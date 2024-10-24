@@ -9,7 +9,7 @@
     <meta name="author" content="">
     <title>@yield('title')</title>
     <!-- Bootstrap -->
-    <link rel="stylesheet" href="{{ asset('css/bootstrap-grid.css') }}">
+    {{-- <link rel="stylesheet" href="{{ asset('css/bootstrap-grid.css') }}">
     <link rel="stylesheet" href="{{ asset('css/bootstrap-grid.css.map') }}">
     <link rel="stylesheet" href="{{ asset('css/bootstrap-grid.min.css') }}">
     <link rel="stylesheet" href="{{ asset('css/bootstrap-grid.min.css.map') }}">
@@ -41,9 +41,15 @@
     <link rel="stylesheet" href="{{ asset('bootstrap.rtl.css.map') }}">
     <link rel="stylesheet" href="{{ asset('bootstrap.rtl.min.css') }}">
     <link rel="stylesheet" href="{{ asset('bootstrap.rtl.min.css.map') }}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css"> --}}
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
     <!-- DataTables CSS -->
-    <link rel="stylesheet" href="https://cdn.datatables.net/2.1.8/css/dataTables.dataTables.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
+
+    <!-- DataTables CSS -->
+    {{-- <link rel="stylesheet" href="https://cdn.datatables.net/2.1.8/css/dataTables.dataTables.min.css"> --}}
     <link href="{{ asset('css/tes.css') }}" rel="stylesheet">
     <!-- DataTables CSS -->
     <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
@@ -185,7 +191,7 @@
         });
     </script>
 
-    <script src="{{ asset('js/jquery.min.js') }}"></script>
+    {{-- <script src="{{ asset('js/jquery.min.js') }}"></script>
     <script src="{{ asset('js/popper.min.js') }}"></script>
     <script src="{{ asset('js/bootstrap.min.js') }}"></script>
     <script src="{{ asset('js/bootstrap.bundle.js') }}"></script>
@@ -199,11 +205,18 @@
     <script src="{{ asset('js/bootsrap.js') }}"></script>
     <script src="{{ asset('js/bootsrap.js.map') }}"></script>
     <script src="{{ asset('js/bootsrap.min.js') }}"></script>
-    <script src="{{ asset('js/bootsrap.min.js.map') }}"></script>
+    <script src="{{ asset('js/bootsrap.min.js.map') }}"></script> --}}
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
     <!-- DataTables JS -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<<<<<<< HEAD:resources/views/layouts/app.blade.php
-    <script src="https://cdn.datatables.net/2.1.8/js/dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+
+
+    <!-- DataTables JS -->
+    {{-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.datatables.net/2.1.8/js/dataTables.min.js"></script> --}}
 
     <script>
         // Inisialisasi DataTables
@@ -213,6 +226,5 @@
     </script>
 =======
     <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
->>>>>>> c97b02f4cc707f0dc9844c21f580254dcef7fee0:resources/views/admin/layouts/app.blade.php
 </body>
 </html>
