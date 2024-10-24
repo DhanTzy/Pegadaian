@@ -6,20 +6,46 @@ use Illuminate\Http\Request;
 use App\Models\Karyawan;
 use App\Models\RiwayatPendidikan;
 use Carbon\Carbon;
+use Yajra\DataTables\DataTables;
 use Illuminate\Support\Facades\File;
 
 class KaryawanController extends Controller
 {
     public function index(Request $request)
     {
-        $karyawan = Karyawan::where('status_delete', '1')->orderBy('created_at', 'ASC')->get();
-
-        foreach ($karyawan as $item) {
-            $item->tanggal_lahir = Carbon::parse($item->tanggal_lahir)->format('d/m/y');
-        }
-        return view('admin.karyawan.index', compact('karyawan'));
+        return view('admin.karyawan.index');
     }
 
+    public function getData(Request $request)
+    {
+    $query = Karyawan::where('status_delete', '1');
+
+    return DataTables::of($query)
+        ->addColumn('action', function ($karyawan) {
+            return '
+                <button class="btn btn-info btn-sm me-2" data-bs-toggle="modal" data-bs-target="#karyawanDetailModal"
+                        data-kewarganegaraan="' . $karyawan->kewarganegaraan . '"
+                        data-status_perkawinan="' . $karyawan->status_perkawinan . '"
+                        data-no_telepon="' . $karyawan->no_telepon . '"
+                        data-email="' . $karyawan->email . '"
+                        data-alamat_lengkap="' . $karyawan->alamat_lengkap . '"
+                        data-kode_pos="' . $karyawan->kode_pos . '"
+                        data-riwayat_pendidikan=\'' . json_encode($karyawan->riwayatPendidikan) . '\'
+                        data-foto_ktp="' . asset('storage/' . $karyawan->foto_ktp) . '"
+                        data-foto_kk="' . asset('storage/' . $karyawan->foto_kk) . '">
+                    Detail
+                </button>
+                <a href="' . route('admin.karyawan.edit', $karyawan->id) . '" class="btn btn-success btn-sm me-2">Edit</a>
+                <form action="' . route('admin.karyawan.destroy', $karyawan->id) . '" method="POST" style="display:inline;">
+                    ' . csrf_field() . '
+                    ' . method_field('DELETE') . '
+                    <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm(\'Yakin ingin menghapus data ini?\')">Hapus</button>
+                </form>
+            ';
+            })->editColumn('tanggal_lahir', function ($karyawan) {
+            return Carbon::parse($karyawan->tanggal_lahir)->format('d/m/Y');
+        })->rawColumns(['action'])->make(true);
+    }
 
     public function create()
     {
@@ -166,8 +192,7 @@ class KaryawanController extends Controller
     {
         $karyawan = Karyawan::find($id);
 
-        if ($karyawan)
-        {
+        if ($karyawan) {
             $karyawan->status_delete = '0';
             $karyawan->save();
             return redirect()->route('admin.karyawan')->with('success', 'Data berhasil dihapus.');

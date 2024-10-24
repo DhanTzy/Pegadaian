@@ -20,7 +20,7 @@ class UserController extends Controller
 
     public function gadaiemas()
     {
-        return view('user.gadaiemas.gadai');
+        return view('user.gadaiemas.index');
     }
 
     public function cabang()
