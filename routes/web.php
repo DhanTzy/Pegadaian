@@ -7,8 +7,6 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\KaryawanController;
 use App\Http\Controllers\TransaksiController;
-use App\Http\Controllers\TransaksiJaminanController;
-use App\Http\Controllers\RiwayatPendidikanController;
 use App\Http\Controllers\UserController;
 use App\Models\Karyawan;
 use App\Models\Nasabah;
@@ -75,8 +73,7 @@ Route::middleware(['auth', 'user-access:admin'])->group(function () {
     Route::get('/admin/transaksi/{id}/edit', [TransaksiController::class, 'edit'])->name('admin.transaksi.edit');
     Route::put('/admin/transaksi/{id}', [TransaksiController::class, 'update'])->name('admin.transaksi.update');
     Route::delete('/admin/transaksi/{id}', [TransaksiController::class, 'destroy'])->name('admin.transaksi.destroy');
-    // Route::get('/admin/transaksi/{id}', [TransaksiController::class, 'show'])->name('admin.transaksi.show');
-    // Route::get('/admin/transaksiJaminan', [TransaksiJaminanController::class, 'index'])->name('admin.transaksiJaminan');
+    Route::get('/admin/transaksi/data', [TransaksiController::class, 'getData'])->name('admin.transaksi.data');
 
     // Profile
     Route::get('/admin/profile', [AdminController::class, 'adminProfile'])->name('admin.profile');
@@ -89,7 +86,8 @@ Route::middleware(['auth', 'user-access:admin'])->group(function () {
     Route::get('/admin/nasabah/edit/{id}', [NasabahController::class, 'edit'])->name('admin.nasabah.edit');
     Route::put('/admin/nasabah/edit/{id}', [NasabahController::class, 'update'])->name('admin.nasabah.update');
     Route::delete('/admin/nasabah/destroy/{id}', [NasabahController::class, 'destroy'])->name('admin.nasabah.destroy');
-    Route::get('/admin/nasabah/data', [NasabahController::class, 'data'])->name('admin.nasabah.data');
+    Route::get('/admin/nasabah/data', [NasabahController::class, 'getData'])->name('admin.nasabah.data');
+
 
     // Karyawan
     Route::get('/admin/karyawan', [KaryawanController::class, 'index'])->name('admin.karyawan');
@@ -99,7 +97,5 @@ Route::middleware(['auth', 'user-access:admin'])->group(function () {
     Route::get('/admin/karyawan/edit/{id}', [KaryawanController::class, 'edit'])->name('admin.karyawan.edit');
     Route::put('/admin/karyawan/edit/{id}', [KaryawanController::class, 'update'])->name('admin.karyawan.update');
     Route::delete('/admin/karyawan/destroy/{id}', [KaryawanController::class, 'destroy'])->name('admin.karyawan.destroy');
-
-    // Riwayat Pendidikan
-    // Route::get('/admin/riwayat-pendidikan', [RiwayatPendidikanController::class, 'index'])->name('admin.riwayatPendidikan');
+    Route::get('/admin/karyawan/data', [KaryawanController::class, 'getData'])->name('admin.karyawan.data');
 });

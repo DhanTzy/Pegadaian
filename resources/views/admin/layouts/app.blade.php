@@ -202,6 +202,7 @@
     <script src="{{ asset('js/bootsrap.min.js.map') }}"></script>
     <!-- DataTables JS -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<<<<<<< HEAD:resources/views/layouts/app.blade.php
     <script src="https://cdn.datatables.net/2.1.8/js/dataTables.min.js"></script>
 
     <script>
@@ -210,5 +211,8 @@
             $('#myTable').DataTable(); // Ganti '#myTable' dengan ID tabel Anda
         });
     </script>
+=======
+    <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+>>>>>>> c97b02f4cc707f0dc9844c21f580254dcef7fee0:resources/views/admin/layouts/app.blade.php
 </body>
 </html>

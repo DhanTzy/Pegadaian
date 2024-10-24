@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Transaksi;
 use App\Models\TransaksiJaminan;
+use Yajra\DataTables\DataTables;
 use Illuminate\Support\Facades\File;
 use Carbon\Carbon;
 
@@ -12,15 +13,39 @@ class TransaksiController extends Controller
 {
     public function index(Request $request)
     {
-        $transaksi = Transaksi::with('jaminan')->where('status_delete', '1')->orderBy('created_at', 'ASC')->get();
-
-        foreach ($transaksi as $item) {
-            $item->tanggal = Carbon::parse($item->tanggal)->format('d/m/y');
-        }
-
-        return view('admin.transaksi.index', compact('transaksi'));
+        return view('admin.transaksi.index');
     }
 
+    public function getData(Request $request)
+    {
+        $transaksi = Transaksi::with('jaminan')->where('status_delete', '1')->get();
+
+        return DataTables::of($transaksi)
+            ->addColumn('action', function ($transaksi) {
+                // Ambil semua foto jaminan
+                $fotoJaminan = '';
+                foreach ($transaksi->jaminan as $jaminan) {
+                    $fotoJaminan .= '<img src="' . asset('storage/' . $jaminan->foto_jaminan) . '" style="width: 100px; height: auto; margin: 5px;">';
+                }
+                return '
+            <button type="button" class="btn btn-info btn-sm me-2"
+                    data-bs-toggle="modal"
+                    data-bs-target="#transaksiDetailModal"
+                    data-no_rekening="' . $transaksi->no_rekening . '"
+                    data-bank="' . $transaksi->bank . '"
+                    data-foto_jaminan="' . htmlspecialchars($fotoJaminan) . '">
+                Detail
+            </button>
+            <a href="' . route('admin.transaksi.edit', $transaksi->id) . '" class="btn btn-success btn-sm me-2">Edit</a>
+            <form action="' . route('admin.transaksi.destroy', $transaksi->id) . '" method="POST"
+                  onsubmit="return confirm(\'Apakah Anda Yakin Menghapus Data Ini?\')" class="d-inline">
+                ' . csrf_field() . '
+                ' . method_field('DELETE') . '
+                <button class="btn btn-danger btn-sm">Delete</button>
+            </form>
+        ';
+         })->make(true);
+    }
 
     public function create()
     {
@@ -132,8 +157,7 @@ class TransaksiController extends Controller
     {
         $transaksi = Transaksi::find($id);
 
-        if ($transaksi)
-        {
+        if ($transaksi) {
             $transaksi->status_delete = '0';
             $transaksi->save();
 

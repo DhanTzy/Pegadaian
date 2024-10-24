@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('admin.layouts.app')
 
 @section('title', 'Home Nasabah List')
 
@@ -13,7 +13,7 @@
             </div>
         @endif
 
-        <table id="myTable" class="table table-striped table-bordered">
+        <table id="nasabahTable" class="table table-striped table-bordered">
             <thead class="table-dark text-center">
                 <tr>
                     <th scope="col">ID</th>
@@ -27,49 +27,13 @@
                 </tr>
             </thead>
             <tbody>
-                @if ($nasabah->count() > 0)
-                    @foreach ($nasabah as $rs)
-                        <tr>
-                            <td class="text-center">{{ $rs->id }}</td>
-                            <td>{{ $rs->nomor_identitas }}</td>
-                            <td>{{ $rs->nama_lengkap }}</td>
-                            <td>{{ $rs->tempat_lahir }}</td>
-                            <td>{{ $rs->tanggal_lahir }}</td>
-                            <td>{{ $rs->status_perkawinan }}</td>
-                            <td>{{ $rs->pekerjaan }}</td>
-
-                            <td class="text-center">
-                                <button type="button" class="btn btn-info btn-sm me-2" data-bs-toggle="modal"
-                                    data-bs-target="#nasabahDetailModal"
-                                    data-alamat_lengkap="{{ $rs->alamat_lengkap }}"
-                                    data-kode_pos="{{ $rs->kode_pos }}"
-                                    data-email="{{ $rs->email }}"
-                                    data-telepon="{{ $rs->telepon }}"
-                                    data-nama_orang_tua="{{ $rs->nama_orang_tua }}"
-                                    data-foto_ktp_sim="{{ asset('storage/' . $rs->foto_ktp_sim) }}">
-                                    Detail
-                                </button>
-                                <a href="{{ route('admin.nasabah.edit', $rs->id) }}"
-                                    class="btn btn-success btn-sm me-2">Edit</a>
-                                <form action="{{ route('admin.nasabah.destroy', $rs->id) }}" method="POST"
-                                    onsubmit="return confirm('Apakah Anda Yakin Menghapus Data Ini?')" class="d-inline">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button class="btn btn-danger btn-sm">Delete</button>
-                                </form>
-                            </td>
-                        </tr>
-                    @endforeach
-                @else
-
-                @endif
+                <!-- Data will be loaded here via AJAX -->
             </tbody>
         </table>
     </div>
 
     <!-- Modal -->
-    <div class="modal fade" id="nasabahDetailModal" tabindex="-1" aria-labelledby="nasabahDetailModalLabel"
-        aria-hidden="true">
+    <div class="modal fade" id="nasabahDetailModal" tabindex="-1" aria-labelledby="nasabahDetailModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -93,11 +57,32 @@
         </div>
     </div>
 
+    <!-- Include DataTables CSS and JS -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+
     <script>
+        $(document).ready(function() {
+            $('#nasabahTable').DataTable({
+                processing: true,
+                serverSide: true,
+                ajax: '{{ route("admin.nasabah.data") }}',
+                columns: [
+                    { data: 'id', name: 'id' },
+                    { data: 'nomor_identitas', name: 'nomor_identitas' },
+                    { data: 'nama_lengkap', name: 'nama_lengkap' },
+                    { data: 'tempat_lahir', name: 'tempat_lahir' },
+                    { data: 'tanggal_lahir', name: 'tanggal_lahir' },
+                    { data: 'status_perkawinan', name: 'status_perkawinan' },
+                    { data: 'pekerjaan', name: 'pekerjaan' },
+                    { data: 'action', name: 'action', orderable: false, searchable: false, },
+                ],
+            });
+        });
+
         var nasabahDetailModal = document.getElementById('nasabahDetailModal');
         nasabahDetailModal.addEventListener('show.bs.modal', function(event) {
-
-            // Ambil data dari atribut
             var button = event.relatedTarget;
             var alamatLengkap = button.getAttribute('data-alamat_lengkap');
             var kodePos = button.getAttribute('data-kode_pos');
@@ -106,21 +91,12 @@
             var namaOrangTua = button.getAttribute('data-nama_orang_tua');
             var fotoKTP = button.getAttribute('data-foto_ktp_sim');
 
-            // Menyimpan ke elemen modal
-            var detailAlamatLengkap = nasabahDetailModal.querySelector('#detailAlamatLengkap');
-            var detailKodePos = nasabahDetailModal.querySelector('#detailKodePos');
-            var detailEmail = nasabahDetailModal.querySelector('#detailEmail');
-            var detailTelepon = nasabahDetailModal.querySelector('#detailTelepon');
-            var detailNamaOrangTua = nasabahDetailModal.querySelector('#detailNamaOrangTua');
-            var detailFotoKTP = nasabahDetailModal.querySelector('#detailFotoKTP');
-
-
-            detailAlamatLengkap.textContent = alamatLengkap;
-            detailKodePos.textContent = kodePos;
-            detailEmail.textContent = email;
-            detailTelepon.textContent = telepon;
-            detailNamaOrangTua.textContent = namaOrangTua;
-            detailFotoKTP.src = fotoKTP;
+            document.querySelector('#detailAlamatLengkap').textContent = alamatLengkap;
+            document.querySelector('#detailKodePos').textContent = kodePos;
+            document.querySelector('#detailEmail').textContent = email;
+            document.querySelector('#detailTelepon').textContent = telepon;
+            document.querySelector('#detailNamaOrangTua').textContent = namaOrangTua;
+            document.querySelector('#detailFotoKTP').src = fotoKTP;
         });
     </script>
 @endsection

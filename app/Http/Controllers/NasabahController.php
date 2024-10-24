@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Nasabah;
 use Illuminate\Support\Facades\File;
+use Yajra\DataTables\DataTables;
 use Carbon\Carbon;
 
 class NasabahController extends Controller
@@ -19,6 +20,34 @@ class NasabahController extends Controller
         return view('admin.nasabah.index', compact('nasabah'));
     }
 
+    public function getData(Request $request)
+    {
+        $nasabah = Nasabah::where('status_delete', '1')->get();
+
+        return DataTables::of($nasabah)
+            ->addColumn('action', function ($nasabah) {
+                return '
+                <button type="button" class="btn btn-info btn-sm me-2"
+                        data-bs-toggle="modal"
+                        data-bs-target="#nasabahDetailModal"
+                        data-alamat_lengkap="' . $nasabah->alamat_lengkap . '"
+                        data-kode_pos="' . $nasabah->kode_pos . '"
+                        data-email="' . $nasabah->email . '"
+                        data-telepon="' . $nasabah->telepon . '"
+                        data-nama_orang_tua= "'. $nasabah->nama_orang_tua .'"
+                        data-foto_ktp_sim="' . asset('storage/' . $nasabah->foto_ktp_sim) . '">
+                    Detail
+                </button>
+                <a href="' . route('admin.nasabah.edit', $nasabah->id) . '" class="btn btn-success btn-sm me-2">Edit</a>
+                <form action="' . route('admin.nasabah.destroy', $nasabah->id) . '" method="POST"
+                      onsubmit="return confirm(\'Apakah Anda Yakin Menghapus Data Ini?\')" class="d-inline">
+                    ' . csrf_field() . '
+                    ' . method_field('DELETE') . '
+                    <button class="btn btn-danger btn-sm">Delete</button>
+                </form>
+            ';
+        })->make(true);
+    }
 
     public function create()
     {
@@ -104,8 +133,7 @@ class NasabahController extends Controller
     {
         $nasabah = Nasabah::find($id);
 
-        if ($nasabah)
-        {
+        if ($nasabah) {
             $nasabah->status_delete = '0';
             $nasabah->save();
             return redirect()->route('admin.nasabah')->with('success', 'Data berhasil dihapus.');
