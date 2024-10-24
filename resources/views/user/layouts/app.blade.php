@@ -48,7 +48,7 @@
                                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                                         data-bs-toggle="dropdown" aria-expanded="false">
                                         <img class="rounded-circle"
-                                            src="{{ asset('storage/logo/otit.jpeg') }}" alt="Profile" class="rounded-circle" width="50" height="50"
+                                            src="{{ asset('img\otit.jpeg') }}" alt="Profile" class="rounded-circle" width="50" height="50"
                                             alt="profile" width="30" height="30">
                                     </a>
                                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
