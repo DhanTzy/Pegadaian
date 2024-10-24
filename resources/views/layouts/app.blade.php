@@ -9,32 +9,67 @@
     <meta name="author" content="">
     <title>@yield('title')</title>
     <!-- Bootstrap -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ asset('css/bootstrap-grid.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/bootstrap-grid.css.map') }}">
+    <link rel="stylesheet" href="{{ asset('css/bootstrap-grid.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/bootstrap-grid.min.css.map') }}">
+    <link rel="stylesheet" href="{{ asset('css/bootstrap-grid.rtl.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/bootstrap-grid.rtl.css.map') }}">
+    <link rel="stylesheet" href="{{ asset('css/bootstrap-grid.rtl.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/bootstrap-grid.rtl.min.css.map') }}">
+    <link rel="stylesheet" href="{{ asset('css/bootstrap-reboot.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/bootstrap-reboot.css.map') }}">
+    <link rel="stylesheet" href="{{ asset('css/bootstrap-reboot.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/bootstrap-reboot.min.css.map') }}">
+    <link rel="stylesheet" href="{{ asset('css/bootstrap-reboot.rtl.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/bootstrap-reboot.rtl.css.map') }}">
+    <link rel="stylesheet" href="{{ asset('css/bootstrap-reboot.rtl.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/bootstrap-reboot.rtl.min.css.map') }}">
+    <link rel="stylesheet" href="{{ asset('css/bootstrap-utilities.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/bootstrap-utilities.css.map') }}">
+    <link rel="stylesheet" href="{{ asset('css/bootstrap-utilities.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/bootstrap-utilities.min.css.map') }}">
+    <link rel="stylesheet" href="{{ asset('css/bootstrap-utilities.rtl.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/bootstrap-utilities.rtl.css.map') }}">
+    <link rel="stylesheet" href="{{ asset('css/bootstrap-utilities.rtl.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/bootstrap-utilities.rtl.min.css.map') }}">
+    <link rel="stylesheet" href="{{ asset('bootstrap.css') }}">
+    <link rel="stylesheet" href="{{ asset('bootstrap.css.map') }}">
+    <link rel="stylesheet" href="{{ asset('bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('bootstrap.min.css.map') }}">
+    <link rel="stylesheet" href="{{ asset('bootstrap.rtl.css') }}">
+    <link rel="stylesheet" href="{{ asset('bootstrap.rtl.css.map') }}">
+    <link rel="stylesheet" href="{{ asset('bootstrap.rtl.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('bootstrap.rtl.min.css.map') }}">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
     <!-- DataTables CSS -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/2.1.8/css/dataTables.dataTables.min.css">
+    <link href="{{ asset('css/tes.css') }}" rel="stylesheet">
+    <!-- DataTables CSS -->
     <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
+    @stack('style')
 </head>
 
 <body>
     <div class="d-flex">
-        <nav class="bg-dark text-white p-3" style="width: 250px; height: 100vh; position: fixed;">
+        <nav class="bg-dark text-white p-3" style="width: 250px; height: 100vh; position: fixed; z-index: 1000;">
             <div class="sidebar">
-                <div class="text-center mb-4">
-                    <img src="{{ asset('storage/logo/Pegadaian_logo.png') }}" alt="Logo" class="img-fluid"
+                <div class="text-center mt-5 mb-4">
+                    <img src="{{ asset('img\pegadaian.png') }}" alt="Logo" class="img-fluid"
                         style="max-width: 75%; height: auto;">
                 </div>
 
                 <!-- Menu Items -->
                 <ul class="nav flex-column">
                     <li class="nav-item">
-                        <a class="nav-link text-white {{ Route::is('admin.home') ? 'active bg-primary' : '' }}"
+                        <a class="nav-link text-black {{ Route::is('admin.home') ? 'active bg-primary' : '' }}"
                             href="{{ route('admin.home') }}">
                             <i class="bi bi-bar-chart-line"></i> Dashboard
                         </a>
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link text-white {{ Route::is('admin.transaksi') ? 'active bg-primary' : '' }}"
+                        <a class="nav-link text-black {{ Route::is('admin.transaksi') ? 'active bg-primary' : '' }}"
                             href="{{ route('admin.transaksi') }}">
                             <i class="bi bi-cash-stack"></i> Transaksi
                         </a>
@@ -42,7 +77,7 @@
 
                     <!-- Data Master Collapse without Sub Collapse -->
                     <li class="nav-item">
-                        <a class="nav-link text-white d-flex justify-content-between align-items-center"
+                        <a class="nav-link text-black d-flex justify-content-between align-items-center"
                             data-bs-toggle="collapse" href="#dataMasterCollapse" role="button" aria-expanded="false"
                             aria-controls="dataMasterCollapse">
                             <span><i class="bi bi-archive"></i> Data Master</span>
@@ -50,13 +85,13 @@
                         </a>
                         <div class="collapse {{ Route::is('admin.nasabah', 'admin.karyawan') ? 'show' : '' }}"
                             id="dataMasterCollapse">
-                            <ul class="nav flex-column ms-3">
+                            <ul class="nav flex-column ms-3 style="width: 100%;">
                                 <li class="nav-item">
-                                    <a class="nav-link text-white {{ Route::is('admin.nasabah') ? 'active bg-primary' : '' }}"
+                                    <a class="nav-link text-black {{ Route::is('admin.nasabah') ? 'active bg-primary' : '' }}"
                                         href="{{ route('admin.nasabah') }}"><i class="bi bi-person"></i> List Nasabah</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link text-white {{ Route::is('admin.karyawan') ? 'active bg-primary' : '' }}"
+                                    <a class="nav-link text-black {{ Route::is('admin.karyawan') ? 'active bg-primary' : '' }}"
                                         href="{{ route('admin.karyawan') }}"><i class="bi bi-people"></i> List Karyawan</a>
                                 </li>
                             </ul>
@@ -72,7 +107,7 @@
                 <div class="dropdown">
                     <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle"
                         id="profileDropdown" data-bs-toggle="dropdown" aria-expanded="false">
-                        <img src="{{ asset('storage/logo/demaz.jpeg') }}" alt="Profile" class="rounded-circle"
+                        <img src="{{ asset('img\rp.png') }}" alt="Profile" class="rounded-circle"
                             width="50" height="50">
                     </a>
                     <ul class="dropdown-menu dropdown-menu-end dropdown-menu-light text-small shadow"
@@ -89,6 +124,24 @@
             <hr />
             <div>
                 @yield('contents')
+                <footer class="footercontainer align-items-center mt-5 bg-footer text-white">
+                    <!-- Hak Cipta -->
+                    <div class="d-flex align-items-center justify-content-center p-5">
+                      <div class="text-white">
+                        <p>© 2024 Pegadaian Hak Cipta. Segala hal yang dilakukan di website ini sudah terlindungi oleh undang-undang hak cipta.</p>
+                        <hr>
+                        <div class="float-left">
+                          <a class="text-white" href="#">Privasi</a> |
+                          <a class="text-white" href="#">Hak Cipta</a> |
+                          <a class="text-white" href="#">Instagram</a> |
+                          <a class="text-white" href="#">Facebook</a>
+                        </div>
+                      </div>
+                      <div class="footerlogo padding-auto p-5">
+                        <img src="assets/img/pegadaian.png" alt="logo" width="50" height="auto">
+                      </div>
+                    </div>
+                  </footer>
             </div>
         </div>
     </div>
@@ -112,6 +165,7 @@
         </div>
     </div>
 
+    @stack('script')
     <script>
         // Mengatur ikon panah untuk collapse
         document.querySelectorAll('[data-bs-toggle="collapse"]').forEach(collapseLink => {
@@ -131,12 +185,24 @@
         });
     </script>
 
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
+    <script src="{{ asset('js/jquery.min.js') }}"></script>
+    <script src="{{ asset('js/popper.min.js') }}"></script>
+    <script src="{{ asset('js/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('js/bootstrap.bundle.js') }}"></script>
+    <script src="{{ asset('js/bootstrap.bundle.js.map') }}"></script>
+    <script src="{{ asset('js/bootstrap.bundle.min.js') }}"></script>
+    <script src="{{ asset('js/bootstrap.bundle.min.js.map') }}"></script>
+    <script src="{{ asset('js/bootsrap.esm.js') }}"></script>
+    <script src="{{ asset('js/bootsrap.esm.js.map') }}"></script>
+    <script src="{{ asset('js/bootsrap.esm.min.js') }}"></script>
+    <script src="{{ asset('js/bootsrap.esm.min.js.map') }}"></script>
+    <script src="{{ asset('js/bootsrap.js') }}"></script>
+    <script src="{{ asset('js/bootsrap.js.map') }}"></script>
+    <script src="{{ asset('js/bootsrap.min.js') }}"></script>
+    <script src="{{ asset('js/bootsrap.min.js.map') }}"></script>
     <!-- DataTables JS -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/2.1.8/js/dataTables.min.js"></script>
 
     <script>
         // Inisialisasi DataTables

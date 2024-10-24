@@ -1,0 +1,22 @@
+table {
+    width: 90%;
+    margin: auto;
+    border-radius: 5px;
+  }
+
+  thead {
+    text-align: center;
+    background-color: #000000;
+  }
+
+  th {
+    text-align: center;
+    border: 1px solid #000000;
+    background-color: #1EE4CD;
+  }
+
+  td {
+    padding: 8px;
+    text-align: left;
+    border: 1px solid #000000;
+  }
