@@ -8,8 +8,8 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <title>@yield('title')</title>
-    <!-- Bootstrap -->
-    {{-- <link rel="stylesheet" href="{{ asset('css/bootstrap-grid.css') }}">
+    {{-- <!-- Bootstrap -->
+    <link rel="stylesheet" href="{{ asset('css/bootstrap-grid.css') }}">
     <link rel="stylesheet" href="{{ asset('css/bootstrap-grid.css.map') }}">
     <link rel="stylesheet" href="{{ asset('css/bootstrap-grid.min.css') }}">
     <link rel="stylesheet" href="{{ asset('css/bootstrap-grid.min.css.map') }}">
@@ -49,8 +49,6 @@
     <!-- DataTables CSS -->
     <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
 
-    <!-- DataTables CSS -->
-    {{-- <link rel="stylesheet" href="https://cdn.datatables.net/2.1.8/css/dataTables.dataTables.min.css"> --}}
     <link href="{{ asset('css/tes.css') }}" rel="stylesheet">
     <!-- DataTables CSS -->
     <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
@@ -92,7 +90,7 @@
                         </a>
                         <div class="collapse {{ Route::is('admin.nasabah', 'admin.karyawan') ? 'show' : '' }}"
                             id="dataMasterCollapse">
-                            <ul class="nav flex-column ms-3 style="width: 100%;">
+                            <ul class="nav flex-column ms-3 style= width: 100%;">
                                 <li class="nav-item">
                                     <a class="nav-link text-black {{ Route::is('admin.nasabah') ? 'active bg-primary' : '' }}"
                                         href="{{ route('admin.nasabah') }}"><i class="bi bi-person"></i> List Nasabah</a>
@@ -145,7 +143,7 @@
                         </div>
                       </div>
                       <div class="footerlogo padding-auto p-5">
-                        <img src="assets/img/pegadaian.png" alt="logo" width="50" height="auto">
+                        <img src="{{ asset('img\pegadaian.png') }}" alt="logo" width="150" height="75">
                       </div>
                     </div>
                   </footer>

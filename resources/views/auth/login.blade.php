@@ -40,11 +40,11 @@
                         @endif
                         <div class="form-group">
                             <label for="email">Your email</label>
-                            <input type="email" name="email" id="email" class="form-control" placeholder="name@company.com" required>
+                            <input type="email" name="email" id="email" class="form-control" placeholder="name@gmail.com" required>
                         </div>
                         <div class="form-group">
                             <label for="password">Password</label>
-                            <input type="password" name="password" id="password" class="form-control" required>
+                            <input type="password" name="password" id="password" class="form-control" placeholder="Masukkan Password" required>
                         </div>
                         <div class="d-flex justify-content-between align-items-center mt-3">
                             <a href="#" class="text-primary">Forgot password?</a>

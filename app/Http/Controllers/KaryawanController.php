@@ -86,7 +86,7 @@ class KaryawanController extends Controller
             'foto_kk' => $kkPath,
         ]));
 
-        // Simpan riwayat pendidikan jika ada
+        // Menyimpan Riwayat Pendidikan
         if ($request->has('riwayat_pendidikan')) {
             foreach ($request->riwayat_pendidikan as $pendidikan) {
                 RiwayatPendidikan::create([

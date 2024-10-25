@@ -44,7 +44,9 @@ class TransaksiController extends Controller
                 <button class="btn btn-danger btn-sm">Delete</button>
             </form>
         ';
-         })->make(true);
+         })->editColumn('tanggal', function ($transkasi) {
+            return Carbon::parse($transkasi->tanggal)->format('d/m/y');
+         })->rawColumns(['action'])->make(true);
     }
 
     public function create()
@@ -96,6 +98,7 @@ class TransaksiController extends Controller
     public function show($id)
     {
         $transaksi = Transaksi::with('jaminan')->findOrFail($id); // Mengambil data transaksi beserta jaminan
+        $transaksi->tanggal = Carbon::parse($transaksi->tanggal)->format('d/m/y');
         return view('admin.transaksi.show', compact('transaksi')); // Mengembalikan view dengan data transaksi
     }
 

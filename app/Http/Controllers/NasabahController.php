@@ -12,17 +12,12 @@ class NasabahController extends Controller
 {
     public function index(Request $request)
     {
-        $nasabah = Nasabah::where('status_delete', '1')->orderBy('created_at', 'ASC')->get();
-        foreach ($nasabah as $item) {
-            $item->tanggal_lahir = Carbon::parse($item->tanggal_lahir)->format('d/m/Y');
-        }
-
-        return view('admin.nasabah.index', compact('nasabah'));
+        return view('admin.nasabah.index');
     }
 
     public function getData(Request $request)
     {
-        $nasabah = Nasabah::where('status_delete', '1')->get();
+        $nasabah = Nasabah::where('status_delete', '1');
 
         return DataTables::of($nasabah)
             ->addColumn('action', function ($nasabah) {
@@ -34,7 +29,7 @@ class NasabahController extends Controller
                         data-kode_pos="' . $nasabah->kode_pos . '"
                         data-email="' . $nasabah->email . '"
                         data-telepon="' . $nasabah->telepon . '"
-                        data-nama_orang_tua= "'. $nasabah->nama_orang_tua .'"
+                        data-nama_orang_tua="' . $nasabah->nama_orang_tua . '"
                         data-foto_ktp_sim="' . asset('storage/' . $nasabah->foto_ktp_sim) . '">
                     Detail
                 </button>
@@ -46,7 +41,9 @@ class NasabahController extends Controller
                     <button class="btn btn-danger btn-sm">Delete</button>
                 </form>
             ';
-        })->make(true);
+            })->editColumn('tanggal_lahir', function ($nasabah){
+            return Carbon::parse($nasabah->tanggal_lahir)->format('d/m/y');
+        })->rawColumns(['action'])->make(true);
     }
 
     public function create()
