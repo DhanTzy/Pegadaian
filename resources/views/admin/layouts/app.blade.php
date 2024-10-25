@@ -42,6 +42,7 @@
     <link rel="stylesheet" href="{{ asset('bootstrap.rtl.min.css') }}">
     <link rel="stylesheet" href="{{ asset('bootstrap.rtl.min.css.map') }}">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css"> --}}
+
     <!-- Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
@@ -113,7 +114,7 @@
                 <div class="dropdown">
                     <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle"
                         id="profileDropdown" data-bs-toggle="dropdown" aria-expanded="false">
-                        <img src="{{ asset('img\rp.png') }}" alt="Profile" class="rounded-circle"
+                        <img src="{{ asset('img\demaz.jpeg') }}" alt="Profile" class="rounded-circle"
                             width="50" height="50">
                     </a>
                     <ul class="dropdown-menu dropdown-menu-end dropdown-menu-light text-small shadow"
@@ -206,13 +207,13 @@
     <script src="{{ asset('js/bootsrap.js.map') }}"></script>
     <script src="{{ asset('js/bootsrap.min.js') }}"></script>
     <script src="{{ asset('js/bootsrap.min.js.map') }}"></script> --}}
+
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
     <!-- DataTables JS -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
-
 
     <!-- DataTables JS -->
     {{-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
