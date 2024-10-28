@@ -12,10 +12,11 @@
                 {{ Session::get('success') }}
             </div>
         @endif
-        
+
         <div class="mb-3">
-            <input type="text" id="namaFilter" placeholder="Search Nama Lengkap" class="form-control form-control-sm">
+            <input type="text" id="namaFilter" placeholder="Search Nama Nasabah" class="form-control form-control-sm d-inline-block" style="width: auto;">
         </div>
+        <button id="filterButton" class="btn btn-success btn-sm me-2">Filter</button>
 
         <table id="nasabahTable" class="table table-striped table-bordered">
             <thead class="table-dark text-center">
@@ -89,9 +90,8 @@
                 ],
             });
 
-            // Event untuk filter
-            $('#namaFilter').on('keyup change', function() {
-                table.draw(); // Memanggil ulang data dengan filter
+            $('#filterButton').on('click', function(){
+                table.draw();
             });
         });
 
