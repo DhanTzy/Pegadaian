@@ -20,6 +20,10 @@ class KaryawanController extends Controller
     {
     $query = Karyawan::where('status_delete', '1');
 
+    if ($request->has('nama_lengkap') && $request->input('nama_lengkap') != '') {
+        $query->where('nama_lengkap', 'LIKE', '%' . $request->input('nama_lengkap') . '%');
+    }
+
     return DataTables::of($query)
         ->addColumn('action', function ($karyawan) {
             return '

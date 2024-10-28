@@ -17,9 +17,13 @@ class NasabahController extends Controller
 
     public function getData(Request $request)
     {
-        $nasabah = Nasabah::where('status_delete', '1');
+        $query = Nasabah::where('status_delete', '1');
 
-        return DataTables::of($nasabah)
+        if ($request->has('nama_lengkap') && $request->input('nama_lengkap') != '') {
+            $query->where('nama_lengkap', 'LIKE', '%' . $request->input('nama_lengkap') . '%');
+        }
+
+        return DataTables::of($query)
             ->addColumn('action', function ($nasabah) {
                 return '
                 <button type="button" class="btn btn-info btn-sm me-2"

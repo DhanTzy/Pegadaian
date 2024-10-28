@@ -13,13 +13,17 @@
             </div>
         @endif
 
+        <div class="mb-3">
+            <input type="text" id="namaFilter" placeholder="Search Nama" class="form-control form-control-sm">
+        </div>
+
         <table id="transaksiTable" class="table table-striped table-bordered">
             <thead class="table-dark text-center">
                 <tr>
                     <th>ID</th>
                     <th>Nama Nasabah</th>
-                    <th>Metode Pencairan</th>
                     <th>Tanggal</th>
+                    <th>Metode Pencairan</th>
                     <th>Jumlah Pinjaman</th>
                     <th>Bunga</th>
                     <th>Jangka Waktu</th>
@@ -61,22 +65,33 @@
 
     <script>
         $(document).ready(function() {
-            $('#transaksiTable').DataTable({
+            var table = $('#transaksiTable').DataTable({
                 processing: true,
                 serverSide: true,
-                ajax: '{{ route("admin.transaksi.data") }}',
+                ajax: {
+                    url: '{{ route("admin.transaksi.data") }}',
+                    data: function(d) {
+                        d.nama_nasabah = $('#namaFilter').val(); // Mengirimkan filter ke server
+                    }
+                },
                 columns: [
                     { data: 'id', name: 'id' },
-                    { data: 'nama_nasabah', name: 'nama_nasabah'},
-                    { data: 'metode_pencairan', name: 'metode_pencairan'},
-                    { data: 'tanggal', name: 'tanggal'},
-                    { data: 'jumlah_pinjaman', name: 'jumlah_pinjaman'},
-                    { data: 'bunga', name: 'bunga'},
+                    { data: 'nama_nasabah', name: 'nama_nasabah' },
+                    { data: 'tanggal', name: 'tanggal' },
+                    { data: 'metode_pencairan', name: 'metode_pencairan' },
+                    { data: 'jumlah_pinjaman', name: 'jumlah_pinjaman' },
+                    { data: 'bunga', name: 'bunga' },
                     { data: 'jangka_waktu', name: 'jangka_waktu'},
-                    { data: 'action', name: 'action', orderable: false, searchable: false, },
+                    { data: 'action', name: 'action', orderable: false, searchable: false },
                 ],
             });
+
+            // Event untuk filter
+            $('#namaFilter').on('keyup change', function() {
+                table.draw(); // Memanggil ulang data dengan filter
+            });
         });
+
 
         var transaksiDetailModal = document.getElementById('transaksiDetailModal');
         transaksiDetailModal.addEventListener('show.bs.modal', function(event) {

@@ -8,6 +8,11 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <title>Register</title>
+    <link rel="stylesheet" href="{{ asset('css/stylinglogin.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+        integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}" />
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.0.7/dist/umd/popper.min.js"></script>
@@ -15,56 +20,82 @@
 </head>
 
 <body>
-    <section class="bg-light">
-        <div class="d-flex flex-column align-items-center justify-content-center min-vh-100 py-5">
-            <div class="mb-4 text-2xl font-weight-bold">
-                Register
-            </div>
-            <div class="card w-100" style="max-width: 400px;">
-                <div class="card-body">
-                    <h1 class="card-title text-center mb-4">Create an account</h1>
-                    <form action="{{ route('register.save') }}" method="POST">
-                        @csrf
-                        <div class="form-group">
-                            <label for="name">Your name</label>
-                            <input type="text" name="name" id="name" class="form-control" required>
-                            @error('name')
-                            <span class="text-danger">{{ $message }}</span>
-                            @enderror
-                        </div>
-                        <div class="form-group">
-                            <label for="email">Your email</label>
-                            <input type="email" name="email" id="email" class="form-control" required>
-                            @error('email')
-                            <span class="text-danger">{{ $message }}</span>
-                            @enderror
-                        </div>
-                        <div class="form-group">
-                            <label for="password">Password</label>
-                            <input type="password" name="password" id="password" class="form-control" required>
-                            @error('password')
-                            <span class="text-danger">{{ $message }}</span>
-                            @enderror
-                        </div>
-                        <div class="form-group">
-                            <label for="password_confirmation">Confirm password</label>
-                            <input type="password" name="password_confirmation" id="password_confirmation" class="form-control" required>
-                            @error('password_confirmation')
-                            <span class="text-danger">{{ $message }}</span>
-                            @enderror
-                        </div>
-                        <div class="form-check mb-3">
-                            <input id="terms" aria-describedby="terms" type="checkbox" class="form-check-input" required>
-                            <label for="terms" class="form-check-label">I accept the <a class="text-primary" href="#">Terms and Conditions</a></label>
-                        </div>
-                        <button type="submit" class="btn btn-primary w-100">Create an account</button>
-                        <p class="text-center mt-3">
-                            Sudah Punya Akun? <a href="{{ route('login') }}" class="text-primary">Login here</a>
-                        </p>
-                    </form>
+    <div class="container login-con">
+        <div class="login-form container row justify-content-end">
+            <img src="{{ asset('img/pegadaian.png') }}" alt="logo" class="logo" />
+                <p class="masuk">Buat Akun Baru</p>
+                <p>
+                    Selamat datang Di Aplikasi Go Pegadaian Ayo masuk ke akun mu supaya
+                    kamu bisa menikmati banyak fitur
+                </p>
+            <hr style="background-color: black; height: 1px; border: none;">
+            <form action="{{ route('register.save') }}" method="POST">
+                @csrf
+                <div>
+                    <label for="name">Nama<span class="text-danger">*</span></label>
+                    <input type="text" id="name" name="name" placeholder="Masukkan nama" class="form-control"
+                        required />
+                    @error('name')
+                        <span class="text-danger">{{ $message }}</span>
+                    @enderror
                 </div>
+                <div>
+                    <label for="email">Email<span class="text-danger">*</span></label>
+                    <input type="text" id="email" name="email" class="form-control"
+                        placeholder="Masukkan email" required />
+                    @error('email')
+                        <span class="text-danger">{{ $message }}</span>
+                    @enderror
+                </div>
+                <div>
+                    <label for="password">Password<span class="text-danger">*</span>
+                    </label>
+                    <input type="password" id="password" name="password" class="form-control"
+                        placeholder="Masukkan password" required />
+                    @error('password')
+                        <span class="text-danger">{{ $message }}</span>
+                    @enderror
+                </div>
+                <div>
+                    <label for="password">Ulangi Password<span class="text-danger">*</span></label>
+                    <input type="password" id="password_confirmation" name="password_confirmation" class="form-control"
+                        placeholder="Masukkan ulangi password" />
+                    @error('password_confirmation')
+                        <span class="text-danger">{{ $message }}</span>
+                    @enderror
+                </div>
+                <div>
+                    <button type="submit" class="btn btn-primary w-100">Create an account</button>
+                </div>
+                <p class="text-center mt-1">
+                    Sudah Punya Akun?
+                    <a href="{{ route('login') }}" class="text-primary">Login here</a>
+                </p>
+                <p class="text-center">atau</p>
+                <div class="icon">
+                    <i class="fa-brands fa-google"></i>
+                    <i class="fa-brands fa-facebook"></i>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="container right">
+        <div class="container box">
+            <div style="margin-left: 5%; margin-top: 8%">
+                <h2>Gaada Uang?</h2>
+            </div>
+            <div style="margin-left: 25%">
+                <h2>Di Go Pegadaian Aja</h2>
+            </div>
+            <div style="margin-left: 45%">
+                <h2>Dijadmin Aman 100%</h2>
+            </div>
+            <div class="img-container">
+                <img src="{{ asset('img/ryhnlogin.png') }}" alt="gambarlogin" class="gambarlogin" />
             </div>
         </div>
-    </section>
+    </div>
 </body>
+
 </html>

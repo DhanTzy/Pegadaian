@@ -18,9 +18,13 @@ class TransaksiController extends Controller
 
     public function getData(Request $request)
     {
-        $transaksi = Transaksi::with('jaminan')->where('status_delete', '1')->get();
+        $query = Transaksi::with('jaminan')->where('status_delete', '1');
 
-        return DataTables::of($transaksi)
+        if ($request->has('nama_nasabah') && $request->input('nama_nasabah') != '') {
+            $query->where('nama_nasabah', 'LIKE', '%' . $request->input('nama_nasabah') . '%');
+        }
+
+        return DataTables::of($query)
             ->addColumn('action', function ($transaksi) {
                 // Ambil semua foto jaminan
                 $fotoJaminan = '';

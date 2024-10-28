@@ -12,6 +12,10 @@
                 {{ Session::get('success') }}
             </div>
         @endif
+        
+        <div class="mb-3">
+            <input type="text" id="namaFilter" placeholder="Search Nama Lengkap" class="form-control form-control-sm">
+        </div>
 
         <table id="nasabahTable" class="table table-striped table-bordered">
             <thead class="table-dark text-center">
@@ -64,10 +68,15 @@
 
     <script>
         $(document).ready(function() {
-            $('#nasabahTable').DataTable({
+            var table = $('#nasabahTable').DataTable({
                 processing: true,
                 serverSide: true,
-                ajax: '{{ route("admin.nasabah.data") }}',
+                ajax: {
+                    url: '{{ route("admin.nasabah.data") }}',
+                    data: function(d) {
+                        d.nama_lengkap = $('#namaFilter').val(); // Mengirimkan filter ke server
+                    }
+                },
                 columns: [
                     { data: 'id', name: 'id' },
                     { data: 'nomor_identitas', name: 'nomor_identitas' },
@@ -76,8 +85,13 @@
                     { data: 'tanggal_lahir', name: 'tanggal_lahir' },
                     { data: 'status_perkawinan', name: 'status_perkawinan' },
                     { data: 'pekerjaan', name: 'pekerjaan' },
-                    { data: 'action', name: 'action', orderable: false, searchable: false, },
+                    { data: 'action', name: 'action', orderable: false, searchable: false },
                 ],
+            });
+
+            // Event untuk filter
+            $('#namaFilter').on('keyup change', function() {
+                table.draw(); // Memanggil ulang data dengan filter
             });
         });
 

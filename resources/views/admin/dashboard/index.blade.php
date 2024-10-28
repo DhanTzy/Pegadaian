@@ -16,10 +16,10 @@
             <div class="col" style="flex: 1; display: flex; flex-direction: column;">
               <div style="flex: 1; display: flex; flex-direction: column; justify-content: space-between;">
                 <div class="card-dashboard border mb-5">
-                  <h1 class="text-center">Jumlah Nasabah 30</h1>
+                  <h1 class="text-center">Jumlah Nasabah</h1>
                 </div>
                 <div class="card-dashboard border">
-                  <h1 class="text-center">Barang Nasabah 30</h1>
+                  <h1 class="text-center">Barang Nasabah</h1>
                 </div>
               </div>
             </div>
