@@ -24,13 +24,20 @@ class KaryawanController extends Controller
         $query->where('nama_lengkap', 'LIKE', '%' . $request->input('nama_lengkap') . '%');
     }
 
+    if ($request->has('posisi_pekerjaan') && $request->input('posisi_pekerjaan') != '') {
+        $query->where('posisi_pekerjaan', 'LIKE', '%' . $request->input('posisi_pekerjaan') . '%');
+    }
+    
+    if ($request->has('tanggal_gabung') && $request->input('tanggal_gabung') != '') {
+        $query->where('created_at', 'LIKE', '%' . $request->input('tanggal_gabung') . '%');
+    }
+
     return DataTables::of($query)
         ->addColumn('action', function ($karyawan) {
             return '
                 <button class="btn btn-info btn-sm me-2" data-bs-toggle="modal" data-bs-target="#karyawanDetailModal"
                         data-kewarganegaraan="' . $karyawan->kewarganegaraan . '"
                         data-status_perkawinan="' . $karyawan->status_perkawinan . '"
-                        data-no_telepon="' . $karyawan->no_telepon . '"
                         data-email="' . $karyawan->email . '"
                         data-alamat_lengkap="' . $karyawan->alamat_lengkap . '"
                         data-kode_pos="' . $karyawan->kode_pos . '"
@@ -43,7 +50,7 @@ class KaryawanController extends Controller
                 <form action="' . route('admin.karyawan.destroy', $karyawan->id) . '" method="POST" style="display:inline;">
                     ' . csrf_field() . '
                     ' . method_field('DELETE') . '
-                    <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm(\'Yakin ingin menghapus data ini?\')">Hapus</button>
+                    <button type="submit" class="btn btn-danger btn-sm me-2" onclick="return confirm(\'Yakin ingin menghapus data ini?\')">Hapus</button>
                 </form>
             ';
             })->editColumn('tanggal_lahir', function ($karyawan) {

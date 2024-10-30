@@ -19,8 +19,23 @@ class NasabahController extends Controller
     {
         $query = Nasabah::where('status_delete', '1');
 
+        // Pencarian berdasarkan nama lengkap
         if ($request->has('nama_lengkap') && $request->input('nama_lengkap') != '') {
             $query->where('nama_lengkap', 'LIKE', '%' . $request->input('nama_lengkap') . '%');
+        }
+
+        // Pencarian berdasarkan nomor identitas
+        if ($request->has('nomor_identitas') && $request->input('nomor_identitas') != '') {
+            $query->where('nomor_identitas', 'LIKE', '%' . $request->input('nomor_identitas') . '%');
+        }
+
+        // Filter berdasarkan rentang tanggal created_at
+        if ($request->has('tanggal_join') && $request->input('tanggal_join') != '') {
+            $query->where('created_at', '>=', $request->input('tanggal_join'));
+        }
+
+        if ($request->has('tanggal_akhir') && $request->input('tanggal_akhir') != '') {
+            $query->where('created_at', '<=', $request->input('tanggal_akhir'));
         }
 
         return DataTables::of($query)
@@ -32,7 +47,6 @@ class NasabahController extends Controller
                         data-alamat_lengkap="' . $nasabah->alamat_lengkap . '"
                         data-kode_pos="' . $nasabah->kode_pos . '"
                         data-email="' . $nasabah->email . '"
-                        data-telepon="' . $nasabah->telepon . '"
                         data-nama_orang_tua="' . $nasabah->nama_orang_tua . '"
                         data-foto_ktp_sim="' . asset('storage/' . $nasabah->foto_ktp_sim) . '">
                     Detail
@@ -42,12 +56,12 @@ class NasabahController extends Controller
                       onsubmit="return confirm(\'Apakah Anda Yakin Menghapus Data Ini?\')" class="d-inline">
                     ' . csrf_field() . '
                     ' . method_field('DELETE') . '
-                    <button class="btn btn-danger btn-sm">Delete</button>
+                    <button class="btn btn-danger btn-sm me-2">Delete</button>
                 </form>
             ';
-            })->editColumn('tanggal_lahir', function ($nasabah){
-            return Carbon::parse($nasabah->tanggal_lahir)->format('d/m/y');
-        })->rawColumns(['action'])->make(true);
+            })->editColumn('tanggal_lahir', function ($nasabah) {
+                return Carbon::parse($nasabah->tanggal_lahir)->format('d/m/Y');
+            })->rawColumns(['action'])->make(true);
     }
 
     public function create()

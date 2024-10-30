@@ -1,6 +1,6 @@
-@extends('admin.layouts.app')
+@extends('user.layouts.app')
 
-@section('title', 'Profile Settings')
+@section('title', 'Pengaturan Profil')
 
 @section('contents')
 
@@ -10,26 +10,32 @@
         </div>
     @endif
 
-    <form method="POST" enctype="multipart/form-data" action="{{ route('admin.profile.update') }}">
+    <!-- Form untuk mengedit profil -->
+    <form method="POST" enctype="multipart/form-data" action="{{ route('user.profile.update') }}">
         @csrf
         @method('PUT')
-        
+
         <div class="mb-3">
-            <label for="image" class="form-label">Foto Profile :</label>
-            <input id="image" name="image" type="file" class="form-control" accept="image/*" onchange="previewImage(event)" />
+            <label for="image" class="form-label">Foto Profil</label>
+            <input id="image" name="image" type="file" class="form-control" accept="image/*"
+                onchange="previewImage(event)" />
+
+            <!-- Preview foto profil -->
             <img id="preview"
-                src="{{ auth()->user()->image ? asset('storage/profile_images/' . auth()->user()->image) : 'img/demaz.jpeg' }}"
+                src="{{ auth()->user()->image ? asset('storage/profile_images/' . auth()->user()->image) : asset('img/default_profile.png') }}"
                 alt="Preview" width="100" class="mt-2" />
         </div>
 
         <div class="mb-3">
-            <label for="name" class="form-label">Name :</label>
-            <input id="name" name="name" type="text" value="{{ old('name', auth()->user()->name) }}" class="form-control" required />
+            <label for="name" class="form-label">Nama</label>
+            <input id="name" name="name" type="text" value="{{ old('name', auth()->user()->name) }}"
+                class="form-control" required />
         </div>
 
         <div class="mb-3">
-            <label for="email" class="form-label">Email :</label>
-            <input id="email" name="email" type="email" value="{{ auth()->user()->email }}" class="form-control" readonly />
+            <label for="email" class="form-label">Email</label>
+            <input id="email" name="email" type="email" value="{{ auth()->user()->email }}" class="form-control"
+                readonly />
         </div>
 
         <!-- Modal Konfirmasi -->
@@ -57,7 +63,7 @@
     </form>
 
     <script>
-        document.getElementById('confirmEditSubmit').addEventListener('click', function() {
+         document.getElementById('confirmEditSubmit').addEventListener('click', function() {
             document.querySelector('form').submit();
         });
 

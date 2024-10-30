@@ -48,11 +48,11 @@
                                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                                         data-bs-toggle="dropdown" aria-expanded="false">
                                         <img class="rounded-circle"
-                                            src="{{ asset('img\otit.jpeg') }}" alt="Profile" class="rounded-circle" width="50" height="50"
-                                            alt="profile" width="30" height="30">
+                                            src="{{ auth()->user()->image ? asset('storage/profile_images/' . auth()->user()->image) : asset('img/default_profile.png') }}"
+                                            alt="Profile" width="50" height="50">
                                     </a>
                                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                                        <li><a class="dropdown-item" href="{{ url('/profile') }}">Profile</a></li>
+                                        <li><a class="dropdown-item" href="{{ route('user.profile') }}">Profile</a></li>
                                         <li><a class="dropdown-item" href="">Membership</a></li>
                                         <li><a class="dropdown-item" href="#" id="logout-link">Sign out</a></li>
                                     </ul>
@@ -113,4 +113,5 @@
         });
     </script>
 </body>
+
 </html>

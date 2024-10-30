@@ -60,7 +60,7 @@
         <nav class="bg-dark text-white p-3" style="width: 250px; height: 100vh; position: fixed; z-index: 1000;">
             <div class="sidebar">
                 <div class="text-center mt-5 mb-4">
-                    <img src="{{ asset('img\pegadaian.png') }}" alt="Logo" class="img-fluid"
+                    <img src="{{ asset('img\logo.png') }}" alt="Logo" class="img-fluid"
                         style="max-width: 75%; height: auto;">
                 </div>
 
@@ -112,7 +112,7 @@
                 <div class="dropdown">
                     <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle"
                         id="profileDropdown" data-bs-toggle="dropdown" aria-expanded="false">
-                        <img src="{{ asset('img\demaz.jpeg') }}" alt="Profile" class="rounded-circle"
+                        <img src="{{ asset('storage/profile_images/' . auth()->user()->image ) }}" alt="Profile" class="rounded-circle"
                             width="50" height="50">
                     </a>
                     <ul class="dropdown-menu dropdown-menu-end dropdown-menu-light text-small shadow"
@@ -143,7 +143,7 @@
                         </div>
                       </div>
                       <div class="footerlogo padding-auto p-5">
-                        <img src="{{ asset('img\pegadaian.png') }}" alt="logo" width="150" height="75">
+                        <img src="{{ asset('img\logo.png') }}" alt="logo" width="150" height="75">
                       </div>
                     </div>
                   </footer>

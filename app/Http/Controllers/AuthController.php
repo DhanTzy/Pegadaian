@@ -60,12 +60,20 @@ class AuthController extends Controller
 
         $request->session()->regenerate();
 
-        if (auth()->user()->type == 'admin') {
+        $user = auth()->user();
+        if ($user->type == 'admin') {
+            if (is_null($user->image) || empty($user->name)) {
+                return redirect()->route('admin.profile')->with('message', 'Silakan Lengkapi Profil Anda Terlebih Dahulu');
+            }
             return redirect()->route('admin.home');
-        } else {
-            return redirect()->route('home');
         }
 
+        if ($user->type == 'user') {
+            if (is_null($user->image) || empty($user->name)) {
+                return redirect()->route('user.profile')->with('message', 'Silakan Lengkapi Profil Anda Terlebih Dahulu');
+            }
+            return redirect()->route('home');
+        }
         return redirect()->route('dashboard');
     }
 

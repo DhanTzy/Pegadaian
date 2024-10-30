@@ -13,10 +13,30 @@
             </div>
         @endif
 
-        <div class="mb-3">
-            <input type="text" id="namaFilter" placeholder="Search Nama Nasabah" class="form-control form-control-sm d-inline-block" style="width: auto;">
+        <div class="mb-3 d-flex align-items-end">
+            <div class="me-2">
+                <label for="namaFilter" class="form-label mb-0">Nama Nasabah :</label>
+                <input type="text" id="namaFilter" placeholder="Search Nama Nasabah" class="form-control form-control-sm me-2" style="width: auto;">
+             </div>
+
+             <div class="me-2">
+                <label for="identitasFilter" class="form-label mb-0">Nomor Identitas :</label>
+                <input type="text" id="identitasFilter" placeholder="Search Identitas" class="form-control form-control-sm me-2" style="width: auto;">
+            </div>
+
+            <div class="me-2">
+                <label for="tanggalJoinFilter" class="form-label mb-0">Tanggal Join :</label>
+                <input type="date" id="tanggalJoinFilter" class="form-control form-control-sm" style="width: auto;">
+            </div>
+
+            <div class="me-2">
+                <label for="tanggalAkhirFilter" class="form-label mb-0">Tanggal Akhir :</label>
+                <input type="date" id="tanggalAkhirFilter" class="form-control form-control-sm" style="width: auto;">
+            </div>
+
+            <button id="filterButton" class="btn btn-success btn-sm">Filter</button>
         </div>
-        <button id="filterButton" class="btn btn-success btn-sm me-2">Filter</button>
+
 
         <table id="nasabahTable" class="table table-striped table-bordered">
             <thead class="table-dark text-center">
@@ -28,6 +48,7 @@
                     <th scope="col">Tanggal Lahir</th>
                     <th scope="col">Status Perkawinan</th>
                     <th scope="col">Pekerjaan</th>
+                    <th scope="col">Telepon</th>
                     <th scope="col">Action</th>
                 </tr>
             </thead>
@@ -49,7 +70,6 @@
                     <p><strong>Alamat Lengkap:</strong> <span id="detailAlamatLengkap"></span></p>
                     <p><strong>Kode Pos:</strong> <span id="detailKodePos"></span></p>
                     <p><strong>Email:</strong> <span id="detailEmail"></span></p>
-                    <p><strong>Telepon:</strong> <span id="detailTelepon"></span></p>
                     <p><strong>Nama Orang Tua:</strong> <span id="detailNamaOrangTua"></span></p>
                     <p><strong>Foto KTP/SIM:</strong> <br>
                         <img id="detailFotoKTP" src="" alt="Foto KTP/SIM" style="width: 100px; height: auto;">
@@ -75,7 +95,10 @@
                 ajax: {
                     url: '{{ route("admin.nasabah.data") }}',
                     data: function(d) {
-                        d.nama_lengkap = $('#namaFilter').val(); // Mengirimkan filter ke server
+                        d.nama_lengkap = $('#namaFilter').val();
+                        d.nomor_identitas = $('#identitasFilter').val();
+                        d.tanggal_join = $('#tanggalJoinFilter').val();
+                        d.tanggal_akhir = $('#tanggalAkhirFilter').val();
                     }
                 },
                 columns: [
@@ -86,11 +109,12 @@
                     { data: 'tanggal_lahir', name: 'tanggal_lahir' },
                     { data: 'status_perkawinan', name: 'status_perkawinan' },
                     { data: 'pekerjaan', name: 'pekerjaan' },
+                    { data: 'telepon', name: 'telepon'},
                     { data: 'action', name: 'action', orderable: false, searchable: false },
                 ],
             });
 
-            $('#filterButton').on('click', function(){
+            $('#filterButton').on('keyup click', function(){
                 table.draw();
             });
         });
@@ -101,14 +125,12 @@
             var alamatLengkap = button.getAttribute('data-alamat_lengkap');
             var kodePos = button.getAttribute('data-kode_pos');
             var email = button.getAttribute('data-email');
-            var telepon = button.getAttribute('data-telepon');
             var namaOrangTua = button.getAttribute('data-nama_orang_tua');
             var fotoKTP = button.getAttribute('data-foto_ktp_sim');
 
             document.querySelector('#detailAlamatLengkap').textContent = alamatLengkap;
             document.querySelector('#detailKodePos').textContent = kodePos;
             document.querySelector('#detailEmail').textContent = email;
-            document.querySelector('#detailTelepon').textContent = telepon;
             document.querySelector('#detailNamaOrangTua').textContent = namaOrangTua;
             document.querySelector('#detailFotoKTP').src = fotoKTP;
         });

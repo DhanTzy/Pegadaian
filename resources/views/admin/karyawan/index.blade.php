@@ -12,10 +12,35 @@
             </div>
         @endif
 
-        <div class="mb-3">
-            <input type="text" id="namaFilter" placeholder="Search Nama Lengkap" class="form-control form-control-sm d-inline-block" style="width: auto;">
+        <div class="mb-3 d-flex align-items-end">
+            <div class="me-2">
+                <label for="namaFilter" class="form-label mb-0">Nama Lengkap :</label>
+                <input type="text" id="namaFilter" placeholder="Search Nama Karyawan" class="form-control form-control-sm me-2" style="width: auto;">
+             </div>
+
+             <div class="me-2">
+                <label for="pekerjaanFilter" class="form-label mb-0">Pekerjaan :</label>
+                <select id="pekerjaanFilter" class="form-select form-select-sm me-2">
+                    <option value=""> -- Pilih Pekerjaan --</option>
+                    <option value="Manager">Manager</option>
+                    <option value="Administrasi">Administrasi</option>
+                    <option value="Supervisor">Supervisor</option>
+                    <option value="Marketing Officer">Marketing Officer</option>
+                    <option value="Collection Officer">Collection Officer</option>
+                    <option value="Kasir">Kasir</option>
+                    <option value="Customer Service">Customer Service</option>
+                    <option value="Teller">Teller</option>
+                    <option value="Security">Security</option>
+                </select>
+            </div>
+
+             <div class="me-2">
+                <label for="tanggalGabungFilter" class="form-label mb-0">Tanggal Gabung :</label>
+                <input type="date" id="tanggalGabungFilter" class="form-control form-control-sm" style="width: auto;">
+            </div>
+
+            <button id="filterButton" class="btn btn-success btn-sm">Filter</button>
         </div>
-        <button id="filterButton" class="btn btn-success btn-sm me-2">Filter</button>
 
         <table id="karyawanTable" class="table table-striped table-bordered">
             <thead class="table-dark text-center">
@@ -27,6 +52,7 @@
                     <th scope="col">Tempat Lahir</th>
                     <th scope="col">Tanggal Lahir</th>
                     <th scope="col">Agama</th>
+                    <th scope="col">Telepon</th>
                     <th scope="col">Action</th>
                 </tr>
             </thead>
@@ -48,7 +74,6 @@
                 <div class="modal-body">
                     <p><strong>Kewarganegaraan :</strong> <span id="detailKewarganegaraan"></span></p>
                     <p><strong>Status Perkawinan :</strong> <span id="detailStatusPerkawinan"></span></p>
-                    <p><strong>No Telepon :</strong> <span id="detailNoTelepon"></span></p>
                     <p><strong>Email :</strong> <span id="detailEmail"></span></p>
                     <p><strong>Alamat Lengkap :</strong> <span id="detailAlamatLengkap"></span></p>
                     <p><strong>Kode Pos :</strong> <span id="detailKodePos"></span></p>
@@ -81,6 +106,8 @@
                     url: '{{ route("admin.karyawan.data") }}',
                     data: function(d) {
                         d.nama_lengkap = $('#namaFilter').val(); // Mengirimkan filter ke server
+                        d.posisi_pekerjaan = $('#pekerjaanFilter').val();
+                        d.tanggal_gabung = $('#tanggalGabungFilter').val();
                     }
                 },
                 columns: [
@@ -91,11 +118,12 @@
                     { data: 'tempat_lahir', name: 'tempat_lahir' },
                     { data: 'tanggal_lahir', name: 'tanggal_lahir' },
                     { data: 'agama', name: 'agama'},
+                    { data: 'no_telepon', name: 'no_telepon'},
                     { data: 'action', name: 'action', orderable: false, searchable: false },
                 ],
             });
 
-            $('#filterButton').on('click', function() {
+            $('#filterButton').on('keyup click', function() {
                 table.draw();
             });
         });
@@ -107,7 +135,6 @@
             var button = event.relatedTarget;
             var kewarganegaraan = button.getAttribute('data-kewarganegaraan');
             var statusPerkawinan = button.getAttribute('data-status_perkawinan');
-            var noTelepon = button.getAttribute('data-no_telepon');
             var email = button.getAttribute('data-email');
             var alamatLengkap = button.getAttribute('data-alamat_lengkap');
             var kodePos = button.getAttribute('data-kode_pos');
@@ -117,7 +144,6 @@
 
             karyawanDetailModal.querySelector('#detailKewarganegaraan').textContent = kewarganegaraan;
             karyawanDetailModal.querySelector('#detailStatusPerkawinan').textContent = statusPerkawinan;
-            karyawanDetailModal.querySelector('#detailNoTelepon').textContent = noTelepon;
             karyawanDetailModal.querySelector('#detailEmail').textContent = email;
             karyawanDetailModal.querySelector('#detailAlamatLengkap').textContent = alamatLengkap;
             karyawanDetailModal.querySelector('#detailKodePos').textContent = kodePos;

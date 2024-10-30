@@ -13,10 +13,28 @@
             </div>
         @endif
 
-        <div class="mb-3">
-            <input type="text" id="namaFilter" placeholder="Search Nama Lengkap" class="form-control form-control-sm d-inline-block" style="width: auto;">
+        <div class="mb-3 d-flex align-items-end">
+            <div class="me-2">
+                <label for="namaFilter" class="form-label mb-0">Nama :</label>
+                <input type="text" id="namaFilter" placeholder="Search Nama" class="form-control form-control-sm me-2" style="width: auto;">
+             </div>
+
+            <div class="me-2">
+                <label for="rekeningFilter" class="form-label mb-0">Rekening :</label>
+                <input type="text" id="rekeningFilter" placeholder="Search Rekening" class="form-control form-control-sm me-2" style="width: auto;">
+             </div>
+
+             <div class="me-2">
+                <label for="metodeFilter" class="form-label mb-0">Metode Pencairan :</label>
+                <select id="metodeFilter" class="form-select form-select-sm me-2">
+                    <option value=""> -- Pilih Metode Pencairan -- </option>
+                    <option value="Transfer">Transfer</option>
+                    <option value="Cash">Cash</option>
+                </select>
+            </div>
+
+            <button id="filterButton" class="btn btn-success btn-sm">Filter</button>
         </div>
-        <button id="filterButton" class="btn btn-success btn-sm me-2">Filter</button>
 
         <table id="transaksiTable" class="table table-striped table-bordered">
             <thead class="table-dark text-center">
@@ -25,6 +43,8 @@
                     <th>Nama Nasabah</th>
                     <th>Tanggal</th>
                     <th>Metode Pencairan</th>
+                    <th>No Rekening</th>
+                    <th>Bank</th>
                     <th>Jumlah Pinjaman</th>
                     <th>Bunga</th>
                     <th>Jangka Waktu</th>
@@ -46,8 +66,6 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <p><strong>No Rekening:</strong> <span id="detailNoRekening"></span></p>
-                    <p><strong>Bank:</strong> <span id="detailBank"></span></p>
                     <p><strong>Foto Jaminan:</strong> <br>
                         <div id="detailFotoJaminan" style="display: flex; flex-wrap: wrap;"></div>
                     </p>
@@ -72,7 +90,9 @@
                 ajax: {
                     url: '{{ route("admin.transaksi.data") }}',
                     data: function(d) {
-                        d.nama_nasabah = $('#namaFilter').val(); // Mengirimkan filter ke server
+                        d.nama_nasabah = $('#namaFilter').val();
+                        d.no_rekening = $('#rekeningFilter').val(); // Mengirimkan filter ke server
+                        d.metode_pencairan = $('#metodeFilter').val();
                     }
                 },
                 columns: [
@@ -80,6 +100,8 @@
                     { data: 'nama_nasabah', name: 'nama_nasabah' },
                     { data: 'tanggal', name: 'tanggal' },
                     { data: 'metode_pencairan', name: 'metode_pencairan' },
+                    { data: 'no_rekening', name: 'no_rekening'},
+                    { data: 'bank', name: 'bank'},
                     { data: 'jumlah_pinjaman', name: 'jumlah_pinjaman' },
                     { data: 'bunga', name: 'bunga' },
                     { data: 'jangka_waktu', name: 'jangka_waktu'},
@@ -87,7 +109,7 @@
                 ],
             });
 
-            $('#filterButton').on('click', function(){
+            $('#filterButton').on(' keyup click', function(){
                 table.draw();
             });
         });
@@ -96,12 +118,7 @@
         var transaksiDetailModal = document.getElementById('transaksiDetailModal');
         transaksiDetailModal.addEventListener('show.bs.modal', function(event) {
             var button = event.relatedTarget;
-            var noRekening = button.getAttribute('data-no_rekening');
-            var bank = button.getAttribute('data-bank');
             var fotoJaminan = button.getAttribute('data-foto_jaminan');
-
-            document.querySelector('#detailNoRekening').textContent = noRekening;
-            document.querySelector('#detailBank').textContent = bank;
 
             // Tampilkan semua foto jaminan
             document.querySelector('#detailFotoJaminan').innerHTML = fotoJaminan; // Menggunakan innerHTML untuk menampilkan beberapa gambar
