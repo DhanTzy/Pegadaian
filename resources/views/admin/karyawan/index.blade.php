@@ -53,6 +53,7 @@
                     <th scope="col">Tanggal Lahir</th>
                     <th scope="col">Agama</th>
                     <th scope="col">Telepon</th>
+                    <th scope="col">Tanggal Gabung</th>
                     <th scope="col">Action</th>
                 </tr>
             </thead>
@@ -119,6 +120,16 @@
                     { data: 'tanggal_lahir', name: 'tanggal_lahir' },
                     { data: 'agama', name: 'agama'},
                     { data: 'no_telepon', name: 'no_telepon'},
+                    { data: 'created_at', name: 'created_at',  render: function(data, type, row)
+                        {
+                            var date = new Date(data);
+                            return date.toLocaleDateString('id-ID', {
+                                day: '2-digit',
+                                month: '2-digit',
+                                year: 'numeric'
+                            });
+                        }
+                    },
                     { data: 'action', name: 'action', orderable: false, searchable: false },
                 ],
             });

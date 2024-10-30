@@ -25,12 +25,11 @@
             </div>
 
             <div class="me-2">
-                <label for="tanggalJoinFilter" class="form-label mb-0">Tanggal Join :</label>
-                <input type="date" id="tanggalJoinFilter" class="form-control form-control-sm" style="width: auto;">
+                <label for="tanggalDaftarFilter" class="form-label mb-0">Tanggal Daftar :</label>
+                <input type="date" id="tanggalDaftarFilter" class="form-control form-control-sm" style="width: auto;">
             </div>
 
             <div class="me-2">
-                <label for="tanggalAkhirFilter" class="form-label mb-0">Tanggal Akhir :</label>
                 <input type="date" id="tanggalAkhirFilter" class="form-control form-control-sm" style="width: auto;">
             </div>
 
@@ -49,6 +48,7 @@
                     <th scope="col">Status Perkawinan</th>
                     <th scope="col">Pekerjaan</th>
                     <th scope="col">Telepon</th>
+                    <th scope="col">Tanggal Daftar</th>
                     <th scope="col">Action</th>
                 </tr>
             </thead>
@@ -97,7 +97,7 @@
                     data: function(d) {
                         d.nama_lengkap = $('#namaFilter').val();
                         d.nomor_identitas = $('#identitasFilter').val();
-                        d.tanggal_join = $('#tanggalJoinFilter').val();
+                        d.tanggal_daftar = $('#tanggalDaftarFilter').val();
                         d.tanggal_akhir = $('#tanggalAkhirFilter').val();
                     }
                 },
@@ -110,6 +110,16 @@
                     { data: 'status_perkawinan', name: 'status_perkawinan' },
                     { data: 'pekerjaan', name: 'pekerjaan' },
                     { data: 'telepon', name: 'telepon'},
+                    { data: 'created_at', name: 'created_at',  render: function(data, type, row)
+                        {
+                            var date = new Date(data);
+                            return date.toLocaleDateString('id-ID', {
+                                day: '2-digit',
+                                month: '2-digit',
+                                year: 'numeric'
+                            });
+                        }
+                    },
                     { data: 'action', name: 'action', orderable: false, searchable: false },
                 ],
             });

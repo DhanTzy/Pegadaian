@@ -15,9 +15,18 @@
 
         <div class="mb-3 d-flex align-items-end">
             <div class="me-2">
-                <label for="namaFilter" class="form-label mb-0">Nama :</label>
+                <label for="namaFilter" class="form-label mb-0">Nama Nasabah :</label>
                 <input type="text" id="namaFilter" placeholder="Search Nama" class="form-control form-control-sm me-2" style="width: auto;">
              </div>
+
+             <div class="me-2">
+                <label for="transaksiFilter" class="form-label mb-0">Tanggal Transaksi :</label>
+                <input type="date" id="transaksiFilter" class="form-control form-control-sm" style="width: auto;">
+            </div>
+
+            <div class="me-2">
+                <input type="date" id="tanggalFilter" class="form-control form-control-sm" style="width: auto;">
+            </div>
 
             <div class="me-2">
                 <label for="rekeningFilter" class="form-label mb-0">Rekening :</label>
@@ -34,6 +43,7 @@
             </div>
 
             <button id="filterButton" class="btn btn-success btn-sm">Filter</button>
+            <button id="resetButton" class="btn btn-secondary btn-sm ms-2">Reset</button>
         </div>
 
         <table id="transaksiTable" class="table table-striped table-bordered">
@@ -91,6 +101,8 @@
                     url: '{{ route("admin.transaksi.data") }}',
                     data: function(d) {
                         d.nama_nasabah = $('#namaFilter').val();
+                        d.tanggal_transaksi = $('#transaksiFilter').val();
+                        d.tanggal = $('#tanggalFilter').val();
                         d.no_rekening = $('#rekeningFilter').val(); // Mengirimkan filter ke server
                         d.metode_pencairan = $('#metodeFilter').val();
                     }
@@ -112,8 +124,16 @@
             $('#filterButton').on(' keyup click', function(){
                 table.draw();
             });
-        });
 
+            $('#resetButton').on('click', function(){
+                $('#namaFilter').val('');
+                $('#transaksiFilter').val('');
+                $('#tanggalFilter').val('');
+                $('#rekeningFilter').val('');
+                $('#metodeFilter').val('');
+                table.draw();
+            });
+        });
 
         var transaksiDetailModal = document.getElementById('transaksiDetailModal');
         transaksiDetailModal.addEventListener('show.bs.modal', function(event) {

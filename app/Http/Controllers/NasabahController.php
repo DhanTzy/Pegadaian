@@ -30,8 +30,8 @@ class NasabahController extends Controller
         }
 
         // Filter berdasarkan rentang tanggal created_at
-        if ($request->has('tanggal_join') && $request->input('tanggal_join') != '') {
-            $query->where('created_at', '>=', $request->input('tanggal_join'));
+        if ($request->has('tanggal_daftar') && $request->input('tanggal_daftar') != '') {
+            $query->where('created_at', '>=', $request->input('tanggal_daftar'));
         }
 
         if ($request->has('tanggal_akhir') && $request->input('tanggal_akhir') != '') {

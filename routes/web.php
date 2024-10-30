@@ -28,8 +28,6 @@ Route::get('/', function () {
     return view('home');
 })->name('home');
 
-Route::get('/history', [UserController::class, 'history'])->name('history');
-
 Route::controller(AuthController::class)->group(function () {
     Route::get('register', 'register')->name('register');
     Route::post('register', 'registerSave')->name('register.save');

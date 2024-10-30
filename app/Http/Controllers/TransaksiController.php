@@ -24,6 +24,14 @@ class TransaksiController extends Controller
             $query->where('nama_nasabah', 'LIKE', '%' . $request->input('nama_nasabah') . '%');
         }
 
+        if ($request->has('tanggal_transaksi') && $request->input('tanggal_transaksi') != '') {
+            $query->where('tanggal', '>=', $request->input('tanggal_transaksi'));
+        }
+
+        if ($request->has('tanggal') && $request->input('tanggal') != '') {
+            $query->where('tanggal', '<=', $request->input('tanggal'));
+        }
+
         if ($request->has('no_rekening') && $request->input('no_rekening') != '') {
             $query->where('no_rekening', 'LIKE', '%' . $request->input('no_rekening') . '%');
         }
