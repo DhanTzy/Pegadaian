@@ -3,6 +3,7 @@
 @section('title', 'Home Transaksi List')
 
 @section('contents')
+<div class="content">
     <div>
         <h1 class="fw-bold fs-3">Daftar Data Transaksi</h1>
 
@@ -53,6 +54,7 @@
             </div>
         </div>
     </div>
+</div>
 
     <!-- Include DataTables CSS and JS -->
     <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">

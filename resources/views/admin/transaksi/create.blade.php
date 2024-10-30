@@ -3,6 +3,7 @@
 @section('title', 'Create Transaksi')
 
 @section('contents')
+<div class="content">
     <div class="container">
         <h1>Buat Transaksi Baru</h1>
         <form action="{{ route('admin.transaksi.store') }}" method="POST" enctype="multipart/form-data">
@@ -122,6 +123,7 @@
             <a href="{{ url()->previous() }}" class="btn btn-secondary w-20">Kembali</a>
         </form>
     </div>
+</div>
 
     <script>
         document.getElementById('confirmSubmit').addEventListener('click', function() {

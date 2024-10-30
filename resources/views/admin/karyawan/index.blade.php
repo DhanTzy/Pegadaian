@@ -3,6 +3,7 @@
 @section('title', 'Home Karyawan List')
 
 @section('contents')
+<div class="content">
     <div>
         <h1 class="fw-bold fs-3">Daftar Data Karyawan</h1>
         <a href="{{ route('admin.karyawan.create') }}" class="btn btn-primary float-left mb-2">Input Data Karyawan</a>
@@ -61,6 +62,7 @@
             </div>
         </div>
     </div>
+</div>
 
     <!-- Include DataTables CSS and JS -->
     <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">

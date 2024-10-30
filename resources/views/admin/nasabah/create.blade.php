@@ -3,6 +3,7 @@
 @section('title', 'Create Nasabah')
 
 @section('contents')
+<div class="content">
     <h1 class="fw-bold fs-3 text-center">Input Data Nasabah</h1>
     <div class="mb-4 pb-4 border-bottom">
         <form action="{{ route('admin.nasabah.store') }}" method="POST" enctype="multipart/form-data">
@@ -163,6 +164,7 @@
             <a href="{{ url()->previous() }}" class="btn btn-secondary w-20">Kembali</a>
         </form>
     </div>
+</div>
 
     <script>
         document.getElementById('confirmSubmit').addEventListener('click', function() {

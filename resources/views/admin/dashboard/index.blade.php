@@ -3,9 +3,6 @@
 @section('title', 'Dashboard')
 
 @section('contents')
-    <div class="container mt-5">
-        <h1 class="fw-bold fs-3 ms-3">Halaman Dashboard</h1>
-    </div>
     <main class="content">
         <div class="container">
           <div class="row" style="display: flex;">
@@ -38,17 +35,17 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
+                        <td>1</td>
+                        <td>Rayhan Riyadhul Jinan</td>
+                        <td>Surat Rumah</td>
+                        <td>500.000.000</td>
+                        <td>Rp. 500.000.000</td>
                     </tr>
                 </tbody>
             </table>
           </div>
         </div>
-      </main>
+    </main>
 @endsection
 
 @push('style')

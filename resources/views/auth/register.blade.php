@@ -64,11 +64,6 @@
                         <span class="text-danger">{{ $message }}</span>
                     @enderror
                 </div>
-                <div class="form-check">
-                    <input id="terms" aria-describedby="terms" type="checkbox" class="form-check-input" required>
-                    <label for="terms" class="form-check-label">I accept the <a class="text-primary"
-                            href="#">Terms and Conditions</a></label>
-                </div>
                 <div>
                     <button type="submit" class="btn btn-primary w-100">Create an account</button>
                 </div>

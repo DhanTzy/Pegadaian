@@ -44,26 +44,26 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css"> --}}
 
     <!-- Bootstrap -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
+    {{-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"> --}}
     <!-- DataTables CSS -->
     <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+        integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
     <!-- DataTables CSS -->
-    {{-- <link rel="stylesheet" href="https://cdn.datatables.net/2.1.8/css/dataTables.dataTables.min.css"> --}}
+    <link href="{{ asset('css/stylingapp.css') }}" rel="stylesheet">
     <link href="{{ asset('css/tes.css') }}" rel="stylesheet">
-    <!-- DataTables CSS -->
     <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
     @stack('style')
 </head>
 
 <body>
     <div class="d-flex">
-        <nav class="bg-dark text-white p-3" style="width: 250px; height: 100vh; position: fixed; z-index: 1000;">
-            <div class="sidebar">
-                <div class="text-center mt-5 mb-4">
+        <nav id="menu-list" class="sidebar hidden bg-dark text-white p-3"><!-- id menu-icon-->
+            <i class="fa-solid fa-xmark closebar" id="closebar"></i>
+                <div class="text-center mb-4 logobar" style="margin-top: 40px;">
                     <img src="{{ asset('img\pegadaian.png') }}" alt="Logo" class="img-fluid"
-                        style="max-width: 75%; height: auto;">
+                        style="max-width: 40%; height: auto;">
                 </div>
 
                 <!-- Menu Items -->
@@ -71,14 +71,14 @@
                     <li class="nav-item">
                         <a class="nav-link text-black {{ Route::is('admin.home') ? 'active bg-primary' : '' }}"
                             href="{{ route('admin.home') }}">
-                            <i class="bi bi-bar-chart-line"></i> Dashboard
+                            <i class="fa-solid fa-chart-simple"></i> Dashboard
                         </a>
                     </li>
 
                     <li class="nav-item">
                         <a class="nav-link text-black {{ Route::is('admin.transaksi') ? 'active bg-primary' : '' }}"
                             href="{{ route('admin.transaksi') }}">
-                            <i class="bi bi-cash-stack"></i> Transaksi
+                            <i class="fa-solid fa-cash-register"></i> Transaksi
                         </a>
                     </li>
 
@@ -87,74 +87,90 @@
                         <a class="nav-link text-black d-flex justify-content-between align-items-center"
                             data-bs-toggle="collapse" href="#dataMasterCollapse" role="button" aria-expanded="false"
                             aria-controls="dataMasterCollapse">
-                            <span><i class="bi bi-archive"></i> Data Master</span>
-                            <i class="bi bi-chevron-down rotate-icon"></i>
+                            <span><i class="fa-solid fa-caret-down"></i> Data Master</span>
+                            <i class="icon bi-chevron-down rotate-icon"></i>
                         </a>
                         <div class="collapse {{ Route::is('admin.nasabah', 'admin.karyawan') ? 'show' : '' }}"
                             id="dataMasterCollapse">
                             <ul class="nav flex-column ms-3 style="width: 100%;">
                                 <li class="nav-item">
                                     <a class="nav-link text-black {{ Route::is('admin.nasabah') ? 'active bg-primary' : '' }}"
-                                        href="{{ route('admin.nasabah') }}"><i class="bi bi-person"></i> List Nasabah</a>
+                                        href="{{ route('admin.nasabah') }}"><i class="fa-solid fa-person-running"></i>
+                                        List Nasabah</a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link text-black {{ Route::is('admin.karyawan') ? 'active bg-primary' : '' }}"
-                                        href="{{ route('admin.karyawan') }}"><i class="bi bi-people"></i> List Karyawan</a>
+                                        href="{{ route('admin.karyawan') }}"><i class="fa-solid fa-people-group"></i>
+                                        List Karyawan</a>
                                 </li>
                             </ul>
                         </div>
                     </li>
                 </ul>
-            </div>
         </nav>
 
-        <div class="flex-grow-1 p-4" style="margin-left: 250px;">
-            <!-- Bagian Profil di Pinggir Kanan Atas-->
-            <div class="d-flex justify-content-end mb-3">
-                <div class="dropdown">
-                    <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle"
-                        id="profileDropdown" data-bs-toggle="dropdown" aria-expanded="false">
-                        <img src="{{ asset('img\demaz.jpeg') }}" alt="Profile" class="rounded-circle"
-                            width="50" height="50">
-                    </a>
-                    <ul class="dropdown-menu dropdown-menu-end dropdown-menu-light text-small shadow"
-                        aria-labelledby="profileDropdown">
-                        <li><a class="dropdown-item" href="{{ route('admin.profile') }}">Profile</a></li>
-                        <li>
-                            <hr class="dropdown-divider">
+        <div class="p-4" style="float: right; margin-right: 0%;">
+            <nav class="navbar navbar-expand-lg navbar-light">
+                <div class="container-fluid">
+                    <!-- Sidebar Toggler on the Left -->
+                    <ul class="navbar-nav me-auto">
+                        <li class="nav-item d-block">
+                            <a class="nav-link sidebartoggler nav-icon-hover" href="#"  id="menu-icon"> <!--menulist-->
+                                <i class="fa-solid fa-bars list p-2"></i>
+                            </a>
                         </li>
-                        <li><a class="dropdown-item" href="#" data-bs-toggle="modal"
-                                data-bs-target="#logoutModal">Logout</a></li>
+                    </ul>
+
+                    <!-- Right Side Profile Icon -->
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item dropdown">
+                            <a class="nav-link nav-icon-hover" href="#" id="drop2" data-bs-toggle="dropdown"
+                                aria-expanded="false">
+                                <img src="{{ asset('img/demaz.jpeg') }}" alt="Photo Profile" width="35"
+                                    height="35" class="rounded-circle">
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-end text-small shadow position-absolute"
+                                aria-labelledby="drop2">
+                                <li><a class="dropdown-item" href="{{ route('admin.profile') }}">Profile</a></li>
+                                <li>
+                                    <hr class="dropdown-divider">
+                                </li>
+                                <li><a class="dropdown-item" href="#" data-bs-toggle="modal"
+                                        data-bs-target="#logoutModal">Logout</a></li>
+                            </ul>
+                        </li>
                     </ul>
                 </div>
-            </div>
+            </nav>
             <hr />
             <div>
                 @yield('contents')
                 <footer class="footercontainer align-items-center mt-5 bg-footer text-white">
                     <!-- Hak Cipta -->
                     <div class="d-flex align-items-center justify-content-center p-5">
-                      <div class="text-white">
-                        <p>© 2024 Pegadaian Hak Cipta. Segala hal yang dilakukan di website ini sudah terlindungi oleh undang-undang hak cipta.</p>
-                        <hr>
-                        <div class="float-left">
-                          <a class="text-white" href="#">Privasi</a> |
-                          <a class="text-white" href="#">Hak Cipta</a> |
-                          <a class="text-white" href="#">Instagram</a> |
-                          <a class="text-white" href="#">Facebook</a>
+                        <div class="text-white">
+                            <p>© 2024 Pegadaian Hak Cipta. Segala hal yang dilakukan di website ini sudah terlindungi
+                                oleh undang-undang hak cipta.</p>
+                            <hr>
+                            <div class="float-left">
+                                <a class="text-white" href="#">Privasi</a> |
+                                <a class="text-white" href="#">Hak Cipta</a> |
+                                <a class="text-white" href="#">Instagram</a> |
+                                <a class="text-white" href="#">Facebook</a>
+                            </div>
                         </div>
-                      </div>
-                      <div class="footerlogo padding-auto p-5">
-                        <img src="assets/img/pegadaian.png" alt="logo" width="50" height="auto">
-                      </div>
+                        <div class="footerlogo padding-auto p-5">
+                            <img src="{{ asset('img/pegadaian.png') }}" class="logo-footer" alt="logo"
+                                width="50" height="auto">
+                        </div>
                     </div>
-                  </footer>
+                </footer>
             </div>
         </div>
     </div>
 
     <!-- Logout Modal -->
-    <div class="modal fade" id="logoutModal" tabindex="-1" aria-labelledby="logoutModalLabel" aria-hidden="true">
+    <div class="modal fade" tabindex="-1" aria-labelledby="logoutModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -173,7 +189,8 @@
     </div>
 
     @stack('script')
-    <script>
+    <script src="{{ asset('js/sidebar.js') }}"></script>
+    {{-- <script>
         // Mengatur ikon panah untuk collapse
         document.querySelectorAll('[data-bs-toggle="collapse"]').forEach(collapseLink => {
             collapseLink.addEventListener('click', function() {
@@ -190,7 +207,7 @@
                 });
             });
         });
-    </script>
+    </script> --}}
 
     {{-- <script src="{{ asset('js/jquery.min.js') }}"></script>
     <script src="{{ asset('js/popper.min.js') }}"></script>
@@ -227,4 +244,5 @@
     </script>
     <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
 </body>
+
 </html>

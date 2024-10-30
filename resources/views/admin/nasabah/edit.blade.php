@@ -3,6 +3,7 @@
 @section('title', 'Edit Nasabah')
 
 @section('contents')
+<div class="content">
     <h1 class="fw-bold fs-3 text-center">Edit Data Nasabah</h1>
     <div class="pb-4">
         <div class="mt-4">
@@ -115,6 +116,7 @@
             </form>
         </div>
     </div>
+</div>
 
     <script>
         document.getElementById('confirmEditSubmit').addEventListener('click', function() {

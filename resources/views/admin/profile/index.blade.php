@@ -3,6 +3,7 @@
 @section('title', 'Profile Settings')
 
 @section('contents')
+<div class="content">
 <form method="POST" enctype="multipart/form-data" action="">
     @csrf
     <div class="mb-3">
@@ -15,4 +16,5 @@
     </div>
     <a href="{{ url()->previous() }}" class="btn btn-secondary">Kembali</a>
 </form>
+</div>
 @endsection
