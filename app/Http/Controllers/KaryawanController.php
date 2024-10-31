@@ -24,10 +24,14 @@ class KaryawanController extends Controller
         $query->where('nama_lengkap', 'LIKE', '%' . $request->input('nama_lengkap') . '%');
     }
 
+    if ($request->has('nip') && $request->input('nip') != '') {
+        $query->where('nip', 'LIKE', '%' . $request->input('nip') . '%');
+    }
+
     if ($request->has('posisi_pekerjaan') && $request->input('posisi_pekerjaan') != '') {
         $query->where('posisi_pekerjaan', 'LIKE', '%' . $request->input('posisi_pekerjaan') . '%');
     }
-    
+
     if ($request->has('tanggal_gabung') && $request->input('tanggal_gabung') != '') {
         $query->where('created_at', 'LIKE', '%' . $request->input('tanggal_gabung') . '%');
     }
@@ -66,6 +70,7 @@ class KaryawanController extends Controller
     public function store(Request $request)
     {
         $validatedData = $request->validate([
+            'nip' => 'required|string|max:18',
             'nama_lengkap' => 'required',
             'posisi_pekerjaan' => 'required',
             'jenis_kelamin' => 'required|in:Laki-laki,Perempuan',
@@ -130,6 +135,7 @@ class KaryawanController extends Controller
     public function update(Request $request, string $id)
     {
         $validatedData = $request->validate([
+            'nip' => 'required|string|max:18',
             'nama_lengkap' => 'required',
             'posisi_pekerjaan' => 'required',
             'jenis_kelamin' => 'required|in:Laki-laki,Perempuan',

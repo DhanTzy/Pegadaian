@@ -11,6 +11,11 @@
                 @method('PUT')
 
                 <div class="mb-3">
+                    <label class="form-label">NIP</label>
+                    <input type="text" id="nip" name="nip" value="{{ $karyawan->nip }}" class="form-control" required>
+                </div>
+
+                <div class="mb-3">
                     <label class="form-label">Nama Lengkap :</label>
                     <input id="nama_lengkap" name="nama_lengkap" type="text"
                         value="{{ old('nama_lengkap', $karyawan->nama_lengkap) }}" class="form-control" required>

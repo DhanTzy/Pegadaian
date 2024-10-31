@@ -7,20 +7,9 @@
     <div class="mb-4 pb-4 border-bottom">
         <form action="{{ route('admin.nasabah.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
+            
             <div class="mb-3">
-                <label class="form-label">Identitas yang Dipakai</label>
-                <div>
-                    <input type="radio" name="identitas" value="KTP" {{ old('identitas') == 'KTP' ? 'checked' : '' }}>KTP
-                    <input type="radio" name="identitas" value="SIM"
-                        {{ old('identitas') == 'SIM' ? 'checked' : '' }}>SIM
-                </div>
-                @error('identitas')
-                    <div class="text-danger">{{ $message }}</div>
-                @enderror
-            </div>
-
-            <div class="mb-3">
-                <label class="form-label">Nomor Identitas (KTP/SIM)</label>
+                <label class="form-label">Nomor Identitas (KTP)</label>
                 <input id="nomor_identitas" name="nomor_identitas" type="text" class="form-control"
                     value="{{ old('nomor_identitas') }}" placeholder="Nomor Identitas Anda" required>
                 @error('nomor_identitas')

@@ -72,8 +72,7 @@ class NasabahController extends Controller
     public function store(Request $request)
     {
         $validatedData = $request->validate([
-            'identitas' => 'required',
-            'nomor_identitas' => 'required|string|max:20',
+            'nomor_identitas' => 'required|string|max:16',
             'nama_lengkap' => 'required|string|max:255',
             'tempat_lahir' => 'required|string|max:100',
             'tanggal_lahir' => 'required|date',
@@ -113,7 +112,6 @@ class NasabahController extends Controller
     public function update(Request $request, string $id)
     {
         $validatedData = $request->validate([
-            'identitas' => 'required',
             'nomor_identitas' => 'required|string|max:20',
             'nama_lengkap' => 'required|string|max:255',
             'tempat_lahir' => 'required|string|max:100',

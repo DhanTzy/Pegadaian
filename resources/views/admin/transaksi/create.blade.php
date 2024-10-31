@@ -54,10 +54,10 @@
             </div>
 
             <div class="mb-3">
-                <label>Jumlah Pinjaman:</label>
-                <input type="text" name="jumlah_pinjaman" class="form-control" value="{{ old('junlah_pinjaman') }}"
+                <label>Pengajuan Pinjaman:</label>
+                <input type="text" name="pengajuan_pinjaman" class="form-control" value="{{ old('pengajuan_pinjaman') }}"
                     required>
-                @error('jumlah_pinjaman')
+                @error('pengajuan_pinjaman')
                     <div class="text-danger">{{ $message }}</div>
                 @enderror
             </div>
@@ -91,11 +91,28 @@
             <div class="mb-3">
                 <label>Foto Jaminan:</label>
                 <input type="file" name="foto_jaminan[]" class="form-control" multiple required accept="image/*"
-                    onchange="previewImages(event)">
+                onchange="previewImages(event)">
                 @error('foto_jaminan')
-                    <div class="text-danger">{{ $message }}</div>
+                <div class="text-danger">{{ $message }}</div>
                 @enderror
                 <div id="image-preview" class="mt-3"></div>
+            </div>
+
+            <div class="mb-3">
+                <label>Jenis Agunan :</label>
+                <input type="text" name="jenis_agunan" class="form-control" value="{{ old('jenis_agunan') }}"
+                    required>
+                @error('jenis_agunan')
+                    <div class="text-danger">{{ $message }}</div>
+                @enderror
+            </div>
+
+            <div class="mb-3">
+                <label>Catatan :</label>
+                <textarea type="text" name="catatan" class="form-control" required>{{ old('catatan') }}</textarea>
+                @error('catatan')
+                    <div class="text-danger">{{ $message }}</div>
+                @enderror
             </div>
 
             <!-- Modal Konfirmasi -->

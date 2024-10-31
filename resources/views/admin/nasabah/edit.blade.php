@@ -11,15 +11,7 @@
                 @method('PUT')
 
                 <div class="mb-3">
-                    <label class="form-label">Identitas yang Dipakai</label>
-                    <div>
-                        <input type="radio" name="identitas" value="KTP"{{ $nasabah->identitas == 'KTP' ? 'checked' : '' }}> KTP
-                        <input type="radio" name="identitas" value="SIM"{{ $nasabah->identitas == 'SIM' ? 'checked' : '' }}> SIM
-                    </div>
-                </div>
-
-                <div class="mb-3">
-                    <label class="form-label">Nomor Identitas (KTP/SIM)</label>
+                    <label class="form-label">Nomor Identitas (KTP)</label>
                     <input id="nomor_identitas" name="nomor_identitas" type="text" value="{{ $nasabah->nomor_identitas }}" class="form-control">
                 </div>
 

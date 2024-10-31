@@ -55,7 +55,7 @@
                     <th>Metode Pencairan</th>
                     <th>No Rekening</th>
                     <th>Bank</th>
-                    <th>Jumlah Pinjaman</th>
+                    <th>Pengajuan Pinjaman</th>
                     <th>Bunga</th>
                     <th>Jangka Waktu</th>
                     <th>Action</th>
@@ -76,9 +76,11 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <p><strong>Foto Jaminan:</strong> <br>
+                    <p><strong>Foto Jaminan :</strong> <br>
                         <div id="detailFotoJaminan" style="display: flex; flex-wrap: wrap;"></div>
                     </p>
+                    <p><strong>Jenis Agunan :</strong> <span id="detailJenisAgunan"></span></p>
+                    <p><strong>Catatan :</strong> <span id="detailCatatan"></span></p>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -114,7 +116,7 @@
                     { data: 'metode_pencairan', name: 'metode_pencairan' },
                     { data: 'no_rekening', name: 'no_rekening'},
                     { data: 'bank', name: 'bank'},
-                    { data: 'jumlah_pinjaman', name: 'jumlah_pinjaman' },
+                    { data: 'pengajuan_pinjaman', name: 'pengajuan_pinjaman' },
                     { data: 'bunga', name: 'bunga' },
                     { data: 'jangka_waktu', name: 'jangka_waktu'},
                     { data: 'action', name: 'action', orderable: false, searchable: false },
@@ -138,9 +140,13 @@
         var transaksiDetailModal = document.getElementById('transaksiDetailModal');
         transaksiDetailModal.addEventListener('show.bs.modal', function(event) {
             var button = event.relatedTarget;
+            var jenisAgunan = button.getAttribute('data-jenis_agunan')
+            var catatan = button.getAttribute('data-catatan');
             var fotoJaminan = button.getAttribute('data-foto_jaminan');
 
             // Tampilkan semua foto jaminan
+            document.querySelector('#detailJenisAgunan').textContent = jenisAgunan;
+            document.querySelector('#detailCatatan').textContent = catatan;
             document.querySelector('#detailFotoJaminan').innerHTML = fotoJaminan; // Menggunakan innerHTML untuk menampilkan beberapa gambar
         });
 

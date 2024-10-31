@@ -7,6 +7,15 @@
     <div class="mb-4 pb-4 border-bottom">
         <form action="{{ route('admin.karyawan.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
+
+            <div class="mb-3">
+                <label class="form-label">NIP</label>
+                <input type="text" name="nip" id="nip" class="form-control" value="{{ old('nip') }}" placeholder="Nomor Induk Pegawai" required>
+                @error('nip')
+                    <div class="text-danger">{{ $message }}</div>
+                @enderror
+            </div>
+
             <div class="mb-3">
                 <label class="form-label">Nama Lengkap :</label>
                 <input id="nama_lengkap" name="nama_lengkap" type="text" class="form-control"

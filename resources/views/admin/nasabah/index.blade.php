@@ -41,7 +41,7 @@
             <thead class="table-dark text-center">
                 <tr>
                     <th scope="col">ID</th>
-                    <th scope="col">Nomor Identitas</th>
+                    <th scope="col">Nomor Identitas (KTP)</th>
                     <th scope="col">Nama Lengkap</th>
                     <th scope="col">Tempat Lahir</th>
                     <th scope="col">Tanggal Lahir</th>

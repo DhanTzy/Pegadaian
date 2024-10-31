@@ -19,6 +19,11 @@
              </div>
 
              <div class="me-2">
+                <label for="nipFilter" class="form-label mb-0">NIP :</label>
+                <input type="text" id="nipFilter" placeholder="Nomor Induk Pegawai" class="form-control form-control-sm me-2" style="width: auto;">
+             </div>
+
+             <div class="me-2">
                 <label for="pekerjaanFilter" class="form-label mb-0">Pekerjaan :</label>
                 <select id="pekerjaanFilter" class="form-select form-select-sm me-2">
                     <option value=""> -- Pilih Pekerjaan --</option>
@@ -45,7 +50,8 @@
         <table id="karyawanTable" class="table table-striped table-bordered">
             <thead class="table-dark text-center">
                 <tr>
-                    <th scope="col">ID Karyawan</th>
+                    <th scope="col">ID</th>
+                    <th scope="col">NIP</th>
                     <th scope="col">Nama Lengkap</th>
                     <th scope="col">Posisi Pekerjaan</th>
                     <th scope="col">Jenis Kelamin</th>
@@ -107,12 +113,14 @@
                     url: '{{ route("admin.karyawan.data") }}',
                     data: function(d) {
                         d.nama_lengkap = $('#namaFilter').val(); // Mengirimkan filter ke server
+                        d.nip = $('#nipFilter').val();
                         d.posisi_pekerjaan = $('#pekerjaanFilter').val();
                         d.tanggal_gabung = $('#tanggalGabungFilter').val();
                     }
                 },
                 columns: [
                     { data: 'id', name: 'id' },
+                    { data: 'nip', name: 'nip'},
                     { data: 'nama_lengkap', name: 'nama_lengkap' },
                     { data: 'posisi_pekerjaan', name: 'posisi_pekerjaan'},
                     { data: 'jenis_kelamin', name: 'jenis_kelamin'},

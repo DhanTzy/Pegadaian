@@ -51,6 +51,8 @@ class TransaksiController extends Controller
             <button type="button" class="btn btn-info btn-sm me-2"
                     data-bs-toggle="modal"
                     data-bs-target="#transaksiDetailModal"
+                    data-catatan="' . $transaksi->catatan . '"
+                    data-jenis_agunan="' . $transaksi->jenis_agunan . '"
                     data-foto_jaminan="' . htmlspecialchars($fotoJaminan) . '">
                 Detail
             </button>
@@ -80,9 +82,11 @@ class TransaksiController extends Controller
             'metode_pencairan' => 'nullable|string',
             'no_rekening' => 'nullable|string',
             'bank' => 'nullable|string',
-            'jumlah_pinjaman' => 'required|string',
+            'pengajuan_pinjaman' => 'required|string',
             'bunga' => 'required|string',
             'jangka_waktu' => 'required|string',
+            'jenis_agunan' => 'required|string',
+            'catatan' => 'required|string',
             'foto_jaminan.*' => 'required|image|mimes:jpeg,png,jpg|max:2048'
         ]);
 
@@ -93,9 +97,11 @@ class TransaksiController extends Controller
             'metode_pencairan',
             'no_rekening',
             'bank',
-            'jumlah_pinjaman',
+            'pengajuan_pinjaman',
             'bunga',
-            'jangka_waktu'
+            'jangka_waktu',
+            'jenis_agunan',
+            'catatan'
         ]));
 
         // Simpan foto jaminan
@@ -134,9 +140,11 @@ class TransaksiController extends Controller
             'metode_pencairan' => 'required|string',
             'no_rekening' => 'nullable|string',
             'bank' => 'nullable|string',
-            'jumlah_pinjaman' => 'required|string',
+            'pengajuan_pinjaman' => 'required|string',
             'bunga' => 'required|string',
             'jangka_waktu' => 'required|string',
+            'jenis_agunan' => 'required|string',
+            'catatan' => 'required|string',
             'foto_jaminan.*' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // Validasi foto jaminan
         ]);
 
@@ -149,9 +157,11 @@ class TransaksiController extends Controller
             'metode_pencairan',
             'no_rekening',
             'bank',
-            'jumlah_pinjaman',
+            'pengajuan_pinjaman',
             'bunga',
+            'jenis_agunan',
             'jangka_waktu',
+            'catatan'
         ]));
 
         // Mengelola foto jaminan
