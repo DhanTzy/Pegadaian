@@ -108,6 +108,24 @@
             </div>
 
             <div class="mb-3">
+                <label>Nilai Pasar Agunan :</label>
+                <input type="text" name="nilai_pasar" class="form-control" value="{{ old('nilai_pasar') }}"
+                    required>
+                @error('nilai_pasar')
+                    <div class="text-danger">{{ $message }}</div>
+                @enderror
+            </div>
+
+            <div class="mb-3">
+                <label>Nilai Likuiditas Agunan :</label>
+                <input type="text" name="nilai_likuiditas" class="form-control" value="{{ old('nilai_likuiditas') }}"
+                    required>
+                @error('nilai_likuiditas')
+                    <div class="text-danger">{{ $message }}</div>
+                @enderror
+            </div>
+
+            <div class="mb-3">
                 <label>Catatan :</label>
                 <textarea type="text" name="catatan" class="form-control" required>{{ old('catatan') }}</textarea>
                 @error('catatan')

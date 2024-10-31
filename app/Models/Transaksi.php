@@ -20,6 +20,8 @@ class Transaksi extends Model
         'bunga',
         'jangka_waktu',
         'jenis_agunan',
+        'nilai_pasar',
+        'nilai_likuiditas',
         'catatan',
         'status_delete',
     ];

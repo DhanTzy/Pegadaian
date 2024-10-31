@@ -76,11 +76,13 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <p><strong>Foto Jaminan :</strong> <br>
+                    <p><strong>Foto Jaminan (Barang) :</strong> <br>
                         <div id="detailFotoJaminan" style="display: flex; flex-wrap: wrap;"></div>
                     </p>
                     <p><strong>Jenis Agunan :</strong> <span id="detailJenisAgunan"></span></p>
-                    <p><strong>Catatan :</strong> <span id="detailCatatan"></span></p>
+                    <p><strong>Nilai Pasar Agunan :</strong> <span id="detailNilaiPasar"></span></p>
+                    <p><strong>NIlai Likuiditas Agunan :</strong> <span id="detailNilaiLikuiditas"></span></p>
+                    <p><strong>Catatan Barang :</strong> <span id="detailCatatan"></span></p>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -140,12 +142,16 @@
         var transaksiDetailModal = document.getElementById('transaksiDetailModal');
         transaksiDetailModal.addEventListener('show.bs.modal', function(event) {
             var button = event.relatedTarget;
-            var jenisAgunan = button.getAttribute('data-jenis_agunan')
+            var jenisAgunan = button.getAttribute('data-jenis_agunan');
+            var nilaiPasar = button.getAttribute('data-nilai_pasar');
+            var nilaiLikuiditas = button.getAttribute('data-nilai_likuiditas');
             var catatan = button.getAttribute('data-catatan');
             var fotoJaminan = button.getAttribute('data-foto_jaminan');
 
             // Tampilkan semua foto jaminan
             document.querySelector('#detailJenisAgunan').textContent = jenisAgunan;
+            document.querySelector('#detailNilaiPasar').textContent = nilaiPasar;
+            document.querySelector('#detailNilaiLikuiditas').textContent = nilaiLikuiditas;
             document.querySelector('#detailCatatan').textContent = catatan;
             document.querySelector('#detailFotoJaminan').innerHTML = fotoJaminan; // Menggunakan innerHTML untuk menampilkan beberapa gambar
         });

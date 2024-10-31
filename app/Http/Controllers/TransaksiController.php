@@ -53,6 +53,8 @@ class TransaksiController extends Controller
                     data-bs-target="#transaksiDetailModal"
                     data-catatan="' . $transaksi->catatan . '"
                     data-jenis_agunan="' . $transaksi->jenis_agunan . '"
+                    data-nilai_pasar="' . $transaksi->nilai_pasar . '"
+                    data-nilai_likuiditas="' . $transaksi->nilai_likuiditas . '"
                     data-foto_jaminan="' . htmlspecialchars($fotoJaminan) . '">
                 Detail
             </button>
@@ -86,6 +88,8 @@ class TransaksiController extends Controller
             'bunga' => 'required|string',
             'jangka_waktu' => 'required|string',
             'jenis_agunan' => 'required|string',
+            'nilai_pasar' => 'required|string',
+            'nilai_likuiditas' => 'required|string',
             'catatan' => 'required|string',
             'foto_jaminan.*' => 'required|image|mimes:jpeg,png,jpg|max:2048'
         ]);
@@ -101,6 +105,8 @@ class TransaksiController extends Controller
             'bunga',
             'jangka_waktu',
             'jenis_agunan',
+            'nilai_pasar',
+            'nilai_likuiditas',
             'catatan'
         ]));
 
@@ -144,6 +150,8 @@ class TransaksiController extends Controller
             'bunga' => 'required|string',
             'jangka_waktu' => 'required|string',
             'jenis_agunan' => 'required|string',
+            'nilai_pasar' => 'required|string',
+            'nilai_likuiditas' => 'required|string',
             'catatan' => 'required|string',
             'foto_jaminan.*' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // Validasi foto jaminan
         ]);
@@ -159,8 +167,10 @@ class TransaksiController extends Controller
             'bank',
             'pengajuan_pinjaman',
             'bunga',
-            'jenis_agunan',
             'jangka_waktu',
+            'jenis_agunan',
+            'nilai_pasar',
+            'nilai_likuiditas',
             'catatan'
         ]));
 

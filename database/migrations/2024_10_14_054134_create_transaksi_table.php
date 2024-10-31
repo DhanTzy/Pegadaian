@@ -19,6 +19,8 @@ return new class extends Migration
             $table->string('bunga');
             $table->string('jangka_waktu');
             $table->string('janis_agunan');
+            $table->string('nilai_pasar');
+            $table->stirng('nilai_likuiditas');
             $table->text('catatan');
             $table->string('status_delete')->default('1');
             $table->timestamps();
