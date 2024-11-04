@@ -30,11 +30,10 @@
                     <option value="Manager">Manager</option>
                     <option value="Administrasi">Administrasi</option>
                     <option value="Supervisor">Supervisor</option>
-                    <option value="Marketing Officer">Marketing Officer</option>
-                    <option value="Collection Officer">Collection Officer</option>
+                    <option value="Approval">Approval</option>
+                    <option value="Appraisal">Appraisal</option>
                     <option value="Kasir">Kasir</option>
                     <option value="Customer Service">Customer Service</option>
-                    <option value="Teller">Teller</option>
                     <option value="Security">Security</option>
                 </select>
             </div>
@@ -45,6 +44,7 @@
             </div>
 
             <button id="filterButton" class="btn btn-success btn-sm">Filter</button>
+            <button id="resetButton" class="btn btn-secondary btn-sm ms-2">Reset</button>
         </div>
 
         <table id="karyawanTable" class="table table-striped table-bordered">
@@ -79,12 +79,20 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
+                    <p><strong>Nip :</strong> <span id="detailNip"></span></p>
+                    <p><strong>Nama Lengkap :</strong> <span id="detailNamaLengkap"></span></p>
+                    <p><strong>Posisi Pekerjaan :</strong> <span id="detailPosisiPekerjaan"></span></p>
+                    <p><strong>Jenis Kelamin :</strong> <span id="detailJenisKelamin"></span></p>
+                    <p><strong>Tempat Lahir :</strong> <span id="detailTempatLahir"></span></p>
+                    <p><strong>Tanggal Lahir :</strong> <span id="detailTanggalLahir"></span></p>
+                    <p><strong>Agama :</strong> <span id="detailAgama"></span></p>
+                    <p><strong>Telepon :</strong> <span id="detailNoTelepon"></span></p>
+                    <p><strong>Tanggal Gabung :</strong> <span id="detailTanggalGabung"></span></p>
                     <p><strong>Kewarganegaraan :</strong> <span id="detailKewarganegaraan"></span></p>
                     <p><strong>Status Perkawinan :</strong> <span id="detailStatusPerkawinan"></span></p>
                     <p><strong>Email :</strong> <span id="detailEmail"></span></p>
                     <p><strong>Alamat Lengkap :</strong> <span id="detailAlamatLengkap"></span></p>
                     <p><strong>Kode Pos :</strong> <span id="detailKodePos"></span></p>
-                    <p><strong>Riwayat Pendidikan :</strong> <span id="detailRiwayatPendidikan"></span></p>
                     <p><strong>Foto KTP :</strong> <br>
                         <img id="detailFotoKTP" src="" alt="Foto KTP" style="width: 100px; height: auto;">
                     </p>
@@ -145,6 +153,14 @@
             $('#filterButton').on('keyup click', function() {
                 table.draw();
             });
+
+            $('#resetButton').on('click', function(){
+                $('#namaFilter').val('');
+                $('#nipFilter').val('');
+                $('#pekerjaanFilter').val('');
+                $('#tanggalGabungFilter').val('');
+                table.draw();
+            });
         });
 
 
@@ -152,45 +168,37 @@
         var karyawanDetailModal = document.getElementById('karyawanDetailModal');
         karyawanDetailModal.addEventListener('show.bs.modal', function(event) {
             var button = event.relatedTarget;
+            var nip = button.getAttribute('data-nip');
+            var namaLengkap = button.getAttribute('data-nama_lengkap');
+            var posisiPekerjaan = button.getAttribute('data-posisi_pekerjaan');
+            var jenisKelamin = button.getAttribute('data-jenis_kelamin');
+            var tempatLahir = button.getAttribute('data-tempat_lahir');
+            var tanggalLahir = button.getAttribute('data-tanggal_lahir');
+            var agama = button.getAttribute('data-agama');
+            var noTelepon = button.getAttribute('data-no_telepon');
+            var tanggalGabung = button.getAttribute('data-created_at');
             var kewarganegaraan = button.getAttribute('data-kewarganegaraan');
             var statusPerkawinan = button.getAttribute('data-status_perkawinan');
             var email = button.getAttribute('data-email');
             var alamatLengkap = button.getAttribute('data-alamat_lengkap');
             var kodePos = button.getAttribute('data-kode_pos');
-            var riwayatPendidikan = JSON.parse(button.getAttribute('data-riwayat_pendidikan'));
             var fotoKTP = button.getAttribute('data-foto_ktp');
             var fotoKK = button.getAttribute('data-foto_kk');
 
+            karyawanDetailModal.querySelector('#detailNip').textContent = nip;
+            karyawanDetailModal.querySelector('#detailNamaLengkap').textContent = namaLengkap;
+            karyawanDetailModal.querySelector('#detailPosisiPekerjaan').textContent = posisiPekerjaan;
+            karyawanDetailModal.querySelector('#detailJenisKelamin').textContent = jenisKelamin;
+            karyawanDetailModal.querySelector('#detailTempatLahir').textContent = tempatLahir;
+            karyawanDetailModal.querySelector('#detailTanggalLahir').textContent = tanggalLahir;
+            karyawanDetailModal.querySelector('#detailAgama').textContent = agama;
+            karyawanDetailModal.querySelector('#detailNoTelepon').textContent = noTelepon;
+            karyawanDetailModal.querySelector('#detailTanggalGabung').textContent = tanggalGabung;
             karyawanDetailModal.querySelector('#detailKewarganegaraan').textContent = kewarganegaraan;
             karyawanDetailModal.querySelector('#detailStatusPerkawinan').textContent = statusPerkawinan;
             karyawanDetailModal.querySelector('#detailEmail').textContent = email;
             karyawanDetailModal.querySelector('#detailAlamatLengkap').textContent = alamatLengkap;
             karyawanDetailModal.querySelector('#detailKodePos').textContent = kodePos;
-
-            var detailRiwayatPendidikan = karyawanDetailModal.querySelector('#detailRiwayatPendidikan');
-            detailRiwayatPendidikan.innerHTML = ""; // Bersihkan konten yang ada
-
-            riwayatPendidikan.forEach(function(pendidikan) {
-                let pendidikanDetail = [];
-                if (pendidikan.pendidikan) {
-                    pendidikanDetail.push("Pendidikan : " + pendidikan.pendidikan);
-                }
-                if (pendidikan.jurusan) {
-                    pendidikanDetail.push("Jurusan : " + pendidikan.jurusan);
-                }
-                if (pendidikan.jenjang_pendidikan) {
-                    pendidikanDetail.push("Jenjang Pendidikan : " + pendidikan.jenjang_pendidikan);
-                }
-                if (pendidikan.tahun_lulus) {
-                    pendidikanDetail.push("Tahun Lulus : " + pendidikan.tahun_lulus);
-                }
-                if (pendidikan.ipk_nilai) {
-                    pendidikanDetail.push("Nilai IPK: " + pendidikan.ipk_nilai);
-                }
-                if (pendidikanDetail.length > 0) {
-                    detailRiwayatPendidikan.innerHTML += pendidikanDetail.join(", ") + "<br>";
-                }
-            });
 
             karyawanDetailModal.querySelector('#detailFotoKTP').src = fotoKTP;
             karyawanDetailModal.querySelector('#detailFotoKK').src = fotoKK;

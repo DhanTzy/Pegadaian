@@ -32,6 +32,10 @@ class TransaksiController extends Controller
             $query->where('tanggal', '<=', $request->input('tanggal'));
         }
 
+        if ($request->has('jangka_waktu') && $request->input('jangka_waktu') != '') {
+            $query->where('jangka_waktu', 'LIKE', '%' . $request->input('jangka_waktu') . '%');
+        }
+
         if ($request->has('no_rekening') && $request->input('no_rekening') != '') {
             $query->where('no_rekening', 'LIKE', '%' . $request->input('no_rekening') . '%');
         }
@@ -51,6 +55,14 @@ class TransaksiController extends Controller
             <button type="button" class="btn btn-info btn-sm me-2"
                     data-bs-toggle="modal"
                     data-bs-target="#transaksiDetailModal"
+                    data-nama_nasabah="' . $transaksi->nama_nasabah . '"
+                    data-tanggal="' . Carbon::parse($transaksi->tanggal_lahir)->format('d-m-Y') . '"
+                    data-metode_pencairan="' . $transaksi->metode_pencairan . '"
+                    data-no_rekening="' . $transaksi->no_rekening . '"
+                    data-bank="' . $transaksi->bank . '"
+                    data-pengajuan_pinjaman="' . $transaksi->pengajuan_pinjaman . '"
+                    data-bunga="' . $transaksi->bunga . '"
+                    data-jangka_waktu="' . $transaksi->jangka_waktu . '"
                     data-catatan="' . $transaksi->catatan . '"
                     data-jenis_agunan="' . $transaksi->jenis_agunan . '"
                     data-nilai_pasar="' . $transaksi->nilai_pasar . '"
@@ -67,7 +79,7 @@ class TransaksiController extends Controller
             </form>
         ';
          })->editColumn('tanggal', function ($transkasi) {
-            return Carbon::parse($transkasi->tanggal)->format('d/m/Y');
+            return Carbon::parse($transkasi->tanggal)->format('d-m-Y');
          })->rawColumns(['action'])->make(true);
     }
 
@@ -128,7 +140,7 @@ class TransaksiController extends Controller
     public function show($id)
     {
         $transaksi = Transaksi::with('jaminan')->findOrFail($id); // Mengambil data transaksi beserta jaminan
-        $transaksi->tanggal = Carbon::parse($transaksi->tanggal)->format('d/m/y');
+        $transaksi->tanggal = Carbon::parse($transaksi->tanggal)->format('d-m-Y');
         return view('admin.transaksi.show', compact('transaksi')); // Mengembalikan view dengan data transaksi
     }
 

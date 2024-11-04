@@ -40,12 +40,20 @@ class KaryawanController extends Controller
         ->addColumn('action', function ($karyawan) {
             return '
                 <button class="btn btn-info btn-sm me-2" data-bs-toggle="modal" data-bs-target="#karyawanDetailModal"
+                        data-nip="' . $karyawan->nip . '"
+                        data-nama_lengkap="' . $karyawan->nama_lengkap . '"
+                        data-posisi_pekerjaan="' . $karyawan->posisi_pekerjaan . '"
+                        data-jenis_kelamin="' . $karyawan->jenis_kelamin . '"
+                        data-tempat_lahir="' . $karyawan->tempat_lahir . '"
+                        data-tanggal_lahir="' .  Carbon::parse($karyawan->tanggal_lahir)->format('d-m-Y') . '"
+                        data-agama="' . $karyawan->agama . '"
+                        data-no_telepon="' . $karyawan->no_telepon . '"
+                        data-created_at="' . Carbon::parse($karyawan->created_at)->format('d-m-Y') . '"
                         data-kewarganegaraan="' . $karyawan->kewarganegaraan . '"
                         data-status_perkawinan="' . $karyawan->status_perkawinan . '"
                         data-email="' . $karyawan->email . '"
                         data-alamat_lengkap="' . $karyawan->alamat_lengkap . '"
                         data-kode_pos="' . $karyawan->kode_pos . '"
-                        data-riwayat_pendidikan=\'' . json_encode($karyawan->riwayatPendidikan) . '\'
                         data-foto_ktp="' . asset('storage/' . $karyawan->foto_ktp) . '"
                         data-foto_kk="' . asset('storage/' . $karyawan->foto_kk) . '">
                     Detail
@@ -58,7 +66,7 @@ class KaryawanController extends Controller
                 </form>
             ';
             })->editColumn('tanggal_lahir', function ($karyawan) {
-            return Carbon::parse($karyawan->tanggal_lahir)->format('d/m/Y');
+            return Carbon::parse($karyawan->tanggal_lahir)->format('d-m-Y');
         })->rawColumns(['action'])->make(true);
     }
 
@@ -85,12 +93,6 @@ class KaryawanController extends Controller
             'kode_pos' => 'required|digits:5',
             'foto_ktp' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
             'foto_kk' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'riwayat_pendidikan' => 'nullable|array', // Ubah menjadi opsional
-            'riwayat_pendidikan.*.pendidikan' => 'string|max:255|required',
-            'riwayat_pendidikan.*.jurusan' => 'string|max:255|nullable',
-            'riwayat_pendidikan.*.jenjang_pendidikan' => 'string|max:255|nullable',
-            'riwayat_pendidikan.*.tahun_lulus' => 'string|max:4|required',
-            'riwayat_pendidikan.*.ipk_nilai' => 'numeric|nullable',
         ]);
 
         $ktpPath = $request->file('foto_ktp')->store('karyawan/foto', 'public');
@@ -102,27 +104,13 @@ class KaryawanController extends Controller
             'foto_kk' => $kkPath,
         ]));
 
-        // Menyimpan Riwayat Pendidikan
-        if ($request->has('riwayat_pendidikan')) {
-            foreach ($request->riwayat_pendidikan as $pendidikan) {
-                RiwayatPendidikan::create([
-                    'karyawan_id' => $karyawan->id,
-                    'pendidikan' => $pendidikan['pendidikan'],
-                    'jurusan' => $pendidikan['jurusan'] ?? null,
-                    'jenjang_pendidikan' => $pendidikan['jenjang_pendidikan'] ?? null,
-                    'tahun_lulus' => $pendidikan['tahun_lulus'],
-                    'ipk_nilai' => $pendidikan['ipk_nilai'] ?? null,
-                ]);
-            }
-        }
-
         return redirect()->route('admin.karyawan')->with('success', 'Karyawan added successfully');
     }
 
     public function show(string $id)
     {
         $karyawan = Karyawan::findOrFail($id);
-        $karyawan->tanggal_lahir = Carbon::parse($karyawan->tanggal_lahir)->format('d/m/y');
+        $karyawan->tanggal_lahir = Carbon::parse($karyawan->tanggal_lahir)->format('d-m-y');
         return view('admin.karyawan.show', compact('karyawan'));
     }
 
@@ -150,12 +138,6 @@ class KaryawanController extends Controller
             'kode_pos' => 'required|digits:5',
             'foto_ktp' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'foto_kk' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'riwayat_pendidikan' => 'nullable|array',
-            'riwayat_pendidikan.*.pendidikan' => 'string|max:255|required',
-            'riwayat_pendidikan.*.jurusan' => 'string|max:255|nullable',
-            'riwayat_pendidikan.*.jenjang_pendidikan' => 'string|max:255|nullable',
-            'riwayat_pendidikan.*.tahun_lulus' => 'string|max:4|required',
-            'riwayat_pendidikan.*.ipk_nilai' => 'numeric|nullable',
         ]);
 
         $karyawan = Karyawan::findOrFail($id);
@@ -185,22 +167,6 @@ class KaryawanController extends Controller
 
         // Update data karyawan
         $karyawan->update($validatedData);
-
-        if ($request->has('riwayat_pendidikan')) {
-            foreach ($request->riwayat_pendidikan as $index => $pendidikan) {
-                if (isset($pendidikan['id'])) {
-                    // Update riwayat pendidikan yang sudah ada
-                    $riwayat = RiwayatPendidikan::find($pendidikan['id']);
-                    $riwayat->update([
-                        'pendidikan' => $pendidikan['pendidikan'],
-                        'jurusan' => $pendidikan['jurusan'] ?? null,
-                        'jenjang_pendidikan' => $pendidikan['jenjang_pendidikan'] ?? null,
-                        'tahun_lulus' => $pendidikan['tahun_lulus'],
-                        'ipk_nilai' => $pendidikan['ipk_nilai'] ?? null,
-                    ]);
-                }
-            }
-        }
 
         return redirect()->route('admin.karyawan')->with('success', 'Karyawan updated successfully');
     }

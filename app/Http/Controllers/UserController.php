@@ -11,7 +11,7 @@ class UserController extends Controller
 
     public function history()
     {
-        return view('user.history.history');
+        return view('user.history.index');
     }
 
     public function gadaiemas()
@@ -21,11 +21,11 @@ class UserController extends Controller
 
     public function cabang()
     {
-        return view('user.cabang.cabang');
+        return view('user.cabang.index');
     }
 
     public function membership()
     {
-        return view('user.membership.member');
+        return view('user.membership.index');
     }
 }

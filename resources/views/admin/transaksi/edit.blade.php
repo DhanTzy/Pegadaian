@@ -121,7 +121,8 @@
             <div class="mb-3">
                 <label>Nilai Pasar Agunan :</label>
                 <input type="text" name="nilai_pasar" class="form-control"
-                    value="{{ old('nilai_pasar', $transaksi->nilai_pasar) }}" required>
+                    value="{{ old('nilai_pasar', $transaksi->nilai_pasar) }}" required
+                    oninput="calculateNilaiLikuiditas()">
                 @error('nilai_pasar')
                     <div class="text-danger">{{ $message }}</div>
                 @enderror
@@ -130,7 +131,7 @@
             <div class="mb-3">
                 <label>Nilai Likuiditas Agunan :</label>
                 <input type="text" name="nilai_likuiditas" class="form-control"
-                    value="{{ old('nilai_likuiditas', $transaksi->nilai_likuiditas) }}" required>
+                    value="{{ old('nilai_likuiditas', $transaksi->nilai_likuiditas) }}" required readonly>
                 @error('nilai_likuiditas')
                     <div class="text-danger">{{ $message }}</div>
                 @enderror
@@ -192,6 +193,13 @@
                 noRekeningInput.value = ''; // Reset nilai input no_rekening
                 bankInput.value = ''; // Reset nilai input bank
             }
+        }
+
+        // Nilai Likuiditas
+        function calculateNilaiLikuiditas() {
+            const nilaiPasar = parseFloat(document.querySelector('input[name="nilai_pasar"]').value) || 0;
+            const nilaiLikuiditas = (nilaiPasar * 0.7).toFixed(); // Menghitung 70% dari nilai pasar
+            document.querySelector('input[name="nilai_likuiditas"]').value = nilaiLikuiditas;
         }
 
         function previewImages(event) {

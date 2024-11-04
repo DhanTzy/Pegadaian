@@ -34,6 +34,7 @@
             </div>
 
             <button id="filterButton" class="btn btn-success btn-sm">Filter</button>
+            <button id="resetButton" class="btn btn-secondary btn-sm ms-2">Reset</button>
         </div>
 
 
@@ -67,6 +68,14 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
+                    <p><strong>Nomor Identitas (KTP):</strong> <span id="detailNomorIdentitas"></span></p>
+                    <p><strong>Nama Lengkap:</strong> <span id="detailNamaLengkap"></span></p>
+                    <p><strong>Tempat Lahir:</strong> <span id="detailTempatLahir"></span></p>
+                    <p><strong>Tanggal Lahir:</strong> <span id="detailTanggalLahir"></span></p>
+                    <p><strong>Status Perkawinan:</strong> <span id="detailStatusPerkawinan"></span></p>
+                    <p><strong>Pekerjaan:</strong> <span id="detailPekerjaan"></span></p>
+                    <p><strong>Telepom:</strong> <span id="detailTelepon"></span></p>
+                    <p><strong>Tanggal Daftar:</strong> <span id="detailTanggalDaftar"></span></p>
                     <p><strong>Alamat Lengkap:</strong> <span id="detailAlamatLengkap"></span></p>
                     <p><strong>Kode Pos:</strong> <span id="detailKodePos"></span></p>
                     <p><strong>Email:</strong> <span id="detailEmail"></span></p>
@@ -127,17 +136,41 @@
             $('#filterButton').on('keyup click', function(){
                 table.draw();
             });
+
+            $('#resetButton').on('click', function(){
+                $('#namaFilter').val('');
+                $('#identitasFilter').val('');
+                $('#tanggalDaftarFilter').val('');
+                $('#tanggalAkhirFilter').val('');
+                table.draw();
+            });
         });
 
         var nasabahDetailModal = document.getElementById('nasabahDetailModal');
         nasabahDetailModal.addEventListener('show.bs.modal', function(event) {
             var button = event.relatedTarget;
+            var nomorIdentitas = button.getAttribute('data-nomor_identitas');
+            var namaLengkap = button.getAttribute('data-nama_lengkap');
+            var tempatLahir = button.getAttribute('data-tempat_lahir');
+            var tanggalLahir = button.getAttribute('data-tanggal_lahir');
+            var statusPerkawinan = button.getAttribute('data-status_perkawinan');
+            var pekerjaan = button.getAttribute('data-pekerjaan');
+            var telepon = button.getAttribute('data-telepon');
+            var tanggalDaftar = button.getAttribute('data-created_at');
             var alamatLengkap = button.getAttribute('data-alamat_lengkap');
             var kodePos = button.getAttribute('data-kode_pos');
             var email = button.getAttribute('data-email');
             var namaOrangTua = button.getAttribute('data-nama_orang_tua');
             var fotoKTP = button.getAttribute('data-foto_ktp_sim');
 
+            document.querySelector('#detailNomorIdentitas').textContent = nomorIdentitas;
+            document.querySelector('#detailNamaLengkap').textContent = namaLengkap;
+            document.querySelector('#detailTempatLahir').textContent = tempatLahir;
+            document.querySelector('#detailTanggalLahir').textContent = tanggalLahir;
+            document.querySelector('#detailStatusPerkawinan').textContent = statusPerkawinan;
+            document.querySelector('#detailPekerjaan').textContent = pekerjaan;
+            document.querySelector('#detailTelepon').textContent = telepon;
+            document.querySelector('#detailTanggalDaftar').textContent = tanggalDaftar;
             document.querySelector('#detailAlamatLengkap').textContent = alamatLengkap;
             document.querySelector('#detailKodePos').textContent = kodePos;
             document.querySelector('#detailEmail').textContent = email;

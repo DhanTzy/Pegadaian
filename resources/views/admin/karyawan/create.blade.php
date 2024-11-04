@@ -34,14 +34,13 @@
                         Administrasi</option>
                     <option value="Supervisor" {{ old('posisi_pekerjaan') == 'Supervisor' ? 'selected' : '' }}>Supervisor
                     </option>
-                    <option value="Marketing Officer"
-                        {{ old('posisi_pekerjaan') == 'Marketing Officer' ? 'selected' : '' }}>Marketing Officer</option>
-                    <option value="Collection Officer"
-                        {{ old('posisi_pekerjaan') == 'Collection Officer' ? 'selected' : '' }}>Collection Officer</option>
+                    <option value="Approval"
+                        {{ old('posisi_pekerjaan') == 'Approval' ? 'selected' : '' }}>Approval</option>
+                    <option value="Appraisal"
+                        {{ old('posisi_pekerjaan') == 'Appraisal' ? 'selected' : '' }}>Appraisal</option>
                     <option value="Kasir" {{ old('posisi_pekerjaan') == 'Kasir' ? 'selected' : '' }}>Kasir</option>
                     <option value="Customer Service" {{ old('posisi_pekerjaan') == 'Customer Service' ? 'selected' : '' }}>
                         Customer Service</option>
-                    <option value="Teller" {{ old('posisi_pekerjaan') == 'Teller' ? 'selected' : '' }}>Teller</option>
                     <option value="Security" {{ old('posisi_pekerjaan' == 'Security' ? 'selected' : '') }}>Security
                     </option>
                 </select>
@@ -149,55 +148,6 @@
                 @enderror
             </div>
 
-            <!-- Input Riwayat Pendidikan -->
-            <label class="form-label">Riwayat Pendidikan :</label>
-            <div id="riwayat-pendidikan-container">
-                <div class="riwayat-pendidikan-item mb-3">
-                    <h5>Riwayat Pendidikan 1</h5>
-                    <div class="mb-2">
-                        <label class="form-label">Pendidikan :</label>
-                        <select name="riwayat_pendidikan[0][pendidikan]" class="form-select" required>
-                            <option value="">Pilih Pendidikan</option>
-                            <option value="SD">SD</option>
-                            <option value="SMP">SMP</option>
-                            <option value="SMA">SMA</option>
-                            <option value="SMK">SMK</option>
-                        </select>
-                    </div>
-                    <div class="mb-2">
-                        <label class="form-label">Jurusan :</label>
-                        <input type="text" name="riwayat_pendidikan[0][jurusan]" class="form-control"
-                            placeholder="Jurusan">
-                    </div>
-                    <div class="mb-2">
-                        <label class="form-label">Jenjang Pendidikan :</label>
-                        <select name="riwayat_pendidikan[0][jenjang_pendidikan]" class="form-select">
-                            <option value="">Pilih Jenjang Pendidikan</option>
-                            <option value="D1">D1</option>
-                            <option value="D2">D2</option>
-                            <option value="D3">D3</option>
-                            <option value="D4">D4</option>
-                            <option value="S1">S1</option>
-                            <option value="S2">S2</option>
-                            <option value="S3">S3</option>
-                        </select>
-                    </div>
-                    <div class="mb-2">
-                        <label class="form-label">Tahun Lulus :</label>
-                        <input type="text" name="riwayat_pendidikan[0][tahun_lulus]" class="form-control"
-                            placeholder="Tahun Lulus" required>
-                    </div>
-                    <div class="mb-2">
-                        <label class="form-label">IPK Nilai :</label>
-                        <input type="text" name="riwayat_pendidikan[0][ipk_nilai]" class="form-control"
-                            placeholder="IPK Nilai">
-                    </div>
-                    <button type="button" class="btn btn-danger hapus-riwayat"
-                        onclick="hapusRiwayat(this)">Hapus</button>
-                </div>
-            </div>
-            <button type="button" class="btn btn-secondary" id="tambah-riwayat">Tambah Riwayat Pendidikan</button>
-
             <div class="mb-3">
                 <label class="form-label">Foto KTP :</label>
                 <input type="file" name="foto_ktp" class="form-control" accept="image/*" id="foto_ktp_input"
@@ -249,59 +199,6 @@
         document.getElementById('confirmSubmit').addEventListener('click', function() {
             document.querySelector('form').submit();
         });
-
-        document.getElementById('tambah-riwayat').addEventListener('click', function() {
-            const container = document.getElementById('riwayat-pendidikan-container');
-            const index = container.children.length;
-
-            const newItem = document.createElement('div');
-            newItem.className = 'riwayat-pendidikan-item mb-3';
-            newItem.innerHTML = `
-                <h5>Riwayat Pendidikan ${index + 1}</h5>
-                <div class="mb-2">
-                    <label class="form-label">Pendidikan :</label>
-                    <select name="riwayat_pendidikan[${index}][pendidikan]" class="form-select" required>
-                        <option value="">Pilih Pendidikan</option>
-                        <option value="SD">SD</ option>
-                        <option value="SMP">SMP</option>
-                        <option value="SMA">SMA</option>
-                        <option value="SMK">SMK</option>
-                    </select>
-                </div>
-                <div class="mb-2">
-                    <label class="form-label">Jurusan :</label>
-                    <input type="text" name="riwayat_pendidikan[${index}][jurusan]" class="form-control" placeholder="Jurusan">
-                </div>
-                <div class="mb-2">
-                    <label class="form-label">Jenjang Pendidikan :</label>
-                    <select name="riwayat_pendidikan[${index}][jenjang_pendidikan]" class="form-select">
-                        <option value="">Pilih Jenjang Pendidikan</option>
-                        <option value="D1">D1</option>
-                        <option value="D2">D2</option>
-                        <option value="D3">D3</option>
-                        <option value="D4">D4</option>
-                        <option value="S1">S1</option>
-                        <option value="S2">S2</option>
-                        <option value="S3">S3</option>
-                    </select>
-                </div>
-                <div class="mb-2">
-                    <label class="form-label">Tahun Lulus :</label>
-                    <input type="text" name="riwayat_pendidikan[${index}][tahun_lulus]" class="form-control" placeholder="Tahun Lulus" required>
-                </div>
-                <div class="mb-2">
-                    <label class="form-label">IPK Nilai :</label>
-                    <input type="text" name="riwayat_pendidikan[${index}][ipk_nilai]" class="form-control" placeholder="IPK Nilai">
-                </div>
-                <button type="button" class="btn btn-danger hapus-riwayat" onclick="hapusRiwayat(this)">Hapus</button>
-            `;
-            container.appendChild(newItem);
-        });
-
-        function hapusRiwayat(button) {
-            const item = button.parentElement;
-            item.remove();
-        }
 
         function previewKTP() {
             const input = document.getElementById('foto_ktp_input');

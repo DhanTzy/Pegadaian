@@ -44,6 +44,14 @@ class NasabahController extends Controller
                 <button type="button" class="btn btn-info btn-sm me-2"
                         data-bs-toggle="modal"
                         data-bs-target="#nasabahDetailModal"
+                        data-nomor_identitas="' . $nasabah->nomor_identitas . '"
+                        data-nama_lengkap="' . $nasabah->nama_lengkap . '"
+                        data-tempat_lahir="' . $nasabah->tempat_lahir . '"
+                        data-tanggal_lahir="' . Carbon::parse($nasabah->tanggal_lahir)->format('d-m-Y') . '"
+                        data-status_perkawinan="' . $nasabah->status_perkawinan . '"
+                        data-pekerjaan="' . $nasabah->pekerjaan . '"
+                        data-telepon="' . $nasabah->telepon . '"
+                        data-created_at="' . Carbon::parse($nasabah->created_at)->format('d-m-Y') . '"
                         data-alamat_lengkap="' . $nasabah->alamat_lengkap . '"
                         data-kode_pos="' . $nasabah->kode_pos . '"
                         data-email="' . $nasabah->email . '"
@@ -60,7 +68,7 @@ class NasabahController extends Controller
                 </form>
             ';
             })->editColumn('tanggal_lahir', function ($nasabah) {
-                return Carbon::parse($nasabah->tanggal_lahir)->format('d/m/Y');
+                return Carbon::parse($nasabah->tanggal_lahir)->format('d-m-Y');
             })->rawColumns(['action'])->make(true);
     }
 
@@ -99,7 +107,7 @@ class NasabahController extends Controller
     public function show(string $id)
     {
         $nasabah = Nasabah::findOrFail($id);
-        $nasabah->tanggal_lahir = Carbon::parse($nasabah->tanggal_lahir)->format('d/m/Y');
+        $nasabah->tanggal_lahir = Carbon::parse($nasabah->tanggal_lahir)->format('d-m-Y');
         return view('admin.nasabah.show', compact('nasabah'));
     }
 

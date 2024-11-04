@@ -29,6 +29,17 @@
             </div>
 
             <div class="me-2">
+                <label for="jangkaFilter" class="form-label mb-0">Jangka Waktu :</label>
+                <select id="jangkaFilter" class="form-select form-select-sm me-2">
+                    <option value=""> -- Pilih Jangka Waktu -- </option>
+                    <option value="1 Bulan">1 Bulan</option>
+                    <option value="4 Bulan">4 Bulan</option>
+                    <option value="8 Bulan">8 Bulan</option>
+                </select>
+             </div>
+
+
+            <div class="me-2">
                 <label for="rekeningFilter" class="form-label mb-0">Rekening :</label>
                 <input type="text" id="rekeningFilter" placeholder="Search Rekening" class="form-control form-control-sm me-2" style="width: auto;">
              </div>
@@ -76,6 +87,14 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
+                    <p><strong>Nama Nasabah :</strong> <span id="detailNamaNasabah"></span></p>
+                    <p><strong>Tanggal :</strong> <span id="detailTanggal"></span></p>
+                    <p><strong>Metode Pencairan :</strong> <span id="detailMetodePencairan"></span></p>
+                    <p><strong>Nomor Rekening :</strong> <span id="detailNoRekening"></span></p>
+                    <p><strong>Bank :</strong> <span id="detailBank"></span></p>
+                    <p><strong>Pengajuan Pinjaman :</strong> <span id="detailPengajuanPinjaman"></span></p>
+                    <p><strong>Bunga :</strong> <span id="detailBunga"></span></p>
+                    <p><strong>Jangka Waktu :</strong> <span id="detailJangkaWaktu"></span></p>
                     <p><strong>Foto Jaminan (Barang) :</strong> <br>
                         <div id="detailFotoJaminan" style="display: flex; flex-wrap: wrap;"></div>
                     </p>
@@ -107,6 +126,7 @@
                         d.nama_nasabah = $('#namaFilter').val();
                         d.tanggal_transaksi = $('#transaksiFilter').val();
                         d.tanggal = $('#tanggalFilter').val();
+                        d.jangka_waktu = $('#jangkaFilter').val();
                         d.no_rekening = $('#rekeningFilter').val(); // Mengirimkan filter ke server
                         d.metode_pencairan = $('#metodeFilter').val();
                     }
@@ -133,6 +153,7 @@
                 $('#namaFilter').val('');
                 $('#transaksiFilter').val('');
                 $('#tanggalFilter').val('');
+                $('#jangkaFilter').val('');
                 $('#rekeningFilter').val('');
                 $('#metodeFilter').val('');
                 table.draw();
@@ -142,6 +163,14 @@
         var transaksiDetailModal = document.getElementById('transaksiDetailModal');
         transaksiDetailModal.addEventListener('show.bs.modal', function(event) {
             var button = event.relatedTarget;
+            var namaNasabah = button.getAttribute('data-nama_nasabah');
+            var tanggal = button.getAttribute('data-tanggal');
+            var metodePencairan = button.getAttribute('data-metode_pencairan');
+            var noRekening = button.getAttribute('data-no_rekening');
+            var bank = button.getAttribute('data-bank');
+            var pengajuanPinjaman = button.getAttribute('data-pengajuan_pinjaman');
+            var bunga = button.getAttribute('data-bunga');
+            var jangkaWaktu = button.getAttribute('data-jangka_waktu');
             var jenisAgunan = button.getAttribute('data-jenis_agunan');
             var nilaiPasar = button.getAttribute('data-nilai_pasar');
             var nilaiLikuiditas = button.getAttribute('data-nilai_likuiditas');
@@ -149,12 +178,19 @@
             var fotoJaminan = button.getAttribute('data-foto_jaminan');
 
             // Tampilkan semua foto jaminan
+            document.querySelector('#detailNamaNasabah').textContent = namaNasabah;
+            document.querySelector('#detailTanggal').textContent = tanggal;
+            document.querySelector('#detailMetodePencairan').textContent = metodePencairan;
+            document.querySelector('#detailNoRekening').textContent = noRekening;
+            document.querySelector('#detailBank').textContent = bank;
+            document.querySelector('#detailPengajuanPinjaman').textContent = pengajuanPinjaman;
+            document.querySelector('#detailBunga').textContent = bunga;
+            document.querySelector('#detailJangkaWaktu').textContent = jangkaWaktu;
             document.querySelector('#detailJenisAgunan').textContent = jenisAgunan;
             document.querySelector('#detailNilaiPasar').textContent = nilaiPasar;
             document.querySelector('#detailNilaiLikuiditas').textContent = nilaiLikuiditas;
             document.querySelector('#detailCatatan').textContent = catatan;
             document.querySelector('#detailFotoJaminan').innerHTML = fotoJaminan; // Menggunakan innerHTML untuk menampilkan beberapa gambar
         });
-
     </script>
 @endsection
