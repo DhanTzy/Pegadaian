@@ -20,7 +20,7 @@
              </div>
 
              <div class="me-2">
-                <label for="identitasFilter" class="form-label mb-0">Nomor Identitas :</label>
+                <label for="identitasFilter" class="form-label mb-0">Identitas (KTP) :</label>
                 <input type="text" id="identitasFilter" placeholder="Search Identitas" class="form-control form-control-sm me-2" style="width: auto;">
             </div>
 

@@ -60,7 +60,7 @@
         <nav class="bg-dark text-white p-3" style="width: 250px; height: 100vh; position: fixed; z-index: 1000;">
             <div class="sidebar">
                 <div class="text-center mt-5 mb-4">
-                    <img src="{{ asset('img\gadai.png') }}" alt="Logo" class="img-fluid"
+                    <img src="{{ asset('img\logo.png') }}" alt="Logo" class="img-fluid"
                         style="max-width: 75%; height: auto;">
                 </div>
 
@@ -85,7 +85,7 @@
                         <a class="nav-link text-black d-flex justify-content-between align-items-center"
                             data-bs-toggle="collapse" href="#dataMasterCollapse" role="button" aria-expanded="false"
                             aria-controls="dataMasterCollapse">
-                            <span><i class="bi bi-archive"></i> Data Master</span>
+                            <span><i class="bi bi-gear-wide-connected"></i> Data Master</span>
                             <i class="bi bi-chevron-down rotate-icon"></i>
                         </a>
                         <div class="collapse {{ Route::is('admin.nasabah', 'admin.karyawan') ? 'show' : '' }}"
@@ -143,7 +143,7 @@
                         </div>
                       </div>
                       <div class="footerlogo padding-auto p-5">
-                        <img src="{{ asset('img\gadai.png') }}" alt="logo" width="150" height="75">
+                        <img src="{{ asset('img\logo.png') }}" alt="logo" width="150" height="75">
                       </div>
                     </div>
                   </footer>
@@ -223,6 +223,6 @@
             $('#myTable').DataTable(); // Ganti '#myTable' dengan ID tabel Anda
         });
     </script>
-    <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+    {{-- <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script> --}}
 </body>
 </html>

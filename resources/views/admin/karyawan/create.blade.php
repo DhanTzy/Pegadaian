@@ -30,17 +30,12 @@
                 <select name="posisi_pekerjaan" class="form-select" required>
                     <option value="" disable selected>Pilih Posisi Pekerjaan</option>
                     <option value="Manager" {{ old('posisi_pekerjaan') == 'Manager' ? 'selected' : '' }}>Manager</option>
-                    <option value="Administrasi" {{ old('posisi_pekerjaan') == 'Administrasi' ? 'selected' : '' }}>
-                        Administrasi</option>
-                    <option value="Supervisor" {{ old('posisi_pekerjaan') == 'Supervisor' ? 'selected' : '' }}>Supervisor
-                    </option>
-                    <option value="Approval"
-                        {{ old('posisi_pekerjaan') == 'Approval' ? 'selected' : '' }}>Approval</option>
-                    <option value="Appraisal"
-                        {{ old('posisi_pekerjaan') == 'Appraisal' ? 'selected' : '' }}>Appraisal</option>
+                    <option value="Administrasi" {{ old('posisi_pekerjaan') == 'Administrasi' ? 'selected' : '' }}>Administrasi</option>
+                    <option value="Supervisor" {{ old('posisi_pekerjaan') == 'Supervisor' ? 'selected' : '' }}>Supervisor</option>
+                    <option value="Approval" {{ old('posisi_pekerjaan') == 'Approval' ? 'selected' : '' }}>Approval</option>
+                    <option value="Appraisal" {{ old('posisi_pekerjaan') == 'Appraisal' ? 'selected' : '' }}>Appraisal</option>
                     <option value="Kasir" {{ old('posisi_pekerjaan') == 'Kasir' ? 'selected' : '' }}>Kasir</option>
-                    <option value="Customer Service" {{ old('posisi_pekerjaan') == 'Customer Service' ? 'selected' : '' }}>
-                        Customer Service</option>
+                    <option value="Customer Service" {{ old('posisi_pekerjaan') == 'Customer Service' ? 'selected' : '' }}>Customer Service</option>
                     <option value="Security" {{ old('posisi_pekerjaan' == 'Security' ? 'selected' : '') }}>Security
                     </option>
                 </select>

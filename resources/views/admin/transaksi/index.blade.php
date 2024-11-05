@@ -29,22 +29,11 @@
             </div>
 
             <div class="me-2">
-                <label for="jangkaFilter" class="form-label mb-0">Jangka Waktu :</label>
-                <select id="jangkaFilter" class="form-select form-select-sm me-2">
-                    <option value=""> -- Pilih Jangka Waktu -- </option>
-                    <option value="1 Bulan">1 Bulan</option>
-                    <option value="4 Bulan">4 Bulan</option>
-                    <option value="8 Bulan">8 Bulan</option>
-                </select>
-             </div>
-
-
-            <div class="me-2">
                 <label for="rekeningFilter" class="form-label mb-0">Rekening :</label>
                 <input type="text" id="rekeningFilter" placeholder="Search Rekening" class="form-control form-control-sm me-2" style="width: auto;">
-             </div>
+            </div>
 
-             <div class="me-2">
+            <div class="me-2">
                 <label for="metodeFilter" class="form-label mb-0">Metode Pencairan :</label>
                 <select id="metodeFilter" class="form-select form-select-sm me-2">
                     <option value=""> -- Pilih Metode Pencairan -- </option>
@@ -53,6 +42,16 @@
                 </select>
             </div>
 
+            <div class="me-2">
+                <label for="jangkaFilter" class="form-label mb-0">Jangka Waktu :</label>
+                <select id="jangkaFilter" class="form-select form-select-sm me-2">
+                    <option value=""> -- Pilih Jangka Waktu -- </option>
+                    <option value="1 Bulan">1 Bulan</option>
+                    <option value="4 Bulan">4 Bulan</option>
+                    <option value="8 Bulan">8 Bulan</option>
+                </select>
+             </div>
+             
             <button id="filterButton" class="btn btn-success btn-sm">Filter</button>
             <button id="resetButton" class="btn btn-secondary btn-sm ms-2">Reset</button>
         </div>
