@@ -75,8 +75,7 @@
                                         <th scope="col">Nama Lengkap</th>
                                         <th scope="col">Posisi Pekerjaan</th>
                                         <th scope="col">Jenis Kelamin</th>
-                                        <th scope="col">Tempat Lahir</th>
-                                        <th scope="col">Tanggal Lahir</th>
+                                        <th scope="col">Kewarganegaraan</th>
                                         <th scope="col">Agama</th>
                                         <th scope="col">Telepon</th>
                                         <th scope="col">Tanggal Gabung</th>
@@ -88,15 +87,6 @@
                                 </tbody>
                             </table>
                         </div>
-                    </div>
-                    <div class="card-footer clearfix">
-                        <ul class="pagination pagination-sm m-0 float-end">
-                            <li class="page-item"> <a class="page-link" href="#">&laquo;</a> </li>
-                            <li class="page-item"> <a class="page-link" href="#">1</a> </li>
-                            <li class="page-item"> <a class="page-link" href="#">2</a> </li>
-                            <li class="page-item"> <a class="page-link" href="#">3</a> </li>
-                            <li class="page-item"> <a class="page-link" href="#">&raquo;</a> </li>
-                        </ul>
                     </div>
                 </div>
             </div>
@@ -139,7 +129,7 @@
             </div>
         </div>
     </div>
-    
+
 <!-- Include DataTables CSS and JS -->
 <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -180,12 +170,8 @@
                     name: 'jenis_kelamin'
                 },
                 {
-                    data: 'tempat_lahir',
-                    name: 'tempat_lahir'
-                },
-                {
-                    data: 'tanggal_lahir',
-                    name: 'tanggal_lahir'
+                    data: 'kewarganegaraan',
+                    name: 'kewarganegaraan'
                 },
                 {
                     data: 'agama',
