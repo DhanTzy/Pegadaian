@@ -110,15 +110,15 @@ class KaryawanController extends Controller
 
         // Simpan data anggota keluarga jika ada
         if ($request->has('anggota_keluarga')) {
-            foreach ($request->input('anggota_keluarga') as $anggota) {
-                $karyawan->anggotaKeluarga()->create([
+            foreach ($request->anggota_keluarga as $anggota) {
+                AnggotaKeluarga::create([
+                    'karyawan_id' => $karyawan->id,
                     'status_kekeluargaan' => $anggota['status_kekeluargaan'],
                     'nama' => $anggota['nama'],
                     'nik' => $anggota['nik'],
                 ]);
             }
         }
-
         return redirect()->route('admin.karyawan')->with('success', 'Karyawan berhasil ditambahkan.');
     }
 
@@ -154,6 +154,7 @@ class KaryawanController extends Controller
             'kode_pos' => 'required|digits:5',
             'foto_ktp' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'foto_kk' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'anggota_keluarga.*.id' => 'nullable|exists:anggota_keluarga,id', // Validate existing ids
             'anggota_keluarga.*.status_kekeluargaan' => 'required|string',
             'anggota_keluarga.*.nama' => 'required|string',
             'anggota_keluarga.*.nik' => 'required|string',
@@ -187,25 +188,43 @@ class KaryawanController extends Controller
         // Update data karyawan
         $karyawan->update($validatedData);
 
-        // Update data anggota keluarga
+        // Mengupdate anggota keluarga
         if ($request->has('anggota_keluarga')) {
-            foreach ($request->input('anggota_keluarga') as $anggota) {
-                if (isset($anggota['id']) && !empty($anggota['id'])) {
-                    // Jika ID anggota keluarga ada, perbarui data
-                    $anggotaKeluarga = AnggotaKeluarga::find($anggota['id']);
-                    if ($anggotaKeluarga) {
-                        $anggotaKeluarga->update([
+            // Menyaring anggota keluarga berdasarkan ID
+            $anggotaKeluarga = collect($request->anggota_keluarga);
+
+            // Menghapus anggota keluarga yang sudah tidak ada di form
+            $existingIds = $anggotaKeluarga->pluck('id')->filter();
+            AnggotaKeluarga::where('karyawan_id', $karyawan->id)
+                ->whereNotIn('id', $existingIds)
+                ->delete();
+
+            foreach ($anggotaKeluarga as $anggota) {
+                // Update anggota keluarga yang ada
+                if (isset($anggota['id']) && $anggota['id']) {
+                    $existingAnggota = AnggotaKeluarga::find($anggota['id']);
+                    if ($existingAnggota) {
+                        $existingAnggota->update([
                             'status_kekeluargaan' => $anggota['status_kekeluargaan'],
                             'nama' => $anggota['nama'],
                             'nik' => $anggota['nik'],
                         ]);
                     }
+                } else {
+                    // Tambah anggota keluarga baru jika tidak ada ID
+                    AnggotaKeluarga::create([
+                        'karyawan_id' => $karyawan->id,
+                        'status_kekeluargaan' => $anggota['status_kekeluargaan'],
+                        'nama' => $anggota['nama'],
+                        'nik' => $anggota['nik'],
+                    ]);
                 }
             }
         }
 
         return redirect()->route('admin.karyawan')->with('success', 'Karyawan updated successfully');
     }
+
 
     public function destroy($id)
     {

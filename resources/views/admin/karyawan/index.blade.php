@@ -163,7 +163,6 @@
             });
         });
 
-
         // Script untuk modal detail karyawan
         var karyawanDetailModal = document.getElementById('karyawanDetailModal');
         karyawanDetailModal.addEventListener('show.bs.modal', function(event) {

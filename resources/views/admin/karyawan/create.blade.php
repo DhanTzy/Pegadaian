@@ -151,7 +151,7 @@
             <div class="mb-3">
                 <h5>Data Anggota Keluarga</h5>
                 <div id="anggotaKeluargaContainer">
-                    <div class="anggota-keluarga mb-3 border p-3">
+                    <div class="anggota-keluarga mb-3 border p-3" data-index="0">
                         <div class="mb-2">
                             <label class="form-label">Status Kekeluargaan</label>
                             <select name="anggota_keluarga[0][status_kekeluargaan]" class="form-select" required>
@@ -232,50 +232,53 @@
         document.getElementById('confirmSubmit').addEventListener('click', function() {
             document.querySelector('form').submit();
         });
-        
+
         document.addEventListener('DOMContentLoaded', function() {
-            let anggotaCount = 1;
+            let index = 1; // Mulai dengan 1, karena yang pertama sudah ada di form HTML
 
             // Tambah Anggota Keluarga
             document.getElementById('addAnggotaKeluarga').addEventListener('click', function() {
                 const container = document.getElementById('anggotaKeluargaContainer');
                 const newAnggota = document.createElement('div');
                 newAnggota.classList.add('anggota-keluarga', 'mb-3', 'border', 'p-3');
-                
+                newAnggota.setAttribute('data-index', index); // Set index untuk anggota baru
+
                 newAnggota.innerHTML = `
-                <div class="mb-2">
-                    <label class="form-label">Status Kekeluargaan</label>
-                    <select name="anggota_keluarga[${anggotaCount}][status_kekeluargaan]" class="form-select" required>
-                        <option value="" disabled selected>Pilih Status Kekeluargaan</option>
-                        <option value="Kepala Keluarga">Kepala Keluarga</option>
-                        <option value="Ayah">Ayah</option>
-                        <option value="Ibu">Ibu</option>
-                        <option value="Suami">Suami</option>
-                        <option value="Istri">Istri</option>
-                        <option value="Anak">Anak</option>
-                    </select>
-                </div>
-                <div class="mb-2">
-                    <label class="form-label">Nama</label>
-                    <input type="text" name="anggota_keluarga[${anggotaCount}][nama]" class="form-control" placeholder="Nama" required>
-                </div>
-                <div class="mb-2">
-                    <label class="form-label">NIK</label>
-                    <input type="text" name="anggota_keluarga[${anggotaCount}][nik]" class="form-control" placeholder="NIK" required>
-                </div>
-                <button type="button" class="btn btn-danger btn-sm remove-anggota">Hapus</button>
-            `;
+        <div class="mb-2">
+            <label class="form-label">Status Kekeluargaan</label>
+            <select name="anggota_keluarga[${index}][status_kekeluargaan]" class="form-select" required>
+                <option value="" disabled selected>Pilih Status Kekeluargaan</option>
+                <option value="Kepala Keluarga">Kepala Keluarga</option>
+                <option value="Ayah">Ayah</option>
+                <option value="Ibu">Ibu</option>
+                <option value="Suami">Suami</option>
+                <option value="Istri">Istri</option>
+                <option value="Anak">Anak</option>
+            </select>
+        </div>
+        <div class="mb-2">
+            <label class="form-label">Nama</label>
+            <input type="text" name="anggota_keluarga[${index}][nama]" class="form-control" placeholder="Nama" required>
+        </div>
+        <div class="mb-2">
+            <label class="form-label">NIK</label>
+            <input type="text" name="anggota_keluarga[${index}][nik]" class="form-control" placeholder="NIK" required>
+        </div>
+        <button type="button" class="btn btn-danger btn-sm remove-anggota">Hapus</button>
+        `;
                 container.appendChild(newAnggota);
-                anggotaCount++;
+                index++; // Increment index untuk anggota keluarga berikutnya
             });
 
             // Hapus Anggota Keluarga
             document.getElementById('anggotaKeluargaContainer').addEventListener('click', function(event) {
                 if (event.target.classList.contains('remove-anggota')) {
                     event.target.closest('.anggota-keluarga').remove();
+                    index--; // Decrement index saat anggota keluarga dihapus
                 }
             });
         });
+
 
         function previewKTP() {
             const input = document.getElementById('foto_ktp_input');
