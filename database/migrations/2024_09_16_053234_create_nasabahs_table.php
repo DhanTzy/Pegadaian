@@ -10,8 +10,7 @@ return new class extends Migration
     {
         Schema::create('nasabahs', function (Blueprint $table) {
             $table->id(); // ID Nasabah
-            $table->string('identitas');
-            $table->string('nomor_identitas')->unique(); // Nomor Identitas (KTP/SIM)
+            $table->string('nomor_identitas')->unique(); // Nomor Identitas (KTP)
             $table->string('nama_lengkap'); // Nama Lengkap
             $table->string('tempat_lahir');
             $table->date('tanggal_lahir');
@@ -26,7 +25,7 @@ return new class extends Migration
             $table->timestamps();
         });
     }
-    
+
     public function down(): void
     {
         Schema::dropIfExists('nasabahs');

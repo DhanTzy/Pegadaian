@@ -24,6 +24,18 @@ class TransaksiController extends Controller
             $query->where('nama_nasabah', 'LIKE', '%' . $request->input('nama_nasabah') . '%');
         }
 
+        if ($request->has('tanggal_transaksi') && $request->input('tanggal_transaksi') != '') {
+            $query->where('tanggal', '>=', $request->input('tanggal_transaksi'));
+        }
+
+        if ($request->has('tanggal') && $request->input('tanggal') != '') {
+            $query->where('tanggal', '<=', $request->input('tanggal'));
+        }
+
+        if ($request->has('jangka_waktu') && $request->input('jangka_waktu') != '') {
+            $query->where('jangka_waktu', 'LIKE', '%' . $request->input('jangka_waktu') . '%');
+        }
+
         if ($request->has('no_rekening') && $request->input('no_rekening') != '') {
             $query->where('no_rekening', 'LIKE', '%' . $request->input('no_rekening') . '%');
         }
@@ -43,6 +55,18 @@ class TransaksiController extends Controller
             <button type="button" class="btn btn-info btn-sm me-2"
                     data-bs-toggle="modal"
                     data-bs-target="#transaksiDetailModal"
+                    data-nama_nasabah="' . $transaksi->nama_nasabah . '"
+                    data-tanggal="' . Carbon::parse($transaksi->tanggal_lahir)->format('d-m-Y') . '"
+                    data-metode_pencairan="' . $transaksi->metode_pencairan . '"
+                    data-no_rekening="' . $transaksi->no_rekening . '"
+                    data-bank="' . $transaksi->bank . '"
+                    data-pengajuan_pinjaman="' . $transaksi->pengajuan_pinjaman . '"
+                    data-bunga="' . $transaksi->bunga . '"
+                    data-jangka_waktu="' . $transaksi->jangka_waktu . '"
+                    data-catatan="' . $transaksi->catatan . '"
+                    data-jenis_agunan="' . $transaksi->jenis_agunan . '"
+                    data-nilai_pasar="' . $transaksi->nilai_pasar . '"
+                    data-nilai_likuiditas="' . $transaksi->nilai_likuiditas . '"
                     data-foto_jaminan="' . htmlspecialchars($fotoJaminan) . '">
                 Detail
             </button>
@@ -55,7 +79,7 @@ class TransaksiController extends Controller
             </form>
         ';
          })->editColumn('tanggal', function ($transkasi) {
-            return Carbon::parse($transkasi->tanggal)->format('d/m/Y');
+            return Carbon::parse($transkasi->tanggal)->format('d-m-Y');
          })->rawColumns(['action'])->make(true);
     }
 
@@ -72,9 +96,13 @@ class TransaksiController extends Controller
             'metode_pencairan' => 'nullable|string',
             'no_rekening' => 'nullable|string',
             'bank' => 'nullable|string',
-            'jumlah_pinjaman' => 'required|string',
+            'pengajuan_pinjaman' => 'required|string',
             'bunga' => 'required|string',
             'jangka_waktu' => 'required|string',
+            'jenis_agunan' => 'required|string',
+            'nilai_pasar' => 'required|string',
+            'nilai_likuiditas' => 'required|string',
+            'catatan' => 'required|string',
             'foto_jaminan.*' => 'required|image|mimes:jpeg,png,jpg|max:2048'
         ]);
 
@@ -85,9 +113,13 @@ class TransaksiController extends Controller
             'metode_pencairan',
             'no_rekening',
             'bank',
-            'jumlah_pinjaman',
+            'pengajuan_pinjaman',
             'bunga',
-            'jangka_waktu'
+            'jangka_waktu',
+            'jenis_agunan',
+            'nilai_pasar',
+            'nilai_likuiditas',
+            'catatan'
         ]));
 
         // Simpan foto jaminan
@@ -108,7 +140,7 @@ class TransaksiController extends Controller
     public function show($id)
     {
         $transaksi = Transaksi::with('jaminan')->findOrFail($id); // Mengambil data transaksi beserta jaminan
-        $transaksi->tanggal = Carbon::parse($transaksi->tanggal)->format('d/m/y');
+        $transaksi->tanggal = Carbon::parse($transaksi->tanggal)->format('d-m-Y');
         return view('admin.transaksi.show', compact('transaksi')); // Mengembalikan view dengan data transaksi
     }
 
@@ -126,9 +158,13 @@ class TransaksiController extends Controller
             'metode_pencairan' => 'required|string',
             'no_rekening' => 'nullable|string',
             'bank' => 'nullable|string',
-            'jumlah_pinjaman' => 'required|string',
+            'pengajuan_pinjaman' => 'required|string',
             'bunga' => 'required|string',
             'jangka_waktu' => 'required|string',
+            'jenis_agunan' => 'required|string',
+            'nilai_pasar' => 'required|string',
+            'nilai_likuiditas' => 'required|string',
+            'catatan' => 'required|string',
             'foto_jaminan.*' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // Validasi foto jaminan
         ]);
 
@@ -141,9 +177,13 @@ class TransaksiController extends Controller
             'metode_pencairan',
             'no_rekening',
             'bank',
-            'jumlah_pinjaman',
+            'pengajuan_pinjaman',
             'bunga',
             'jangka_waktu',
+            'jenis_agunan',
+            'nilai_pasar',
+            'nilai_likuiditas',
+            'catatan'
         ]));
 
         // Mengelola foto jaminan

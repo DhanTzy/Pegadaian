@@ -15,9 +15,13 @@ return new class extends Migration
             $table->string('metode_pencairan');
             $table->string('no_rekening');
             $table->string('bank');
-            $table->string('jumlah_pinjaman');
+            $table->string('pengajuan_pinjaman');
             $table->string('bunga');
             $table->string('jangka_waktu');
+            $table->string('janis_agunan');
+            $table->string('nilai_pasar');
+            $table->string('nilai_likuiditas');
+            $table->text('catatan');
             $table->string('status_delete')->default('1');
             $table->timestamps();
         });

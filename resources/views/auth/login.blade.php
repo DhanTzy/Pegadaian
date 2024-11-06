@@ -23,7 +23,7 @@
     <div class="container login-con">
         <div class="login-form container row justify-content-end">
             <br>
-            <img src="{{ asset('img/pegadaian.png') }}" alt="logo" class="logo"/>
+            <img src="{{ asset('img/gadai.png') }}" alt="logo" class="logo"/>
             <h1 class="fs-1 fw-semibold font-poppins">
                 Masuk
             </h1>

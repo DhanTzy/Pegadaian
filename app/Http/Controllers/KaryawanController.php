@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Karyawan;
-use App\Models\RiwayatPendidikan;
+use App\Models\AnggotaKeluarga;
 use Carbon\Carbon;
 use Yajra\DataTables\DataTables;
 use Illuminate\Support\Facades\File;
@@ -18,30 +18,42 @@ class KaryawanController extends Controller
 
     public function getData(Request $request)
     {
-    $query = Karyawan::where('status_delete', '1');
+        $query = Karyawan::where('status_delete', '1');
 
-    if ($request->has('nama_lengkap') && $request->input('nama_lengkap') != '') {
-        $query->where('nama_lengkap', 'LIKE', '%' . $request->input('nama_lengkap') . '%');
-    }
+        if ($request->has('nama_lengkap') && $request->input('nama_lengkap') != '') {
+            $query->where('nama_lengkap', 'LIKE', '%' . $request->input('nama_lengkap') . '%');
+        }
 
-    if ($request->has('posisi_pekerjaan') && $request->input('posisi_pekerjaan') != '') {
-        $query->where('posisi_pekerjaan', 'LIKE', '%' . $request->input('posisi_pekerjaan') . '%');
-    }
-    
-    if ($request->has('tanggal_gabung') && $request->input('tanggal_gabung') != '') {
-        $query->where('created_at', 'LIKE', '%' . $request->input('tanggal_gabung') . '%');
-    }
+        if ($request->has('nip') && $request->input('nip') != '') {
+            $query->where('nip', 'LIKE', '%' . $request->input('nip') . '%');
+        }
 
-    return DataTables::of($query)
-        ->addColumn('action', function ($karyawan) {
-            return '
+        if ($request->has('posisi_pekerjaan') && $request->input('posisi_pekerjaan') != '') {
+            $query->where('posisi_pekerjaan', 'LIKE', '%' . $request->input('posisi_pekerjaan') . '%');
+        }
+
+        if ($request->has('tanggal_gabung') && $request->input('tanggal_gabung') != '') {
+            $query->where('created_at', 'LIKE', '%' . $request->input('tanggal_gabung') . '%');
+        }
+
+        return DataTables::of($query)
+            ->addColumn('action', function ($karyawan) {
+                return '
                 <button class="btn btn-info btn-sm me-2" data-bs-toggle="modal" data-bs-target="#karyawanDetailModal"
+                        data-nip="' . $karyawan->nip . '"
+                        data-nama_lengkap="' . $karyawan->nama_lengkap . '"
+                        data-posisi_pekerjaan="' . $karyawan->posisi_pekerjaan . '"
+                        data-jenis_kelamin="' . $karyawan->jenis_kelamin . '"
+                        data-tempat_lahir="' . $karyawan->tempat_lahir . '"
+                        data-tanggal_lahir="' .  Carbon::parse($karyawan->tanggal_lahir)->format('d-m-Y') . '"
+                        data-agama="' . $karyawan->agama . '"
+                        data-no_telepon="' . $karyawan->no_telepon . '"
+                        data-created_at="' . Carbon::parse($karyawan->created_at)->format('d-m-Y') . '"
                         data-kewarganegaraan="' . $karyawan->kewarganegaraan . '"
                         data-status_perkawinan="' . $karyawan->status_perkawinan . '"
                         data-email="' . $karyawan->email . '"
                         data-alamat_lengkap="' . $karyawan->alamat_lengkap . '"
                         data-kode_pos="' . $karyawan->kode_pos . '"
-                        data-riwayat_pendidikan=\'' . json_encode($karyawan->riwayatPendidikan) . '\'
                         data-foto_ktp="' . asset('storage/' . $karyawan->foto_ktp) . '"
                         data-foto_kk="' . asset('storage/' . $karyawan->foto_kk) . '">
                     Detail
@@ -54,8 +66,8 @@ class KaryawanController extends Controller
                 </form>
             ';
             })->editColumn('tanggal_lahir', function ($karyawan) {
-            return Carbon::parse($karyawan->tanggal_lahir)->format('d/m/Y');
-        })->rawColumns(['action'])->make(true);
+                return Carbon::parse($karyawan->tanggal_lahir)->format('d-m-Y');
+            })->rawColumns(['action'])->make(true);
     }
 
     public function create()
@@ -66,6 +78,7 @@ class KaryawanController extends Controller
     public function store(Request $request)
     {
         $validatedData = $request->validate([
+            'nip' => 'required|string|max:18',
             'nama_lengkap' => 'required',
             'posisi_pekerjaan' => 'required',
             'jenis_kelamin' => 'required|in:Laki-laki,Perempuan',
@@ -80,44 +93,40 @@ class KaryawanController extends Controller
             'kode_pos' => 'required|digits:5',
             'foto_ktp' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
             'foto_kk' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'riwayat_pendidikan' => 'nullable|array', // Ubah menjadi opsional
-            'riwayat_pendidikan.*.pendidikan' => 'string|max:255|required',
-            'riwayat_pendidikan.*.jurusan' => 'string|max:255|nullable',
-            'riwayat_pendidikan.*.jenjang_pendidikan' => 'string|max:255|nullable',
-            'riwayat_pendidikan.*.tahun_lulus' => 'string|max:4|required',
-            'riwayat_pendidikan.*.ipk_nilai' => 'numeric|nullable',
+            'anggota_keluarga.*.status_kekeluargaan' => 'required|string',
+            'anggota_keluarga.*.nama' => 'required|string',
+            'anggota_keluarga.*.nik' => 'required|string',
         ]);
 
+        // Upload foto
         $ktpPath = $request->file('foto_ktp')->store('karyawan/foto', 'public');
         $kkPath = $request->file('foto_kk')->store('karyawan/foto', 'public');
 
-        // Simpan ke database
+        // Simpan data karyawan ke database
         $karyawan = Karyawan::create(array_merge($validatedData, [
             'foto_ktp' => $ktpPath,
             'foto_kk' => $kkPath,
         ]));
 
-        // Menyimpan Riwayat Pendidikan
-        if ($request->has('riwayat_pendidikan')) {
-            foreach ($request->riwayat_pendidikan as $pendidikan) {
-                RiwayatPendidikan::create([
-                    'karyawan_id' => $karyawan->id,
-                    'pendidikan' => $pendidikan['pendidikan'],
-                    'jurusan' => $pendidikan['jurusan'] ?? null,
-                    'jenjang_pendidikan' => $pendidikan['jenjang_pendidikan'] ?? null,
-                    'tahun_lulus' => $pendidikan['tahun_lulus'],
-                    'ipk_nilai' => $pendidikan['ipk_nilai'] ?? null,
+        // Simpan data anggota keluarga jika ada
+        if ($request->has('anggota_keluarga')) {
+            foreach ($request->input('anggota_keluarga') as $anggota) {
+                $karyawan->anggotaKeluarga()->create([
+                    'status_kekeluargaan' => $anggota['status_kekeluargaan'],
+                    'nama' => $anggota['nama'],
+                    'nik' => $anggota['nik'],
                 ]);
             }
         }
 
-        return redirect()->route('admin.karyawan')->with('success', 'Karyawan added successfully');
+        return redirect()->route('admin.karyawan')->with('success', 'Karyawan berhasil ditambahkan.');
     }
+
 
     public function show(string $id)
     {
         $karyawan = Karyawan::findOrFail($id);
-        $karyawan->tanggal_lahir = Carbon::parse($karyawan->tanggal_lahir)->format('d/m/y');
+        $karyawan->tanggal_lahir = Carbon::parse($karyawan->tanggal_lahir)->format('d-m-y');
         return view('admin.karyawan.show', compact('karyawan'));
     }
 
@@ -130,6 +139,7 @@ class KaryawanController extends Controller
     public function update(Request $request, string $id)
     {
         $validatedData = $request->validate([
+            'nip' => 'required|string|max:18',
             'nama_lengkap' => 'required',
             'posisi_pekerjaan' => 'required',
             'jenis_kelamin' => 'required|in:Laki-laki,Perempuan',
@@ -144,12 +154,9 @@ class KaryawanController extends Controller
             'kode_pos' => 'required|digits:5',
             'foto_ktp' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'foto_kk' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'riwayat_pendidikan' => 'nullable|array',
-            'riwayat_pendidikan.*.pendidikan' => 'string|max:255|required',
-            'riwayat_pendidikan.*.jurusan' => 'string|max:255|nullable',
-            'riwayat_pendidikan.*.jenjang_pendidikan' => 'string|max:255|nullable',
-            'riwayat_pendidikan.*.tahun_lulus' => 'string|max:4|required',
-            'riwayat_pendidikan.*.ipk_nilai' => 'numeric|nullable',
+            'anggota_keluarga.*.status_kekeluargaan' => 'required|string',
+            'anggota_keluarga.*.nama' => 'required|string',
+            'anggota_keluarga.*.nik' => 'required|string',
         ]);
 
         $karyawan = Karyawan::findOrFail($id);
@@ -180,18 +187,19 @@ class KaryawanController extends Controller
         // Update data karyawan
         $karyawan->update($validatedData);
 
-        if ($request->has('riwayat_pendidikan')) {
-            foreach ($request->riwayat_pendidikan as $index => $pendidikan) {
-                if (isset($pendidikan['id'])) {
-                    // Update riwayat pendidikan yang sudah ada
-                    $riwayat = RiwayatPendidikan::find($pendidikan['id']);
-                    $riwayat->update([
-                        'pendidikan' => $pendidikan['pendidikan'],
-                        'jurusan' => $pendidikan['jurusan'] ?? null,
-                        'jenjang_pendidikan' => $pendidikan['jenjang_pendidikan'] ?? null,
-                        'tahun_lulus' => $pendidikan['tahun_lulus'],
-                        'ipk_nilai' => $pendidikan['ipk_nilai'] ?? null,
-                    ]);
+        // Update data anggota keluarga
+        if ($request->has('anggota_keluarga')) {
+            foreach ($request->input('anggota_keluarga') as $anggota) {
+                if (isset($anggota['id']) && !empty($anggota['id'])) {
+                    // Jika ID anggota keluarga ada, perbarui data
+                    $anggotaKeluarga = AnggotaKeluarga::find($anggota['id']);
+                    if ($anggotaKeluarga) {
+                        $anggotaKeluarga->update([
+                            'status_kekeluargaan' => $anggota['status_kekeluargaan'],
+                            'nama' => $anggota['nama'],
+                            'nik' => $anggota['nik'],
+                        ]);
+                    }
                 }
             }
         }

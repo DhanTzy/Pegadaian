@@ -16,9 +16,13 @@ class Transaksi extends Model
         'metode_pencairan',
         'no_rekening',
         'bank',
-        'jumlah_pinjaman',
+        'pengajuan_pinjaman',
         'bunga',
         'jangka_waktu',
+        'jenis_agunan',
+        'nilai_pasar',
+        'nilai_likuiditas',
+        'catatan',
         'status_delete',
     ];
 

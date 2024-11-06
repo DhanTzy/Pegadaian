@@ -30,8 +30,8 @@ class NasabahController extends Controller
         }
 
         // Filter berdasarkan rentang tanggal created_at
-        if ($request->has('tanggal_join') && $request->input('tanggal_join') != '') {
-            $query->where('created_at', '>=', $request->input('tanggal_join'));
+        if ($request->has('tanggal_daftar') && $request->input('tanggal_daftar') != '') {
+            $query->where('created_at', '>=', $request->input('tanggal_daftar'));
         }
 
         if ($request->has('tanggal_akhir') && $request->input('tanggal_akhir') != '') {
@@ -44,6 +44,14 @@ class NasabahController extends Controller
                 <button type="button" class="btn btn-info btn-sm me-2"
                         data-bs-toggle="modal"
                         data-bs-target="#nasabahDetailModal"
+                        data-nomor_identitas="' . $nasabah->nomor_identitas . '"
+                        data-nama_lengkap="' . $nasabah->nama_lengkap . '"
+                        data-tempat_lahir="' . $nasabah->tempat_lahir . '"
+                        data-tanggal_lahir="' . Carbon::parse($nasabah->tanggal_lahir)->format('d-m-Y') . '"
+                        data-status_perkawinan="' . $nasabah->status_perkawinan . '"
+                        data-pekerjaan="' . $nasabah->pekerjaan . '"
+                        data-telepon="' . $nasabah->telepon . '"
+                        data-created_at="' . Carbon::parse($nasabah->created_at)->format('d-m-Y') . '"
                         data-alamat_lengkap="' . $nasabah->alamat_lengkap . '"
                         data-kode_pos="' . $nasabah->kode_pos . '"
                         data-email="' . $nasabah->email . '"
@@ -60,7 +68,7 @@ class NasabahController extends Controller
                 </form>
             ';
             })->editColumn('tanggal_lahir', function ($nasabah) {
-                return Carbon::parse($nasabah->tanggal_lahir)->format('d/m/Y');
+                return Carbon::parse($nasabah->tanggal_lahir)->format('d-m-Y');
             })->rawColumns(['action'])->make(true);
     }
 
@@ -72,8 +80,7 @@ class NasabahController extends Controller
     public function store(Request $request)
     {
         $validatedData = $request->validate([
-            'identitas' => 'required',
-            'nomor_identitas' => 'required|string|max:20',
+            'nomor_identitas' => 'required|string|max:16',
             'nama_lengkap' => 'required|string|max:255',
             'tempat_lahir' => 'required|string|max:100',
             'tanggal_lahir' => 'required|date',
@@ -100,7 +107,7 @@ class NasabahController extends Controller
     public function show(string $id)
     {
         $nasabah = Nasabah::findOrFail($id);
-        $nasabah->tanggal_lahir = Carbon::parse($nasabah->tanggal_lahir)->format('d/m/Y');
+        $nasabah->tanggal_lahir = Carbon::parse($nasabah->tanggal_lahir)->format('d-m-Y');
         return view('admin.nasabah.show', compact('nasabah'));
     }
 
@@ -113,7 +120,6 @@ class NasabahController extends Controller
     public function update(Request $request, string $id)
     {
         $validatedData = $request->validate([
-            'identitas' => 'required',
             'nomor_identitas' => 'required|string|max:20',
             'nama_lengkap' => 'required|string|max:255',
             'tempat_lahir' => 'required|string|max:100',

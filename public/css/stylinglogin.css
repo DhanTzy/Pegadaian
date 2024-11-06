@@ -13,13 +13,13 @@
 }
 
 .logo {
-    width: 20% !important;
+    width: 30% !important;
     /* background-color: #D9D9D9; */
     float: right;
 }
 
 .logo img{
-    width: 10%;
+    width: 30%;
 }
 
 .login-form.container {

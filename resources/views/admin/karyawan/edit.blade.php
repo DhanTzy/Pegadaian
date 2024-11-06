@@ -12,6 +12,11 @@
                 @method('PUT')
 
                 <div class="mb-3">
+                    <label class="form-label">NIP</label>
+                    <input type="text" id="nip" name="nip" value="{{ $karyawan->nip }}" class="form-control" required>
+                </div>
+
+                <div class="mb-3">
                     <label class="form-label">Nama Lengkap :</label>
                     <input id="nama_lengkap" name="nama_lengkap" type="text"
                         value="{{ old('nama_lengkap', $karyawan->nama_lengkap) }}" class="form-control" required>
@@ -23,33 +28,14 @@
                 <div class="mb-3">
                     <label class="form-label">Posisi Pekerjaan :</label>
                     <select name="posisi_pekerjaan" class="form-select" required>
-                        <option value="Manager"
-                            {{ old('posisi_pekerjaan', $karyawan->posisi_pekerjaan) == 'Manager' ? 'selected' : '' }}>
-                            Manager</option>
-                        <option value="Administrasi"
-                            {{ old('posisi_pekerjaan', $karyawan->posisi_pekerjaan) == 'Administrasi' ? 'seleted' : '' }}>
-                            Administrasi</option>
-                        <option value="Supervisor"
-                            {{ old('posisi_pekerjaan', $karyawan->posisi_pekerjaan) == 'Supervisor' ? 'selected' : '' }}>
-                            Supervisor</option>
-                        <option value="Marketing Officer"
-                            {{ old('posisi_pekerjaan', $karyawan->posisi_pekerjaan) == 'Marketing Officer' ? 'selected' : '' }}>
-                            Marketing Officer</option>
-                        <option value="Collection Officer"
-                            {{ old('posisi_pekerjaan', $karyawan->posisi_pekerjaan) == 'Collection Officer' ? 'selected' : '' }}>
-                            Collection Officer</option>
-                        <option value="Kasir"
-                            {{ old('posisi_pekerjaan', $karyawan->posisi_pekerjaan) == 'Kasir' ? 'selected' : '' }}>Kasir
-                        </option>
-                        <option value="Customer Service"
-                            {{ old('posisi_pekerjaan', $karyawan->posisi_pekerjaan) == 'Customer Service' ? 'selected' : '' }}>
-                            Customer Service</option>
-                        <option value="Teller"
-                            {{ old('posisi_pekerjaan', $karyawan->posisi_pekerjaan) == 'Teller' ? 'selected' : '' }}>Teller
-                        </option>
-                        <option value="Security"
-                            {{ old('posisi_pekerjaan', $karyawan->posisi_pekerjaan) == 'Security' ? 'selected' : '' }}>
-                            Security</option>
+                        <option value="Manager" {{ old('posisi_pekerjaan', $karyawan->posisi_pekerjaan) == 'Manager' ? 'selected' : '' }}>Manager</option>
+                        <option value="Administrasi" {{ old('posisi_pekerjaan', $karyawan->posisi_pekerjaan) == 'Administrasi' ? 'seleted' : '' }}>Administrasi</option>
+                        <option value="Supervisor" {{ old('posisi_pekerjaan', $karyawan->posisi_pekerjaan) == 'Supervisor' ? 'selected' : '' }}>Supervisor</option>
+                        <option value="Approval" {{ old('posisi_pekerjaan', $karyawan->posisi_pekerjaan) == 'Approval' ? 'selected' : '' }}>Approval</option>
+                        <option value="Appraisal" {{ old('posisi_pekerjaan', $karyawan->posisi_pekerjaan) == 'Appraisal' ? 'selected' : '' }}>Appraisal</option>
+                        <option value="Kasir" {{ old('posisi_pekerjaan', $karyawan->posisi_pekerjaan) == 'Kasir' ? 'selected' : '' }}>Kasir</option>
+                        <option value="Customer Service" {{ old('posisi_pekerjaan', $karyawan->posisi_pekerjaan) == 'Customer Service' ? 'selected' : '' }}>Customer Service</option>
+                        <option value="Security" {{ old('posisi_pekerjaan', $karyawan->posisi_pekerjaan) == 'Security' ? 'selected' : '' }}>Security</option>
                     </select>
                     @error('posisi_pekerjaan')
                         <div class="text-danger">{{ $message }}</div>
@@ -158,92 +144,38 @@
                     @enderror
                 </div>
 
-                <!-- Input Riwayat Pendidikan -->
-                <label class="form-label">Riwayat Pendidikan :</label>
-                <div id="riwayat-pendidikan-container">
-                    @foreach ($karyawan->riwayatPendidikan as $index => $pendidikan)
-                        <div class="riwayat-pendidikan-item mb-3">
-                            <h5>Riwayat Pendidikan {{ $index + 1 }}</h5>
-                            <div class="mb-2">
-                                <label class="form-label">Pendidikan :</label>
-                                <input type="hidden" name="riwayat_pendidikan[{{ $index }}][id]"
-                                    value="{{ $pendidikan->id }}">
-                                <select name="riwayat_pendidikan[{{ $index }}][pendidikan]" class="form-select" required>
-                                    <option value=""
-                                        {{ old("riwayat_pendidikan.$index.pendidikan", $pendidikan->pendidikan) == null ? 'selected' : '' }}>
-                                        Pilih Pendidikan</option>
-                                    <option value="SD"
-                                        {{ old("riwayat_pendidikan.$index.pendidikan", $pendidikan->pendidikan) == 'SD' ? 'selected' : '' }}>
-                                        SD</option>
-                                    <option value="SMP"
-                                        {{ old("riwayat_pendidikan.$index.pendidikan", $pendidikan->pendidikan) == 'SMP' ? 'selected' : '' }}>
-                                        SMP</option>
-                                    <option value="SMA"
-                                        {{ old("riwayat_pendidikan.$index.pendidikan", $pendidikan->pendidikan) == 'SMA' ? 'selected' : '' }}>
-                                        SMA</option>
-                                    <option value="SMK"
-                                        {{ old("riwayat_pendidikan.$index.pendidikan", $pendidikan->pendidikan) == 'SMK' ? 'selected' : '' }}>
-                                        SMK</option>
-                                </select>
+                <!-- Anggota Keluarga Repeater -->
+                <div class="mb-3">
+                    <label class="form-label">Anggota Keluarga:</label>
+                    <div id="anggotaKeluargaContainer">
+                        @foreach ($karyawan->anggotaKeluarga as $index => $anggota)
+                            <div class="anggota-keluarga mb-3 border p-3" data-index="{{ $index }}">
+                                <div class="mb-2">
+                                    <label class="form-label">Status Kekeluargaan</label>
+                                    <select name="anggota_keluarga[{{ $index }}][status_kekeluargaan]" class="form-select" required>
+                                        <option value="Kepala Keluarga" {{ $anggota->status_kekeluargaan == 'Kepala Keluarga' ? 'selected' : '' }}>Kepala Keluarga</option>
+                                        <option value="Ayah" {{ $anggota->status_kekeluargaan == 'Ayah' ? 'selected' : '' }}>Ayah</option>
+                                        <option value="Ibu" {{ $anggota->status_kekeluargaan == 'Ibu' ? 'selected' : '' }}>Ibu</option>
+                                        <option value="Suami" {{ $anggota->status_kekeluargaan == 'Suami' ? 'selected' : '' }}>Suami</option>
+                                        <option value="Istri" {{ $anggota->status_kekeluargaan == 'Istri' ? 'selected' : '' }}>Istri</option>
+                                        <option value="Anak" {{ $anggota->status_kekeluargaan == 'Anak' ? 'selected' : '' }}>Anak</option>
+                                    </select>
+                                </div>
+                                <div class="mb-2">
+                                    <label class="form-label">Nama</label>
+                                    <input type="text" name="anggota_keluarga[{{ $index }}][nama]" class="form-control" value="{{ $anggota->nama }}" required>
+                                </div>
+                                <div class="mb-2">
+                                    <label class="form-label">NIK</label>
+                                    <input type="text" name="anggota_keluarga[{{ $index }}][nik]" class="form-control" value="{{ $anggota->nik }}" required>
+                                </div>
+                                <button type="button" class="btn btn-danger btn-sm remove-anggota">Hapus</button>
                             </div>
-                            <div class="mb-2">
-                                <label class="form-label">Jurusan :</label>
-                                <input type="text" name="riwayat_pendidikan[{{ $index }}][jurusan]"
-                                    class="form-control"
-                                    value="{{ old("riwayat_pendidikan.$index.jurusan", $pendidikan->jurusan) }}"
-                                    placeholder="Jurusan">
-                            </div>
-                            <div class="mb-2">
-                                <label class="form-label">Jenjang Pendidikan :</label>
-                                <select name="riwayat_pendidikan[{{ $index }}][jenjang_pendidikan]"
-                                    class="form-select">
-                                    <option value=""
-                                        {{ old("riwayat_pendidikan.$index.jenjang_pendidikan", $pendidikan->jenjang_pendidikan) == null ? 'selected' : '' }}>
-                                        Pilih Jenjang Pendidikan</option>
-                                    <option value="D1"
-                                        {{ old("riwayat_pendidikan.$index.jenjang_pendidikan", $pendidikan->jenjang_pendidikan) == 'D1' ? 'selected' : '' }}>
-                                        D1</option>
-                                    <option value="D2"
-                                        {{ old("riwayat_pendidikan.$index.jenjang_pendidikan", $pendidikan->jenjang_pendidikan) == 'D2' ? 'selected' : '' }}>
-                                        D2</option>
-                                    <option value="D3"
-                                        {{ old("riwayat_pendidikan.$index.jenjang_pendidikan", $pendidikan->jenjang_pendidikan) == 'D3' ? 'selected' : '' }}>
-                                        D3</option>
-                                    <option value="D4"
-                                        {{ old("riwayat_pendidikan.$index.jenjang_pendidikan", $pendidikan->jenjang_pendidikan) == 'D4' ? 'selected' : '' }}>
-                                        D4</option>
-                                    <option value="S1"
-                                        {{ old("riwayat_pendidikan.$index.jenjang_pendidikan", $pendidikan->jenjang_pendidikan) == 'S1' ? 'selected' : '' }}>
-                                        S1</option>
-                                    <option value="S2"
-                                        {{ old("riwayat_pendidikan.$index.jenjang_pendidikan", $pendidikan->jenjang_pendidikan) == 'S2' ? 'selected' : '' }}>
-                                        S2</option>
-                                    <option value="S3"
-                                        {{ old("riwayat_pendidikan.$index.jenjang_pendidikan", $pendidikan->jenjang_pendidikan) == 'S3' ? 'selected' : '' }}>
-                                        S3</option>
-                                </select>
-                            </div>
-                            <div class="mb-2">
-                                <label class="form-label">Tahun Lulus :</label>
-                                <input type="number" name="riwayat_pendidikan[{{ $index }}][tahun_lulus]"
-                                    class="form-control" required
-                                    value="{{ old("riwayat_pendidikan.$index.tahun_lulus", $pendidikan->tahun_lulus) }}"
-                                    placeholder="Tahun Lulus">
-                            </div>
-                            <div class="mb-2">
-                                <label class="form-label">Nilai IPk :</label>
-                                <input type="number" name="riwayat_pendidikan[{{ $index }}][ipk_nilai]"
-                                    class="form-control"
-                                    value="{{ old("riwayat_pendidikan.$index.ipk_nilai", $pendidikan->ipk_nilai) }}"
-                                    placeholder="Nilai IPK">
-                            </div>
-                            <button type="button" class="btn btn-danger"
-                                onclick="removeRiwayatPendidikan(this)">Hapus</button>
-                        </div>
-                    @endforeach
+                        @endforeach
+                    </div>
+                    <button type="button" class="btn btn-primary btn-sm" id="addAnggotaKeluarga">Tambah Anggota Keluarga</button>
                 </div>
-                <button type="button" class="btn btn-secondary mb-3" onclick="addRiwayatPendidikan()">Tambah Riwayat
-                    Pendidikan</button>
+                
 
                 <div class="mb-3">
                     <label class="form-label">Foto KTP :</label>
@@ -308,6 +240,51 @@
             document.querySelector('form').submit();
         });
 
+        document.addEventListener('DOMContentLoaded', function() {
+    let anggotaCount = {{ $karyawan->anggotaKeluarga->count() }};
+
+    // Tambah Anggota Keluarga
+    document.getElementById('addAnggotaKeluarga').addEventListener('click', function() {
+        const container = document.getElementById('anggotaKeluargaContainer');
+        const newAnggota = document.createElement('div');
+        newAnggota.classList.add('anggota-keluarga', 'mb-3', 'border', 'p-3');
+
+        newAnggota.innerHTML = `
+            <div class="mb-2">
+                <label class="form-label">Status Kekeluargaan</label>
+                <select name="anggota_keluarga[${anggotaCount}][status_kekeluargaan]" class="form-select" required>
+                    <option value="" disabled selected>Pilih Status Kekeluargaan</option>
+                    <option value="Kepala Keluarga">Kepala Keluarga</option>
+                    <option value="Ayah">Ayah</option>
+                    <option value="Ibu">Ibu</option>
+                    <option value="Suami">Suami</option>
+                    <option value="Istri">Istri</option>
+                    <option value="Anak">Anak</option>
+                </select>
+            </div>
+            <div class="mb-2">
+                <label class="form-label">Nama</label>
+                <input type="text" name="anggota_keluarga[${anggotaCount}][nama]" class="form-control" placeholder="Nama" required>
+            </div>
+            <div class="mb-2">
+                <label class="form-label">NIK</label>
+                <input type="text" name="anggota_keluarga[${anggotaCount}][nik]" class="form-control" placeholder="NIK" required>
+            </div>
+            <button type="button" class="btn btn-danger btn-sm remove-anggota">Hapus</button>
+        `;
+        
+        container.appendChild(newAnggota);
+        anggotaCount++;
+    });
+
+    // Hapus Anggota Keluarga
+    document.getElementById('anggotaKeluargaContainer').addEventListener('click', function(event) {
+        if (event.target.classList.contains('remove-anggota')) {
+            event.target.closest('.anggota-keluarga').remove();
+        }
+    });
+});
+
         function previewFoto(inputId, previewId) {
             const input = document.getElementById(inputId);
             const preview = document.getElementById(previewId);
@@ -327,61 +304,6 @@
                 preview.src = "{{ asset('storage/' . $karyawan->foto_ktp) }}"; // untuk KTP
                 preview.src = "{{ asset('storage/' . $karyawan->foto_kk) }}"; // untuk KK
             }
-        }
-
-        // Menambah riwayat pendidikan
-        function addRiwayatPendidikan() {
-            const container = document.getElementById('riwayat-pendidikan-container');
-            const index = container.children.length;
-            const newItem = `
-                <div class="riwayat-pendidikan-item mb-3">
-                    <h5>Riwayat Pendidikan ${index + 1}</h5>
-                    <div class="mb-2">
-                        <input type="hidden" name="riwayat_pendidikan[{{ $index }}][id]" value="{{ $pendidikan->id }}">
-                        <label class="form-label">Pendidikan :</label>
-                        <select name="riwayat_pendidikan[${index}][pendidikan]" class="form-select" required>
-                             <option value="">Pilih Pendidikan</option>
-                            <option value="SD">SD</option>
-                            <option value="SMP">SMP</option>
-                            <option value="SMA">SMA</option>
-                            <option value="SMK">SMK</option>
-                        </select>
-                    </div>
-                    <div class="mb-2">
-                        <label class="form-label">Jurusan :</label>
-                        <input type="text" name="riwayat_pendidikan[${index}][jurusan]" class="form-control" placeholder="Jurusan">
-                    </div>
-                    <div class="mb-2">
-                        <label class="form-label">Jenjang Pendidikan :</label>
-                        <select name="riwayat_pendidikan[${index}][jenjang_pendidikan]" class="form-select">
-                            <option value="">Pilih Jenjang Pendidikan</option>
-                            <option value="D1">D1</option>
-                            <option value="D2">D2</option>
-                            <option value="D3">D3</option>
-                            <option value="D4">D4</option>
-                            <option value="S1">S1</option>
-                            <option value="S2">S2</option>
-                            <option value="S3">S3</option>
-                        </select>
-                    </div>
-                    <div class="mb-2">
-                        <label class="form-label">Tahun Lulus :</label>
-                        <input type="number" name="riwayat_pendidikan[${index}][tahun_lulus]" class="form-control" placeholder="Tahun Lulus" required>
-                    </div>
-                    <div class="mb-2">
-                        <label class="form-label">Nilai IPK :</label>
-                        <input type="number" name="riwayat_pendidikan[${index}][ipk_nilai]" class="form-control" placeholder="Nilai IPK">
-                    </div>
-                    <button type="button" class="btn btn-danger" onclick="removeRiwayatPendidikan(this)">Hapus</button>
-                </div>
-            `;
-            container.insertAdjacentHTML('beforeend', newItem);
-        }
-
-        // Menghapus riwayat pendidikan
-        function removeRiwayatPendidikan(element) {
-            const item = element.closest('.riwayat-pendidikan-item');
-            item.remove();
         }
     </script>
 @endsection

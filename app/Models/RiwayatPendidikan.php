@@ -19,9 +19,9 @@ class RiwayatPendidikan extends Model
         'ipk_nilai',
     ];
 
-    // Relasi ke model Karyawan
-    public function karyawan()
-    {
-        return $this->belongsTo(Karyawan::class, 'karyawan_id');
-    }
+    // // Relasi ke model Karyawan
+    // public function karyawan()
+    // {
+    //     return $this->belongsTo(Karyawan::class, 'karyawan_id');
+    // }
 }

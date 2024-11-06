@@ -22,7 +22,7 @@
 <body>
     <div class="container login-con">
         <div class="login-form container row justify-content-end">
-            <img src="{{ asset('img/pegadaian.png') }}" alt="logo" class="logo" />
+            <img src="{{ asset('img/gadai.png') }}" alt="logo" class="logo" />
                 <p class="masuk">Buat Akun Baru</p>
                 <p>
                     Selamat datang Di Aplikasi Go Pegadaian Ayo masuk ke akun mu supaya

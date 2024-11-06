@@ -10,6 +10,7 @@ return new class extends Migration
     {
         Schema::create('karyawan', function (Blueprint $table) {
             $table->id();
+            $table->string('nip')->unique();
             $table->string('nama_lengkap');
             $table->string('posisi_pekerjaan');
             $table->string('jenis_kelamin');

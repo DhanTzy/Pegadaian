@@ -60,10 +60,10 @@
             </div>
 
             <div class="mb-3">
-                <label>Jumlah Pinjaman:</label>
-                <input type="text" name="jumlah_pinjaman" class="form-control"
-                    value="{{ old('jumlah_pinjaman', $transaksi->jumlah_pinjaman) }}" required>
-                @error('jumlah_pinjaman')
+                <label>Pengajuan Pinjaman:</label>
+                <input type="text" name="pengajuan_pinjaman" class="form-control"
+                    value="{{ old('pengajuan_pinjaman', $transaksi->pengajuan_pinjaman) }}" required>
+                @error('pengajuan_pinjaman')
                     <div class="text-danger">{{ $message }}</div>
                 @enderror
             </div>
@@ -107,6 +107,42 @@
                             style="width: 100px; margin-right: 10px;">
                     @endforeach
                 </div>
+            </div>
+
+            <div class="mb-3">
+                <label>Jenis Agunan :</label>
+                <input type="text" name="jenis_agunan" class="form-control"
+                    value="{{ old('jenis_agunan', $transaksi->jenis_agunan) }}" required>
+                @error('jenis_agunan')
+                    <div class="text-danger">{{ $message }}</div>
+                @enderror
+            </div>
+
+            <div class="mb-3">
+                <label>Nilai Pasar Agunan :</label>
+                <input type="text" name="nilai_pasar" class="form-control"
+                    value="{{ old('nilai_pasar', $transaksi->nilai_pasar) }}" required
+                    oninput="calculateNilaiLikuiditas()">
+                @error('nilai_pasar')
+                    <div class="text-danger">{{ $message }}</div>
+                @enderror
+            </div>
+
+            <div class="mb-3">
+                <label>Nilai Likuiditas Agunan :</label>
+                <input type="text" name="nilai_likuiditas" class="form-control"
+                    value="{{ old('nilai_likuiditas', $transaksi->nilai_likuiditas) }}" required readonly>
+                @error('nilai_likuiditas')
+                    <div class="text-danger">{{ $message }}</div>
+                @enderror
+            </div>
+
+            <div class="mb-3">
+                <label>Catatan :</label>
+                <textarea name="catatan" class="form-control">{{ $transaksi->catatan }}</textarea>
+                @error('catatan')
+                    <div class="text-">{{ $message }}</div>
+                @enderror
             </div>
 
             <!-- Modal Konfirmasi -->
@@ -157,6 +193,13 @@
                 noRekeningInput.value = ''; // Reset nilai input no_rekening
                 bankInput.value = ''; // Reset nilai input bank
             }
+        }
+
+        // Nilai Likuiditas
+        function calculateNilaiLikuiditas() {
+            const nilaiPasar = parseFloat(document.querySelector('input[name="nilai_pasar"]').value) || 0;
+            const nilaiLikuiditas = (nilaiPasar * 0.7).toFixed(); // Menghitung 70% dari nilai pasar
+            document.querySelector('input[name="nilai_likuiditas"]').value = nilaiLikuiditas;
         }
 
         function previewImages(event) {

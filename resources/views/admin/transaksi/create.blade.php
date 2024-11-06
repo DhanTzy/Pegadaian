@@ -55,10 +55,10 @@
             </div>
 
             <div class="mb-3">
-                <label>Jumlah Pinjaman:</label>
-                <input type="text" name="jumlah_pinjaman" class="form-control" value="{{ old('junlah_pinjaman') }}"
-                    required>
-                @error('jumlah_pinjaman')
+                <label>Pengajuan Pinjaman:</label>
+                <input type="text" name="pengajuan_pinjaman" class="form-control"
+                    value="{{ old('pengajuan_pinjaman') }}" required>
+                @error('pengajuan_pinjaman')
                     <div class="text-danger">{{ $message }}</div>
                 @enderror
             </div>
@@ -99,13 +99,49 @@
                 <div id="image-preview" class="mt-3"></div>
             </div>
 
+            <div class="mb-3">
+                <label>Jenis Agunan :</label>
+                <input type="text" name="jenis_agunan" class="form-control" value="{{ old('jenis_agunan') }}" required>
+                @error('jenis_agunan')
+                    <div class="text-danger">{{ $message }}</div>
+                @enderror
+            </div>
+
+            <div class="mb-3">
+                <label>Nilai Pasar Agunan :</label>
+                <input type="text" name="nilai_pasar" class="form-control" value="{{ old('nilai_pasar') }}" required
+                    oninput="calculateNilaiLikuiditas()">
+                @error('nilai_pasar')
+                    <div class="text-danger">{{ $message }}</div>
+                @enderror
+            </div>
+
+            <div class="mb-3">
+                <label>Nilai Likuiditas Agunan :</label>
+                <input type="text" name="nilai_likuiditas" class="form-control" value="{{ old('nilai_likuiditas') }}"
+                    required readonly>
+                @error('nilai_likuiditas')
+                    <div class="text-danger">{{ $message }}</div>
+                @enderror
+            </div>
+
+            <div class="mb-3">
+                <label>Catatan :</label>
+                <textarea type="text" name="catatan" class="form-control" required>{{ old('catatan') }}</textarea>
+                @error('catatan')
+                    <div class="text-danger">{{ $message }}</div>
+                @enderror
+            </div>
+
             <!-- Modal Konfirmasi -->
-            <div class="modal fade" id="confirmModal" tabindex="-1" aria-labelledby="confirmModalLabel" aria-hidden="true">
+            <div class="modal fade" id="confirmModal" tabindex="-1" aria-labelledby="confirmModalLabel"
+                aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
                             <h5 class="modal-title" id="confirmModalLabel">Konfirmasi Tambah Data</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
                             Apakah Anda yakin ingin menambah data ini?
@@ -117,7 +153,8 @@
                     </div>
                 </div>
             </div>
-            <button type="button" class="btn btn-primary w-20" data-bs-toggle="modal" data-bs-target="#confirmModal">Tambah
+            <button type="button" class="btn btn-primary w-20" data-bs-toggle="modal"
+                data-bs-target="#confirmModal">Tambah
                 Data
             </button>
             <a href="{{ url()->previous() }}" class="btn btn-secondary w-20">Kembali</a>
@@ -148,6 +185,12 @@
             }
         }
 
+        // Nilai Likuiditas
+        function calculateNilaiLikuiditas() {
+            const nilaiPasar = parseFloat(document.querySelector('input[name="nilai_pasar"]').value) || 0;
+            const nilaiLikuiditas = (nilaiPasar * 0.7).toFixed(0); // Menghitung 70% dari nilai pasar
+            document.querySelector('input[name="nilai_likuiditas"]').value = nilaiLikuiditas; // Update nilai likuiditas
+        }
 
         function previewImages(event) {
             const previewContainer = document.getElementById('image-preview');

@@ -33,7 +33,7 @@
                             <i class="bi bi-list"></i> </a> </li>
                 </ul>
                 <ul class="navbar-nav ms-auto">
-                    </li>
+                    
                     <li class="nav-item"> <a class="nav-link" href="#" data-lte-toggle="fullscreen"> <i
                                 data-lte-icon="maximize" class="bi bi-arrows-fullscreen"></i> <i
                                 data-lte-icon="minimize" class="bi bi-fullscreen-exit" style="display: none;"></i> </a>
@@ -600,6 +600,7 @@
         );
         sparkline3.render();
     </script> <!--end::Script-->
+    {{-- <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script> --}}
 </body>
 
 </html>

@@ -8,6 +8,16 @@
     <div class="mb-4 pb-4 border-bottom">
         <form action="{{ route('admin.karyawan.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
+
+            <div class="mb-3">
+                <label class="form-label">NIP</label>
+                <input type="text" name="nip" id="nip" class="form-control" value="{{ old('nip') }}"
+                    placeholder="Nomor Induk Pegawai" required>
+                @error('nip')
+                    <div class="text-danger">{{ $message }}</div>
+                @enderror
+            </div>
+
             <div class="mb-3">
                 <label class="form-label">Nama Lengkap :</label>
                 <input id="nama_lengkap" name="nama_lengkap" type="text" class="form-control"
@@ -26,14 +36,12 @@
                         Administrasi</option>
                     <option value="Supervisor" {{ old('posisi_pekerjaan') == 'Supervisor' ? 'selected' : '' }}>Supervisor
                     </option>
-                    <option value="Marketing Officer"
-                        {{ old('posisi_pekerjaan') == 'Marketing Officer' ? 'selected' : '' }}>Marketing Officer</option>
-                    <option value="Collection Officer"
-                        {{ old('posisi_pekerjaan') == 'Collection Officer' ? 'selected' : '' }}>Collection Officer</option>
+                    <option value="Approval" {{ old('posisi_pekerjaan') == 'Approval' ? 'selected' : '' }}>Approval</option>
+                    <option value="Appraisal" {{ old('posisi_pekerjaan') == 'Appraisal' ? 'selected' : '' }}>Appraisal
+                    </option>
                     <option value="Kasir" {{ old('posisi_pekerjaan') == 'Kasir' ? 'selected' : '' }}>Kasir</option>
                     <option value="Customer Service" {{ old('posisi_pekerjaan') == 'Customer Service' ? 'selected' : '' }}>
                         Customer Service</option>
-                    <option value="Teller" {{ old('posisi_pekerjaan') == 'Teller' ? 'selected' : '' }}>Teller</option>
                     <option value="Security" {{ old('posisi_pekerjaan' == 'Security' ? 'selected' : '') }}>Security
                     </option>
                 </select>
@@ -141,54 +149,38 @@
                 @enderror
             </div>
 
-            <!-- Input Riwayat Pendidikan -->
-            <label class="form-label">Riwayat Pendidikan :</label>
-            <div id="riwayat-pendidikan-container">
-                <div class="riwayat-pendidikan-item mb-3">
-                    <h5>Riwayat Pendidikan 1</h5>
-                    <div class="mb-2">
-                        <label class="form-label">Pendidikan :</label>
-                        <select name="riwayat_pendidikan[0][pendidikan]" class="form-select" required>
-                            <option value="">Pilih Pendidikan</option>
-                            <option value="SD">SD</option>
-                            <option value="SMP">SMP</option>
-                            <option value="SMA">SMA</option>
-                            <option value="SMK">SMK</option>
-                        </select>
+            <div class="mb-3">
+                <h5>Data Anggota Keluarga</h5>
+                <div id="anggotaKeluargaContainer">
+                    <div class="anggota-keluarga mb-3 border p-3">
+                        <div class="mb-2">
+                            <label class="form-label">Status Kekeluargaan</label>
+                            <select name="anggota_keluarga[0][status_kekeluargaan]" class="form-select" required>
+                                <option value="" disabled selected>Pilih Status Kekeluargaan</option>
+                                <option value="Kepala Keluarga">Kepala Keluarga</option>
+                                <option value="Ayah">Ayah</option>
+                                <option value="Ibu">Ibu</option>
+                                <option value="Suami">Suami</option>
+                                <option value="Istri">Istri</option>
+                                <option value="Anak">Anak</option>
+                            </select>
+                        </div>
+                        <div class="mb-2">
+                            <label class="form-label">Nama</label>
+                            <input type="text" name="anggota_keluarga[0][nama]" class="form-control"
+                                placeholder="Nama" required>
+                        </div>
+                        <div class="mb-2">
+                            <label class="form-label">NIK</label>
+                            <input type="text" name="anggota_keluarga[0][nik]" class="form-control" placeholder="NIK"
+                                required>
+                        </div>
+                        <button type="button" class="btn btn-danger btn-sm remove-anggota">Hapus</button>
                     </div>
-                    <div class="mb-2">
-                        <label class="form-label">Jurusan :</label>
-                        <input type="text" name="riwayat_pendidikan[0][jurusan]" class="form-control"
-                            placeholder="Jurusan">
-                    </div>
-                    <div class="mb-2">
-                        <label class="form-label">Jenjang Pendidikan :</label>
-                        <select name="riwayat_pendidikan[0][jenjang_pendidikan]" class="form-select">
-                            <option value="">Pilih Jenjang Pendidikan</option>
-                            <option value="D1">D1</option>
-                            <option value="D2">D2</option>
-                            <option value="D3">D3</option>
-                            <option value="D4">D4</option>
-                            <option value="S1">S1</option>
-                            <option value="S2">S2</option>
-                            <option value="S3">S3</option>
-                        </select>
-                    </div>
-                    <div class="mb-2">
-                        <label class="form-label">Tahun Lulus :</label>
-                        <input type="text" name="riwayat_pendidikan[0][tahun_lulus]" class="form-control"
-                            placeholder="Tahun Lulus" required>
-                    </div>
-                    <div class="mb-2">
-                        <label class="form-label">IPK Nilai :</label>
-                        <input type="text" name="riwayat_pendidikan[0][ipk_nilai]" class="form-control"
-                            placeholder="IPK Nilai">
-                    </div>
-                    <button type="button" class="btn btn-danger hapus-riwayat"
-                        onclick="hapusRiwayat(this)">Hapus</button>
                 </div>
+                <button type="button" class="btn btn-primary btn-sm" id="addAnggotaKeluarga">Tambah Anggota
+                    Keluarga</button>
             </div>
-            <button type="button" class="btn btn-secondary" id="tambah-riwayat">Tambah Riwayat Pendidikan</button>
 
             <div class="mb-3">
                 <label class="form-label">Foto KTP :</label>
@@ -242,59 +234,50 @@
         document.getElementById('confirmSubmit').addEventListener('click', function() {
             document.querySelector('form').submit();
         });
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            let anggotaCount = 1;
 
-        document.getElementById('tambah-riwayat').addEventListener('click', function() {
-            const container = document.getElementById('riwayat-pendidikan-container');
-            const index = container.children.length;
-
-            const newItem = document.createElement('div');
-            newItem.className = 'riwayat-pendidikan-item mb-3';
-            newItem.innerHTML = `
-                <h5>Riwayat Pendidikan ${index + 1}</h5>
+            // Tambah Anggota Keluarga
+            document.getElementById('addAnggotaKeluarga').addEventListener('click', function() {
+                const container = document.getElementById('anggotaKeluargaContainer');
+                const newAnggota = document.createElement('div');
+                newAnggota.classList.add('anggota-keluarga', 'mb-3', 'border', 'p-3');
+                
+                newAnggota.innerHTML = `
                 <div class="mb-2">
-                    <label class="form-label">Pendidikan :</label>
-                    <select name="riwayat_pendidikan[${index}][pendidikan]" class="form-select" required>
-                        <option value="">Pilih Pendidikan</option>
-                        <option value="SD">SD</ option>
-                        <option value="SMP">SMP</option>
-                        <option value="SMA">SMA</option>
-                        <option value="SMK">SMK</option>
+                    <label class="form-label">Status Kekeluargaan</label>
+                    <select name="anggota_keluarga[${anggotaCount}][status_kekeluargaan]" class="form-select" required>
+                        <option value="" disabled selected>Pilih Status Kekeluargaan</option>
+                        <option value="Kepala Keluarga">Kepala Keluarga</option>
+                        <option value="Ayah">Ayah</option>
+                        <option value="Ibu">Ibu</option>
+                        <option value="Suami">Suami</option>
+                        <option value="Istri">Istri</option>
+                        <option value="Anak">Anak</option>
                     </select>
                 </div>
                 <div class="mb-2">
-                    <label class="form-label">Jurusan :</label>
-                    <input type="text" name="riwayat_pendidikan[${index}][jurusan]" class="form-control" placeholder="Jurusan">
+                    <label class="form-label">Nama</label>
+                    <input type="text" name="anggota_keluarga[${anggotaCount}][nama]" class="form-control" placeholder="Nama" required>
                 </div>
                 <div class="mb-2">
-                    <label class="form-label">Jenjang Pendidikan :</label>
-                    <select name="riwayat_pendidikan[${index}][jenjang_pendidikan]" class="form-select">
-                        <option value="">Pilih Jenjang Pendidikan</option>
-                        <option value="D1">D1</option>
-                        <option value="D2">D2</option>
-                        <option value="D3">D3</option>
-                        <option value="D4">D4</option>
-                        <option value="S1">S1</option>
-                        <option value="S2">S2</option>
-                        <option value="S3">S3</option>
-                    </select>
+                    <label class="form-label">NIK</label>
+                    <input type="text" name="anggota_keluarga[${anggotaCount}][nik]" class="form-control" placeholder="NIK" required>
                 </div>
-                <div class="mb-2">
-                    <label class="form-label">Tahun Lulus :</label>
-                    <input type="text" name="riwayat_pendidikan[${index}][tahun_lulus]" class="form-control" placeholder="Tahun Lulus" required>
-                </div>
-                <div class="mb-2">
-                    <label class="form-label">IPK Nilai :</label>
-                    <input type="text" name="riwayat_pendidikan[${index}][ipk_nilai]" class="form-control" placeholder="IPK Nilai">
-                </div>
-                <button type="button" class="btn btn-danger hapus-riwayat" onclick="hapusRiwayat(this)">Hapus</button>
+                <button type="button" class="btn btn-danger btn-sm remove-anggota">Hapus</button>
             `;
-            container.appendChild(newItem);
-        });
+                container.appendChild(newAnggota);
+                anggotaCount++;
+            });
 
-        function hapusRiwayat(button) {
-            const item = button.parentElement;
-            item.remove();
-        }
+            // Hapus Anggota Keluarga
+            document.getElementById('anggotaKeluargaContainer').addEventListener('click', function(event) {
+                if (event.target.classList.contains('remove-anggota')) {
+                    event.target.closest('.anggota-keluarga').remove();
+                }
+            });
+        });
 
         function previewKTP() {
             const input = document.getElementById('foto_ktp_input');

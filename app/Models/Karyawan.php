@@ -12,6 +12,7 @@ class Karyawan extends Model
     protected $table = 'karyawan';
 
     protected $fillable = [
+        'nip',
         'nama_lengkap',
         'posisi_pekerjaan',
         'jenis_kelamin',
@@ -29,9 +30,9 @@ class Karyawan extends Model
         'status_delete',
     ];
 
-    // Relasi ke model RiwayatPendidikan
-    public function riwayatPendidikan()
+    // Relasi ke model Anggota Keluarga
+    public function anggotaKeluarga()
     {
-        return $this->hasMany(RiwayatPendidikan::class);
+        return $this->hasMany(AnggotaKeluarga::class);
     }
 }
