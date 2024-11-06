@@ -20,6 +20,6 @@ class AnggotaKeluarga extends Model
     // Relasi ke model Karyawan
     public function karyawan()
     {
-        return $this->belongsTo(Karyawan::class, 'karyawan_id');
+        return $this->belongsTo(Karyawan::class);
     }
 }

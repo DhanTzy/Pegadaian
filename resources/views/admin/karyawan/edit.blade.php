@@ -13,7 +13,8 @@
 
                 <div class="mb-3">
                     <label class="form-label">NIP</label>
-                    <input type="text" id="nip" name="nip" value="{{ $karyawan->nip }}" class="form-control" required>
+                    <input type="text" id="nip" name="nip" value="{{ $karyawan->nip }}" class="form-control"
+                        required>
                 </div>
 
                 <div class="mb-3">
@@ -28,14 +29,30 @@
                 <div class="mb-3">
                     <label class="form-label">Posisi Pekerjaan :</label>
                     <select name="posisi_pekerjaan" class="form-select" required>
-                        <option value="Manager" {{ old('posisi_pekerjaan', $karyawan->posisi_pekerjaan) == 'Manager' ? 'selected' : '' }}>Manager</option>
-                        <option value="Administrasi" {{ old('posisi_pekerjaan', $karyawan->posisi_pekerjaan) == 'Administrasi' ? 'seleted' : '' }}>Administrasi</option>
-                        <option value="Supervisor" {{ old('posisi_pekerjaan', $karyawan->posisi_pekerjaan) == 'Supervisor' ? 'selected' : '' }}>Supervisor</option>
-                        <option value="Approval" {{ old('posisi_pekerjaan', $karyawan->posisi_pekerjaan) == 'Approval' ? 'selected' : '' }}>Approval</option>
-                        <option value="Appraisal" {{ old('posisi_pekerjaan', $karyawan->posisi_pekerjaan) == 'Appraisal' ? 'selected' : '' }}>Appraisal</option>
-                        <option value="Kasir" {{ old('posisi_pekerjaan', $karyawan->posisi_pekerjaan) == 'Kasir' ? 'selected' : '' }}>Kasir</option>
-                        <option value="Customer Service" {{ old('posisi_pekerjaan', $karyawan->posisi_pekerjaan) == 'Customer Service' ? 'selected' : '' }}>Customer Service</option>
-                        <option value="Security" {{ old('posisi_pekerjaan', $karyawan->posisi_pekerjaan) == 'Security' ? 'selected' : '' }}>Security</option>
+                        <option value="Manager"
+                            {{ old('posisi_pekerjaan', $karyawan->posisi_pekerjaan) == 'Manager' ? 'selected' : '' }}>
+                            Manager</option>
+                        <option value="Administrasi"
+                            {{ old('posisi_pekerjaan', $karyawan->posisi_pekerjaan) == 'Administrasi' ? 'seleted' : '' }}>
+                            Administrasi</option>
+                        <option value="Supervisor"
+                            {{ old('posisi_pekerjaan', $karyawan->posisi_pekerjaan) == 'Supervisor' ? 'selected' : '' }}>
+                            Supervisor</option>
+                        <option value="Approval"
+                            {{ old('posisi_pekerjaan', $karyawan->posisi_pekerjaan) == 'Approval' ? 'selected' : '' }}>
+                            Approval</option>
+                        <option value="Appraisal"
+                            {{ old('posisi_pekerjaan', $karyawan->posisi_pekerjaan) == 'Appraisal' ? 'selected' : '' }}>
+                            Appraisal</option>
+                        <option value="Kasir"
+                            {{ old('posisi_pekerjaan', $karyawan->posisi_pekerjaan) == 'Kasir' ? 'selected' : '' }}>Kasir
+                        </option>
+                        <option value="Customer Service"
+                            {{ old('posisi_pekerjaan', $karyawan->posisi_pekerjaan) == 'Customer Service' ? 'selected' : '' }}>
+                            Customer Service</option>
+                        <option value="Security"
+                            {{ old('posisi_pekerjaan', $karyawan->posisi_pekerjaan) == 'Security' ? 'selected' : '' }}>
+                            Security</option>
                     </select>
                     @error('posisi_pekerjaan')
                         <div class="text-danger">{{ $message }}</div>
@@ -150,32 +167,44 @@
                     <div id="anggotaKeluargaContainer">
                         @foreach ($karyawan->anggotaKeluarga as $index => $anggota)
                             <div class="anggota-keluarga mb-3 border p-3" data-index="{{ $index }}">
+                                <input type="hidden" name="anggota_keluarga[{{ $index }}][id]"
+                                    value="{{ $anggota->id }}">
                                 <div class="mb-2">
                                     <label class="form-label">Status Kekeluargaan</label>
-                                    <select name="anggota_keluarga[{{ $index }}][status_kekeluargaan]" class="form-select" required>
-                                        <option value="Kepala Keluarga" {{ $anggota->status_kekeluargaan == 'Kepala Keluarga' ? 'selected' : '' }}>Kepala Keluarga</option>
-                                        <option value="Ayah" {{ $anggota->status_kekeluargaan == 'Ayah' ? 'selected' : '' }}>Ayah</option>
-                                        <option value="Ibu" {{ $anggota->status_kekeluargaan == 'Ibu' ? 'selected' : '' }}>Ibu</option>
-                                        <option value="Suami" {{ $anggota->status_kekeluargaan == 'Suami' ? 'selected' : '' }}>Suami</option>
-                                        <option value="Istri" {{ $anggota->status_kekeluargaan == 'Istri' ? 'selected' : '' }}>Istri</option>
-                                        <option value="Anak" {{ $anggota->status_kekeluargaan == 'Anak' ? 'selected' : '' }}>Anak</option>
+                                    <select name="anggota_keluarga[{{ $index }}][status_kekeluargaan]"
+                                        class="form-select" required>
+                                        <option value="Kepala Keluarga"
+                                            {{ $anggota->status_kekeluargaan == 'Kepala Keluarga' ? 'selected' : '' }}>
+                                            Kepala Keluarga</option>
+                                        <option value="Ayah"
+                                            {{ $anggota->status_kekeluargaan == 'Ayah' ? 'selected' : '' }}>Ayah</option>
+                                        <option value="Ibu"
+                                            {{ $anggota->status_kekeluargaan == 'Ibu' ? 'selected' : '' }}>Ibu</option>
+                                        <option value="Suami"
+                                            {{ $anggota->status_kekeluargaan == 'Suami' ? 'selected' : '' }}>Suami</option>
+                                        <option value="Istri"
+                                            {{ $anggota->status_kekeluargaan == 'Istri' ? 'selected' : '' }}>Istri</option>
+                                        <option value="Anak"
+                                            {{ $anggota->status_kekeluargaan == 'Anak' ? 'selected' : '' }}>Anak</option>
                                     </select>
                                 </div>
                                 <div class="mb-2">
                                     <label class="form-label">Nama</label>
-                                    <input type="text" name="anggota_keluarga[{{ $index }}][nama]" class="form-control" value="{{ $anggota->nama }}" required>
+                                    <input type="text" name="anggota_keluarga[{{ $index }}][nama]"
+                                        class="form-control" value="{{ $anggota->nama }}" required>
                                 </div>
                                 <div class="mb-2">
                                     <label class="form-label">NIK</label>
-                                    <input type="text" name="anggota_keluarga[{{ $index }}][nik]" class="form-control" value="{{ $anggota->nik }}" required>
+                                    <input type="text" name="anggota_keluarga[{{ $index }}][nik]"
+                                        class="form-control" value="{{ $anggota->nik }}" required>
                                 </div>
                                 <button type="button" class="btn btn-danger btn-sm remove-anggota">Hapus</button>
                             </div>
                         @endforeach
                     </div>
-                    <button type="button" class="btn btn-primary btn-sm" id="addAnggotaKeluarga">Tambah Anggota Keluarga</button>
+                    <button type="button" class="btn btn-primary btn-sm" id="addAnggotaKeluarga">Tambah Anggota
+                        Keluarga</button>
                 </div>
-                
 
                 <div class="mb-3">
                     <label class="form-label">Foto KTP :</label>
@@ -241,18 +270,20 @@
         });
 
         document.addEventListener('DOMContentLoaded', function() {
-    let anggotaCount = {{ $karyawan->anggotaKeluarga->count() }};
+            let index =
+            {{ $karyawan->anggotaKeluarga->count() }}; // Mendapatkan jumlah anggota keluarga yang sudah ada
 
-    // Tambah Anggota Keluarga
-    document.getElementById('addAnggotaKeluarga').addEventListener('click', function() {
-        const container = document.getElementById('anggotaKeluargaContainer');
-        const newAnggota = document.createElement('div');
-        newAnggota.classList.add('anggota-keluarga', 'mb-3', 'border', 'p-3');
+            // Tambah Anggota Keluarga
+            document.getElementById('addAnggotaKeluarga').addEventListener('click', function() {
+                const container = document.getElementById('anggotaKeluargaContainer');
+                const newAnggota = document.createElement('div');
+                newAnggota.classList.add('anggota-keluarga', 'mb-3', 'border', 'p-3');
+                newAnggota.setAttribute('data-index', index); // Set index untuk anggota baru
 
-        newAnggota.innerHTML = `
+                newAnggota.innerHTML = `
             <div class="mb-2">
                 <label class="form-label">Status Kekeluargaan</label>
-                <select name="anggota_keluarga[${anggotaCount}][status_kekeluargaan]" class="form-select" required>
+                <select name="anggota_keluarga[${index}][status_kekeluargaan]" class="form-select" required>
                     <option value="" disabled selected>Pilih Status Kekeluargaan</option>
                     <option value="Kepala Keluarga">Kepala Keluarga</option>
                     <option value="Ayah">Ayah</option>
@@ -264,26 +295,28 @@
             </div>
             <div class="mb-2">
                 <label class="form-label">Nama</label>
-                <input type="text" name="anggota_keluarga[${anggotaCount}][nama]" class="form-control" placeholder="Nama" required>
+                <input type="text" name="anggota_keluarga[${index}][nama]" class="form-control" placeholder="Nama" required>
             </div>
             <div class="mb-2">
                 <label class="form-label">NIK</label>
-                <input type="text" name="anggota_keluarga[${anggotaCount}][nik]" class="form-control" placeholder="NIK" required>
+                <input type="text" name="anggota_keluarga[${index}][nik]" class="form-control" placeholder="NIK" required>
             </div>
             <button type="button" class="btn btn-danger btn-sm remove-anggota">Hapus</button>
         `;
-        
-        container.appendChild(newAnggota);
-        anggotaCount++;
-    });
 
-    // Hapus Anggota Keluarga
-    document.getElementById('anggotaKeluargaContainer').addEventListener('click', function(event) {
-        if (event.target.classList.contains('remove-anggota')) {
-            event.target.closest('.anggota-keluarga').remove();
-        }
-    });
-});
+                container.appendChild(newAnggota);
+                index++; // Increment index untuk anggota keluarga berikutnya
+            });
+
+            // Hapus Anggota Keluarga
+            document.getElementById('anggotaKeluargaContainer').addEventListener('click', function(event) {
+                if (event.target.classList.contains('remove-anggota')) {
+                    event.target.closest('.anggota-keluarga').remove();
+                    index--; // Decrement index saat anggota keluarga dihapus
+                }
+            });
+        });
+
 
         function previewFoto(inputId, previewId) {
             const input = document.getElementById(inputId);
