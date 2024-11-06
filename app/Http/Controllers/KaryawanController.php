@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Karyawan;
-use App\Models\RiwayatPendidikan;
+use App\Models\AnggotaKeluarga;
 use Carbon\Carbon;
 use Yajra\DataTables\DataTables;
 use Illuminate\Support\Facades\File;
@@ -18,27 +18,27 @@ class KaryawanController extends Controller
 
     public function getData(Request $request)
     {
-    $query = Karyawan::where('status_delete', '1');
+        $query = Karyawan::where('status_delete', '1');
 
-    if ($request->has('nama_lengkap') && $request->input('nama_lengkap') != '') {
-        $query->where('nama_lengkap', 'LIKE', '%' . $request->input('nama_lengkap') . '%');
-    }
+        if ($request->has('nama_lengkap') && $request->input('nama_lengkap') != '') {
+            $query->where('nama_lengkap', 'LIKE', '%' . $request->input('nama_lengkap') . '%');
+        }
 
-    if ($request->has('nip') && $request->input('nip') != '') {
-        $query->where('nip', 'LIKE', '%' . $request->input('nip') . '%');
-    }
+        if ($request->has('nip') && $request->input('nip') != '') {
+            $query->where('nip', 'LIKE', '%' . $request->input('nip') . '%');
+        }
 
-    if ($request->has('posisi_pekerjaan') && $request->input('posisi_pekerjaan') != '') {
-        $query->where('posisi_pekerjaan', 'LIKE', '%' . $request->input('posisi_pekerjaan') . '%');
-    }
+        if ($request->has('posisi_pekerjaan') && $request->input('posisi_pekerjaan') != '') {
+            $query->where('posisi_pekerjaan', 'LIKE', '%' . $request->input('posisi_pekerjaan') . '%');
+        }
 
-    if ($request->has('tanggal_gabung') && $request->input('tanggal_gabung') != '') {
-        $query->where('created_at', 'LIKE', '%' . $request->input('tanggal_gabung') . '%');
-    }
+        if ($request->has('tanggal_gabung') && $request->input('tanggal_gabung') != '') {
+            $query->where('created_at', 'LIKE', '%' . $request->input('tanggal_gabung') . '%');
+        }
 
-    return DataTables::of($query)
-        ->addColumn('action', function ($karyawan) {
-            return '
+        return DataTables::of($query)
+            ->addColumn('action', function ($karyawan) {
+                return '
                 <button class="btn btn-info btn-sm me-2" data-bs-toggle="modal" data-bs-target="#karyawanDetailModal"
                         data-nip="' . $karyawan->nip . '"
                         data-nama_lengkap="' . $karyawan->nama_lengkap . '"
@@ -66,8 +66,8 @@ class KaryawanController extends Controller
                 </form>
             ';
             })->editColumn('tanggal_lahir', function ($karyawan) {
-            return Carbon::parse($karyawan->tanggal_lahir)->format('d-m-Y');
-        })->rawColumns(['action'])->make(true);
+                return Carbon::parse($karyawan->tanggal_lahir)->format('d-m-Y');
+            })->rawColumns(['action'])->make(true);
     }
 
     public function create()
@@ -93,19 +93,35 @@ class KaryawanController extends Controller
             'kode_pos' => 'required|digits:5',
             'foto_ktp' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
             'foto_kk' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'anggota_keluarga.*.status_kekeluargaan' => 'required|string',
+            'anggota_keluarga.*.nama' => 'required|string',
+            'anggota_keluarga.*.nik' => 'required|string',
         ]);
 
+        // Upload foto
         $ktpPath = $request->file('foto_ktp')->store('karyawan/foto', 'public');
         $kkPath = $request->file('foto_kk')->store('karyawan/foto', 'public');
 
-        // Simpan ke database
+        // Simpan data karyawan ke database
         $karyawan = Karyawan::create(array_merge($validatedData, [
             'foto_ktp' => $ktpPath,
             'foto_kk' => $kkPath,
         ]));
 
-        return redirect()->route('admin.karyawan')->with('success', 'Karyawan added successfully');
+        // Simpan data anggota keluarga jika ada
+        if ($request->has('anggota_keluarga')) {
+            foreach ($request->input('anggota_keluarga') as $anggota) {
+                $karyawan->anggotaKeluarga()->create([
+                    'status_kekeluargaan' => $anggota['status_kekeluargaan'],
+                    'nama' => $anggota['nama'],
+                    'nik' => $anggota['nik'],
+                ]);
+            }
+        }
+
+        return redirect()->route('admin.karyawan')->with('success', 'Karyawan berhasil ditambahkan.');
     }
+
 
     public function show(string $id)
     {
@@ -138,6 +154,9 @@ class KaryawanController extends Controller
             'kode_pos' => 'required|digits:5',
             'foto_ktp' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'foto_kk' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'anggota_keluarga.*.status_kekeluargaan' => 'required|string',
+            'anggota_keluarga.*.nama' => 'required|string',
+            'anggota_keluarga.*.nik' => 'required|string',
         ]);
 
         $karyawan = Karyawan::findOrFail($id);
@@ -167,6 +186,23 @@ class KaryawanController extends Controller
 
         // Update data karyawan
         $karyawan->update($validatedData);
+
+        // Update data anggota keluarga
+        if ($request->has('anggota_keluarga')) {
+            foreach ($request->input('anggota_keluarga') as $anggota) {
+                if (isset($anggota['id']) && !empty($anggota['id'])) {
+                    // Jika ID anggota keluarga ada, perbarui data
+                    $anggotaKeluarga = AnggotaKeluarga::find($anggota['id']);
+                    if ($anggotaKeluarga) {
+                        $anggotaKeluarga->update([
+                            'status_kekeluargaan' => $anggota['status_kekeluargaan'],
+                            'nama' => $anggota['nama'],
+                            'nik' => $anggota['nik'],
+                        ]);
+                    }
+                }
+            }
+        }
 
         return redirect()->route('admin.karyawan')->with('success', 'Karyawan updated successfully');
     }

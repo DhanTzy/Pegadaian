@@ -10,7 +10,8 @@
 
             <div class="mb-3">
                 <label class="form-label">NIP</label>
-                <input type="text" name="nip" id="nip" class="form-control" value="{{ old('nip') }}" placeholder="Nomor Induk Pegawai" required>
+                <input type="text" name="nip" id="nip" class="form-control" value="{{ old('nip') }}"
+                    placeholder="Nomor Induk Pegawai" required>
                 @error('nip')
                     <div class="text-danger">{{ $message }}</div>
                 @enderror
@@ -30,12 +31,16 @@
                 <select name="posisi_pekerjaan" class="form-select" required>
                     <option value="" disable selected>Pilih Posisi Pekerjaan</option>
                     <option value="Manager" {{ old('posisi_pekerjaan') == 'Manager' ? 'selected' : '' }}>Manager</option>
-                    <option value="Administrasi" {{ old('posisi_pekerjaan') == 'Administrasi' ? 'selected' : '' }}>Administrasi</option>
-                    <option value="Supervisor" {{ old('posisi_pekerjaan') == 'Supervisor' ? 'selected' : '' }}>Supervisor</option>
+                    <option value="Administrasi" {{ old('posisi_pekerjaan') == 'Administrasi' ? 'selected' : '' }}>
+                        Administrasi</option>
+                    <option value="Supervisor" {{ old('posisi_pekerjaan') == 'Supervisor' ? 'selected' : '' }}>Supervisor
+                    </option>
                     <option value="Approval" {{ old('posisi_pekerjaan') == 'Approval' ? 'selected' : '' }}>Approval</option>
-                    <option value="Appraisal" {{ old('posisi_pekerjaan') == 'Appraisal' ? 'selected' : '' }}>Appraisal</option>
+                    <option value="Appraisal" {{ old('posisi_pekerjaan') == 'Appraisal' ? 'selected' : '' }}>Appraisal
+                    </option>
                     <option value="Kasir" {{ old('posisi_pekerjaan') == 'Kasir' ? 'selected' : '' }}>Kasir</option>
-                    <option value="Customer Service" {{ old('posisi_pekerjaan') == 'Customer Service' ? 'selected' : '' }}>Customer Service</option>
+                    <option value="Customer Service" {{ old('posisi_pekerjaan') == 'Customer Service' ? 'selected' : '' }}>
+                        Customer Service</option>
                     <option value="Security" {{ old('posisi_pekerjaan' == 'Security' ? 'selected' : '') }}>Security
                     </option>
                 </select>
@@ -144,6 +149,39 @@
             </div>
 
             <div class="mb-3">
+                <h5>Data Anggota Keluarga</h5>
+                <div id="anggotaKeluargaContainer">
+                    <div class="anggota-keluarga mb-3 border p-3">
+                        <div class="mb-2">
+                            <label class="form-label">Status Kekeluargaan</label>
+                            <select name="anggota_keluarga[0][status_kekeluargaan]" class="form-select" required>
+                                <option value="" disabled selected>Pilih Status Kekeluargaan</option>
+                                <option value="Kepala Keluarga">Kepala Keluarga</option>
+                                <option value="Ayah">Ayah</option>
+                                <option value="Ibu">Ibu</option>
+                                <option value="Suami">Suami</option>
+                                <option value="Istri">Istri</option>
+                                <option value="Anak">Anak</option>
+                            </select>
+                        </div>
+                        <div class="mb-2">
+                            <label class="form-label">Nama</label>
+                            <input type="text" name="anggota_keluarga[0][nama]" class="form-control"
+                                placeholder="Nama" required>
+                        </div>
+                        <div class="mb-2">
+                            <label class="form-label">NIK</label>
+                            <input type="text" name="anggota_keluarga[0][nik]" class="form-control" placeholder="NIK"
+                                required>
+                        </div>
+                        <button type="button" class="btn btn-danger btn-sm remove-anggota">Hapus</button>
+                    </div>
+                </div>
+                <button type="button" class="btn btn-primary btn-sm" id="addAnggotaKeluarga">Tambah Anggota
+                    Keluarga</button>
+            </div>
+
+            <div class="mb-3">
                 <label class="form-label">Foto KTP :</label>
                 <input type="file" name="foto_ktp" class="form-control" accept="image/*" id="foto_ktp_input"
                     onchange="previewKTP()">
@@ -193,6 +231,50 @@
     <script>
         document.getElementById('confirmSubmit').addEventListener('click', function() {
             document.querySelector('form').submit();
+        });
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            let anggotaCount = 1;
+
+            // Tambah Anggota Keluarga
+            document.getElementById('addAnggotaKeluarga').addEventListener('click', function() {
+                const container = document.getElementById('anggotaKeluargaContainer');
+                const newAnggota = document.createElement('div');
+                newAnggota.classList.add('anggota-keluarga', 'mb-3', 'border', 'p-3');
+                
+                newAnggota.innerHTML = `
+                <div class="mb-2">
+                    <label class="form-label">Status Kekeluargaan</label>
+                    <select name="anggota_keluarga[${anggotaCount}][status_kekeluargaan]" class="form-select" required>
+                        <option value="" disabled selected>Pilih Status Kekeluargaan</option>
+                        <option value="Kepala Keluarga">Kepala Keluarga</option>
+                        <option value="Ayah">Ayah</option>
+                        <option value="Ibu">Ibu</option>
+                        <option value="Suami">Suami</option>
+                        <option value="Istri">Istri</option>
+                        <option value="Anak">Anak</option>
+                    </select>
+                </div>
+                <div class="mb-2">
+                    <label class="form-label">Nama</label>
+                    <input type="text" name="anggota_keluarga[${anggotaCount}][nama]" class="form-control" placeholder="Nama" required>
+                </div>
+                <div class="mb-2">
+                    <label class="form-label">NIK</label>
+                    <input type="text" name="anggota_keluarga[${anggotaCount}][nik]" class="form-control" placeholder="NIK" required>
+                </div>
+                <button type="button" class="btn btn-danger btn-sm remove-anggota">Hapus</button>
+            `;
+                container.appendChild(newAnggota);
+                anggotaCount++;
+            });
+
+            // Hapus Anggota Keluarga
+            document.getElementById('anggotaKeluargaContainer').addEventListener('click', function(event) {
+                if (event.target.classList.contains('remove-anggota')) {
+                    event.target.closest('.anggota-keluarga').remove();
+                }
+            });
         });
 
         function previewKTP() {

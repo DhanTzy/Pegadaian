@@ -143,6 +143,39 @@
                     @enderror
                 </div>
 
+                <!-- Anggota Keluarga Repeater -->
+                <div class="mb-3">
+                    <label class="form-label">Anggota Keluarga:</label>
+                    <div id="anggotaKeluargaContainer">
+                        @foreach ($karyawan->anggotaKeluarga as $index => $anggota)
+                            <div class="anggota-keluarga mb-3 border p-3" data-index="{{ $index }}">
+                                <div class="mb-2">
+                                    <label class="form-label">Status Kekeluargaan</label>
+                                    <select name="anggota_keluarga[{{ $index }}][status_kekeluargaan]" class="form-select" required>
+                                        <option value="Kepala Keluarga" {{ $anggota->status_kekeluargaan == 'Kepala Keluarga' ? 'selected' : '' }}>Kepala Keluarga</option>
+                                        <option value="Ayah" {{ $anggota->status_kekeluargaan == 'Ayah' ? 'selected' : '' }}>Ayah</option>
+                                        <option value="Ibu" {{ $anggota->status_kekeluargaan == 'Ibu' ? 'selected' : '' }}>Ibu</option>
+                                        <option value="Suami" {{ $anggota->status_kekeluargaan == 'Suami' ? 'selected' : '' }}>Suami</option>
+                                        <option value="Istri" {{ $anggota->status_kekeluargaan == 'Istri' ? 'selected' : '' }}>Istri</option>
+                                        <option value="Anak" {{ $anggota->status_kekeluargaan == 'Anak' ? 'selected' : '' }}>Anak</option>
+                                    </select>
+                                </div>
+                                <div class="mb-2">
+                                    <label class="form-label">Nama</label>
+                                    <input type="text" name="anggota_keluarga[{{ $index }}][nama]" class="form-control" value="{{ $anggota->nama }}" required>
+                                </div>
+                                <div class="mb-2">
+                                    <label class="form-label">NIK</label>
+                                    <input type="text" name="anggota_keluarga[{{ $index }}][nik]" class="form-control" value="{{ $anggota->nik }}" required>
+                                </div>
+                                <button type="button" class="btn btn-danger btn-sm remove-anggota">Hapus</button>
+                            </div>
+                        @endforeach
+                    </div>
+                    <button type="button" class="btn btn-primary btn-sm" id="addAnggotaKeluarga">Tambah Anggota Keluarga</button>
+                </div>
+                
+
                 <div class="mb-3">
                     <label class="form-label">Foto KTP :</label>
                     <input type="file" name="foto_ktp" class="form-control" accept="image/*" id="foto_ktp_input"
@@ -204,6 +237,51 @@
         document.getElementById('confirmEditSubmit').addEventListener('click', function() {
             document.querySelector('form').submit();
         });
+
+        document.addEventListener('DOMContentLoaded', function() {
+    let anggotaCount = {{ $karyawan->anggotaKeluarga->count() }};
+
+    // Tambah Anggota Keluarga
+    document.getElementById('addAnggotaKeluarga').addEventListener('click', function() {
+        const container = document.getElementById('anggotaKeluargaContainer');
+        const newAnggota = document.createElement('div');
+        newAnggota.classList.add('anggota-keluarga', 'mb-3', 'border', 'p-3');
+
+        newAnggota.innerHTML = `
+            <div class="mb-2">
+                <label class="form-label">Status Kekeluargaan</label>
+                <select name="anggota_keluarga[${anggotaCount}][status_kekeluargaan]" class="form-select" required>
+                    <option value="" disabled selected>Pilih Status Kekeluargaan</option>
+                    <option value="Kepala Keluarga">Kepala Keluarga</option>
+                    <option value="Ayah">Ayah</option>
+                    <option value="Ibu">Ibu</option>
+                    <option value="Suami">Suami</option>
+                    <option value="Istri">Istri</option>
+                    <option value="Anak">Anak</option>
+                </select>
+            </div>
+            <div class="mb-2">
+                <label class="form-label">Nama</label>
+                <input type="text" name="anggota_keluarga[${anggotaCount}][nama]" class="form-control" placeholder="Nama" required>
+            </div>
+            <div class="mb-2">
+                <label class="form-label">NIK</label>
+                <input type="text" name="anggota_keluarga[${anggotaCount}][nik]" class="form-control" placeholder="NIK" required>
+            </div>
+            <button type="button" class="btn btn-danger btn-sm remove-anggota">Hapus</button>
+        `;
+        
+        container.appendChild(newAnggota);
+        anggotaCount++;
+    });
+
+    // Hapus Anggota Keluarga
+    document.getElementById('anggotaKeluargaContainer').addEventListener('click', function(event) {
+        if (event.target.classList.contains('remove-anggota')) {
+            event.target.closest('.anggota-keluarga').remove();
+        }
+    });
+});
 
         function previewFoto(inputId, previewId) {
             const input = document.getElementById(inputId);
