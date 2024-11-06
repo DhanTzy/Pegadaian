@@ -33,21 +33,18 @@
                             <i class="bi bi-list"></i> </a> </li>
                 </ul>
                 <ul class="navbar-nav ms-auto">
-                    <!--end::Fullscreen Toggle-->
-                    <li class="nav-item"> <a class="nav-link" href="#" data-lte-toggle="fullscreen"> <i
-                         data-lte-icon="maximize" class="bi bi-arrows-fullscreen"></i> <i
-                         data-lte-icon="minimize" class="bi bi-fullscreen-exit" style="display: none;"></i> </a>
-                    </li>
-                    <!--begin::User Menu Dropdown-->
-                    <li class="nav-item dropdown user-menu"> <a href="#" class="nav-link dropdown-toggle"
-                            data-bs-toggle="dropdown"> <img src="{{ asset('img/rp.png') }}"
-                                class="user-image rounded-circle shadow" alt="User Image">
-                            <ul class="dropdown-menu dropdown-menu-lg dropdown-menu-end"> <!--begin::User Image-->
-                                Rayhan Riyadhul Jinan
-                                <a href="{{ route('admin.profile') }}" class="btn btn-default btn-flat">Profile</a>
-                                <a href="{{ route('logout') }}" class="btn btn-primary">Logout</a>
-                            </ul>
-                    </li>
+                        <li class="nav-item"> <a class="nav-link" href="#" data-lte-toggle="fullscreen"> <i
+                                    data-lte-icon="maximize" class="bi bi-arrows-fullscreen"></i> <i
+                                    data-lte-icon="minimize" class="bi bi-fullscreen-exit" style="display: none;"></i>
+                            </a>
+                        </li> <!--end::Fullscreen Toggle--> <!--begin::User Menu Dropdown-->
+                        <li class="nav-item dropdown user-menu"><a href="#" class="nav-link" data-bs-toggle="dropdown">
+                            <img src="{{ asset('storage/profile_images/' . auth()->user()->image) }}" alt="Profile" class="logoprofile">
+                                <ul class="dropdown-menu dropdown-menu-end">
+                                    <a href="{{ route('admin.profile') }}" class="btn btn-success">Profile</a>
+                                    <a href="{{ route('logout') }}" class="btn btn-primary">Logout</a>
+                                </ul>
+                        </li>
                 </ul>
             </div>
         </nav>

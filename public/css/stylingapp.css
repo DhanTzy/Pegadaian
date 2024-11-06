@@ -3,6 +3,11 @@ body {
     margin: 0%;
     padding: 0%;
 }
+.logoprofile {
+    height: 30px;
+    width: auto;
+    border-radius: 50%;
+}
 .text-black {
     color: #000000 !important;
 }
