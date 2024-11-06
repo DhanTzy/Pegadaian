@@ -8,10 +8,6 @@ use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
-    public function userprofile()
-    {
-        return view('user.userprofile.userprofile');
-    }
 
     public function history()
     {

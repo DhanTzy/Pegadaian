@@ -1,8 +1,3 @@
-@extends('admin.layouts.app')
-
-@section('title', 'Edit Nasabah')
-
-@section('contents')
 <div class="content">
     <h1 class="fw-bold fs-3 text-center">Edit Data Nasabah</h1>
     <div class="pb-4">

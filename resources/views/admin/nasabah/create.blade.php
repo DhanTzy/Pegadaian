@@ -1,8 +1,9 @@
 @extends('admin.layouts.app')
 
-@section('title', 'Create Nasabah')
+@section('title', 'Home Nasabah List')
 
 @section('contents')
+
 <div class="content">
     <h1 class="fw-bold fs-3 text-center">Input Data Nasabah</h1>
     <div class="mb-4 pb-4 border-bottom">

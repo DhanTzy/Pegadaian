@@ -3,66 +3,135 @@
 @section('title', 'Home Karyawan List')
 
 @section('contents')
-<div class="content">
-    <div>
-        <h1 class="fw-bold fs-3">Daftar Data Karyawan</h1>
-        <a href="{{ route('admin.karyawan.create') }}" class="btn btn-primary float-left mb-2">Input Data Karyawan</a>
-        @if (Session::has('success'))
-            <div class="alert alert-success" role="alert">
-                {{ Session::get('success') }}
-            </div>
-        @endif
+    <div class="content">
+        <main class="app-main"> <!--begin::App Content Header-->
+            <div class="app-content-header"> <!--begin::Container-->
+                <div class="container-fluid"> <!--begin::Row-->
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <h1 class="fw-bold fs-3">Daftar Data Karyawan</h1>
+                        </div>
+                        <div class="col-sm-6">
+                            <ol class="breadcrumb float-sm-end">
+                                <button class="btn btn-primary">Tambah Karyawan</button>
+                            </ol>
+                        </div>
+                    </div> <!--end::Row-->
+                </div> <!--end::Container-->
+            </div> <!--end::App Content Header--> <!--begin::App Content-->
+            <div class="app-content"> <!--begin::Container-->
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <h3 class="card-title">Bordered Table</h3>
+                    </div> <!-- /.card-header -->
+                    <div class="card-body">
+                        <a href="{{ route('admin.karyawan.create') }}" class="btn btn-primary float-left mb-2">Input Data
+                            Karyawan</a>
+                        @if (Session::has('success'))
+                            <div class="alert alert-success" role="alert">
+                                {{ Session::get('success') }}
+                            </div>
+                        @endif
 
-        <table id="karyawanTable" class="table table-striped table-bordered">
-            <thead class="table-dark text-center">
-                <tr>
-                    <th scope="col">ID Karyawan</th>
-                    <th scope="col">Nama Lengkap</th>
-                    <th scope="col">Posisi Pekerjaan</th>
-                    <th scope="col">Jenis Kelamin</th>
-                    <th scope="col">Tempat Lahir</th>
-                    <th scope="col">Tanggal Lahir</th>
-                    <th scope="col">Agama</th>
-                    <th scope="col">Action</th>
-                </tr>
-            </thead>
-            <tbody>
-                <!-- Data will be loaded here via AJAX -->
-            </tbody>
-        </table>
-    </div>
+                        <div class="table-responsive">
+                            <div class="mb-3 d-flex align-items-end">
+                                <div class="me-2">
+                                    <label for="namaFilter" class="form-label mb-0">Nama Lengkap :</label>
+                                    <input type="text" id="namaFilter" placeholder="Search Nama Karyawan"
+                                        class="form-control form-control-sm me-2" style="width: auto;">
+                                </div>
 
-    <!-- Modal -->
-    <div class="modal fade" id="karyawanDetailModal" tabindex="-1" aria-labelledby="karyawanDetailModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="karyawanDetailModalLabel">Detail Karyawan</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <p><strong>Kewarganegaraan :</strong> <span id="detailKewarganegaraan"></span></p>
-                    <p><strong>Status Perkawinan :</strong> <span id="detailStatusPerkawinan"></span></p>
-                    <p><strong>No Telepon :</strong> <span id="detailNoTelepon"></span></p>
-                    <p><strong>Email :</strong> <span id="detailEmail"></span></p>
-                    <p><strong>Alamat Lengkap :</strong> <span id="detailAlamatLengkap"></span></p>
-                    <p><strong>Kode Pos :</strong> <span id="detailKodePos"></span></p>
-                    <p><strong>Riwayat Pendidikan :</strong> <span id="detailRiwayatPendidikan"></span></p>
-                    <p><strong>Foto KTP :</strong> <br>
-                        <img id="detailFotoKTP" src="" alt="Foto KTP" style="width: 100px; height: auto;">
-                    </p>
-                    <p><strong>Foto KK:</strong> <br>
-                        <img id="detailFotoKK" src="" alt="Foto KK" style="width: 100px; height: auto;">
-                    </p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <div class="me-2">
+                                    <label for="pekerjaanFilter" class="form-label mb-0">Pekerjaan :</label>
+                                    <select id="pekerjaanFilter" class="form-select form-select-sm me-2">
+                                        <option value=""> -- Pilih Pekerjaan --</option>
+                                        <option value="Manager">Manager</option>
+                                        <option value="Administrasi">Administrasi</option>
+                                        <option value="Supervisor">Supervisor</option>
+                                        <option value="Marketing Officer">Marketing Officer</option>
+                                        <option value="Collection Officer">Collection Officer</option>
+                                        <option value="Kasir">Kasir</option>
+                                        <option value="Customer Service">Customer Service</option>
+                                        <option value="Teller">Teller</option>
+                                        <option value="Security">Security</option>
+                                    </select>
+                                </div>
+
+                                <div class="me-2">
+                                    <label for="tanggalGabungFilter" class="form-label mb-0">Tanggal Gabung :</label>
+                                    <input type="date" id="tanggalGabungFilter" class="form-control form-control-sm"
+                                        style="width: auto;">
+                                </div>
+
+                                <button id="filterButton" class="btn btn-success btn-sm">Filter</button>
+                            </div>
+                            <table id="karyawanTable" class="table table-bordered" style="margin-top: 10px; margin-bottom: 10px">
+                                <thead>
+                                    <tr>
+                                        <th>No.</th>
+                                        <th>Nama Lengkap</th>
+                                        <th>Posisi Pekerjaan</th>
+                                        <th>Jenis Kelamin</th>
+                                        <th>Tempat Lahir</th>
+                                        <th>Tanggal Lahir</th>
+                                        <th>Agama</th>
+                                        <th>No. Telp.</th>
+                                        <th>Aksi</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <!-- Data dari ajax -->
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div> <!-- /.card-body -->
+                    <div class="card-footer clearfix">
+                        <ul class="pagination pagination-sm m-0 float-end">
+                            <li class="page-item"> <a class="page-link" href="#">&laquo;</a> </li>
+                            <li class="page-item"> <a class="page-link" href="#">1</a> </li>
+                            <li class="page-item"> <a class="page-link" href="#">2</a> </li>
+                            <li class="page-item"> <a class="page-link" href="#">3</a> </li>
+                            <li class="page-item"> <a class="page-link" href="#">&raquo;</a> </li>
+                        </ul>
+                    </div>
+                </div> <!-- /.card -->
+            </div> <!--end::App Content-->
+
+            <!-- Modal -->
+            <div class="modal fade" id="karyawanDetailModal" tabindex="-1" aria-labelledby="karyawanDetailModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="karyawanDetailModalLabel">Detail Karyawan</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <p><strong>Kewarganegaraan :</strong> <span id="detailKewarganegaraan"></span></p>
+                            <p><strong>Status Perkawinan :</strong> <span id="detailStatusPerkawinan"></span></p>
+                            <p><strong>Email :</strong> <span id="detailEmail"></span></p>
+                            <p><strong>Alamat Lengkap :</strong> <span id="detailAlamatLengkap"></span></p>
+                            <p><strong>Kode Pos :</strong> <span id="detailKodePos"></span></p>
+                            <p><strong>Riwayat Pendidikan :</strong> <span id="detailRiwayatPendidikan"></span></p>
+                            <p><strong>Foto KTP :</strong> <br>
+                                <img id="detailFotoKTP" src="" alt="Foto KTP" style="width: 100px; height: auto;">
+                            </p>
+                            <p><strong>Foto KK:</strong> <br>
+                                <img id="detailFotoKK" src="" alt="Foto KK" style="width: 100px; height: auto;">
+                            </p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
     </div>
-</div>
+    </main> <!--end::App Main--> <!--begin::Footer-->
+
+
 
     <!-- Include DataTables CSS and JS -->
     <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
@@ -71,22 +140,63 @@
 
     <script>
         $(document).ready(function() {
-            $('#karyawanTable').DataTable({
+            var table = $('#karyawanTable').DataTable({
                 processing: true,
                 serverSide: true,
-                ajax: '{{ route("admin.karyawan.data") }}',
-                columns: [
-                    { data: 'id', name: 'id' },
-                    { data: 'nama_lengkap', name: 'nama_lengkap' },
-                    { data: 'posisi_pekerjaan', name: 'posisi_pekerjaan'},
-                    { data: 'jenis_kelamin', name: 'jenis_kelamin' },
-                    { data: 'tempat_lahir', name: 'tempat_lahir' },
-                    { data: 'tanggal_lahir', name: 'tanggal_lahir' },
-                    { data: 'agama', name: 'agama' },
-                    { data: 'action', name: 'action', orderable: false, searchable: false, },
+                ajax: {
+                    url: '{{ route('admin.karyawan.data') }}',
+                    data: function(d) {
+                        d.nama_lengkap = $('#namaFilter').val(); // Mengirimkan filter ke server
+                        d.posisi_pekerjaan = $('#pekerjaanFilter').val();
+                        d.tanggal_gabung = $('#tanggalGabungFilter').val();
+                    }
+                },
+                columns: [{
+                        data: 'id',
+                        name: 'id'
+                    },
+                    {
+                        data: 'nama_lengkap',
+                        name: 'nama_lengkap'
+                    },
+                    {
+                        data: 'posisi_pekerjaan',
+                        name: 'posisi_pekerjaan'
+                    },
+                    {
+                        data: 'jenis_kelamin',
+                        name: 'jenis_kelamin'
+                    },
+                    {
+                        data: 'tempat_lahir',
+                        name: 'tempat_lahir'
+                    },
+                    {
+                        data: 'tanggal_lahir',
+                        name: 'tanggal_lahir'
+                    },
+                    {
+                        data: 'agama',
+                        name: 'agama'
+                    },
+                    {
+                        data: 'no_telepon',
+                        name: 'no_telepon'
+                    },
+                    {
+                        data: 'action',
+                        name: 'action',
+                        orderable: false,
+                        searchable: false
+                    },
                 ],
             });
+
+            $('#filterButton').on('keyup click', function() {
+                table.draw();
+            });
         });
+
 
         // Script untuk modal detail karyawan
         var karyawanDetailModal = document.getElementById('karyawanDetailModal');
@@ -94,7 +204,6 @@
             var button = event.relatedTarget;
             var kewarganegaraan = button.getAttribute('data-kewarganegaraan');
             var statusPerkawinan = button.getAttribute('data-status_perkawinan');
-            var noTelepon = button.getAttribute('data-no_telepon');
             var email = button.getAttribute('data-email');
             var alamatLengkap = button.getAttribute('data-alamat_lengkap');
             var kodePos = button.getAttribute('data-kode_pos');
@@ -104,7 +213,6 @@
 
             karyawanDetailModal.querySelector('#detailKewarganegaraan').textContent = kewarganegaraan;
             karyawanDetailModal.querySelector('#detailStatusPerkawinan').textContent = statusPerkawinan;
-            karyawanDetailModal.querySelector('#detailNoTelepon').textContent = noTelepon;
             karyawanDetailModal.querySelector('#detailEmail').textContent = email;
             karyawanDetailModal.querySelector('#detailAlamatLengkap').textContent = alamatLengkap;
             karyawanDetailModal.querySelector('#detailKodePos').textContent = kodePos;

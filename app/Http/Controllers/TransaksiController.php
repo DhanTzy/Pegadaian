@@ -18,9 +18,21 @@ class TransaksiController extends Controller
 
     public function getData(Request $request)
     {
-        $transaksi = Transaksi::with('jaminan')->where('status_delete', '1')->get();
+        $query = Transaksi::with('jaminan')->where('status_delete', '1');
 
-        return DataTables::of($transaksi)
+        if ($request->has('nama_nasabah') && $request->input('nama_nasabah') != '') {
+            $query->where('nama_nasabah', 'LIKE', '%' . $request->input('nama_nasabah') . '%');
+        }
+
+        if ($request->has('no_rekening') && $request->input('no_rekening') != '') {
+            $query->where('no_rekening', 'LIKE', '%' . $request->input('no_rekening') . '%');
+        }
+
+        if ($request->has('metode_pencairan') && $request->input('metode_pencairan') != '') {
+            $query->where('metode_pencairan', 'LIKE', '%' . $request->input('metode_pencairan') . '%');
+        }
+
+        return DataTables::of($query)
             ->addColumn('action', function ($transaksi) {
                 // Ambil semua foto jaminan
                 $fotoJaminan = '';
@@ -31,8 +43,6 @@ class TransaksiController extends Controller
             <button type="button" class="btn btn-info btn-sm me-2"
                     data-bs-toggle="modal"
                     data-bs-target="#transaksiDetailModal"
-                    data-no_rekening="' . $transaksi->no_rekening . '"
-                    data-bank="' . $transaksi->bank . '"
                     data-foto_jaminan="' . htmlspecialchars($fotoJaminan) . '">
                 Detail
             </button>
@@ -41,10 +51,12 @@ class TransaksiController extends Controller
                   onsubmit="return confirm(\'Apakah Anda Yakin Menghapus Data Ini?\')" class="d-inline">
                 ' . csrf_field() . '
                 ' . method_field('DELETE') . '
-                <button class="btn btn-danger btn-sm">Delete</button>
+                <button class="btn btn-danger btn-sm me-2">Delete</button>
             </form>
         ';
-         })->make(true);
+         })->editColumn('tanggal', function ($transkasi) {
+            return Carbon::parse($transkasi->tanggal)->format('d/m/Y');
+         })->rawColumns(['action'])->make(true);
     }
 
     public function create()
@@ -96,6 +108,7 @@ class TransaksiController extends Controller
     public function show($id)
     {
         $transaksi = Transaksi::with('jaminan')->findOrFail($id); // Mengambil data transaksi beserta jaminan
+        $transaksi->tanggal = Carbon::parse($transaksi->tanggal)->format('d/m/y');
         return view('admin.transaksi.show', compact('transaksi')); // Mengembalikan view dengan data transaksi
     }
 

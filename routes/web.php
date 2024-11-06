@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\NasabahController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\UserProfileController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\KaryawanController;
 use App\Http\Controllers\TransaksiController;
@@ -44,7 +45,9 @@ Route::middleware(['auth', 'user-access:user'])->group(function () {
     Route::get('/home', [HomeController::class, 'index'])->name('home');
 
     // User Profil
-    Route::get('/profile', [UserController::class, 'userprofile'])->name('profile');
+    Route::get('/user/profile', [UserProfileController::class, 'show'])->name('user.profile');
+    Route::put('/user/profile', [UserProfileController::class, 'update'])->name('user.profile.update');
+
 
     // Gadai Emas
     Route::get('/gadaiemas', [UserController::class, 'gadaiemas'])->name('gadaiemas');
@@ -76,7 +79,9 @@ Route::middleware(['auth', 'user-access:admin'])->group(function () {
     Route::get('/admin/transaksi/data', [TransaksiController::class, 'getData'])->name('admin.transaksi.data');
 
     // Profile
+    // Profile
     Route::get('/admin/profile', [AdminController::class, 'adminProfile'])->name('admin.profile');
+    Route::put('/admin/profile', [AdminController::class, 'updateProfile'])->name('admin.profile.update');
 
     // Nasabah
     Route::get('/admin/nasabah', [NasabahController::class, 'index'])->name('admin.nasabah');
