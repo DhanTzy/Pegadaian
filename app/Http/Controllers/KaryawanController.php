@@ -18,7 +18,7 @@ class KaryawanController extends Controller
 
     public function getData(Request $request)
     {
-        $query = Karyawan::where('status_delete', '1');
+        $query = Karyawan::where('status_delete', '1')->with('anggotaKeluarga');
 
         if ($request->has('nama_lengkap') && $request->input('nama_lengkap') != '') {
             $query->where('nama_lengkap', 'LIKE', '%' . $request->input('nama_lengkap') . '%');
@@ -38,6 +38,13 @@ class KaryawanController extends Controller
 
         return DataTables::of($query)
             ->addColumn('action', function ($karyawan) {
+                $anggotaKeluarga = $karyawan->anggotaKeluarga->map(function ($anggota) {
+                    return [
+                        'status_kekeluargaan' => $anggota->status_kekeluargaan,
+                        'nama' => $anggota->nama,
+                        'nik' => $anggota->nik,
+                    ];
+                });
                 return '
                 <button class="btn btn-info btn-sm me-2" data-bs-toggle="modal" data-bs-target="#karyawanDetailModal"
                         data-nip="' . $karyawan->nip . '"
@@ -54,6 +61,7 @@ class KaryawanController extends Controller
                         data-email="' . $karyawan->email . '"
                         data-alamat_lengkap="' . $karyawan->alamat_lengkap . '"
                         data-kode_pos="' . $karyawan->kode_pos . '"
+                        data-anggota_keluarga="' . htmlspecialchars(json_encode($anggotaKeluarga)) . '"
                         data-foto_ktp="' . asset('storage/' . $karyawan->foto_ktp) . '"
                         data-foto_kk="' . asset('storage/' . $karyawan->foto_kk) . '">
                     Detail

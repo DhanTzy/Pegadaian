@@ -42,7 +42,7 @@
                             <img src="{{ asset('storage/profile_images/' . auth()->user()->image) }}" alt="Profile" class="logoprofile">
                                 <ul class="dropdown-menu dropdown-menu-end p-1">
                                     <a href="{{ route('admin.profile') }}" class="btn btn-success">Profile</a>
-                                    <a href="{{ route('logout') }}" class="btn btn-primary">Logout</a>
+                                    <a href="#" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#logoutModal">Logout</a>
                                 </ul>
                         </li>
                 </ul>
@@ -123,6 +123,23 @@
     </div> <!--end::Footer-->
     </div> <!--end::App Wrapper--> <!--begin::Script--> <!--begin::Third Party Plugin(OverlayScrollbars)-->
 
+    <div class="modal fade" id="logoutModal" tabindex="-1" aria-labelledby="logoutModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="logoutModalLabel">Konfirmasi Logout</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Apakah Anda yakin ingin keluar dari akun ini?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                    <a href="{{ route('logout') }}" type="button" class="btn btn-primary">Logout</a>
+                </div>
+            </div>
+        </div>
+    </div>
     @stack('script')
     {{-- <script src="{{ asset('js/sidebar.js') }}"></script> --}}
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
