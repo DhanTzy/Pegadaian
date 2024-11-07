@@ -19,7 +19,7 @@
                 <input id="image" name="image" type="file" class="form-control" accept="image/*"
                     onchange="previewImage(event)" />
                 <img id="preview"
-                    src="{{ auth()->user()->image ? asset('storage/profile_images/' . auth()->user()->image) : 'img/demaz.jpeg' }}"
+                    src="{{ auth()->user()->image ? asset('storage/profile_images/' . auth()->user()->image) : '' }}"
                     alt="Preview" width="100" class="mt-2" />
             </div>
 

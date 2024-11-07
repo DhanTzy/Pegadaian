@@ -40,7 +40,7 @@
                         </li> <!--end::Fullscreen Toggle--> <!--begin::User Menu Dropdown-->
                         <li class="nav-item dropdown user-menu"><a href="#" class="nav-link" data-bs-toggle="dropdown">
                             <img src="{{ asset('storage/profile_images/' . auth()->user()->image) }}" alt="Profile" class="logoprofile">
-                                <ul class="dropdown-menu dropdown-menu-end">
+                                <ul class="dropdown-menu dropdown-menu-end p-1">
                                     <a href="{{ route('admin.profile') }}" class="btn btn-success">Profile</a>
                                     <a href="{{ route('logout') }}" class="btn btn-primary">Logout</a>
                                 </ul>
