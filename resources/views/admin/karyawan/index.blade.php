@@ -102,7 +102,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <p><strong>Nip :</strong> <span id="detailNip"></span></p>
+                    <p><strong>NIP :</strong> <span id="detailNip"></span></p>
                     <p><strong>Nama Lengkap :</strong> <span id="detailNamaLengkap"></span></p>
                     <p><strong>Posisi Pekerjaan :</strong> <span id="detailPosisiPekerjaan"></span></p>
                     <p><strong>Jenis Kelamin :</strong> <span id="detailJenisKelamin"></span></p>

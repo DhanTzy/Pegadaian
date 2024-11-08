@@ -160,9 +160,13 @@
                                 <option value="Kepala Keluarga">Kepala Keluarga</option>
                                 <option value="Ayah">Ayah</option>
                                 <option value="Ibu">Ibu</option>
+                                <option value="Kakak">Kakak</option>
+                                <option value="Adik">Adik</option>
                                 <option value="Suami">Suami</option>
                                 <option value="Istri">Istri</option>
                                 <option value="Anak">Anak</option>
+                                <option value="Kakek">Kakek</option>
+                                <option value="Nenek">Nenek</option>
                             </select>
                         </div>
                         <div class="mb-2">
@@ -253,9 +257,13 @@
                 <option value="Kepala Keluarga">Kepala Keluarga</option>
                 <option value="Ayah">Ayah</option>
                 <option value="Ibu">Ibu</option>
+                <option value="Kakak">Kakak</option>
+                <option value="Adik">Adik</option>
                 <option value="Suami">Suami</option>
                 <option value="Istri">Istri</option>
                 <option value="Anak">Anak</option>
+                <option value="Kakek">Kakek</option>
+                <option value="Nenek">Nenek</option>
             </select>
         </div>
         <div class="mb-2">
