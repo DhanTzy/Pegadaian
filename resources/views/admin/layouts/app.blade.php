@@ -82,6 +82,7 @@
                 </ul>
             </div>
         </nav>
+
         <aside class="app-sidebar bg-body-secondary shadow" data-bs-theme="dark">
             <div class="sidebar-brand"> <a href="" class="brand-link"><img src="{{ asset('img/Sidebar.png') }}"
                         alt="AdminLTE Logo" class="brand-image opacity-75 shadow">
@@ -154,7 +155,7 @@
                                         <p>Layout RTL</p>
                                     </a> </li>
                             </ul>
-                        </li>
+                        </li>-->
 
                     </ul> <!--end::Sidebar Menu-->
                 </nav>

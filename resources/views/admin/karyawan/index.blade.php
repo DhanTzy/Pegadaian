@@ -75,8 +75,7 @@
                                         <th scope="col">Nama Lengkap</th>
                                         <th scope="col">Posisi Pekerjaan</th>
                                         <th scope="col">Jenis Kelamin</th>
-                                        <th scope="col">Tempat Lahir</th>
-                                        <th scope="col">Tanggal Lahir</th>
+                                        <th scope="col">Kewarganegaraan</th>
                                         <th scope="col">Agama</th>
                                         <th scope="col">Telepon</th>
                                         <th scope="col">Tanggal Gabung</th>
@@ -88,15 +87,6 @@
                                 </tbody>
                             </table>
                         </div>
-                    </div>
-                    <div class="card-footer clearfix">
-                        <ul class="pagination pagination-sm m-0 float-end">
-                            <li class="page-item"> <a class="page-link" href="#">&laquo;</a> </li>
-                            <li class="page-item"> <a class="page-link" href="#">1</a> </li>
-                            <li class="page-item"> <a class="page-link" href="#">2</a> </li>
-                            <li class="page-item"> <a class="page-link" href="#">3</a> </li>
-                            <li class="page-item"> <a class="page-link" href="#">&raquo;</a> </li>
-                        </ul>
                     </div>
                 </div>
             </div>
@@ -112,7 +102,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <p><strong>Nip :</strong> <span id="detailNip"></span></p>
+                    <p><strong>NIP :</strong> <span id="detailNip"></span></p>
                     <p><strong>Nama Lengkap :</strong> <span id="detailNamaLengkap"></span></p>
                     <p><strong>Posisi Pekerjaan :</strong> <span id="detailPosisiPekerjaan"></span></p>
                     <p><strong>Jenis Kelamin :</strong> <span id="detailJenisKelamin"></span></p>
@@ -126,6 +116,10 @@
                     <p><strong>Email :</strong> <span id="detailEmail"></span></p>
                     <p><strong>Alamat Lengkap :</strong> <span id="detailAlamatLengkap"></span></p>
                     <p><strong>Kode Pos :</strong> <span id="detailKodePos"></span></p>
+                    <p><strong>Anggota Keluarga :</strong></p>
+                    <ul id="detailAnggotaKeluarga">
+                        <!-- Daftar anggota keluarga akan dimuat di sini -->
+                    </ul>
                     <p><strong>Foto KTP :</strong> <br>
                         <img id="detailFotoKTP" src="" alt="Foto KTP" style="width: 100px; height: auto;">
                     </p>
@@ -140,134 +134,155 @@
         </div>
     </div>
 
-<!-- Include DataTables CSS and JS -->
-<link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+    <!-- Include DataTables CSS and JS -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
 
-<script>
-    $(document).ready(function() {
-        var table = $('#karyawanTable').DataTable({
-            processing: true,
-            serverSide: true,
-            ajax: {
-                url: '{{ route('admin.karyawan.data') }}',
-                data: function(d) {
-                    d.nama_lengkap = $('#namaFilter').val(); // Mengirimkan filter ke server
-                    d.nip = $('#nipFilter').val();
-                    d.posisi_pekerjaan = $('#pekerjaanFilter').val();
-                    d.tanggal_gabung = $('#tanggalGabungFilter').val();
-                }
-            },
-            columns: [{
-                    data: 'id',
-                    name: 'id'
-                },
-                {
-                    data: 'nip',
-                    name: 'nip'
-                },
-                {
-                    data: 'nama_lengkap',
-                    name: 'nama_lengkap'
-                },
-                {
-                    data: 'posisi_pekerjaan',
-                    name: 'posisi_pekerjaan'
-                },
-                {
-                    data: 'jenis_kelamin',
-                    name: 'jenis_kelamin'
-                },
-                {
-                    data: 'tempat_lahir',
-                    name: 'tempat_lahir'
-                },
-                {
-                    data: 'tanggal_lahir',
-                    name: 'tanggal_lahir'
-                },
-                {
-                    data: 'agama',
-                    name: 'agama'
-                },
-                {
-                    data: 'no_telepon',
-                    name: 'no_telepon'
-                },
-                {
-                    data: 'created_at',
-                    name: 'created_at',
-                    render: function(data, type, row) {
-                        var date = new Date(data);
-                        return date.toLocaleDateString('id-ID', {
-                            day: '2-digit',
-                            month: '2-digit',
-                            year: 'numeric'
-                        });
+    <script>
+        $(document).ready(function() {
+            var table = $('#karyawanTable').DataTable({
+                processing: true,
+                serverSide: true,
+                ajax: {
+                    url: '{{ route('admin.karyawan.data') }}',
+                    data: function(d) {
+                        d.nama_lengkap = $('#namaFilter').val(); // Mengirimkan filter ke server
+                        d.nip = $('#nipFilter').val();
+                        d.posisi_pekerjaan = $('#pekerjaanFilter').val();
+                        d.tanggal_gabung = $('#tanggalGabungFilter').val();
                     }
                 },
-                {
-                    data: 'action',
-                    name: 'action',
-                    orderable: false,
-                    searchable: false
-                },
-            ],
+                columns: [{
+                        data: 'id',
+                        name: 'id'
+                    },
+                    {
+                        data: 'nip',
+                        name: 'nip'
+                    },
+                    {
+                        data: 'nama_lengkap',
+                        name: 'nama_lengkap'
+                    },
+                    {
+                        data: 'posisi_pekerjaan',
+                        name: 'posisi_pekerjaan'
+                    },
+                    {
+                        data: 'jenis_kelamin',
+                        name: 'jenis_kelamin'
+                    },
+                    {
+                        data: 'kewarganegaraan',
+                        name: 'kewarganegaraan'
+                    },
+                    {
+                        data: 'agama',
+                        name: 'agama'
+                    },
+                    {
+                        data: 'no_telepon',
+                        name: 'no_telepon'
+                    },
+                    {
+                        data: 'created_at',
+                        name: 'created_at',
+                        render: function(data, type, row) {
+                            var date = new Date(data);
+                            return date.toLocaleDateString('id-ID', {
+                                day: '2-digit',
+                                month: '2-digit',
+                                year: 'numeric'
+                            });
+                        }
+                    },
+                    {
+                        data: 'action',
+                        name: 'action',
+                        orderable: false,
+                        searchable: false
+                    },
+                ],
+            });
+
+            $('#filterButton').on('keyup click', function() {
+                table.draw();
+            });
+
+            $('#resetButton').on('click', function() {
+                $('#namaFilter').val('');
+                $('#nipFilter').val('');
+                $('#pekerjaanFilter').val('');
+                $('#tanggalGabungFilter').val('');
+                table.draw();
+            });
         });
 
-        $('#filterButton').on('keyup click', function() {
-            table.draw();
+
+        // Script untuk modal detail karyawan
+        var karyawanDetailModal = document.getElementById('karyawanDetailModal');
+        karyawanDetailModal.addEventListener('show.bs.modal', function(event) {
+            var button = event.relatedTarget;
+            var nip = button.getAttribute('data-nip');
+            var namaLengkap = button.getAttribute('data-nama_lengkap');
+            var posisiPekerjaan = button.getAttribute('data-posisi_pekerjaan');
+            var jenisKelamin = button.getAttribute('data-jenis_kelamin');
+            var tempatLahir = button.getAttribute('data-tempat_lahir');
+            var tanggalLahir = button.getAttribute('data-tanggal_lahir');
+            var agama = button.getAttribute('data-agama');
+            var noTelepon = button.getAttribute('data-no_telepon');
+            var tanggalGabung = button.getAttribute('data-created_at');
+            var kewarganegaraan = button.getAttribute('data-kewarganegaraan');
+            var statusPerkawinan = button.getAttribute('data-status_perkawinan');
+            var email = button.getAttribute('data-email');
+            var alamatLengkap = button.getAttribute('data-alamat_lengkap');
+            var kodePos = button.getAttribute('data-kode_pos');
+            var anggotaKeluarga = JSON.parse(button.getAttribute('data-anggota_keluarga'));
+            var fotoKTP = button.getAttribute('data-foto_ktp');
+            var fotoKK = button.getAttribute('data-foto_kk');
+
+            karyawanDetailModal.querySelector('#detailNip').textContent = nip;
+            karyawanDetailModal.querySelector('#detailNamaLengkap').textContent = namaLengkap;
+            karyawanDetailModal.querySelector('#detailPosisiPekerjaan').textContent = posisiPekerjaan;
+            karyawanDetailModal.querySelector('#detailJenisKelamin').textContent = jenisKelamin;
+            karyawanDetailModal.querySelector('#detailTempatLahir').textContent = tempatLahir;
+            karyawanDetailModal.querySelector('#detailTanggalLahir').textContent = tanggalLahir;
+            karyawanDetailModal.querySelector('#detailAgama').textContent = agama;
+            karyawanDetailModal.querySelector('#detailNoTelepon').textContent = noTelepon;
+            karyawanDetailModal.querySelector('#detailTanggalGabung').textContent = tanggalGabung;
+            karyawanDetailModal.querySelector('#detailKewarganegaraan').textContent = kewarganegaraan;
+            karyawanDetailModal.querySelector('#detailStatusPerkawinan').textContent = statusPerkawinan;
+            karyawanDetailModal.querySelector('#detailEmail').textContent = email;
+            karyawanDetailModal.querySelector('#detailAlamatLengkap').textContent = alamatLengkap;
+            karyawanDetailModal.querySelector('#detailKodePos').textContent = kodePos;
+            karyawanDetailModal.querySelector('#detailFotoKTP').src = fotoKTP;
+            karyawanDetailModal.querySelector('#detailFotoKK').src = fotoKK;
+            // Menampilkan anggota keluarga
+            var anggotaKeluargaList = karyawanDetailModal.querySelector('#detailAnggotaKeluarga');
+            anggotaKeluargaList.innerHTML = ''; // reset dulu
+
+            anggotaKeluarga.forEach(function(anggota) {
+                var div = document.createElement('div'); // Ganti li dengan div untuk menampilkan vertikal
+
+                // Membuat elemen paragraf untuk setiap data
+                var statusKekeluargaan = document.createElement('p');
+                statusKekeluargaan.textContent = `* Status Kekeluargaan : ${anggota.status_kekeluargaan}`;
+
+                var nama = document.createElement('p');
+                nama.textContent = `Nama : ${anggota.nama}`;
+
+                var nik = document.createElement('p');
+                nik.textContent = `NIK : ${anggota.nik}`;
+
+                // Menambahkan paragraf ke dalam div
+                div.appendChild(statusKekeluargaan);
+                div.appendChild(nama);
+                div.appendChild(nik);
+
+                // Menambahkan div ke dalam list anggota keluarga
+                anggotaKeluargaList.appendChild(div);
+            });
         });
-
-        $('#resetButton').on('click', function() {
-            $('#namaFilter').val('');
-            $('#nipFilter').val('');
-            $('#pekerjaanFilter').val('');
-            $('#tanggalGabungFilter').val('');
-            table.draw();
-        });
-    });
-
-
-    // Script untuk modal detail karyawan
-    var karyawanDetailModal = document.getElementById('karyawanDetailModal');
-    karyawanDetailModal.addEventListener('show.bs.modal', function(event) {
-        var button = event.relatedTarget;
-        var nip = button.getAttribute('data-nip');
-        var namaLengkap = button.getAttribute('data-nama_lengkap');
-        var posisiPekerjaan = button.getAttribute('data-posisi_pekerjaan');
-        var jenisKelamin = button.getAttribute('data-jenis_kelamin');
-        var tempatLahir = button.getAttribute('data-tempat_lahir');
-        var tanggalLahir = button.getAttribute('data-tanggal_lahir');
-        var agama = button.getAttribute('data-agama');
-        var noTelepon = button.getAttribute('data-no_telepon');
-        var tanggalGabung = button.getAttribute('data-created_at');
-        var kewarganegaraan = button.getAttribute('data-kewarganegaraan');
-        var statusPerkawinan = button.getAttribute('data-status_perkawinan');
-        var email = button.getAttribute('data-email');
-        var alamatLengkap = button.getAttribute('data-alamat_lengkap');
-        var kodePos = button.getAttribute('data-kode_pos');
-        var fotoKTP = button.getAttribute('data-foto_ktp');
-        var fotoKK = button.getAttribute('data-foto_kk');
-
-        karyawanDetailModal.querySelector('#detailNip').textContent = nip;
-        karyawanDetailModal.querySelector('#detailNamaLengkap').textContent = namaLengkap;
-        karyawanDetailModal.querySelector('#detailPosisiPekerjaan').textContent = posisiPekerjaan;
-        karyawanDetailModal.querySelector('#detailJenisKelamin').textContent = jenisKelamin;
-        karyawanDetailModal.querySelector('#detailTempatLahir').textContent = tempatLahir;
-        karyawanDetailModal.querySelector('#detailTanggalLahir').textContent = tanggalLahir;
-        karyawanDetailModal.querySelector('#detailAgama').textContent = agama;
-        karyawanDetailModal.querySelector('#detailNoTelepon').textContent = noTelepon;
-        karyawanDetailModal.querySelector('#detailTanggalGabung').textContent = tanggalGabung;
-        karyawanDetailModal.querySelector('#detailKewarganegaraan').textContent = kewarganegaraan;
-        karyawanDetailModal.querySelector('#detailStatusPerkawinan').textContent = statusPerkawinan;
-        karyawanDetailModal.querySelector('#detailEmail').textContent = email;
-        karyawanDetailModal.querySelector('#detailAlamatLengkap').textContent = alamatLengkap;
-        karyawanDetailModal.querySelector('#detailKodePos').textContent = kodePos;
-
-        karyawanDetailModal.querySelector('#detailFotoKTP').src = fotoKTP;
-        karyawanDetailModal.querySelector('#detailFotoKK').src = fotoKK;
-    });
-</script>
+    </script>
 @endsection

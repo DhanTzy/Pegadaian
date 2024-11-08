@@ -101,7 +101,7 @@
                                         <p><strong>Tanggal Lahir:</strong> <span id="detailTanggalLahir"></span></p>
                                         <p><strong>Status Perkawinan:</strong> <span id="detailStatusPerkawinan"></span></p>
                                         <p><strong>Pekerjaan:</strong> <span id="detailPekerjaan"></span></p>
-                                        <p><strong>Telepom:</strong> <span id="detailTelepon"></span></p>
+                                        <p><strong>Telepon:</strong> <span id="detailTelepon"></span></p>
                                         <p><strong>Tanggal Daftar:</strong> <span id="detailTanggalDaftar"></span></p>
                                         <p><strong>Alamat Lengkap:</strong> <span id="detailAlamatLengkap"></span></p>
                                         <p><strong>Kode Pos:</strong> <span id="detailKodePos"></span></p>
