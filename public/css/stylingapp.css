@@ -3,10 +3,19 @@ body {
     margin: 0%;
     padding: 0%;
 }
+.nav-item {
+    margin-right: 10px;
+    justify-items: center !important;
+}
 .logoprofile {
     height: 30px;
     width: auto;
     border-radius: 50%;
+}
+.profiledropdown {
+    margin-top: 0%;
+    display: row;
+    padding: 10px;
 }
 .text-black {
     color: #000000 !important;
