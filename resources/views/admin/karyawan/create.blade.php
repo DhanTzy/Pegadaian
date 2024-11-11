@@ -229,7 +229,7 @@
             <button type="button" class="btn btn-primary w-20" data-bs-toggle="modal"
                 data-bs-target="#confirmModal">Tambah Data
             </button>
-            <a href="{{ url()->previous() }}" class="btn btn-secondary w-20">Kembali</a>
+            <a href="{{ url('admin/karyawan') }}" class="btn btn-secondary w-20">Kembali</a>
         </form>
     </div>
 </div>

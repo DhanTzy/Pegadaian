@@ -157,7 +157,7 @@
                 data-bs-target="#confirmModal">Tambah
                 Data
             </button>
-            <a href="{{ url()->previous() }}" class="btn btn-secondary w-20">Kembali</a>
+            <a href="{{ url('admin/transaksi') }}" class="btn btn-secondary w-20">Kembali</a>
         </form>
     </div>
 </div>

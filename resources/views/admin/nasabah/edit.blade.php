@@ -105,7 +105,7 @@
                 </div>
                 <button type="button" class="btn btn-primary w-20" data-bs-toggle="modal"
                     data-bs-target="#editConfirmModal">Perbarui Data</button>
-                <a href="{{ url()->previous() }}" class="btn btn-secondary w-20">Kembali</a>
+                <a href="{{ url('admin/nasabah') }}" class="btn btn-secondary w-20">Kembali</a>
             </form>
         </div>
     </div>

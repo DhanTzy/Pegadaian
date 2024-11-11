@@ -9,7 +9,7 @@
     <div class="mb-4 pb-4 border-bottom">
         <form action="{{ route('admin.nasabah.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
-            
+
             <div class="mb-3">
                 <label class="form-label">Nomor Identitas (KTP)</label>
                 <input id="nomor_identitas" name="nomor_identitas" type="text" class="form-control"
@@ -151,7 +151,7 @@
             <button type="button" class="btn btn-primary w-20" data-bs-toggle="modal"
                 data-bs-target="#confirmModal">Tambah Data
             </button>
-            <a href="{{ url()->previous() }}" class="btn btn-secondary w-20">Kembali</a>
+            <a href="{{ url('admin/nasabah') }}" class="btn btn-secondary w-20">Kembali</a>
         </form>
     </div>
 </div>
