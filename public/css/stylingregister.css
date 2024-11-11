@@ -21,7 +21,7 @@ p {
 }
 
 .logo {
-    width: 30%;
+    width: 30% !important;
     width: 100px;
     height: 40px;
     background-color: #d9d9d9;

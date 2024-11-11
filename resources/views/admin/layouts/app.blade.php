@@ -33,18 +33,52 @@
                             <i class="bi bi-list"></i> </a> </li>
                 </ul>
                 <ul class="navbar-nav ms-auto">
-                        <li class="nav-item"> <a class="nav-link" href="#" data-lte-toggle="fullscreen"> <i
-                                    data-lte-icon="maximize" class="bi bi-arrows-fullscreen"></i> <i
-                                    data-lte-icon="minimize" class="bi bi-fullscreen-exit" style="display: none;"></i>
-                            </a>
-                        </li> <!--end::Fullscreen Toggle--> <!--begin::User Menu Dropdown-->
-                        <li class="nav-item dropdown user-menu"><a href="#" class="nav-link" data-bs-toggle="dropdown">
-                            <img src="{{ asset('storage/profile_images/' . auth()->user()->image) }}" alt="Profile" class="logoprofile">
-                                <ul class="dropdown-menu dropdown-menu-end p-1">
-                                    <a href="{{ route('admin.profile') }}" class="btn btn-success">Profile</a>
-                                    <a href="#" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#logoutModal">Logout</a>
-                                </ul>
-                        </li>
+                    <li class="nav-item"> <a class="nav-link" href="#" data-lte-toggle="fullscreen"> <i
+                                data-lte-icon="maximize" class="bi bi-arrows-fullscreen"></i> <i
+                                data-lte-icon="minimize" class="bi bi-fullscreen-exit" style="display: none;"></i>
+                        </a>
+                    </li> <!--end::Fullscreen Toggle--> <!--begin::User Menu Dropdown-->
+                    {{-- <li class="nav-item"><a href="#" class="nav-link" data-bs-toggle="dropdown"
+                            style="margin-bottom: 5px;">
+                            <img src="{{ asset('storage/profile_images/' . auth()->user()->image) }}" alt="Profile"
+                                class="logoprofile">
+                        <ul class="dropdown-menu dropdown-menu-end p-1">
+                            <li class="profiledropdown"><a href="{{ route('admin.profile') }}" class="btn btn-success">Profile</a></li>
+                            <li class="profiledropdown"><a href="{{ route('logout') }}" class="btn btn-primary">Logout</a></li>
+                            <li class="profiledropdown">
+                                <a href="{{ route('admin.profile') }}" class="btn btn-success">Profile</a>
+                            </li>
+                            <li class="profiledropdown">
+                                <a href="{{ route('logout') }}" class="btn btn-primary">Logout</a>
+                            </li>
+                        </ul>
+                    </li> --}}
+                    <li class="nav-item dropdown">
+                        <a class="nav-link nav-icon-hover" href="javascript:void(0)" id="drop2"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            <img src="{{ asset('storage/profile_images/' . auth()->user()->image) }}"
+                                alt="Photo Profile" class="rounded-circle"
+                                style="width: 35px; height: 35px; object-fit: cover;">
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-end dropdown-menu-animate-up" aria-labelledby="drop2">
+                            <div class="message-body">
+                                <a href="{{ route('admin.profile') }}"
+                                    class="d-flex align-items-center gap-2 dropdown-item">
+                                    <i class="fa-solid fa-user"></i>
+                                    <p class="mb-0 fs-6">Profile</p>
+                                </a>
+                                <a href="{{ route('admin.profile') }}"
+                                    class="d-flex align-items-center gap-2 dropdown-item">
+                                    <i class="fa-solid fa-lock"></i>
+                                    <p class="mb-0 fs-6">Ubah Password</p>
+                                </a>
+                                <div class="d-flex justify-content-center">
+                                    <a href="{{ route('logout') }}"
+                                        class="btn btn-outline-danger my-2 d-block w-75">Logout</a>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
                 </ul>
             </div>
         </nav>
@@ -92,6 +126,37 @@
                                     </a> </li>
                             </ul>
                         </li>
+                        <!-- <li class="nav-item"> <a href="#" class="nav-link"> <i class="nav-icon bi bi-clipboard-fill"></i>
+                                <p>
+                                    Layout Options
+                                    <span class="nav-badge badge text-bg-secondary me-3">6</span> <i class="nav-arrow bi bi-chevron-right"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item"> <a href="./layout/unfixed-sidebar.html" class="nav-link"> <i class="nav-icon bi bi-circle"></i>
+                                        <p>Default Sidebar</p>
+                                    </a> </li>
+                                <li class="nav-item"> <a href="./layout/fixed-sidebar.html" class="nav-link"> <i class="nav-icon bi bi-circle"></i>
+                                        <p>Fixed Sidebar</p>
+                                    </a> </li>
+                                <li class="nav-item"> <a href="./layout/layout-custom-area.html" class="nav-link"> <i class="nav-icon bi bi-circle"></i>
+                                        <p>Layout <small>+ Custom Area </small></p>
+                                    </a> </li>
+                                <li class="nav-item"> <a href="./layout/sidebar-mini.html" class="nav-link"> <i class="nav-icon bi bi-circle"></i>
+                                        <p>Sidebar Mini</p>
+                                    </a> </li>
+                                <li class="nav-item"> <a href="./layout/collapsed-sidebar.html" class="nav-link"> <i class="nav-icon bi bi-circle"></i>
+                                        <p>Sidebar Mini <small>+ Collapsed</small></p>
+                                    </a> </li>
+                                <li class="nav-item"> <a href="./layout/logo-switch.html" class="nav-link"> <i class="nav-icon bi bi-circle"></i>
+                                        <p>Sidebar Mini <small>+ Logo Switch</small></p>
+                                    </a> </li>
+                                <li class="nav-item"> <a href="./layout/layout-rtl.html" class="nav-link"> <i class="nav-icon bi bi-circle"></i>
+                                        <p>Layout RTL</p>
+                                    </a> </li>
+                            </ul>
+                        </li>-->
+
                     </ul> <!--end::Sidebar Menu-->
                 </nav>
             </div> <!--end::Sidebar Wrapper-->
@@ -123,23 +188,7 @@
     </div> <!--end::Footer-->
     </div> <!--end::App Wrapper--> <!--begin::Script--> <!--begin::Third Party Plugin(OverlayScrollbars)-->
 
-    <div class="modal fade" id="logoutModal" tabindex="-1" aria-labelledby="logoutModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="logoutModalLabel">Konfirmasi Logout</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    Apakah Anda yakin ingin keluar dari akun ini?
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-                    <a href="{{ route('logout') }}" type="button" class="btn btn-primary">Logout</a>
-                </div>
-            </div>
-        </div>
-    </div>
+    {{-- <script src="https://cdn.jsdelivr.net/npm/overlayscrollbars@2.3.0/browser/overlayscrollbars.browser.es6.min.js"></script> --}}
     @stack('script')
     {{-- <script src="{{ asset('js/sidebar.js') }}"></script> --}}
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -365,7 +414,7 @@
         );
         sparkline3.render();
     </script> <!--end::Script-->
-    {{-- <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script> --}}
+
 </body>
 
 </html>
