@@ -19,7 +19,6 @@ class Profile extends Model
         'status_perkawinan',
         'alamat_lengkap',
         'kode_pos',
-        'posisi_pekerjaan',
         'telepon',
         'nama_orang_tua',
     ];

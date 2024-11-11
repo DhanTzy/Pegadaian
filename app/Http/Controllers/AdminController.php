@@ -33,7 +33,6 @@ class AdminController extends Controller
             'status_perkawinan' => 'required|string|max:50',
             'alamat_lengkap' => 'required|string',
             'kode_pos' => 'required|string|max:10',
-            'posisi_pekerjaan' => 'required|string|max:100',
             'telepon' => 'required|string|max:15',
             'nama_orang_tua' => 'required|string|max:255',
         ]);
@@ -67,7 +66,6 @@ class AdminController extends Controller
         $profile->status_perkawinan = $request->status_perkawinan;
         $profile->alamat_lengkap = $request->alamat_lengkap;
         $profile->kode_pos = $request->kode_pos;
-        $profile->posisi_pekerjaan = $request->posisi_pekerjaan;
         $profile->telepon = $request->telepon;
         $profile->nama_orang_tua = $request->nama_orang_tua;
 

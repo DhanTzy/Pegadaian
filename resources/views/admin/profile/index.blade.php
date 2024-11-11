@@ -144,31 +144,6 @@
                                 </div>
 
                                 <div class="row mb-3">
-                                    <label for="posisi_pekerjaan" class="col-md-4 col-form-label">Posisi Pekerja</label>
-                                    <div class="col-md-8">
-                                        <select id="posisi_pekerjaan" name="posisi_pekerjaan"
-                                            class="form-select @error('posisi_pekerjaan') is-invalid @enderror">
-                                            <option value="">Pilih Status</option>
-                                            <option value="Admin"
-                                                {{ old('posisi_pekerjaan', auth()->user()->profile ? auth()->user()->profile->posisi_pekerjaan : '') == 'Admin' ? 'selected' : '' }}>
-                                                Admin</option>
-                                            <option value="Approval"
-                                                {{ old('posisi_pekerjaan', auth()->user()->profile ? auth()->user()->profile->posisi_pekerjaan : '') == 'Approval' ? 'selected' : '' }}>
-                                                Approval</option>
-                                            <option value="Appraisal"
-                                                {{ old('posisi_pekerjaan', auth()->user()->profile ? auth()->user()->profile->posisi_pekerjaan : '') == 'Appraisal' ? 'selected' : '' }}>
-                                                Appraisal</option>
-                                            <option value="Customer Service"
-                                                {{ old('posisi_pekerjaan', auth()->user()->profile ? auth()->user()->profile->posisi_pekerjaan : '') == 'Customer Service' ? 'selected' : '' }}>
-                                                Customer Service</option>
-                                        </select>
-                                        @error('posisi_pekerjaan')
-                                            <div class="text-danger">{{ $message }}</div>
-                                        @enderror
-                                    </div>
-                                </div>
-
-                                <div class="row mb-3">
                                     <label for="email" class="col-md-4 col-form-label">Email</label>
                                     <div class="col-md-8">
                                         <input type="email" class="form-control" id="email" name="email"
