@@ -114,16 +114,20 @@
                                 </p>
                             </a>
                             <ul class="nav nav-treeview">
-                                <li class="nav-item"> <a
+                                <li class="nav-item">
+                                    <a
                                         class="nav-link {{ Route::is('admin.nasabah') ? 'active bg-primary' : '' }}"
                                         href="{{ route('admin.nasabah') }}"> <i class="nav-icon bi bi-circle"></i>
                                         <p>Nasabah</p>
-                                    </a> </li>
-                                <li class="nav-item"> <a
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a
                                         class="nav-link {{ Route::is('admin.karyawan') ? 'active bg-primary' : '' }}"
                                         href="{{ route('admin.karyawan') }}"> <i class="nav-icon bi bi-circle"></i>
                                         <p>Karyawan</p>
-                                    </a> </li>
+                                    </a>
+                                </li>
                             </ul>
                         </li>
                         <!-- <li class="nav-item"> <a href="#" class="nav-link"> <i class="nav-icon bi bi-clipboard-fill"></i>

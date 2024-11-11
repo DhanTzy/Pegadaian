@@ -36,8 +36,8 @@
                                             <div class="row d-flex">
                                                 <div class="mt-5 mt-md-0">
                                                     <input type="file" class="form-control" id="file-upload"
-                                                        name="photo" accept=".jpg, .jpeg, .png">
-                                                    @error('photo')
+                                                        name="image" accept=".jpg, .jpeg, .png">
+                                                    @error('image')
                                                         <div class="text-danger">{{ $message }}</div>
                                                     @enderror
                                                 </div>
@@ -117,7 +117,7 @@
                                                 Belum Menikah</option>
                                         </select>
                                         @error('status_perkawinan')
-                                            <div class="invalid-feedback">{{ $message }}</div>
+                                            <div class="text-danger">{{ $message }}</div>
                                         @enderror
                                     </div>
                                 </div>
@@ -180,7 +180,7 @@
                                 </div>
 
                                 <div class="row mb-3">
-                                    <label for="telepon" class="col-md-4 col-form-label">Nomor Ponsel</label>
+                                    <label for="telepon" class="col-md-4 col-form-label">Telepon</label>
                                     <div class="col-md-8">
                                         <input type="number" class="form-control" id="telepon" name="telepon"
                                             value="{{ old('telepon', auth()->user()->profile ? auth()->user()->profile->telepon : '') }}">
@@ -189,8 +189,6 @@
                                         @enderror
                                     </div>
                                 </div>
-
-
 
                                 <div class="row mb-3">
                                     <label for="nama_orang_tua" class="col-md-4 col-form-label">Nama Orang Tua</label>
@@ -215,8 +213,8 @@
 
                                 <div class="text-end">
                                     <a href="{{ url('admin/home') }}" class="btn btn-secondary">Kembali</a>
-                                <button type="button" class="btn btn-primary w-20" data-bs-toggle="modal"
-                                    data-bs-target="#editConfirmModal">Perbarui Data</button>
+                                    <button type="button" class="btn btn-primary w-20" data-bs-toggle="modal"
+                                        data-bs-target="#editConfirmModal">Perbarui Data</button>
                                 </div>
                             </form>
                         </div>
@@ -251,20 +249,35 @@
 @push('script')
     <script>
         document.getElementById('confirmEditSubmit').addEventListener('click', function() {
+            // Submit form after confirmation
             document.querySelector('form').submit();
         });
 
-        function previewImage(event) {
-            const preview = document.getElementById('preview');
-            const file = event.target.files[0];
+        // function previewImage(event) {
+        //     const preview = document.getElementById('preview');
+        //     const file = event.target.files[0];
 
+        //     if (file) {
+        //         const reader = new FileReader();
+        //         reader.onload = function(e) {
+        //             preview.src = e.target.result;
+        //         };
+        //         reader.readAsDataURL(file);
+        //     }
+        // }
+
+        const input = document.getElementById('file-upload');
+        const previewPhoto = () => {
+            const file = input.files[0];
             if (file) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    preview.src = e.target.result;
-                };
-                reader.readAsDataURL(file);
+                const fileReader = new FileReader();
+                const preview = document.getElementById('file-preview');
+                fileReader.onload = function(event) {
+                    preview.setAttribute('src', event.target.result);
+                }
+                fileReader.readAsDataURL(file);
             }
         }
+        input.addEventListener("change", previewPhoto);
     </script>
 @endpush
