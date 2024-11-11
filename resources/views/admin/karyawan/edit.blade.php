@@ -185,12 +185,6 @@
                                             </option>
                                             <option value="Ibu"
                                                 {{ $anggota->status_kekeluargaan == 'Ibu' ? 'selected' : '' }}>Ibu</option>
-                                            <option value="Kakak"
-                                                {{ $anggota->status_kekeluargaan == 'Kakak' ? 'selected' : '' }}>Kakak
-                                            </option>
-                                            <option value="Adik"
-                                                {{ $anggota->status_kekeluargaan == 'Adik' ? 'selected' : '' }}>Adik
-                                            </option>
                                             <option value="Suami"
                                                 {{ $anggota->status_kekeluargaan == 'Suami' ? 'selected' : '' }}>Suami
                                             </option>
@@ -309,8 +303,6 @@
                     <option value="Kepala Keluarga">Kepala Keluarga</option>
                     <option value="Ayah">Ayah</option>
                     <option value="Ibu">Ibu</option>
-                    <option value="Kakak">Kakak</option>
-                    <option value="Adik">Adik</option>
                     <option value="Suami">Suami</option>
                     <option value="Istri">Istri</option>
                     <option value="Anak">Anak</option>
