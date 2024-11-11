@@ -58,17 +58,6 @@
                                 </div>
 
                                 <div class="row mb-3">
-                                    <label for="email" class="col-md-4 col-form-label">Email</label>
-                                    <div class="col-md-8">
-                                        <input type="email" class="form-control" id="email" name="email"
-                                            value="{{ old('email', Auth::user()->email) }}">
-                                        @error('email')
-                                            <div class="text-danger">{{ $message }}</div>
-                                        @enderror
-                                    </div>
-                                </div>
-
-                                <div class="row mb-3">
                                     <label for="nip" class="col-md-4 col-form-label">NIP</label>
                                     <div class="col-md-8">
                                         <input type="nip" class="form-control" id="nip" name="nip"
@@ -134,21 +123,9 @@
                                 </div>
 
                                 <div class="row mb-3">
-                                    <label for="telepon" class="col-md-4 col-form-label">Nomor Ponsel</label>
-                                    <div class="col-md-8">
-                                        <input type="number" class="form-control" id="telepon" name="telepon"
-                                            value="{{ old('telepon', auth()->user()->profile ? auth()->user()->profile->telepon : '') }}">
-                                        @error('telepon')
-                                            <div class="text-danger">{{ $message }}</div>
-                                        @enderror
-                                    </div>
-                                </div>
-
-                                <div class="row mb-3">
                                     <label for="alamat_lengkap" class="col-md-4 col-form-label">Alamat Lengkap</label>
                                     <div class="col-md-8">
-                                        <textarea id="alamat_lengkap" name="alamat_lengkap"
-                                            class="form-control @error('alamat_lengkap') is-invalid @enderror">{{ old('alamat_lengkap', auth()->user()->profile ? auth()->user()->profile->alamat_lengkap : '') }}</textarea>
+                                        <textarea id="alamat_lengkap" name="alamat_lengkap" class="form-control @error('alamat_lengkap') is-invalid @enderror">{{ old('alamat_lengkap', auth()->user()->profile ? auth()->user()->profile->alamat_lengkap : '') }}</textarea>
                                         @error('alamat_lengkap')
                                             <div class="text-danger">{{ $message }}</div>
                                         @enderror
@@ -161,18 +138,6 @@
                                         <input type="text" class="form-control" id="kode_pos" name="kode_pos"
                                             value="{{ old('kode_pos', auth()->user()->profile ? auth()->user()->profile->kode_pos : '') }}">
                                         @error('kode_pos')
-                                            <div class="text-danger">{{ $message }}</div>
-                                        @enderror
-                                    </div>
-                                </div>
-
-                                <div class="row mb-3">
-                                    <label for="nama_orang_tua" class="col-md-4 col-form-label">Nama Orang Tua</label>
-                                    <div class="col-md-8">
-                                        <input type="text" class="form-control" id="nama_orang_tua"
-                                            name="nama_orang_tua"
-                                            value="{{ old('nama_orang_tua', auth()->user()->profile ? auth()->user()->profile->nama_orang_tua : '') }}">
-                                        @error('nama_orang_tua')
                                             <div class="text-danger">{{ $message }}</div>
                                         @enderror
                                     </div>
@@ -204,16 +169,54 @@
                                 </div>
 
                                 <div class="row mb-3">
+                                    <label for="email" class="col-md-4 col-form-label">Email</label>
+                                    <div class="col-md-8">
+                                        <input type="email" class="form-control" id="email" name="email"
+                                            value="{{ old('email', Auth::user()->email) }}">
+                                        @error('email')
+                                            <div class="text-danger">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+                                </div>
+
+                                <div class="row mb-3">
+                                    <label for="telepon" class="col-md-4 col-form-label">Nomor Ponsel</label>
+                                    <div class="col-md-8">
+                                        <input type="number" class="form-control" id="telepon" name="telepon"
+                                            value="{{ old('telepon', auth()->user()->profile ? auth()->user()->profile->telepon : '') }}">
+                                        @error('telepon')
+                                            <div class="text-danger">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+                                </div>
+
+
+
+                                <div class="row mb-3">
+                                    <label for="nama_orang_tua" class="col-md-4 col-form-label">Nama Orang Tua</label>
+                                    <div class="col-md-8">
+                                        <input type="text" class="form-control" id="nama_orang_tua"
+                                            name="nama_orang_tua"
+                                            value="{{ old('nama_orang_tua', auth()->user()->profile ? auth()->user()->profile->nama_orang_tua : '') }}">
+                                        @error('nama_orang_tua')
+                                            <div class="text-danger">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+                                </div>
+
+
+                                <div class="row mb-5">
                                     <label for="created_at" class="col-md-4 col-form-label">Akun Dibuat</label>
                                     <div class="col-md-8">
                                         <input type="text" class="form-control" id="created_at"
                                             value="{{ Auth::user()->created_at->format('d M Y') }}" disabled>
-                                        <div class="form-text text-danger fw-bold">Data ini tidak bisa diubah</div>
                                     </div>
                                 </div>
 
                                 <div class="text-end">
-                                    <button type="submit" class="btn btn-warning">Perbarui Data</button>
+                                    <a href="{{ url('admin/home') }}" class="btn btn-secondary">Kembali</a>
+                                <button type="button" class="btn btn-primary w-20" data-bs-toggle="modal"
+                                    data-bs-target="#editConfirmModal">Perbarui Data</button>
                                 </div>
                             </form>
                         </div>
@@ -241,9 +244,6 @@
                 </div>
             </div>
         </div>
-        <button type="button" class="btn btn-primary w-20" data-bs-toggle="modal"
-            data-bs-target="#editConfirmModal">Perbarui Data</button>
-        <a href="{{ url()->previous() }}" class="btn btn-secondary">Kembali</a>
         </form>
     </div>
 @endsection
