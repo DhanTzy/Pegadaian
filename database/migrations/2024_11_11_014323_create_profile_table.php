@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('status_perkawinan');
             $table->text('alamat_lengkap');
             $table->string('kode_pos');
-            $table->string('pekerjaan');
+            $table->string('posisi_pekerjaan');
             $table->string('telepon');
             $table->string('nama_orang_tua');
             $table->timestamps();
