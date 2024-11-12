@@ -96,7 +96,7 @@
                                     <label for="tanggal_lahir" class="col-md-4 col-form-label">Tanggal Lahir</label>
                                     <div class="col-md-8">
                                         <input type="date" class="form-control" id="tanggal_lahir" name="tanggal_lahir"
-                                            value="{{ old('tanggal_lahir', auth()->user()->profile ? \Carbon\Carbon::parse(auth()->user()->profile->tanggal_lahir)->format('Y-m-d') : '') }}">
+                                            value="{{ old('tanggal_lahir', auth()->user()->profile ? auth()->user()->profile->tanggal_lahir : '') }}">
                                         @error('tanggal_lahir')
                                             <div class="text-danger">{{ $message }}</div>
                                         @enderror
@@ -147,7 +147,7 @@
                                     <label for="email" class="col-md-4 col-form-label">Email</label>
                                     <div class="col-md-8">
                                         <input type="email" class="form-control" id="email" name="email"
-                                            value="{{ old('email', Auth::user()->email) }}">
+                                            value="{{ old('email', Auth::user()->email) }}" disabled>
                                         @error('email')
                                             <div class="text-danger">{{ $message }}</div>
                                         @enderror
@@ -176,7 +176,6 @@
                                         @enderror
                                     </div>
                                 </div>
-
 
                                 <div class="row mb-5">
                                     <label for="created_at" class="col-md-4 col-form-label">Akun Dibuat</label>

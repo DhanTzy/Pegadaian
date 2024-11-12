@@ -3,15 +3,17 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\NasabahController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\UserProfileController;
-use App\Http\Controllers\AdminController;
+use App\Http\Controllers\AdminProfileController;
 use App\Http\Controllers\KaryawanController;
 use App\Http\Controllers\TransaksiController;
 use App\Http\Controllers\UserController;
 use App\Models\Karyawan;
 use App\Models\Nasabah;
 use App\Models\Transaksi;
+use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 
 /*
 |--------------------------------------------------------------------------
@@ -64,7 +66,7 @@ Route::middleware(['auth', 'user-access:user'])->group(function () {
 Route::middleware(['auth', 'user-access:admin'])->group(function () {
 
     // Dashboard
-    Route::get('/admin/home', [AdminController::class, 'adminHome'])->name('admin.home');
+    Route::get('/admin/home', [DashboardController::class, 'adminHome'])->name('admin.home');
 
     // Transaksi
     Route::get('/admin/transaksi', [TransaksiController::class, 'index'])->name('admin.transaksi');
@@ -77,9 +79,8 @@ Route::middleware(['auth', 'user-access:admin'])->group(function () {
     Route::get('/admin/transaksi/data', [TransaksiController::class, 'getData'])->name('admin.transaksi.data');
 
     // Profile
-    // Profile
-    Route::get('/admin/profile', [AdminController::class, 'adminProfile'])->name('admin.profile');
-    Route::put('/admin/profile', [AdminController::class, 'updateProfile'])->name('admin.profile.update');
+    Route::get('/admin/profile', [AdminProfileController::class, 'adminProfile'])->name('admin.profile');
+    Route::put('/admin/profile', [AdminProfileController::class, 'updateProfile'])->name('admin.profile.update');
 
     // Nasabah
     Route::get('/admin/nasabah', [NasabahController::class, 'index'])->name('admin.nasabah');
@@ -90,7 +91,6 @@ Route::middleware(['auth', 'user-access:admin'])->group(function () {
     Route::put('/admin/nasabah/edit/{id}', [NasabahController::class, 'update'])->name('admin.nasabah.update');
     Route::delete('/admin/nasabah/destroy/{id}', [NasabahController::class, 'destroy'])->name('admin.nasabah.destroy');
     Route::get('/admin/nasabah/data', [NasabahController::class, 'getData'])->name('admin.nasabah.data');
-
 
     // Karyawan
     Route::get('/admin/karyawan', [KaryawanController::class, 'index'])->name('admin.karyawan');

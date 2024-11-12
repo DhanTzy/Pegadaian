@@ -8,13 +8,8 @@ use App\Models\Profile;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
-class AdminController extends Controller
+class AdminProfileController extends Controller
 {
-    public function adminHome()
-    {
-        return view('admin.dashboard.index');
-    }
-
     public function adminProfile()
     {
         return view('admin.profile.index');
