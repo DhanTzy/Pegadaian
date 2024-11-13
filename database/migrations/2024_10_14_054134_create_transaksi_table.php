@@ -13,8 +13,8 @@ return new class extends Migration
             $table->string('nama_nasabah');
             $table->date('tanggal');
             $table->string('metode_pencairan');
-            $table->string('no_rekening');
-            $table->string('bank');
+            $table->string('no_rekening')->nullable();
+            $table->string('bank')->nullable();
             $table->string('pengajuan_pinjaman');
             $table->string('bunga');
             $table->string('jangka_waktu');
