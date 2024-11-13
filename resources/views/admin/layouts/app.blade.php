@@ -67,7 +67,7 @@
                                     <i class="fa-solid fa-user"></i>
                                     <p class="mb-0 fs-6">Profile</p>
                                 </a>
-                                {{-- <a href="{{ route('admin.profile') }}"
+                                {{-- <a href="{{ route('admin.password') }}"
                                     class="d-flex align-items-center gap-2 dropdown-item">
                                     <i class="fa-solid fa-lock"></i>
                                     <p class="mb-0 fs-6">Ubah Password</p>

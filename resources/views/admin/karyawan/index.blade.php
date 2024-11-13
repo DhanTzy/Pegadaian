@@ -153,41 +153,16 @@
                         d.tanggal_gabung = $('#tanggalGabungFilter').val();
                     }
                 },
-                columns: [{
-                        data: 'id',
-                        name: 'id'
-                    },
-                    {
-                        data: 'nip',
-                        name: 'nip'
-                    },
-                    {
-                        data: 'nama_lengkap',
-                        name: 'nama_lengkap'
-                    },
-                    {
-                        data: 'posisi_pekerjaan',
-                        name: 'posisi_pekerjaan'
-                    },
-                    {
-                        data: 'jenis_kelamin',
-                        name: 'jenis_kelamin'
-                    },
-                    {
-                        data: 'kewarganegaraan',
-                        name: 'kewarganegaraan'
-                    },
-                    {
-                        data: 'agama',
-                        name: 'agama'
-                    },
-                    {
-                        data: 'no_telepon',
-                        name: 'no_telepon'
-                    },
-                    {
-                        data: 'created_at',
-                        name: 'created_at',
+                columns: [
+                    { data: 'id', name: 'id' },
+                    { data: 'nip', name: 'nip' },
+                    { data: 'nama_lengkap', name: 'nama_lengkap' },
+                    { data: 'posisi_pekerjaan', name: 'posisi_pekerjaan' },
+                    { data: 'jenis_kelamin', name: 'jenis_kelamin' },
+                    { data: 'kewarganegaraan', name: 'kewarganegaraan' },
+                    { data: 'agama', name: 'agama' },
+                    { data: 'no_telepon', name: 'no_telepon' },
+                    { data: 'created_at', name: 'created_at',
                         render: function(data, type, row) {
                             var date = new Date(data);
                             return date.toLocaleDateString('id-ID', {
@@ -197,12 +172,7 @@
                             });
                         }
                     },
-                    {
-                        data: 'action',
-                        name: 'action',
-                        orderable: false,
-                        searchable: false
-                    },
+                    { data: 'action', name: 'action', orderable: false, searchable: false },
                 ],
             });
 

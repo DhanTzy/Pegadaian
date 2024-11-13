@@ -85,4 +85,28 @@ class AuthController extends Controller
 
         return redirect('/');
     }
+
+    // public function changePassword()
+    // {
+    //     return view('admin.password');
+    // }
+
+    // public function updatePassword(Request $request)
+    // {
+    //     $request->validate([
+    //         'current_password' => 'required',
+    //         'password' => 'required|confirmed',
+    //     ]);
+
+    //     $user = Auth::user();
+
+    //     if (!Hash::check($request->current_password, $user->password)) {
+    //         return back()->withErrors(['current_password' => 'Password saat ini tidak cocok.']);
+    //     }
+
+    //     $user->password = Hash::make($request->new_password);
+    //     $user->save();
+
+    //     return redirect()->route('admin.password')->with('status', 'Password berhasil diubah.');
+    // }
 }

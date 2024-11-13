@@ -30,6 +30,10 @@ Route::get('/', function () {
     return view('home');
 })->name('home');
 
+// Route::get('/', function () {
+//     return redirect()->route('login');
+// });
+
 Route::controller(AuthController::class)->group(function () {
     Route::get('register', 'register')->name('register');
     Route::post('register', 'registerSave')->name('register.save');
@@ -81,6 +85,10 @@ Route::middleware(['auth', 'user-access:admin'])->group(function () {
     // Profile
     Route::get('/admin/profile', [AdminProfileController::class, 'adminProfile'])->name('admin.profile');
     Route::put('/admin/profile', [AdminProfileController::class, 'updateProfile'])->name('admin.profile.update');
+
+    // Ubah Password Admin
+    // Route::get('/admin/password', [AuthController::class, 'changePassword'])->name('admin.password');
+    // Route::post('/admin/password', [AuthController::class, 'updatePassword'])->name('admin.password.update');
 
     // Nasabah
     Route::get('/admin/nasabah', [NasabahController::class, 'index'])->name('admin.nasabah');

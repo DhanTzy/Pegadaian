@@ -143,41 +143,16 @@
                         d.tanggal_akhir = $('#tanggalAkhirFilter').val();
                     }
                 },
-                columns: [{
-                        data: 'id',
-                        name: 'id'
-                    },
-                    {
-                        data: 'nomor_identitas',
-                        name: 'nomor_identitas'
-                    },
-                    {
-                        data: 'nama_lengkap',
-                        name: 'nama_lengkap'
-                    },
-                    {
-                        data: 'tempat_lahir',
-                        name: 'tempat_lahir'
-                    },
-                    {
-                        data: 'tanggal_lahir',
-                        name: 'tanggal_lahir'
-                    },
-                    {
-                        data: 'status_perkawinan',
-                        name: 'status_perkawinan'
-                    },
-                    {
-                        data: 'pekerjaan',
-                        name: 'pekerjaan'
-                    },
-                    {
-                        data: 'telepon',
-                        name: 'telepon'
-                    },
-                    {
-                        data: 'created_at',
-                        name: 'created_at',
+                columns: [
+                    { data: 'id', name: 'id' },
+                    { data: 'nomor_identitas', name: 'nomor_identitas' },
+                    { data: 'nama_lengkap', name: 'nama_lengkap' },
+                    { data: 'tempat_lahir', name: 'tempat_lahir' },
+                    { data: 'tanggal_lahir', name: 'tanggal_lahir' },
+                    { data: 'status_perkawinan', name: 'status_perkawinan' },
+                    { data: 'pekerjaan', name: 'pekerjaan' },
+                    { data: 'telepon', name: 'telepon' },
+                    { data: 'created_at', name: 'created_at',
                         render: function(data, type, row) {
                             var date = new Date(data);
                             return date.toLocaleDateString('id-ID', {
@@ -187,12 +162,7 @@
                             });
                         }
                     },
-                    {
-                        data: 'action',
-                        name: 'action',
-                        orderable: false,
-                        searchable: false
-                    },
+                    { data: 'action', name: 'action', orderable: false, searchable: false },
                 ],
             });
 

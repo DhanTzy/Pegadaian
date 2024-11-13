@@ -13,18 +13,14 @@ class UserAccess
      *
      * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
      */
-    //public function handle(Request $request, Closure $next): Response
-   // {
-    //    return $next($request);
-   // }
-
     public function handle(Request $request, Closure $next, $userType)
     {
+        // dd(auth()->user()->type);
         if (auth()->user()->type == $userType) {
             return $next($request);
         }
 
-        return response()->json(['You do not have permission to access for this page.']);
-        /* return response()->view('errors.check-permission'); */
+        // Jika tipe pengguna tidak sesuai, kembalikan halaman 403 (Forbidden)
+        return abort(403, 'Kamu tidak memiliki akses halaman ini Mending tidur saja.');
     }
 }
