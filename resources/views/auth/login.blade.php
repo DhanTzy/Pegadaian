@@ -5,7 +5,6 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    {{-- <meta name="author" content=""> --}}
     <title>Login</title>
     <link rel="stylesheet" href="{{ asset('css/stylinglogin.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
@@ -23,7 +22,7 @@
     <div class="container login-con">
         <div class="login-form container row justify-content-end">
             <br>
-            <img src="{{ asset('img/gadai.png') }}" alt="logo" class="logo"/>
+            <img src="{{ asset('img/gadai.png') }}" alt="logo" class="logo" />
             <h1 class="fs-1 fw-semibold font-poppins">
                 Masuk
             </h1>
@@ -49,23 +48,36 @@
                         </button>
                     </div>
                 @endif
-                {{-- rayy --}}
+
                 <div class="form-group">
                     <label for="email">Your email</label>
-                    <input type="email" name="email" id="email" class="form-control" placeholder="name@company.com" required>
+                    <input type="email" name="email" id="email" class="form-control"
+                        placeholder="name@company.com" required>
                 </div>
+
                 <div class="form-group">
                     <label for="password">Password</label>
-                    <input type="password" name="password" id="password" class="form-control" placeholder="passwoard" required>
+                    <div class="input-group">
+                        <input type="password" name="password" id="password" class="form-control"
+                            placeholder="password" required>
+                        <div class="input-group-append">
+                            <span class="input-group-text" onclick="togglePassword('password')">
+                                <i class="fa fa-eye"></i>
+                            </span>
+                        </div>
+                    </div>
                 </div>
+
                 <div style="float: right; margin-top: 10px;">
                     <a href="#">Lupa Password?</a>
                 </div>
+
                 <div>
                     <button class="btn btn-primary" type="submit">
                         Login
                     </button>
                 </div>
+
                 <div style="margin-top: 10px;">
                     Belum punya akun?
                     <a href="{{ route('register') }}" class="text-primary">Sign up</a>
@@ -79,7 +91,6 @@
             </form>
         </div>
     </div>
-    {{-- box kanan --}}
     <div class="container right">
         <div class="container box">
             <div style="margin-left: 5%; margin-top: 8%">
@@ -89,12 +100,29 @@
                 <h2>Di Go Pegadaian Aja</h2>
             </div>
             <div style="margin-left: 45%">
-                <h2>Dijadmin Aman 100%</h2>
+                <h2>Dijamin Aman 100%</h2>
             </div>
             <div class="img-container">
                 <img src="{{ asset('img/gambarlogin.png') }}" alt="logo" class="gambarlogin">
             </div>
         </div>
     </div>
+
+    <script>
+        function togglePassword(fieldId) {
+            var field = document.getElementById(fieldId);
+            var icon = field.nextElementSibling.querySelector('i');
+            if (field.type === "password") {
+                field.type = "text";
+                icon.classList.remove('fa-eye');
+                icon.classList.add('fa-eye-slash');
+            } else {
+                field.type = "password";
+                icon.classList.remove('fa-eye-slash');
+                icon.classList.add('fa-eye');
+            }
+        }
+    </script>
 </body>
+
 </html>

@@ -14,7 +14,7 @@ class AuthController extends Controller
 
     public function __construct()
     {
-        $this->middleware('guest')->except('logout');
+        $this->middleware('guest')->except(['logout', 'changePassword', 'changePasswordSave']);
     }
 
     public function register()
@@ -86,27 +86,31 @@ class AuthController extends Controller
         return redirect('/');
     }
 
-    // public function changePassword()
-    // {
-    //     return view('admin.password');
-    // }
+    public function changePassword()
+    {
+        return view('auth/password');
+    }
 
-    // public function updatePassword(Request $request)
-    // {
-    //     $request->validate([
-    //         'current_password' => 'required',
-    //         'password' => 'required|confirmed',
-    //     ]);
+    public function changePasswordSave(Request $request)
+    {
+        // Validasi input
+        $request->validate([
+            'current_password' => 'required',
+            'new_password' => 'required|confirmed',
+        ]);
 
-    //     $user = Auth::user();
+        $user = Auth::user();
 
-    //     if (!Hash::check($request->current_password, $user->password)) {
-    //         return back()->withErrors(['current_password' => 'Password saat ini tidak cocok.']);
-    //     }
+        // Cek apakah password lama sesuai
+        if (!Hash::check($request->current_password, $user->password)) {
+            return back()->withErrors(['current_password' => 'Password lama tidak sesuai']);
+        }
 
-    //     $user->password = Hash::make($request->new_password);
-    //     $user->save();
+        // Update password
+        $user->update([
+            'password' => Hash::make($request->new_password),
+        ]);
 
-    //     return redirect()->route('admin.password')->with('status', 'Password berhasil diubah.');
-    // }
+        return redirect()->route('admin.home')->with('success', 'Password berhasil diubah');
+    }
 }

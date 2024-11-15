@@ -31,7 +31,6 @@
                 <label class="form-label">Posisi Pekerjaan :</label>
                 <select name="posisi_pekerjaan" class="form-select" required>
                     <option value="" disable selected>Pilih Posisi Pekerjaan</option>
-                    <option value="Manager" {{ old('posisi_pekerjaan') == 'Manager' ? 'selected' : '' }}>Manager</option>
                     <option value="Administrasi" {{ old('posisi_pekerjaan') == 'Administrasi' ? 'selected' : '' }}>
                         Administrasi</option>
                     <option value="Supervisor" {{ old('posisi_pekerjaan') == 'Supervisor' ? 'selected' : '' }}>Supervisor
@@ -158,13 +157,8 @@
                             <select name="anggota_keluarga[0][status_kekeluargaan]" class="form-select" required>
                                 <option value="" disabled selected>Pilih Status Kekeluargaan</option>
                                 <option value="Kepala Keluarga">Kepala Keluarga</option>
-                                <option value="Ayah">Ayah</option>
-                                <option value="Ibu">Ibu</option>
-                                <option value="Suami">Suami</option>
                                 <option value="Istri">Istri</option>
                                 <option value="Anak">Anak</option>
-                                <option value="Kakek">Kakek</option>
-                                <option value="Nenek">Nenek</option>
                             </select>
                         </div>
                         <div class="mb-2">
@@ -253,13 +247,8 @@
             <select name="anggota_keluarga[${index}][status_kekeluargaan]" class="form-select" required>
                 <option value="" disabled selected>Pilih Status Kekeluargaan</option>
                 <option value="Kepala Keluarga">Kepala Keluarga</option>
-                <option value="Ayah">Ayah</option>
-                <option value="Ibu">Ibu</option>
-                <option value="Suami">Suami</option>
                 <option value="Istri">Istri</option>
                 <option value="Anak">Anak</option>
-                <option value="Kakek">Kakek</option>
-                <option value="Nenek">Nenek</option>
             </select>
         </div>
         <div class="mb-2">
@@ -284,7 +273,6 @@
                 }
             });
         });
-
 
         function previewKTP() {
             const input = document.getElementById('foto_ktp_input');

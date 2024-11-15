@@ -185,7 +185,7 @@
             }
         }
 
-        // Nilai Likuiditas
+        // Nilai Likuiditas Dari Hasil Menginput Nilai Pasar
         function calculateNilaiLikuiditas() {
             const nilaiPasar = parseFloat(document.querySelector('input[name="nilai_pasar"]').value) || 0;
             const nilaiLikuiditas = (nilaiPasar * 0.7).toFixed(0); // Menghitung 70% dari nilai pasar

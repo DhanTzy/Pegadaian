@@ -67,11 +67,11 @@
                                     <i class="fa-solid fa-user"></i>
                                     <p class="mb-0 fs-6">Profile</p>
                                 </a>
-                                {{-- <a href="{{ route('admin.password') }}"
+                                <a href="{{ route('password.change') }}"
                                     class="d-flex align-items-center gap-2 dropdown-item">
                                     <i class="fa-solid fa-lock"></i>
                                     <p class="mb-0 fs-6">Ubah Password</p>
-                                </a> --}}
+                                </a>
                                 <div class="d-flex justify-content-center">
                                     <a href="{{ route('logout') }}"
                                         class="btn btn-outline-danger my-2 d-block w-75">Logout</a>

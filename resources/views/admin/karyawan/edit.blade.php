@@ -30,9 +30,6 @@
                     <div class="mb-3">
                         <label class="form-label">Posisi Pekerjaan :</label>
                         <select name="posisi_pekerjaan" class="form-select" required>
-                            <option value="Manager"
-                                {{ old('posisi_pekerjaan', $karyawan->posisi_pekerjaan) == 'Manager' ? 'selected' : '' }}>
-                                Manager</option>
                             <option value="Administrasi"
                                 {{ old('posisi_pekerjaan', $karyawan->posisi_pekerjaan) == 'Administrasi' ? 'seleted' : '' }}>
                                 Administrasi</option>
@@ -180,25 +177,11 @@
                                             <option value="Kepala Keluarga"
                                                 {{ $anggota->status_kekeluargaan == 'Kepala Keluarga' ? 'selected' : '' }}>
                                                 Kepala Keluarga</option>
-                                            <option value="Ayah"
-                                                {{ $anggota->status_kekeluargaan == 'Ayah' ? 'selected' : '' }}>Ayah
-                                            </option>
-                                            <option value="Ibu"
-                                                {{ $anggota->status_kekeluargaan == 'Ibu' ? 'selected' : '' }}>Ibu</option>
-                                            <option value="Suami"
-                                                {{ $anggota->status_kekeluargaan == 'Suami' ? 'selected' : '' }}>Suami
-                                            </option>
                                             <option value="Istri"
                                                 {{ $anggota->status_kekeluargaan == 'Istri' ? 'selected' : '' }}>Istri
                                             </option>
                                             <option value="Anak"
                                                 {{ $anggota->status_kekeluargaan == 'Anak' ? 'selected' : '' }}>Anak
-                                            </option>
-                                            <option value="Kakek"
-                                                {{ $anggota->status_kekeluargaan == 'Kakek' ? 'selected' : '' }}>Kakek
-                                            </option>
-                                            <option value="Nenek"
-                                                {{ $anggota->status_kekeluargaan == 'Nenek' ? 'selected' : '' }}>Nenek
                                             </option>
                                         </select>
                                     </div>
@@ -301,13 +284,8 @@
                 <select name="anggota_keluarga[${index}][status_kekeluargaan]" class="form-select" required>
                     <option value="" disabled selected>Pilih Status Kekeluargaan</option>
                     <option value="Kepala Keluarga">Kepala Keluarga</option>
-                    <option value="Ayah">Ayah</option>
-                    <option value="Ibu">Ibu</option>
-                    <option value="Suami">Suami</option>
                     <option value="Istri">Istri</option>
                     <option value="Anak">Anak</option>
-                    <option value="Kakek">Kakek</option>
-                    <option value="Nenek">Nenek</option>
                 </select>
             </div>
             <div class="mb-2">
@@ -333,7 +311,6 @@
                 }
             });
         });
-
 
         function previewFoto(inputId, previewId) {
             const input = document.getElementById(inputId);

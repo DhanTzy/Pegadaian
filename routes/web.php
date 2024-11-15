@@ -26,13 +26,13 @@ use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 |
 */
 
-Route::get('/', function () {
-    return view('home');
-})->name('home');
-
 // Route::get('/', function () {
-//     return redirect()->route('login');
-// });
+//     return view('home');
+// })->name('home');
+
+Route::get('/', function () {
+    return redirect()->route('login');
+});
 
 Route::controller(AuthController::class)->group(function () {
     Route::get('register', 'register')->name('register');
@@ -82,13 +82,12 @@ Route::middleware(['auth', 'user-access:admin'])->group(function () {
     Route::delete('/admin/transaksi/{id}', [TransaksiController::class, 'destroy'])->name('admin.transaksi.destroy');
     Route::get('/admin/transaksi/data', [TransaksiController::class, 'getData'])->name('admin.transaksi.data');
 
+    Route::get('password/change', [AuthController::class, 'changePassword'])->name('password.change')->middleware('auth');
+    Route::post('password/change', [AuthController::class, 'changePasswordSave'])->name('password.change.save')->middleware('auth');
+
     // Profile
     Route::get('/admin/profile', [AdminProfileController::class, 'adminProfile'])->name('admin.profile');
     Route::put('/admin/profile', [AdminProfileController::class, 'updateProfile'])->name('admin.profile.update');
-
-    // Ubah Password Admin
-    // Route::get('/admin/password', [AuthController::class, 'changePassword'])->name('admin.password');
-    // Route::post('/admin/password', [AuthController::class, 'updatePassword'])->name('admin.password.update');
 
     // Nasabah
     Route::get('/admin/nasabah', [NasabahController::class, 'index'])->name('admin.nasabah');

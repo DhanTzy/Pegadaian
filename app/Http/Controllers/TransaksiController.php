@@ -93,7 +93,7 @@ class TransaksiController extends Controller
         $request->validate([
             'nama_nasabah' => 'required|string',
             'tanggal' => 'required|date',
-            'metode_pencairan' => 'nullable|string',
+            'metode_pencairan' => 'required|string',
             'no_rekening' => 'nullable|string',
             'bank' => 'nullable|string',
             'pengajuan_pinjaman' => 'required|string',
