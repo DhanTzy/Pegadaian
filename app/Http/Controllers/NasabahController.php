@@ -92,6 +92,25 @@ class NasabahController extends Controller
             'telepon' => 'required|numeric|digits_between:10,13',
             'nama_orang_tua' => 'required|string|max:255',
             'foto_ktp_sim' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+        ], [
+            'nomor_identitas.required' => 'Nomor identitas wajib diisi.',
+            'nomor_identitas.max' => 'Nomor identitas tidak boleh lebih dari 16 karakter.',
+            'nama_lengkap.required' => 'Nama lengkap wajib diisi.',
+            'tempat_lahir.required' => 'Tempat lahir lengkap wajib diisi.',
+            'tanggal_lahir.required' => 'Tanggal lahir wajib diisi.',
+            'status_perkawinan.required' => 'Status wajib diisi.',
+            'alamat_lengkap.required' => 'Alamat lengkap wajib diisi.',
+            'kode_pos.digits' => 'Kode pos harus terdiri dari 5 digit.',
+            'kode_pos.required' => 'Kode pos wajib disi.',
+            'pekerjaan.required' => 'Pekerjaan wajib diisi.',
+            'email.required' => 'Email wajib diisi.',
+            'telepon.digits_between' => 'Nomor telepon harus antara 10 hingga 13 digit.',
+            'telepon.required' => 'Nomor telepon wajib disi.',
+            'nama_orang_tua.required' => 'Nama orang tua wajib disi.',
+            'foto_ktp_sim.required' => 'Foto KTP/SIM wajib diunggah.',
+            'foto_ktp_sim.image' => 'File yang diunggah harus berupa gambar.',
+            'foto_ktp_sim.mimes' => 'Foto harus berformat jpeg, png, jpg, atau gif.',
+            'foto_ktp_sim.max' => 'Ukuran foto tidak boleh lebih dari 2MB.',
         ]);
 
         $path = $request->file('foto_ktp_sim')->store('nasabah/foto', 'public');
