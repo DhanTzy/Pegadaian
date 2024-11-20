@@ -48,6 +48,7 @@ class KaryawanController extends Controller
                 return '
                 <button class="btn btn-info btn-sm me-2" data-bs-toggle="modal" data-bs-target="#karyawanDetailModal"
                         data-nip="' . $karyawan->nip . '"
+                        data-no_identitas="' . $karyawan->no_identitas . '"
                         data-nama_lengkap="' . $karyawan->nama_lengkap . '"
                         data-posisi_pekerjaan="' . $karyawan->posisi_pekerjaan . '"
                         data-jenis_kelamin="' . $karyawan->jenis_kelamin . '"
@@ -86,7 +87,8 @@ class KaryawanController extends Controller
     public function store(Request $request)
     {
         $validatedData = $request->validate([
-            'nip' => 'required|string|max:18',
+            'nip' => 'required|string|max:18|unique:karyawan,nip',
+            'no_identitas' => 'required|string|max:16|unique:karyawan,no_identitas',
             'nama_lengkap' => 'required',
             'posisi_pekerjaan' => 'required',
             'jenis_kelamin' => 'required|in:Laki-laki,Perempuan',
@@ -95,8 +97,8 @@ class KaryawanController extends Controller
             'agama' => 'required',
             'kewarganegaraan' => 'required',
             'status_perkawinan' => 'required|in:Belum Menikah,Menikah',
-            'no_telepon' => 'required',
-            'email' => 'required|email',
+            'no_telepon' => 'required|string|max:13|unique:karyawan,no_telepon',
+            'email' => 'required|email|unique:karyawan,email',
             'alamat_lengkap' => 'required|string',
             'kode_pos' => 'required|digits:5',
             'foto_ktp' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
@@ -108,6 +110,10 @@ class KaryawanController extends Controller
             'nip.required' => 'NIP wajib diisi.',
             'nip.string' => 'NIP harus berupa teks.',
             'nip.max' => 'NIP tidak boleh lebih dari 18 karakter.',
+            'nip.unique' => 'NIP sudah ada. Mohon masukkan nomor NIP anda dengan benar.',
+            'no_identitas.required' => 'Nomor identitas wajib diisi.',
+            'no_identitas.max' => 'Nomor identitas tidak boleh lebih dari 16 karakter.',
+            'no_identitas.unique' => 'Nomor identitas sudah terdaftar. Mohon masukkan nomor indentitas anda dengan benar.',
             'nama_lengkap.required' => 'Nama lengkap wajib diisi.',
             'posisi_pekerjaan.required' => 'Posisi pekerjaan wajib diisi.',
             'jenis_kelamin.required' => 'Jenis kelamin wajib diisi.',
@@ -120,8 +126,10 @@ class KaryawanController extends Controller
             'status_perkawinan.required' => 'Status perkawinan wajib diisi.',
             'status_perkawinan.in' => 'Status perkawinan hanya boleh Belum Menikah atau Menikah.',
             'no_telepon.required' => 'Nomor telepon wajib diisi.',
+            'no_telepon.unique' => 'Telepon sudah terdaftar. Mohon masukkan nomor telepon anda dengan benar.',
             'email.required' => 'Email wajib diisi.',
             'email.email' => 'Email harus berupa format yang valid.',
+            'email.unique' => 'Email sudah terdaftar. Mohon masukkan email anda dengan benar.',
             'alamat_lengkap.required' => 'Alamat lengkap wajib diisi.',
             'alamat_lengkap.string' => 'Alamat lengkap harus berupa teks.',
             'kode_pos.required' => 'Kode pos wajib diisi.',
@@ -139,7 +147,6 @@ class KaryawanController extends Controller
             'anggota_keluarga.*.nama.required' => 'Nama anggota keluarga wajib diisi.',
             'anggota_keluarga.*.nama.string' => 'Nama anggota keluarga harus berupa teks.',
             'anggota_keluarga.*.nik.required' => 'NIK anggota keluarga wajib diisi.',
-            'anggota_keluarga.*.nik.string' => 'NIK anggota keluarga harus berupa teks.',
         ]);
 
 
@@ -183,8 +190,13 @@ class KaryawanController extends Controller
 
     public function update(Request $request, string $id)
     {
+        $karyawan = Karyawan::findOrFail($id);
+
         $validatedData = $request->validate([
-            'nip' => 'required|string|max:18',
+            'nip' => 'required|string|max:18|unique:karyawan,nip,' . $karyawan->id,
+            'no_identitas' => 'required|string|max:16|unique:karyawan,no_identitas,' . $karyawan->id,
+            'no_telepon' => 'required|string|max:13|unique:karyawan,no_telepon,' . $karyawan->id,
+            'email' => 'required|email|unique:karyawan,email,' . $karyawan->id,
             'nama_lengkap' => 'required',
             'posisi_pekerjaan' => 'required',
             'jenis_kelamin' => 'required|in:Laki-laki,Perempuan',
@@ -193,19 +205,22 @@ class KaryawanController extends Controller
             'agama' => 'required',
             'kewarganegaraan' => 'required',
             'status_perkawinan' => 'required|in:Belum Menikah,Menikah',
-            'no_telepon' => 'required',
-            'email' => 'required|email',
             'alamat_lengkap' => 'required',
             'kode_pos' => 'required|digits:5',
             'foto_ktp' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'foto_kk' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'anggota_keluarga.*.id' => 'nullable|exists:anggota_keluarga,id', // Validate existing ids
+            'anggota_keluarga.*.id' => 'nullable|exists:anggota_keluarga,id',
             'anggota_keluarga.*.status_kekeluargaan' => 'required|string',
             'anggota_keluarga.*.nama' => 'required|string',
             'anggota_keluarga.*.nik' => 'required|string',
+        ], [
+            'nip.unique' => 'NIP sudah ada. Mohon masukkan nomor NIP anda dengan benar.',
+            'no_identitas.unique' => 'Nomor identitas sudah terdaftar. Mohon masukkan nomor indentitas anda dengan benar.',
+            'no_telepon.unique' => 'Telepon sudah terdaftar. Mohon masukkan nomor telepon anda dengan benar.',
+            'email.unique' => 'Email sudah terdaftar. Mohon masukkan email anda dengan benar.',
         ]);
 
-        $karyawan = Karyawan::findOrFail($id);
+        // $karyawan = Karyawan::findOrFail($id);
 
         // Penanganan foto
         if ($request->hasFile('foto_ktp')) {

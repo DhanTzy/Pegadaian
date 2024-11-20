@@ -17,12 +17,16 @@ class AdminProfileController extends Controller
 
     public function updateProfile(Request $request)
     {
+        // Ambil user dan profile terkait
+        $user = Auth::user();
+        $profile = $user->profile;
+
         // Validasi input
         $request->validate([
             'name' => 'required|string|max:255',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'nip' => 'required|string|max:20',
-            'nomor_identitas' => 'required|string|max:50',
+            'nip' => 'required|string|max:18|unique:profile,nip,' . ($profile->id ?? 'null'),
+            'nomor_identitas' => 'required|string|max:16|unique:profile,nomor_identitas,' . ($profile->id ?? 'null'),
             'tempat_lahir' => 'required|string|max:100',
             'tanggal_lahir' => 'required|date',
             'status_perkawinan' => 'required|string|max:50',
@@ -30,11 +34,14 @@ class AdminProfileController extends Controller
             'kode_pos' => 'required|string|max:10',
             'telepon' => 'required|string|max:15',
             'nama_orang_tua' => 'required|string|max:255',
+        ], [
+            'nip.required' => 'NIP wajib diisi.',
+            'nip.max' => 'NIP tidak boleh lebih dari 18 karakter.',
+            'nip.unique' => 'NIP sudah ada. Mohon gunakan nomor NIP yang berbeda.',
+            'nomor_identitas.required' => 'Nomor identitas wajib diisi.',
+            'nomor_identitas.max' => 'Nomor identitas tidak boleh lebih dari 16 karakter.',
+            'nomor_identitas.unique' => 'Nomor identitas sudah ada. Mohon gunakan nomor yang berbeda.',
         ]);
-
-        // Ambil user dan profile terkait
-        $user = Auth::user();
-        $profile = $user->profile ?? new Profile();
 
         // Update data user
         $user->name = $request->name;
@@ -53,7 +60,11 @@ class AdminProfileController extends Controller
         $user->save();
 
         // Update data profile
-        $profile->user_id = $user->id;
+        if (!$profile) {
+            $profile = new Profile();
+            $profile->user_id = $user->id;
+        }
+
         $profile->nip = $request->nip;
         $profile->nomor_identitas = $request->nomor_identitas;
         $profile->tempat_lahir = $request->tempat_lahir;

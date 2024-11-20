@@ -35,24 +35,14 @@
             <hr style="background-color: black; height: 1px; border: none;">
             <form method="post" action="{{ route('login.action') }}">
                 @csrf
-                @if ($errors->any())
-                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                        <strong class="font-weight-bold">Error!</strong>
-                        <ul>
-                            @foreach ($errors->all() as $error)
-                                <li>{{ $error }}</li>
-                            @endforeach
-                        </ul>
-                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                @endif
 
                 <div class="form-group">
                     <label for="email">Your email</label>
                     <input type="email" name="email" id="email" class="form-control"
                         placeholder="name@company.com" required>
+                        @error('email')
+                        <span class="text-danger">{{ $message }}</span>
+                    @enderror
                 </div>
 
                 <div class="form-group">
@@ -66,11 +56,14 @@
                             </span>
                         </div>
                     </div>
+                    @error('password')
+                        <span class="text-danger">{{ $message }}</span>
+                    @enderror
                 </div>
 
-                <div style="float: right; margin-top: 10px;">
+                {{-- <div style="float: right; margin-top: 10px;">
                     <a href="#">Lupa Password?</a>
-                </div>
+                </div> --}}
 
                 <div>
                     <button class="btn btn-primary" type="submit">

@@ -45,7 +45,7 @@
                         <input type="password" id="password" name="password" class="form-control"
                             placeholder="Masukkan password" autocomplete="off" required />
                         <div class="input-group-append">
-                            <span class="input-group-text toggle-password" style="cursor: pointer;">
+                            <span class="input-group-text" onclick="togglePassword('password')">
                                 <i class="fa fa-eye"></i>
                             </span>
                         </div>
@@ -60,7 +60,7 @@
                         <input type="password" id="password_confirmation" name="password_confirmation"
                             class="form-control" placeholder="Masukkan ulang password" autocomplete="off" required />
                         <div class="input-group-append">
-                            <span class="input-group-text toggle-password" style="cursor: pointer;">
+                            <span class="input-group-text" onclick="togglePassword('password_confirmation')">
                                 <i class="fa fa-eye"></i>
                             </span>
                         </div>
@@ -103,12 +103,21 @@
     </div>
 
     <script>
-        $(".toggle-password").click(function() {
-            $(this).children().toggleClass("fa-eye fa-eye-slash");
-            let input = $(this).prev("input");
-            input.attr("type", input.attr("type") === "password" ? "text" : "password");
-        });
+        function togglePassword(fieldId) {
+            var field = document.getElementById(fieldId);
+            var icon = field.nextElementSibling.querySelector('i');
+            if (field.type === "password") {
+                field.type = "text";
+                icon.classList.remove('fa-eye');
+                icon.classList.add('fa-eye-slash');
+            } else {
+                field.type = "password";
+                icon.classList.remove('fa-eye-slash');
+                icon.classList.add('fa-eye');
+            }
+        }
     </script>
+
 </body>
 
 </html>

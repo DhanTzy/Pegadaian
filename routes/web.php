@@ -82,6 +82,10 @@ Route::middleware(['auth', 'user-access:admin'])->group(function () {
     Route::delete('/admin/transaksi/{id}', [TransaksiController::class, 'destroy'])->name('admin.transaksi.destroy');
     Route::get('/admin/transaksi/data', [TransaksiController::class, 'getData'])->name('admin.transaksi.data');
 
+    Route::get('auth/password', function () {
+        return view('auth.password');
+    })->name('auth.password');
+
     Route::get('password/change', [AuthController::class, 'changePassword'])->name('password.change');
     Route::post('password/change', [AuthController::class, 'changePasswordSave'])->name('password.change.save');
 

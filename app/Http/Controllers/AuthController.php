@@ -26,8 +26,12 @@ class AuthController extends Controller
     {
         Validator::make($request->all(), [
             'name' => 'required',
-            'email' => 'required|email',
+            'email' => 'required|email|unique:users,email',
             'password' => 'required|confirmed'
+        ], [
+            'email.unique' => 'Email sudah terdaftar. Silakan gunakan email lain.',
+            'email.required' => 'Email wajib diisi.',
+            'password_confirmation' => 'Konfirmasi password tidak cocok.'
         ])->validate();
 
         User::create([
@@ -39,6 +43,7 @@ class AuthController extends Controller
 
         return redirect()->route('login');
     }
+
 
     public function login()
     {
@@ -52,9 +57,18 @@ class AuthController extends Controller
             'password' => 'required'
         ])->validate();
 
+        // Cek apakah email terdaftar
+        $user = User::where('email', $request->email)->first();
+        if (!$user) {
+            throw ValidationException::withMessages([
+                'email' => 'Email belum terdaftar, Silahkan daftar terlebih dahulu.'
+            ]);
+        }
+
+        // Cek kombinasi email dan password
         if (!Auth::attempt($request->only('email', 'password'), $request->boolean('remember'))) {
             throw ValidationException::withMessages([
-                'email' => trans('auth.failed')
+                'password' => 'Password yang anda masukkan salah, Silahkan isi dengan benar.'
             ]);
         }
 
@@ -77,6 +91,7 @@ class AuthController extends Controller
         return redirect()->route('dashboard');
     }
 
+
     public function logout(Request $request)
     {
         Auth::guard('web')->logout();
@@ -93,17 +108,21 @@ class AuthController extends Controller
 
     public function changePasswordSave(Request $request)
     {
-        // Validasi input
+        // Validasi input dengan pesan kustom
         $request->validate([
             'current_password' => 'required',
             'new_password' => 'required|confirmed',
+        ], [
+            'current_password.required' => 'Password lama wajib diisi.',
+            'new_password.required' => 'Password baru wajib diisi.',
+            'new_password.confirmed' => 'Konfirmasi password baru tidak sesuai.',
         ]);
 
         $user = Auth::user();
 
         // Cek apakah password lama sesuai
         if (!Hash::check($request->current_password, $user->password)) {
-            return back()->withErrors(['current_password' => 'Password lama tidak sesuai']);
+            return back()->withErrors(['current_password' => 'Password lama tidak sesuai.']);
         }
 
         // Update password
@@ -111,6 +130,6 @@ class AuthController extends Controller
             'password' => Hash::make($request->new_password),
         ]);
 
-        return redirect()->route('admin.home')->with('success', 'Password berhasil diubah');
+        return redirect()->route('auth.password')->with('success', 'Password berhasil diubah.');
     }
 }

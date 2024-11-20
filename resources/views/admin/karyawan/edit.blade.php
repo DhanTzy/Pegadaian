@@ -16,6 +16,18 @@
                         <label class="form-label">NIP</label>
                         <input type="text" id="nip" name="nip" value="{{ $karyawan->nip }}" class="form-control"
                             required>
+                        @error('nip')
+                            <div class="text-danger">{{ $message }}</div>
+                        @enderror
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Nomor Identitas (KTP)</label>
+                        <input id="no_identitas" name="no_identitas" type="text"
+                            value="{{ $karyawan->no_identitas }}" class="form-control" required>
+                        @error('no_identitas')
+                            <div class="text-danger">{{ $message }}</div>
+                        @enderror
                     </div>
 
                     <div class="mb-3">

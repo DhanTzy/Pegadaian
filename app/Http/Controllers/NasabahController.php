@@ -80,7 +80,7 @@ class NasabahController extends Controller
     public function store(Request $request)
     {
         $validatedData = $request->validate([
-            'nomor_identitas' => 'required|string|max:16',
+            'nomor_identitas' => 'required|string|max:16|unique:nasabahs,nomor_identitas',
             'nama_lengkap' => 'required|string|max:255',
             'tempat_lahir' => 'required|string|max:100',
             'tanggal_lahir' => 'required|date',
@@ -88,13 +88,14 @@ class NasabahController extends Controller
             'alamat_lengkap' => 'required|string',
             'kode_pos' => 'required|digits:5',
             'pekerjaan' => 'required|string|max:100',
-            'email' => 'required|email|max:255',
-            'telepon' => 'required|numeric|digits_between:10,13',
+            'email' => 'required|email|unique:nasabahs,email',
+            'telepon' => 'required|numeric|digits_between:10,13|unique:nasabahs,telepon',
             'nama_orang_tua' => 'required|string|max:255',
             'foto_ktp_sim' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
         ], [
             'nomor_identitas.required' => 'Nomor identitas wajib diisi.',
             'nomor_identitas.max' => 'Nomor identitas tidak boleh lebih dari 16 karakter.',
+            'nomor_identitas.unique' => 'Nomor identitas sudah terdaftar. Mohon masukkan nomor indentitas anda dengan benar.',
             'nama_lengkap.required' => 'Nama lengkap wajib diisi.',
             'tempat_lahir.required' => 'Tempat lahir lengkap wajib diisi.',
             'tanggal_lahir.required' => 'Tanggal lahir wajib diisi.',
@@ -104,8 +105,10 @@ class NasabahController extends Controller
             'kode_pos.required' => 'Kode pos wajib disi.',
             'pekerjaan.required' => 'Pekerjaan wajib diisi.',
             'email.required' => 'Email wajib diisi.',
+            'email.unique' => 'Email sudah terdaftar. Mohon masukkan email anda dengan benar.',
             'telepon.digits_between' => 'Nomor telepon harus antara 10 hingga 13 digit.',
             'telepon.required' => 'Nomor telepon wajib disi.',
+            'telepon.unique' => 'Telepon sudah terdaftar. Mohon masukkan nomor telepon anda dengan benar.',
             'nama_orang_tua.required' => 'Nama orang tua wajib disi.',
             'foto_ktp_sim.required' => 'Foto KTP/SIM wajib diunggah.',
             'foto_ktp_sim.image' => 'File yang diunggah harus berupa gambar.',
@@ -138,8 +141,10 @@ class NasabahController extends Controller
 
     public function update(Request $request, string $id)
     {
+        $nasabah = Nasabah::findOrFail($id);
+
         $validatedData = $request->validate([
-            'nomor_identitas' => 'required|string|max:20',
+            'nomor_identitas' => 'required|string|max:16|unique:nasabahs,nomor_identitas,' . $nasabah->id,
             'nama_lengkap' => 'required|string|max:255',
             'tempat_lahir' => 'required|string|max:100',
             'tanggal_lahir' => 'required|date',
@@ -147,13 +152,17 @@ class NasabahController extends Controller
             'alamat_lengkap' => 'required|string',
             'kode_pos' => 'required|digits:5',
             'pekerjaan' => 'required|string|max:100',
-            'email' => 'required|email|max:255',
-            'telepon' => 'required|numeric|digits_between:10,13',
+            'email' => 'required|email|unique:nasabahs,email,' . $nasabah->id,
+            'telepon' => 'required|numeric|digits_between:10,13|unique:nasabahs,telepon,' . $nasabah->id,
             'nama_orang_tua' => 'required|string|max:255',
             'foto_ktp_sim' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+        ], [
+            'nomor_identitas.unique' => 'Nomor identitas sudah terdaftar. Mohon masukkan nomor indentitas anda dengan benar.',
+            'email.unique' => 'Email sudah terdaftar. Mohon masukkan email anda dengan benar.',
+            'telepon.unique' => 'Telepon sudah terdaftar. Mohon masukkan nomor telepon anda dengan benar.',
         ]);
 
-        $nasabah = Nasabah::findOrFail($id);
+
         if ($request->hasFile('foto_ktp_sim')) {
             if ($nasabah->foto_ktp_sim) {
                 $oldFilePath = public_path('storage/' . $nasabah->foto_ktp_sim);

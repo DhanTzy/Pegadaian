@@ -72,6 +72,7 @@
                                     <tr>
                                         <th scope="col">ID</th>
                                         <th scope="col">NIP</th>
+                                        <th scope="col">Nomor Identitas</th>
                                         <th scope="col">Nama Lengkap</th>
                                         <th scope="col">Posisi Pekerjaan</th>
                                         <th scope="col">Jenis Kelamin</th>
@@ -103,6 +104,7 @@
                 </div>
                 <div class="modal-body">
                     <p><strong>NIP :</strong> <span id="detailNip"></span></p>
+                    <p><strong>No Identitas :</strong> <span id="detailNoIdentitas"></span></p>
                     <p><strong>Nama Lengkap :</strong> <span id="detailNamaLengkap"></span></p>
                     <p><strong>Posisi Pekerjaan :</strong> <span id="detailPosisiPekerjaan"></span></p>
                     <p><strong>Jenis Kelamin :</strong> <span id="detailJenisKelamin"></span></p>
@@ -156,6 +158,7 @@
                 columns: [
                     { data: 'id', name: 'id' },
                     { data: 'nip', name: 'nip' },
+                    { data: 'no_identitas', name: 'no_identitas' },
                     { data: 'nama_lengkap', name: 'nama_lengkap' },
                     { data: 'posisi_pekerjaan', name: 'posisi_pekerjaan' },
                     { data: 'jenis_kelamin', name: 'jenis_kelamin' },
@@ -195,6 +198,7 @@
         karyawanDetailModal.addEventListener('show.bs.modal', function(event) {
             var button = event.relatedTarget;
             var nip = button.getAttribute('data-nip');
+            var noIdentitas = button.getAttribute('data-no_identitas');
             var namaLengkap = button.getAttribute('data-nama_lengkap');
             var posisiPekerjaan = button.getAttribute('data-posisi_pekerjaan');
             var jenisKelamin = button.getAttribute('data-jenis_kelamin');
@@ -213,6 +217,7 @@
             var fotoKK = button.getAttribute('data-foto_kk');
 
             karyawanDetailModal.querySelector('#detailNip').textContent = nip;
+            karyawanDetailModal.querySelector('#detailNoIdentitas').textContent = noIdentitas;
             karyawanDetailModal.querySelector('#detailNamaLengkap').textContent = namaLengkap;
             karyawanDetailModal.querySelector('#detailPosisiPekerjaan').textContent = posisiPekerjaan;
             karyawanDetailModal.querySelector('#detailJenisKelamin').textContent = jenisKelamin;
