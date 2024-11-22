@@ -3,164 +3,165 @@
 @section('title', 'Create Transaksi')
 
 @section('contents')
-<div class="content">
-    <div class="container">
-        <h1>Buat Transaksi Baru</h1>
-        <form action="{{ route('admin.transaksi.store') }}" method="POST" enctype="multipart/form-data">
-            @csrf
-            <div class="mb-3">
-                <label>Nama Nasabah:</label>
-                <input type="text" name="nama_nasabah" class="form-control" value="{{ old('nama_nasabah') }}" required>
-                @error('nama_nasabah')
-                    <div class="text-danger">{{ $message }}</div>
-                @enderror
-            </div>
-
-            <div class="mb-3">
-                <label>Tanggal:</label>
-                <input type="date" name="tanggal" class="form-control" value="{{ old('tanggal') }}" required>
-                @error('tanggal')
-                    <div class="text-danger">{{ $message }}</div>
-                @enderror
-            </div>
-
-            <div class="mb-3">
-                <label>Metode Pencairan:</label>
-                <select name="metode_pencairan" class="form-select" required onchange="toggleRekeningFields()">
-                    <option value="">Pilih Metode</option>
-                    <option value="Transfer">Transfer</option>
-                    <option value="Cash">Cash</option>
-                </select>
-                @error('metode_pencairan')
-                    <div class="text-danger">{{ $message }}</div>
-                @enderror
-            </div>
-
-            <div id="rekeningFields" style="display: none;">
+    <div class="content">
+        <div class="container">
+            <h1>Buat Transaksi Baru</h1>
+            <form action="{{ route('admin.transaksi.store') }}" method="POST" enctype="multipart/form-data">
+                @csrf
                 <div class="mb-3">
-                    <label>No Rekening:</label>
-                    <input type="text" name="no_rekening" class="form-control" value="{{ old('no_rekening') }}">
-                    @error('no_rekening')
+                    <label>Nama Nasabah:</label>
+                    <input type="text" name="nama_nasabah" class="form-control" value="{{ old('nama_nasabah') }}" required>
+                    @error('nama_nasabah')
                         <div class="text-danger">{{ $message }}</div>
                     @enderror
                 </div>
 
                 <div class="mb-3">
-                    <label>Bank:</label>
-                    <input type="text" name="bank" class="form-control" value="{{ old('bank') }}">
-                    @error('bank')
+                    <label>Tanggal:</label>
+                    <input type="date" name="tanggal" class="form-control" value="{{ old('tanggal') }}" required>
+                    @error('tanggal')
                         <div class="text-danger">{{ $message }}</div>
                     @enderror
                 </div>
-            </div>
 
-            <div class="mb-3">
-                <label>Pengajuan Pinjaman:</label>
-                <input type="text" name="pengajuan_pinjaman" class="form-control"
-                    value="{{ old('pengajuan_pinjaman') }}" required>
-                @error('pengajuan_pinjaman')
-                    <div class="text-danger">{{ $message }}</div>
-                @enderror
-            </div>
+                <div class="mb-3">
+                    <label>Metode Pencairan:</label>
+                    <select name="metode_pencairan" class="form-select" required onchange="toggleRekeningFields()">
+                        <option value="">Pilih Metode</option>
+                        <option value="Transfer">Transfer</option>
+                        <option value="Cash">Cash</option>
+                    </select>
+                    @error('metode_pencairan')
+                        <div class="text-danger">{{ $message }}</div>
+                    @enderror
+                </div>
 
-            <div class="mb-3">
-                <label>Bunga (%):</label>
-                <select id="bunga" name="bunga" class="form-select" required onchange="updateJangkaWaktu()">
-                    <option value="">Pilih Bunga</option>
-                    <option value="1.15%">1,15%</option>
-                    <option value="4.15%">4,15%</option>
-                    <option value="8.15%">8,15%</option>
-                </select>
-                @error('bunga')
-                    <div class="text-danger">{{ $message }}</div>
-                @enderror
-            </div>
+                <div id="rekeningFields" style="display: none;">
+                    <div class="mb-3">
+                        <label>No Rekening:</label>
+                        <input type="text" name="no_rekening" class="form-control" value="{{ old('no_rekening') }}">
+                        @error('no_rekening')
+                            <div class="text-danger">{{ $message }}</div>
+                        @enderror
+                    </div>
 
-            <div class="mb-3">
-                <label>Jangka Waktu:</label>
-                <select id="jangka_waktu" name="jangka_waktu" class="form-select" required>
-                    <option value="">Pilih Jangka Waktu</option>
-                    <option value="1 Bulan">1 Bulan</option>
-                    <option value="4 Bulan">4 Bulan</option>
-                    <option value="8 Bulan">8 Bulan</option>
-                </select>
-                @error('jangka_waktu')
-                    <div class="text-danger">{{ $message }}</div>
-                @enderror
-            </div>
+                    <div class="mb-3">
+                        <label>Bank:</label>
+                        <input type="text" name="bank" class="form-control" value="{{ old('bank') }}">
+                        @error('bank')
+                            <div class="text-danger">{{ $message }}</div>
+                        @enderror
+                    </div>
+                </div>
 
-            <div class="mb-3">
-                <label>Foto Jaminan:</label>
-                <input type="file" name="foto_jaminan[]" class="form-control" multiple required accept="image/*"
-                    onchange="previewImages(event)">
-                @error('foto_jaminan')
-                    <div class="text-danger">{{ $message }}</div>
-                @enderror
-                <div id="image-preview" class="mt-3"></div>
-            </div>
+                <div class="mb-3">
+                    <label>Pengajuan Pinjaman:</label>
+                    <input type="text" name="pengajuan_pinjaman" class="form-control"
+                        value="{{ old('pengajuan_pinjaman') }}" required>
+                    @error('pengajuan_pinjaman')
+                        <div class="text-danger">{{ $message }}</div>
+                    @enderror
+                </div>
 
-            <div class="mb-3">
-                <label>Jenis Agunan :</label>
-                <input type="text" name="jenis_agunan" class="form-control" value="{{ old('jenis_agunan') }}" required>
-                @error('jenis_agunan')
-                    <div class="text-danger">{{ $message }}</div>
-                @enderror
-            </div>
+                <div class="mb-3">
+                    <label>Jangka Waktu:</label>
+                    <select id="jangka_waktu" name="jangka_waktu" class="form-select" required onchange="updateJangkaWaktu()">
+                        <option value="">Pilih Jangka Waktu</option>
+                        <option value="1 Bulan">1 Bulan</option>
+                        <option value="4 Bulan">4 Bulan</option>
+                        <option value="8 Bulan">8 Bulan</option>
+                    </select>
+                    @error('jangka_waktu')
+                        <div class="text-danger">{{ $message }}</div>
+                    @enderror
+                </div>
 
-            <div class="mb-3">
-                <label>Nilai Pasar Agunan :</label>
-                <input type="text" name="nilai_pasar" class="form-control" value="{{ old('nilai_pasar') }}" required
-                    oninput="calculateNilaiLikuiditas()">
-                @error('nilai_pasar')
-                    <div class="text-danger">{{ $message }}</div>
-                @enderror
-            </div>
+                <div class="mb-3">
+                    <label>Bunga (%):</label>
+                    <select id="bunga" name="bunga" class="form-select" required >
+                        <option value="">Pilih Bunga</option>
+                        <option value="1.15%">1,15%</option>
+                        <option value="4.15%">4,15%</option>
+                        <option value="8.15%">8,15%</option>
+                    </select>
+                    @error('bunga')
+                        <div class="text-danger">{{ $message }}</div>
+                    @enderror
+                </div>
 
-            <div class="mb-3">
-                <label>Nilai Likuiditas Agunan :</label>
-                <input type="text" name="nilai_likuiditas" class="form-control" value="{{ old('nilai_likuiditas') }}"
-                    required readonly>
-                @error('nilai_likuiditas')
-                    <div class="text-danger">{{ $message }}</div>
-                @enderror
-            </div>
+                <div class="mb-3">
+                    <label>Foto Jaminan:</label>
+                    <input type="file" name="foto_jaminan[]" class="form-control" multiple required accept="image/*"
+                        onchange="previewImages(event)">
+                    @error('foto_jaminan')
+                        <div class="text-danger">{{ $message }}</div>
+                    @enderror
+                    <div id="image-preview" class="mt-3"></div>
+                </div>
 
-            <div class="mb-3">
-                <label>Catatan :</label>
-                <textarea type="text" name="catatan" class="form-control" required>{{ old('catatan') }}</textarea>
-                @error('catatan')
-                    <div class="text-danger">{{ $message }}</div>
-                @enderror
-            </div>
+                <div class="mb-3">
+                    <label>Jenis Agunan :</label>
+                    <input type="text" name="jenis_agunan" class="form-control" value="{{ old('jenis_agunan') }}"
+                        required>
+                    @error('jenis_agunan')
+                        <div class="text-danger">{{ $message }}</div>
+                    @enderror
+                </div>
 
-            <!-- Modal Konfirmasi -->
-            <div class="modal fade" id="confirmModal" tabindex="-1" aria-labelledby="confirmModalLabel"
-                aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="confirmModalLabel">Konfirmasi Tambah Data</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            Apakah Anda yakin ingin menambah data ini?
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-                            <button type="button" class="btn btn-primary" id="confirmSubmit">Ya</button>
+                <div class="mb-3">
+                    <label>Nilai Pasar Agunan :</label>
+                    <input type="text" name="nilai_pasar" class="form-control" value="{{ old('nilai_pasar') }}" required
+                        oninput="calculateNilaiLikuiditas()">
+                    @error('nilai_pasar')
+                        <div class="text-danger">{{ $message }}</div>
+                    @enderror
+                </div>
+
+                <div class="mb-3">
+                    <label>Nilai Likuiditas Agunan :</label>
+                    <input type="text" name="nilai_likuiditas" class="form-control"
+                        value="{{ old('nilai_likuiditas') }}" required readonly>
+                    @error('nilai_likuiditas')
+                        <div class="text-danger">{{ $message }}</div>
+                    @enderror
+                </div>
+
+                <div class="mb-3">
+                    <label>Catatan :</label>
+                    <textarea type="text" name="catatan" class="form-control" required>{{ old('catatan') }}</textarea>
+                    @error('catatan')
+                        <div class="text-danger">{{ $message }}</div>
+                    @enderror
+                </div>
+
+                <!-- Modal Konfirmasi -->
+                <div class="modal fade" id="confirmModal" tabindex="-1" aria-labelledby="confirmModalLabel"
+                    aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="confirmModalLabel">Konfirmasi Tambah Data</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                Apakah Anda yakin ingin menambah data ini?
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                                <button type="button" class="btn btn-primary" id="confirmSubmit">Ya</button>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <button type="button" class="btn btn-primary w-20" data-bs-toggle="modal"
-                data-bs-target="#confirmModal">Tambah
-                Data
-            </button>
-            <a href="{{ url('admin/transaksi') }}" class="btn btn-secondary w-20">Kembali</a>
-        </form>
+                <button type="button" class="btn btn-primary w-20" data-bs-toggle="modal"
+                    data-bs-target="#confirmModal">Tambah
+                    Data
+                </button>
+                <a href="{{ url('admin/transaksi') }}" class="btn btn-secondary w-20">Kembali</a>
+            </form>
+        </div>
     </div>
-</div>
 
     <script>
         document.getElementById('confirmSubmit').addEventListener('click', function() {
@@ -223,21 +224,21 @@
                 option.disabled = false; // Enable all options
             });
 
-            switch (bungaSelect.value) {
-                case '1.15%':
-                    jangkaWaktuSelect.value = '1 Bulan';
-                    disableOtherOptions(jangkaWaktuSelect, ['4 Bulan', '8 Bulan']);
+            switch (jangkaWaktuSelect.value) {
+                case '1 Bulan':
+                    bungaSelect.value = '1.15%';
+                    disableOtherOptions(bungaSelect, ['4.15%', '8.15%']);
                     break;
-                case '4.15%':
-                    jangkaWaktuSelect.value = '4 Bulan';
-                    disableOtherOptions(jangkaWaktuSelect, ['1 Bulan', '8 Bulan']);
+                case '4 Bulan':
+                    bungaSelect.value = '4.15%';
+                    disableOtherOptions(bungaSelect, ['1.15%', '8.15%']);
                     break;
-                case '8.15%':
-                    jangkaWaktuSelect.value = '8 Bulan';
-                    disableOtherOptions(jangkaWaktuSelect, ['1 Bulan', '4 Bulan']);
+                case '8 Bulan':
+                    bungaSelect.value = '8.15%';
+                    disableOtherOptions(bungaSelect, ['1.15%', '4.15%']);
                     break;
                 default:
-                    jangkaWaktuSelect.value = ''; // Reset jangka waktu jika tidak ada pilihan
+                    bungaSelect.value = ''; // Reset jangka waktu jika tidak ada pilihan
             }
         }
 

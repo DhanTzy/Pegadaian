@@ -69,27 +69,27 @@
             </div>
 
             <div class="mb-3">
-                <label>Bunga (%):</label>
-                <select id="bunga" name="bunga" class="form-select" required onchange="updateJangkaWaktu()">
-                    <option value="">Pilih Bunga</option>
-                    <option value="1.15%" {{ $transaksi->bunga == '1.15%' ? 'selected' : '' }}>1,15%</option>
-                    <option value="4.15%" {{ $transaksi->bunga == '4.15%' ? 'selected' : '' }}>4,15%</option>
-                    <option value="8.15%" {{ $transaksi->bunga == '8.15%' ? 'selected' : '' }}>8,15%</option>
-                </select>
-                @error('bunga')
-                    <div class="text-danger">{{ $message }}</div>
-                @enderror
-            </div>
-
-            <div class="mb-3">
                 <label>Jangka Waktu:</label>
-                <select id="jangka_waktu" name="jangka_waktu" class="form-select" required>
+                <select id="jangka_waktu" name="jangka_waktu" class="form-select" required onchange="updateJangkaWaktu()">
                     <option value="">Pilih Jangka Waktu</option>
                     <option value="1 Bulan" {{ $transaksi->jangka_waktu == '1 Bulan' ? 'selected' : '' }}>1 Bulan</option>
                     <option value="4 Bulan" {{ $transaksi->jangka_waktu == '4 Bulan' ? 'selected' : '' }}>4 Bulan</option>
                     <option value="8 Bulan" {{ $transaksi->jangka_waktu == '8 Bulan' ? 'selected' : '' }}>8 Bulan</option>
                 </select>
                 @error('jangka_waktu')
+                    <div class="text-danger">{{ $message }}</div>
+                @enderror
+            </div>
+
+            <div class="mb-3">
+                <label>Bunga (%):</label>
+                <select id="bunga" name="bunga" class="form-select" required>
+                    <option value="">Pilih Bunga</option>
+                    <option value="1.15%" {{ $transaksi->bunga == '1.15%' ? 'selected' : '' }}>1,15%</option>
+                    <option value="4.15%" {{ $transaksi->bunga == '4.15%' ? 'selected' : '' }}>4,15%</option>
+                    <option value="8.15%" {{ $transaksi->bunga == '8.15%' ? 'selected' : '' }}>8,15%</option>
+                </select>
+                @error('bunga')
                     <div class="text-danger">{{ $message }}</div>
                 @enderror
             </div>
@@ -152,7 +152,8 @@
                     <div class="modal-content">
                         <div class="modal-header">
                             <h5 class="modal-title" id="editConfirmModalLabel">Konfirmasi Perubahan Data</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
                             Apakah Anda yakin ingin mengubah data ini?
@@ -233,21 +234,21 @@
                 option.disabled = false; // Enable all options
             });
 
-            switch (bungaSelect.value) {
-                case '1.15%':
-                    jangkaWaktuSelect.value = '1 Bulan';
-                    disableOtherOptions(jangkaWaktuSelect, ['4 Bulan', '8 Bulan']);
+            switch (jangkaWaktuSelect.value) {
+                case '1 Bulan':
+                    bungaSelect.value = '1.15%';
+                    disableOtherOptions(bungaSelect, ['4.15%', '8.15%']);
                     break;
-                case '4.15%':
-                    jangkaWaktuSelect.value = '4 Bulan';
-                    disableOtherOptions(jangkaWaktuSelect, ['1 Bulan', '8 Bulan']);
+                case '4 Bulan':
+                    bungaSelect.value = '4.15%';
+                    disableOtherOptions(bungaSelect, ['1.15%', '8.15%']);
                     break;
-                case '8.15%':
-                    jangkaWaktuSelect.value = '8 Bulan';
-                    disableOtherOptions(jangkaWaktuSelect, ['1 Bulan', '4 Bulan']);
+                case '8 Bulan':
+                    bungaSelect.value = '8.15%';
+                    disableOtherOptions(bungaSelect, ['1.15%', '4.15%']);
                     break;
                 default:
-                    jangkaWaktuSelect.value = ''; // Reset jangka waktu jika tidak ada pilihan
+                    bungaSelect.value = ''; // Reset jangka waktu jika tidak ada pilihan
             }
         }
 
