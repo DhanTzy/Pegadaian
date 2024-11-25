@@ -115,17 +115,21 @@
                             </a>
                             <ul class="nav nav-treeview">
                                 <li class="nav-item">
-                                    <a
-                                        class="nav-link {{ Route::is('admin.nasabah') ? 'active bg-primary' : '' }}"
+                                    <a class="nav-link {{ Route::is('admin.nasabah') ? 'active bg-primary' : '' }}"
                                         href="{{ route('admin.nasabah') }}"> <i class="nav-icon bi bi-circle"></i>
                                         <p>Nasabah</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a
-                                        class="nav-link {{ Route::is('admin.karyawan') ? 'active bg-primary' : '' }}"
+                                    <a class="nav-link {{ Route::is('admin.karyawan') ? 'active bg-primary' : '' }}"
                                         href="{{ route('admin.karyawan') }}"> <i class="nav-icon bi bi-circle"></i>
                                         <p>Karyawan</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link {{ Route::is('admin.transaksi.pajak.index') ? 'active bg-primary' : '' }}"
+                                        href="{{ route('admin.transaksi.pajak.index') }}"> <i class="nav-icon bi bi-circle"></i>
+                                        <p>Pajak</p>
                                     </a>
                                 </li>
                             </ul>

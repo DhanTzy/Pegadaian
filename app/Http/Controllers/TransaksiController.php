@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Transaksi;
 use App\Models\TransaksiJaminan;
+use App\Models\Pajak;
 use Yajra\DataTables\DataTables;
 use Illuminate\Support\Facades\File;
 use Carbon\Carbon;
@@ -32,8 +33,8 @@ class TransaksiController extends Controller
             $query->where('tanggal', '<=', $request->input('tanggal'));
         }
 
-        if ($request->has('jangka_waktu') && $request->input('jangka_waktu') != '') {
-            $query->where('jangka_waktu', 'LIKE', '%' . $request->input('jangka_waktu') . '%');
+        if ($request->has('bulan_id') && $request->input('bulan_id') != '') {
+            $query->where('bulan_id', 'LIKE', '%' . $request->input('bulan_id') . '%');
         }
 
         if ($request->has('no_rekening') && $request->input('no_rekening') != '') {
@@ -61,8 +62,8 @@ class TransaksiController extends Controller
                     data-no_rekening="' . $transaksi->no_rekening . '"
                     data-bank="' . $transaksi->bank . '"
                     data-pengajuan_pinjaman="' . $transaksi->pengajuan_pinjaman . '"
+                    data-bulan_id="' . $transaksi->bulan_id . '"
                     data-bunga="' . $transaksi->bunga . '"
-                    data-jangka_waktu="' . $transaksi->jangka_waktu . '"
                     data-catatan="' . $transaksi->catatan . '"
                     data-jenis_agunan="' . $transaksi->jenis_agunan . '"
                     data-nilai_pasar="' . $transaksi->nilai_pasar . '"
@@ -78,14 +79,15 @@ class TransaksiController extends Controller
                 <button class="btn btn-danger btn-sm me-2">Delete</button>
             </form>
         ';
-         })->editColumn('tanggal', function ($transkasi) {
-            return Carbon::parse($transkasi->tanggal)->format('d-m-Y');
-         })->rawColumns(['action'])->make(true);
+            })->editColumn('tanggal', function ($transkasi) {
+                return Carbon::parse($transkasi->tanggal)->format('d-m-Y');
+            })->rawColumns(['action'])->make(true);
     }
 
     public function create()
     {
-        return view('admin.transaksi.create'); // Buat view create.blade.php
+        $pajaks = Pajak::all(); // Ambil semua data pajak
+        return view('admin.transaksi.create', compact('pajaks'));
     }
 
     public function store(Request $request)
@@ -97,13 +99,13 @@ class TransaksiController extends Controller
             'no_rekening' => 'nullable|string',
             'bank' => 'nullable|string',
             'pengajuan_pinjaman' => 'required|string',
+            'bulan_id' => 'required|exists:pajak,id',
             'bunga' => 'required|string',
-            'jangka_waktu' => 'required|string',
             'jenis_agunan' => 'required|string',
             'nilai_pasar' => 'required|string',
             'nilai_likuiditas' => 'required|string',
             'catatan' => 'required|string',
-            'foto_jaminan.*' => 'required|image|mimes:jpeg,png,jpg|max:2048'
+            'foto_jaminan.*' => 'required|image|mimes:jpeg,png,jpg|max:2048',
         ]);
 
         // Simpan data transaksi
@@ -114,12 +116,12 @@ class TransaksiController extends Controller
             'no_rekening',
             'bank',
             'pengajuan_pinjaman',
+            'bulan_id',
             'bunga',
-            'jangka_waktu',
             'jenis_agunan',
             'nilai_pasar',
             'nilai_likuiditas',
-            'catatan'
+            'catatan',
         ]));
 
         // Simpan foto jaminan
@@ -137,17 +139,19 @@ class TransaksiController extends Controller
     }
 
 
+
     public function show($id)
     {
-        $transaksi = Transaksi::with('jaminan')->findOrFail($id); // Mengambil data transaksi beserta jaminan
-        $transaksi->tanggal = Carbon::parse($transaksi->tanggal)->format('d-m-Y');
-        return view('admin.transaksi.show', compact('transaksi')); // Mengembalikan view dengan data transaksi
+        $transaksi = Transaksi::findOrFail($id);
+        $pajaks = Pajak::all(); // Ambil data pajak untuk edit
+        return view('admin.transaksi.edit', compact('transaksi', 'pajaks')); // Mengembalikan view dengan data transaksi
     }
 
     public function edit($id)
     {
+        $pajaks = Pajak::all();
         $transaksi = Transaksi::with('jaminan')->findOrFail($id);
-        return view('admin.transaksi.edit', compact('transaksi'));
+        return view('admin.transaksi.edit', compact('transaksi', 'pajaks'));
     }
 
     public function update(Request $request, $id)
@@ -159,8 +163,8 @@ class TransaksiController extends Controller
             'no_rekening' => 'nullable|string',
             'bank' => 'nullable|string',
             'pengajuan_pinjaman' => 'required|string',
+            'bulan_id' => 'required|exists:pajak,id',
             'bunga' => 'required|string',
-            'jangka_waktu' => 'required|string',
             'jenis_agunan' => 'required|string',
             'nilai_pasar' => 'required|string',
             'nilai_likuiditas' => 'required|string',
@@ -178,24 +182,23 @@ class TransaksiController extends Controller
             'no_rekening',
             'bank',
             'pengajuan_pinjaman',
+            'bulan_id',
             'bunga',
-            'jangka_waktu',
             'jenis_agunan',
             'nilai_pasar',
             'nilai_likuiditas',
-            'catatan'
+            'catatan',
         ]));
 
         // Mengelola foto jaminan
         if ($request->hasFile('foto_jaminan')) {
             foreach ($transaksi->jaminan as $jaminan) {
-                // Hapus foto jaminan yang ada jika perlu
                 $jaminan->delete(); // Pastikan Anda menangani penghapusan foto dari storage jika perlu
             }
 
             // Simpan foto jaminan baru
             foreach ($request->file('foto_jaminan') as $foto) {
-                $path = $foto->store('path/to/images', 'public'); // Ganti dengan path penyimpanan yang sesuai
+                $path = $foto->store('jaminan', 'public');
                 TransaksiJaminan::create([
                     'transaksi_id' => $transaksi->id,
                     'foto_jaminan' => $path,
@@ -205,6 +208,7 @@ class TransaksiController extends Controller
 
         return redirect()->route('admin.transaksi')->with('success', 'Transaksi berhasil diperbarui!');
     }
+
 
     public function destroy($id)
     {

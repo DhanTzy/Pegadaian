@@ -68,31 +68,27 @@
                 @enderror
             </div>
 
-            <div class="mb-3">
-                <label>Jangka Waktu:</label>
-                <select id="jangka_waktu" name="jangka_waktu" class="form-select" required onchange="updateJangkaWaktu()">
-                    <option value="">Pilih Jangka Waktu</option>
-                    <option value="1 Bulan" {{ $transaksi->jangka_waktu == '1 Bulan' ? 'selected' : '' }}>1 Bulan</option>
-                    <option value="4 Bulan" {{ $transaksi->jangka_waktu == '4 Bulan' ? 'selected' : '' }}>4 Bulan</option>
-                    <option value="8 Bulan" {{ $transaksi->jangka_waktu == '8 Bulan' ? 'selected' : '' }}>8 Bulan</option>
+            <div class="form-group">
+                <label for="bulan_id">Bulan</label>
+                <select name="bulan_id" id="bulan_id" class="form-select" onchange="updateBunga()">
+                    <option value="" disabled selected>Pilih Bulan</option>
+                    @foreach ($pajaks as $pajak)
+                        <option value="{{ $pajak->id }}"
+                            {{ old('bulan_id', $transaksi->bulan_id) == $pajak->id ? 'selected' : '' }}>
+                            {{ $pajak->bulan }}
+                        </option>
+                    @endforeach
                 </select>
-                @error('jangka_waktu')
-                    <div class="text-danger">{{ $message }}</div>
-                @enderror
             </div>
 
-            <div class="mb-3">
-                <label>Bunga (%):</label>
-                <select id="bunga" name="bunga" class="form-select" required>
-                    <option value="">Pilih Bunga</option>
-                    <option value="1.15%" {{ $transaksi->bunga == '1.15%' ? 'selected' : '' }}>1,15%</option>
-                    <option value="4.15%" {{ $transaksi->bunga == '4.15%' ? 'selected' : '' }}>4,15%</option>
-                    <option value="8.15%" {{ $transaksi->bunga == '8.15%' ? 'selected' : '' }}>8,15%</option>
-                </select>
+            <div class="form-group">
+                <label for="bunga">Bunga</label>
+                <input type="text" name="bunga" id="bunga" class="form-control"
+                    value="{{ old('bunga', $transaksi->bunga) }}" readonly>
                 @error('bunga')
                     <div class="text-danger">{{ $message }}</div>
                 @enderror
-            </div>
+            </div>  
 
             <div class="mb-3">
                 <label>Foto Jaminan:</label>
@@ -225,47 +221,17 @@
             }
         }
 
-        function updateJangkaWaktu() {
-            const bungaSelect = document.getElementById('bunga');
-            const jangkaWaktuSelect = document.getElementById('jangka_waktu');
+        // Fungsi untuk memperbarui bunga berdasarkan bulan yang dipilih
+        function updateBunga() {
+            const bulanId = document.getElementById('bulan_id').value;
+            const bungaInput = document.getElementById('bunga');
 
-            // Reset semua opsi jangka waktu menjadi aktif
-            Array.from(jangkaWaktuSelect.options).forEach(option => {
-                option.disabled = false; // Enable all options
-            });
-
-            switch (jangkaWaktuSelect.value) {
-                case '1 Bulan':
-                    bungaSelect.value = '1.15%';
-                    disableOtherOptions(bungaSelect, ['4.15%', '8.15%']);
-                    break;
-                case '4 Bulan':
-                    bungaSelect.value = '4.15%';
-                    disableOtherOptions(bungaSelect, ['1.15%', '8.15%']);
-                    break;
-                case '8 Bulan':
-                    bungaSelect.value = '8.15%';
-                    disableOtherOptions(bungaSelect, ['1.15%', '4.15%']);
-                    break;
-                default:
-                    bungaSelect.value = ''; // Reset jangka waktu jika tidak ada pilihan
+            // Dapatkan bunga berdasarkan bulan yang dipilih
+            const bulan = @json($pajaks);
+            const selectedBulan = bulan.find(b => b.id == bulanId);
+            if (selectedBulan) {
+                bungaInput.value = selectedBulan.bunga;
             }
         }
-
-        function disableOtherOptions(selectElement, valuesToDisable) {
-            valuesToDisable.forEach(value => {
-                for (let i = 0; i < selectElement.options.length; i++) {
-                    if (selectElement.options[i].value === value) {
-                        selectElement.options[i].disabled = true; // Disable the option
-                    }
-                }
-            });
-        }
-
-        // Panggil toggleRekeningFields() saat halaman dimuat untuk mengatur status dropdown awal
-        window.onload = function() {
-            toggleRekeningFields();
-            updateJangkaWaktu();
-        };
     </script>
 @endsection

@@ -9,6 +9,7 @@ use App\Http\Controllers\UserProfileController;
 use App\Http\Controllers\AdminProfileController;
 use App\Http\Controllers\KaryawanController;
 use App\Http\Controllers\TransaksiController;
+use App\Http\Controllers\PajakController;
 use App\Http\Controllers\UserController;
 use App\Models\Karyawan;
 use App\Models\Nasabah;
@@ -81,6 +82,14 @@ Route::middleware(['auth', 'user-access:admin'])->group(function () {
     Route::put('/admin/transaksi/{id}', [TransaksiController::class, 'update'])->name('admin.transaksi.update');
     Route::delete('/admin/transaksi/{id}', [TransaksiController::class, 'destroy'])->name('admin.transaksi.destroy');
     Route::get('/admin/transaksi/data', [TransaksiController::class, 'getData'])->name('admin.transaksi.data');
+
+    // Pajak
+    Route::get('/admin/transaksi/pajak', [PajakController::class, 'index'])->name('admin.transaksi.pajak.index');
+    Route::get('/admin/transaksi/pajak/create', [PajakController::class, 'create'])->name('admin.transaksi.pajak.create');
+    Route::post('/admin/transaksi/pajak', [PajakController::class, 'store'])->name('admin.transaksi.pajak.store');
+    Route::get('/admin/transaksi/pajak/{id}/edit', [PajakController::class, 'edit'])->name('admin.transaksi.pajak.edit');
+    Route::put('/admin/transaksi/pajak/{id}', [PajakController::class, 'update'])->name('admin.transaksi.pajak.update');
+    Route::delete('/admin/transaksi/pajak/{id}', [PajakController::class, 'destroy'])->name('admin.transaksi.pajak.destroy');
 
     Route::get('auth/password', function () {
         return view('auth.password');

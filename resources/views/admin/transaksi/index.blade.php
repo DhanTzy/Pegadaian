@@ -61,12 +61,7 @@
 
                                     <div class="me-2">
                                         <label for="jangkaFilter" class="form-label mb-0">Jangka Waktu :</label>
-                                        <select id="jangkaFilter" class="form-select form-select-sm me-2">
-                                            <option value=""> -- Pilih Jangka Waktu -- </option>
-                                            <option value="1 Bulan">1 Bulan</option>
-                                            <option value="4 Bulan">4 Bulan</option>
-                                            <option value="8 Bulan">8 Bulan</option>
-                                        </select>
+                                        <input type="text" id="jangkaFilter" placeholder="Search Jangka Waktu" class="form-control form-control-sm me-2" style="width: auto;">
                                      </div>
 
                                     <button id="filterButton" class="btn btn-success btn-sm">Filter</button>
@@ -83,8 +78,8 @@
                                             <th>No Rekening</th>
                                             <th>Bank</th>
                                             <th>Pengajuan Pinjaman</th>
+                                            <th>Bulan</th>
                                             <th>Bunga</th>
-                                            <th>Jangka Waktu</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
@@ -117,8 +112,8 @@
                     <p><strong>Nomor Rekening :</strong> <span id="detailNoRekening"></span></p>
                     <p><strong>Bank :</strong> <span id="detailBank"></span></p>
                     <p><strong>Pengajuan Pinjaman :</strong> <span id="detailPengajuanPinjaman"></span></p>
+                    <p><strong>Bulan :</strong> <span id="detailBulanId"></span></p>
                     <p><strong>Bunga :</strong> <span id="detailBunga"></span></p>
-                    <p><strong>Jangka Waktu :</strong> <span id="detailJangkaWaktu"></span></p>
                     <p><strong>Foto Jaminan (Barang) :</strong> <br>
                         <div id="detailFotoJaminan" style="display: flex; flex-wrap: wrap;"></div>
                     </p>
@@ -150,7 +145,7 @@
                         d.nama_nasabah = $('#namaFilter').val();
                         d.tanggal_transaksi = $('#transaksiFilter').val();
                         d.tanggal = $('#tanggalFilter').val();
-                        d.jangka_waktu = $('#jangkaFilter').val();
+                        d.bulan_id = $('#jangkaFilter').val();
                         d.no_rekening = $('#rekeningFilter').val(); // Mengirimkan filter ke server
                         d.metode_pencairan = $('#metodeFilter').val();
                     }
@@ -163,8 +158,8 @@
                     { data: 'no_rekening', name: 'no_rekening'},
                     { data: 'bank', name: 'bank'},
                     { data: 'pengajuan_pinjaman', name: 'pengajuan_pinjaman' },
+                    { data: 'bulan_id', name: 'bulan_id' },
                     { data: 'bunga', name: 'bunga' },
-                    { data: 'jangka_waktu', name: 'jangka_waktu'},
                     { data: 'action', name: 'action', orderable: false, searchable: false },
                 ],
             });
@@ -193,8 +188,8 @@
             var noRekening = button.getAttribute('data-no_rekening');
             var bank = button.getAttribute('data-bank');
             var pengajuanPinjaman = button.getAttribute('data-pengajuan_pinjaman');
+            var bulanId = button.getAttribute('data-bulan_id');
             var bunga = button.getAttribute('data-bunga');
-            var jangkaWaktu = button.getAttribute('data-jangka_waktu');
             var jenisAgunan = button.getAttribute('data-jenis_agunan');
             var nilaiPasar = button.getAttribute('data-nilai_pasar');
             var nilaiLikuiditas = button.getAttribute('data-nilai_likuiditas');
@@ -208,8 +203,8 @@
             document.querySelector('#detailNoRekening').textContent = noRekening;
             document.querySelector('#detailBank').textContent = bank;
             document.querySelector('#detailPengajuanPinjaman').textContent = pengajuanPinjaman;
+            document.querySelector('#detailBulanId').textContent = bulanId;
             document.querySelector('#detailBunga').textContent = bunga;
-            document.querySelector('#detailJangkaWaktu').textContent = jangkaWaktu;
             document.querySelector('#detailJenisAgunan').textContent = jenisAgunan;
             document.querySelector('#detailNilaiPasar').textContent = nilaiPasar;
             document.querySelector('#detailNilaiLikuiditas').textContent = nilaiLikuiditas;

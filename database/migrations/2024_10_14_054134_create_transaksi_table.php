@@ -17,7 +17,6 @@ return new class extends Migration
             $table->string('bank')->nullable();
             $table->string('pengajuan_pinjaman');
             $table->string('bunga');
-            $table->string('jangka_waktu');
             $table->string('janis_agunan');
             $table->string('nilai_pasar');
             $table->string('nilai_likuiditas');

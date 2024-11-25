@@ -63,27 +63,23 @@
                     @enderror
                 </div>
 
-                <div class="mb-3">
-                    <label>Jangka Waktu:</label>
-                    <select id="jangka_waktu" name="jangka_waktu" class="form-select" required onchange="updateJangkaWaktu()">
-                        <option value="">Pilih Jangka Waktu</option>
-                        <option value="1 Bulan">1 Bulan</option>
-                        <option value="4 Bulan">4 Bulan</option>
-                        <option value="8 Bulan">8 Bulan</option>
+                <div class="form-group">
+                    <label for="bulan_id">Bulan</label>
+                    <select name="bulan_id" id="bulan_id" class="form-select" onchange="updateBunga()">
+                        <option value="" disabled selected>Pilih Bulan</option>
+                        @foreach ($pajaks as $pajak)
+                            <option value="{{ $pajak->id }}"
+                                {{ old('bulan_id', $transaksi->bulan ?? '') == $pajak->id ? 'selected' : '' }}>
+                                {{ $pajak->bulan }}
+                            </option>
+                        @endforeach
                     </select>
-                    @error('jangka_waktu')
-                        <div class="text-danger">{{ $message }}</div>
-                    @enderror
                 </div>
 
-                <div class="mb-3">
-                    <label>Bunga (%):</label>
-                    <select id="bunga" name="bunga" class="form-select" required >
-                        <option value="">Pilih Bunga</option>
-                        <option value="1.15%">1,15%</option>
-                        <option value="4.15%">4,15%</option>
-                        <option value="8.15%">8,15%</option>
-                    </select>
+                <div class="form-group">
+                    <label for="bunga">Bunga</label>
+                    <input type="text" name="bunga" id="bunga" class="form-control" value="{{ old('bunga') }}"
+                        readonly>
                     @error('bunga')
                         <div class="text-danger">{{ $message }}</div>
                     @enderror
@@ -134,7 +130,6 @@
                     @enderror
                 </div>
 
-                <!-- Modal Konfirmasi -->
                 <div class="modal fade" id="confirmModal" tabindex="-1" aria-labelledby="confirmModalLabel"
                     aria-hidden="true">
                     <div class="modal-dialog">
@@ -188,9 +183,12 @@
 
         // Nilai Likuiditas Dari Hasil Menginput Nilai Pasar
         function calculateNilaiLikuiditas() {
-            const nilaiPasar = parseFloat(document.querySelector('input[name="nilai_pasar"]').value) || 0;
-            const nilaiLikuiditas = (nilaiPasar * 0.7).toFixed(0); // Menghitung 70% dari nilai pasar
-            document.querySelector('input[name="nilai_likuiditas"]').value = nilaiLikuiditas; // Update nilai likuiditas
+            const nilaiPasar = document.querySelector('input[name="nilai_pasar"]').value;
+            const nilaiLikuiditas = document.querySelector('input[name="nilai_likuiditas"]');
+            if (nilaiPasar) {
+                const nilai = parseFloat(nilaiPasar) * 0.7;
+                nilaiLikuiditas.value = nilai.toFixed(); // Hasil perhitungan 70%
+            }
         }
 
         function previewImages(event) {
@@ -215,41 +213,17 @@
             }
         }
 
-        function updateJangkaWaktu() {
-            const bungaSelect = document.getElementById('bunga');
-            const jangkaWaktuSelect = document.getElementById('jangka_waktu');
+        // Fungsi untuk memperbarui bunga berdasarkan bulan yang dipilih
+        function updateBunga() {
+            const bulanId = document.getElementById('bulan_id').value;
+            const bungaInput = document.getElementById('bunga');
 
-            // Reset semua opsi jangka waktu menjadi aktif
-            Array.from(jangkaWaktuSelect.options).forEach(option => {
-                option.disabled = false; // Enable all options
-            });
-
-            switch (jangkaWaktuSelect.value) {
-                case '1 Bulan':
-                    bungaSelect.value = '1.15%';
-                    disableOtherOptions(bungaSelect, ['4.15%', '8.15%']);
-                    break;
-                case '4 Bulan':
-                    bungaSelect.value = '4.15%';
-                    disableOtherOptions(bungaSelect, ['1.15%', '8.15%']);
-                    break;
-                case '8 Bulan':
-                    bungaSelect.value = '8.15%';
-                    disableOtherOptions(bungaSelect, ['1.15%', '4.15%']);
-                    break;
-                default:
-                    bungaSelect.value = ''; // Reset jangka waktu jika tidak ada pilihan
+            // Dapatkan bunga berdasarkan bulan yang dipilih
+            const bulan = @json($pajaks);
+            const selectedBulan = bulan.find(b => b.id == bulanId);
+            if (selectedBulan) {
+                bungaInput.value = selectedBulan.bunga;
             }
-        }
-
-        function disableOtherOptions(selectElement, valuesToDisable) {
-            valuesToDisable.forEach(value => {
-                for (let i = 0; i < selectElement.options.length; i++) {
-                    if (selectElement.options[i].value === value) {
-                        selectElement.options[i].disabled = true; // Disable the option
-                    }
-                }
-            });
         }
     </script>
 @endsection
