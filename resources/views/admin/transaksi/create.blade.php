@@ -69,7 +69,7 @@
                         <option value="" disabled selected>Pilih Bulan</option>
                         @foreach ($pajaks as $pajak)
                             <option value="{{ $pajak->id }}"
-                                {{ old('bulan_id', $transaksi->bulan ?? '') == $pajak->id ? 'selected' : '' }}>
+                                {{ old('bulan_id', $transaksi->bulan ?? '') == $pajak->bulan ? 'selected' : '' }}>
                                 {{ $pajak->bulan }}
                             </option>
                         @endforeach
@@ -181,15 +181,48 @@
             }
         }
 
+        // Fungsi untuk memformat angka menjadi format Rupiah
+        function formatRupiah(angka, prefix) {
+            if (!angka) return ''; // Jika angka kosong, kembalikan string kosong
+            const numberString = angka.replace(/[^,\d]/g, '').toString();
+            const split = numberString.split(',');
+            const sisa = split[0].length % 3;
+            let rupiah = split[0].substr(0, sisa); // Ambil bagian awal angka
+
+            const ribuan = split[0].substr(sisa).match(/\d{3}/g); // Ambil kelompok ribuan
+            if (ribuan) {
+                const separator = sisa ? '.' : ''; // Tambahkan titik jika ada sisa
+                rupiah += separator + ribuan.join('.'); // Gabungkan semua kelompok ribuan
+            }
+
+            rupiah = split[1] !== undefined ? rupiah + ',' + split[1] : rupiah; // Tambahkan desimal jika ada
+            return prefix ? prefix + ' ' + rupiah : rupiah;
+        }
+
+        // Tambahkan event listener untuk format Rupiah
+        document.querySelectorAll('input[name="pengajuan_pinjaman"], input[name="nilai_pasar"]').forEach(input => {
+            input.addEventListener('input', function() {
+                const value = this.value.replace(/\./g, ''); // Hapus titik sebelumnya
+                this.value = value ? formatRupiah(value, 'Rp') : ''; // Format hanya jika ada nilai
+            });
+        });
+
         // Nilai Likuiditas Dari Hasil Menginput Nilai Pasar
         function calculateNilaiLikuiditas() {
-            const nilaiPasar = document.querySelector('input[name="nilai_pasar"]').value;
-            const nilaiLikuiditas = document.querySelector('input[name="nilai_likuiditas"]');
-            if (nilaiPasar) {
-                const nilai = parseFloat(nilaiPasar) * 0.7;
-                nilaiLikuiditas.value = nilai.toFixed(); // Hasil perhitungan 70%
+            const nilaiPasarInput = document.querySelector('input[name="nilai_pasar"]');
+            const nilaiLikuiditasInput = document.querySelector('input[name="nilai_likuiditas"]');
+
+            if (nilaiPasarInput.value) {
+                const nilaiPasar = parseFloat(nilaiPasarInput.value.replace(/[^\d]/g, '')) || 0;
+                const nilaiLikuiditas = nilaiPasar * 0.7; // Kalkulasi 70%
+                nilaiLikuiditasInput.value = formatRupiah(nilaiLikuiditas.toFixed(0), 'Rp');
+            } else {
+                nilaiLikuiditasInput.value = ''; // Kosongkan jika tidak ada nilai pasar
             }
         }
+
+        // Event listener untuk perhitungan nilai likuiditas
+        document.querySelector('input[name="nilai_pasar"]').addEventListener('input', calculateNilaiLikuiditas);
 
         function previewImages(event) {
             const previewContainer = document.getElementById('image-preview');
