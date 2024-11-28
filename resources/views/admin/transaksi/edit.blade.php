@@ -68,26 +68,24 @@
                 @enderror
             </div>
 
-            <div class="form-group">
-                <label for="bulan_id">Bulan</label>
-                <select name="bulan_id" id="bulan_id" class="form-select" onchange="updateBunga()">
-                    <option value="" disabled selected>Pilih Bulan</option>
+            <div class="form-group mb-3">
+                <label for="bulan">Bulan</label>
+                <select id="bulan" name="bulan" class="form-control" onchange="updateBunga()">
+                    <option value="">Pilih Bulan</option>
                     @foreach ($pajaks as $pajak)
-                        <option value="{{ $pajak->id }}"
-                            {{ old('bulan_id', $transaksi->bulan_id) == $pajak->bulan ? 'selected' : '' }}>
+                        <option value="{{ $pajak->bulan }}"
+                            {{ old('bulan', $transaksi->bulan) == $pajak->bulan ? 'selected' : '' }}>
                             {{ $pajak->bulan }}
                         </option>
                     @endforeach
                 </select>
             </div>
 
-            <div class="form-group">
+            <!-- Input Bunga -->
+            <div class="form-group mb-3">
                 <label for="bunga">Bunga</label>
-                <input type="text" name="bunga" id="bunga" class="form-control"
+                <input type="text" id="bunga" name="bunga" class="form-control"
                     value="{{ old('bunga', $transaksi->bunga) }}" readonly>
-                @error('bunga')
-                    <div class="text-danger">{{ $message }}</div>
-                @enderror
             </div>
 
             <div class="mb-3">
@@ -172,6 +170,20 @@
             document.querySelector('form').submit();
         });
 
+        // Bulan >> Bunga
+        const pajak = @json($pajaks);
+
+        function updateBunga() {
+            const bulan = document.getElementById('bulan').value;
+            const bunga = pajak.find(item => item.bulan === bulan)?.bunga || '';
+            document.getElementById('bunga').value = bunga;
+        }
+
+        // Mengisi nilai bunga awal berdasarkan bulan yang sudah dipilih
+        document.addEventListener('DOMContentLoaded', () => {
+            updateBunga();
+        });
+
         function toggleRekeningFields() {
             const metodePencairan = document.querySelector('select[name="metode_pencairan"]').value;
             const rekeningFields = document.getElementById('rekeningFields');
@@ -254,19 +266,6 @@
                 };
 
                 reader.readAsDataURL(file);
-            }
-        }
-
-        // Fungsi untuk memperbarui bunga berdasarkan bulan yang dipilih
-        function updateBunga() {
-            const bulanId = document.getElementById('bulan_id').value;
-            const bungaInput = document.getElementById('bunga');
-
-            // Dapatkan bunga berdasarkan bulan yang dipilih
-            const bulan = @json($pajaks);
-            const selectedBulan = bulan.find(b => b.id == bulanId);
-            if (selectedBulan) {
-                bungaInput.value = selectedBulan.bunga;
             }
         }
     </script>

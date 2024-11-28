@@ -60,9 +60,9 @@
                                     </div>
 
                                     <div class="me-2">
-                                        <label for="jangkaFilter" class="form-label mb-0">Jangka Waktu :</label>
-                                        <input type="text" id="jangkaFilter" placeholder="Search Jangka Waktu" class="form-control form-control-sm me-2" style="width: auto;">
-                                     </div>
+                                        <label for="bulanFilter" class="form-label mb-0">Bulan :</label>
+                                        <input type="text" id="bulanFilter" placeholder="Search bulan" class="form-control form-control-sm me-2" style="width: auto;">
+                                    </div>
 
                                     <button id="filterButton" class="btn btn-success btn-sm">Filter</button>
                                     <button id="resetButton" class="btn btn-secondary btn-sm ms-2">Reset</button>
@@ -112,7 +112,7 @@
                     <p><strong>Nomor Rekening :</strong> <span id="detailNoRekening"></span></p>
                     <p><strong>Bank :</strong> <span id="detailBank"></span></p>
                     <p><strong>Pengajuan Pinjaman :</strong> <span id="detailPengajuanPinjaman"></span></p>
-                    <p><strong>Bulan :</strong> <span id="detailBulanId"></span></p>
+                    <p><strong>Bulan :</strong> <span id="detailBulan"></span></p>
                     <p><strong>Bunga :</strong> <span id="detailBunga"></span></p>
                     <p><strong>Foto Jaminan (Barang) :</strong> <br>
                         <div id="detailFotoJaminan" style="display: flex; flex-wrap: wrap;"></div>
@@ -145,9 +145,9 @@
                         d.nama_nasabah = $('#namaFilter').val();
                         d.tanggal_transaksi = $('#transaksiFilter').val();
                         d.tanggal = $('#tanggalFilter').val();
-                        d.bulan_id = $('#jangkaFilter').val();
                         d.no_rekening = $('#rekeningFilter').val(); // Mengirimkan filter ke server
                         d.metode_pencairan = $('#metodeFilter').val();
+                        d.bulan = $('#bulanFilter').val();
                     }
                 },
                 columns: [
@@ -158,7 +158,7 @@
                     { data: 'no_rekening', name: 'no_rekening'},
                     { data: 'bank', name: 'bank'},
                     { data: 'pengajuan_pinjaman', name: 'pengajuan_pinjaman' },
-                    { data: 'bulan_id', name: 'bulan_id' },
+                    { data: 'bulan', name: 'bulan' },
                     { data: 'bunga', name: 'bunga' },
                     { data: 'action', name: 'action', orderable: false, searchable: false },
                 ],
@@ -172,9 +172,9 @@
                 $('#namaFilter').val('');
                 $('#transaksiFilter').val('');
                 $('#tanggalFilter').val('');
-                $('#jangkaFilter').val('');
                 $('#rekeningFilter').val('');
                 $('#metodeFilter').val('');
+                $('#bulanFilter').val('');
                 table.draw();
             });
         });
@@ -188,7 +188,7 @@
             var noRekening = button.getAttribute('data-no_rekening');
             var bank = button.getAttribute('data-bank');
             var pengajuanPinjaman = button.getAttribute('data-pengajuan_pinjaman');
-            var bulanId = button.getAttribute('data-bulan_id');
+            var bulan = button.getAttribute('data-bulan');
             var bunga = button.getAttribute('data-bunga');
             var jenisAgunan = button.getAttribute('data-jenis_agunan');
             var nilaiPasar = button.getAttribute('data-nilai_pasar');
@@ -203,7 +203,7 @@
             document.querySelector('#detailNoRekening').textContent = noRekening;
             document.querySelector('#detailBank').textContent = bank;
             document.querySelector('#detailPengajuanPinjaman').textContent = pengajuanPinjaman;
-            document.querySelector('#detailBulanId').textContent = bulanId;
+            document.querySelector('#detailBulan').textContent = bulan;
             document.querySelector('#detailBunga').textContent = bunga;
             document.querySelector('#detailJenisAgunan').textContent = jenisAgunan;
             document.querySelector('#detailNilaiPasar').textContent = nilaiPasar;

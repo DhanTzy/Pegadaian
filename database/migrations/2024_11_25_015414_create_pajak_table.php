@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('pajak', function (Blueprint $table) {
             $table->id();
-            $table->string('bunga');
             $table->string('bulan');
+            $table->string('bunga');
             $table->timestamps();
         });
     }

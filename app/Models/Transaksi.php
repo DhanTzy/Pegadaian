@@ -17,7 +17,7 @@ class Transaksi extends Model
         'no_rekening',
         'bank',
         'pengajuan_pinjaman',
-        'bulan_id',
+        'bulan',
         'bunga',
         'jenis_agunan',
         'nilai_pasar',
@@ -25,11 +25,6 @@ class Transaksi extends Model
         'catatan',
         'status_delete',
     ];
-
-    public function pajak()
-    {
-        return $this->belongsTo(Pajak::class, 'bulan_id');
-    }
 
     public function jaminan()
     {

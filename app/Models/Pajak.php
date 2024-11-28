@@ -11,13 +11,7 @@ class Pajak extends Model
     protected $table = 'pajak';
 
     protected $fillable = [
-        'bunga',
         'bulan',
+        'bunga',
     ];
-
-    public function transaksi()
-    {
-        return $this->hasMany(Transaksi::class);
-    }
-
 }

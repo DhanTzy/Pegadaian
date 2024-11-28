@@ -3,16 +3,16 @@
 @section('contents')
     <div class="content">
         <div>
-            <main class="app-main"> <!--begin::App Content Header-->
-                <div class="app-content-header"> <!--begin::Container-->
-                    <div class="container-fluid"> <!--begin::Row-->
+            <main class="app-main">
+                <div class="app-content-header">
+                    <div class="container-fluid">
                         <div class="row">
                             <div class="col-sm-6">
                                 <h1 class="fw-bold fs-3">Daftar Pajak</h1>
                             </div>
-                        </div> <!--end::Row-->
-                    </div> <!--end::Container-->
-                </div> <!--end::App Content Header--> <!--begin::App Content-->
+                        </div>
+                    </div>
+                </div>
                 <div class="app-content">
                     <div class="card mb-4">
                         <div class="card-header">
@@ -28,12 +28,12 @@
                                 </div>
                             @endif
 
-                            <table class="table table-striped table-bordered">
+                            <table id="myTable" class="table table-striped table-bordered">
                                 <thead class="table-dark text-center">
                                     <tr>
                                         <th>No</th>
-                                        <th>Bunga</th>
                                         <th>Bulan</th>
+                                        <th>Bunga</th>
                                         <th>Aksi</th>
                                     </tr>
                                 </thead>
@@ -41,8 +41,8 @@
                                     @foreach ($pajaks as $pajak)
                                         <tr>
                                             <td>{{ $loop->iteration }}</td>
-                                            <td>{{ $pajak->bunga }}</td>
                                             <td>{{ $pajak->bulan }}</td>
+                                            <td>{{ $pajak->bunga }}</td>
                                             <td>
                                                 <a href="{{ route('admin.transaksi.pajak.edit', $pajak->id) }}"
                                                     class="btn btn-warning btn-sm me-2">Edit</a>

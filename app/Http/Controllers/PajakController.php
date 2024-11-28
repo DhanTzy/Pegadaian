@@ -21,7 +21,8 @@ class PajakController extends Controller
      */
     public function create()
     {
-        return view('admin.transaksi.pajak.create');
+        $pajaks = Pajak::all();
+        return view('admin.transaksi.pajak.create', compact('pajaks'));
     }
 
     /**
