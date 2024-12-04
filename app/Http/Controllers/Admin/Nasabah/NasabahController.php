@@ -1,6 +1,7 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin\Nasabah;
+use App\Http\Controllers\Controller;
 
 use Illuminate\Http\Request;
 use App\Models\Nasabah;
@@ -10,7 +11,7 @@ use Carbon\Carbon;
 
 class NasabahController extends Controller
 {
-    public function index(Request $request)
+    public function index()
     {
         return view('admin.nasabah.index');
     }
@@ -39,6 +40,7 @@ class NasabahController extends Controller
         }
 
         return DataTables::of($query)
+            ->addIndexColumn()
             ->addColumn('action', function ($nasabah) {
                 return '
                 <button type="button" class="btn btn-info btn-sm me-2"

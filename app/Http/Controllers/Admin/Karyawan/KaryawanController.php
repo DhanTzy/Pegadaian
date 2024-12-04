@@ -1,9 +1,11 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin\Karyawan;
+use App\Http\Controllers\Controller;
 
 use Illuminate\Http\Request;
 use App\Models\Karyawan;
+use App\Models\Pekerjaan;
 use App\Models\AnggotaKeluarga;
 use Carbon\Carbon;
 use Yajra\DataTables\DataTables;
@@ -11,14 +13,17 @@ use Illuminate\Support\Facades\File;
 
 class KaryawanController extends Controller
 {
-    public function index(Request $request)
+    public function index()
     {
-        return view('admin.karyawan.index');
+        $pekerjaans = Pekerjaan::all();
+        $karyawan = Karyawan::with('pekerjaan')->get();
+        return view('admin.karyawan.index', compact('karyawan', 'pekerjaans'));
     }
 
     public function getData(Request $request)
     {
-        $query = Karyawan::where('status_delete', '1')->with('anggotaKeluarga');
+        $query = Karyawan::with('anggotaKeluarga', 'pekerjaan') // Pastikan pekerjaan juga dimuat
+            ->where('status_delete', '1');
 
         if ($request->has('nama_lengkap') && $request->input('nama_lengkap') != '') {
             $query->where('nama_lengkap', 'LIKE', '%' . $request->input('nama_lengkap') . '%');
@@ -28,15 +33,23 @@ class KaryawanController extends Controller
             $query->where('nip', 'LIKE', '%' . $request->input('nip') . '%');
         }
 
-        if ($request->has('posisi_pekerjaan') && $request->input('posisi_pekerjaan') != '') {
-            $query->where('posisi_pekerjaan', 'LIKE', '%' . $request->input('posisi_pekerjaan') . '%');
+        if ($request->has('pekerjaan_id') && $request->input('pekerjaan_id') != '') {
+            $query->where('pekerjaan_id', $request->input('pekerjaan_id'));
         }
 
         if ($request->has('tanggal_gabung') && $request->input('tanggal_gabung') != '') {
-            $query->where('created_at', 'LIKE', '%' . $request->input('tanggal_gabung') . '%');
+            $query->where('created_at', '>=', $request->input('tanggal_gabung'));
+        }
+
+        if ($request->has('tanggal_akhir') && $request->input('tanggal_akhir') != '') {
+            $query->where('created_at', '<=', $request->input('tanggal_akhir'));
         }
 
         return DataTables::of($query)
+            ->addIndexColumn()
+            ->addColumn('posisi_pekerjaan', function ($karyawan) {
+                return $karyawan->pekerjaan ? $karyawan->pekerjaan->posisi_pekerjaan : '-';
+            })
             ->addColumn('action', function ($karyawan) {
                 $anggotaKeluarga = $karyawan->anggotaKeluarga->map(function ($anggota) {
                     return [
@@ -46,42 +59,46 @@ class KaryawanController extends Controller
                     ];
                 });
                 return '
-                <button class="btn btn-info btn-sm me-2" data-bs-toggle="modal" data-bs-target="#karyawanDetailModal"
-                        data-nip="' . $karyawan->nip . '"
-                        data-no_identitas="' . $karyawan->no_identitas . '"
-                        data-nama_lengkap="' . $karyawan->nama_lengkap . '"
-                        data-posisi_pekerjaan="' . $karyawan->posisi_pekerjaan . '"
-                        data-jenis_kelamin="' . $karyawan->jenis_kelamin . '"
-                        data-tempat_lahir="' . $karyawan->tempat_lahir . '"
-                        data-tanggal_lahir="' .  Carbon::parse($karyawan->tanggal_lahir)->format('d-m-Y') . '"
-                        data-agama="' . $karyawan->agama . '"
-                        data-no_telepon="' . $karyawan->no_telepon . '"
-                        data-created_at="' . Carbon::parse($karyawan->created_at)->format('d-m-Y') . '"
-                        data-kewarganegaraan="' . $karyawan->kewarganegaraan . '"
-                        data-status_perkawinan="' . $karyawan->status_perkawinan . '"
-                        data-email="' . $karyawan->email . '"
-                        data-alamat_lengkap="' . $karyawan->alamat_lengkap . '"
-                        data-kode_pos="' . $karyawan->kode_pos . '"
-                        data-anggota_keluarga="' . htmlspecialchars(json_encode($anggotaKeluarga)) . '"
-                        data-foto_ktp="' . asset('storage/' . $karyawan->foto_ktp) . '"
-                        data-foto_kk="' . asset('storage/' . $karyawan->foto_kk) . '">
-                    Detail
-                </button>
-                <a href="' . route('admin.karyawan.edit', $karyawan->id) . '" class="btn btn-success btn-sm me-2">Edit</a>
-                <form action="' . route('admin.karyawan.destroy', $karyawan->id) . '" method="POST" style="display:inline;">
-                    ' . csrf_field() . '
-                    ' . method_field('DELETE') . '
-                    <button type="submit" class="btn btn-danger btn-sm me-2" onclick="return confirm(\'Yakin ingin menghapus data ini?\')">Hapus</button>
-                </form>
-            ';
-            })->editColumn('tanggal_lahir', function ($karyawan) {
+            <button class="btn btn-info btn-sm me-2" data-bs-toggle="modal" data-bs-target="#karyawanDetailModal"
+                    data-nip="' . $karyawan->nip . '"
+                    data-no_identitas="' . $karyawan->no_identitas . '"
+                    data-nama_lengkap="' . $karyawan->nama_lengkap . '"
+                    data-posisi_pekerjaan="' . $karyawan->pekerjaan->posisi_pekerjaan . '"
+                    data-jenis_kelamin="' . $karyawan->jenis_kelamin . '"
+                    data-tempat_lahir="' . $karyawan->tempat_lahir . '"
+                    data-tanggal_lahir="' .  Carbon::parse($karyawan->tanggal_lahir)->format('d-m-Y') . '"
+                    data-agama="' . $karyawan->agama . '"
+                    data-no_telepon="' . $karyawan->no_telepon . '"
+                    data-created_at="' . Carbon::parse($karyawan->created_at)->format('d-m-Y') . '"
+                    data-kewarganegaraan="' . $karyawan->kewarganegaraan . '"
+                    data-status_perkawinan="' . $karyawan->status_perkawinan . '"
+                    data-email="' . $karyawan->email . '"
+                    data-alamat_lengkap="' . $karyawan->alamat_lengkap . '"
+                    data-kode_pos="' . $karyawan->kode_pos . '"
+                    data-anggota_keluarga="' . htmlspecialchars(json_encode($anggotaKeluarga)) . '"
+                    data-foto_ktp="' . asset('storage/' . $karyawan->foto_ktp) . '"
+                    data-foto_kk="' . asset('storage/' . $karyawan->foto_kk) . '">
+                Detail
+            </button>
+            <a href="' . route('admin.karyawan.edit', $karyawan->id) . '" class="btn btn-success btn-sm me-2">Edit</a>
+            <form action="' . route('admin.karyawan.destroy', $karyawan->id) . '" method="POST" style="display:inline;">
+                ' . csrf_field() . '
+                ' . method_field('DELETE') . '
+                <button type="submit" class="btn btn-danger btn-sm me-2" onclick="return confirm(\'Yakin ingin menghapus data ini?\')">Hapus</button>
+            </form>
+        ';
+            })
+            ->editColumn('tanggal_lahir', function ($karyawan) {
                 return Carbon::parse($karyawan->tanggal_lahir)->format('d-m-Y');
-            })->rawColumns(['action'])->make(true);
+            })
+            ->rawColumns(['action'])
+            ->make(true);
     }
 
     public function create()
     {
-        return view('admin.karyawan.create');
+        $pekerjaans = Pekerjaan::all();
+        return view('admin.karyawan.create', compact('pekerjaans'));
     }
 
     public function store(Request $request)
@@ -89,13 +106,13 @@ class KaryawanController extends Controller
         $validatedData = $request->validate([
             'nip' => 'required|string|max:18|unique:karyawan,nip',
             'no_identitas' => 'required|string|max:16|unique:karyawan,no_identitas',
-            'nama_lengkap' => 'required',
-            'posisi_pekerjaan' => 'required',
+            'nama_lengkap' => 'required|string',
+            'pekerjaan_id' => 'required|exists:pekerjaan,id',
             'jenis_kelamin' => 'required|in:Laki-laki,Perempuan',
-            'tempat_lahir' => 'required',
+            'tempat_lahir' => 'required|string',
             'tanggal_lahir' => 'required|date',
-            'agama' => 'required',
-            'kewarganegaraan' => 'required',
+            'agama' => 'required|string',
+            'kewarganegaraan' => 'required|string',
             'status_perkawinan' => 'required|in:Belum Menikah,Menikah',
             'no_telepon' => 'required|string|max:13|unique:karyawan,no_telepon',
             'email' => 'required|email|unique:karyawan,email',
@@ -115,7 +132,6 @@ class KaryawanController extends Controller
             'no_identitas.max' => 'Nomor identitas tidak boleh lebih dari 16 karakter.',
             'no_identitas.unique' => 'Nomor identitas sudah terdaftar. Mohon masukkan nomor indentitas anda dengan benar.',
             'nama_lengkap.required' => 'Nama lengkap wajib diisi.',
-            'posisi_pekerjaan.required' => 'Posisi pekerjaan wajib diisi.',
             'jenis_kelamin.required' => 'Jenis kelamin wajib diisi.',
             'jenis_kelamin.in' => 'Jenis kelamin hanya boleh Laki-laki atau Perempuan.',
             'tempat_lahir.required' => 'Tempat lahir wajib diisi.',
@@ -179,13 +195,14 @@ class KaryawanController extends Controller
     {
         $karyawan = Karyawan::findOrFail($id);
         $karyawan->tanggal_lahir = Carbon::parse($karyawan->tanggal_lahir)->format('d-m-y');
-        return view('admin.karyawan.show', compact('karyawan'));
+        return view('admin.karyawan.edit', compact('karyawan'));
     }
 
     public function edit(string $id)
     {
         $karyawan = Karyawan::findOrFail($id);
-        return view('admin.karyawan.edit', compact('karyawan'));
+        $pekerjaans = Pekerjaan::all();
+        return view('admin.karyawan.edit', compact('karyawan', 'pekerjaans'));
     }
 
     public function update(Request $request, string $id)
@@ -197,15 +214,15 @@ class KaryawanController extends Controller
             'no_identitas' => 'required|string|max:16|unique:karyawan,no_identitas,' . $karyawan->id,
             'no_telepon' => 'required|string|max:13|unique:karyawan,no_telepon,' . $karyawan->id,
             'email' => 'required|email|unique:karyawan,email,' . $karyawan->id,
-            'nama_lengkap' => 'required',
-            'posisi_pekerjaan' => 'required',
+            'nama_lengkap' => 'required|string',
+            'pekerjaan_id' => 'required|exists:pekerjaan,id',
             'jenis_kelamin' => 'required|in:Laki-laki,Perempuan',
-            'tempat_lahir' => 'required',
+            'tempat_lahir' => 'required|string',
             'tanggal_lahir' => 'required|date',
-            'agama' => 'required',
-            'kewarganegaraan' => 'required',
+            'agama' => 'required|string',
+            'kewarganegaraan' => 'required|string',
             'status_perkawinan' => 'required|in:Belum Menikah,Menikah',
-            'alamat_lengkap' => 'required',
+            'alamat_lengkap' => 'required|string',
             'kode_pos' => 'required|digits:5',
             'foto_ktp' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'foto_kk' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',

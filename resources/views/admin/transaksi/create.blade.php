@@ -27,9 +27,10 @@
                 <div class="mb-3">
                     <label>Metode Pencairan:</label>
                     <select name="metode_pencairan" class="form-select" required onchange="toggleRekeningFields()">
-                        <option value="">Pilih Metode</option>
-                        <option value="Transfer">Transfer</option>
-                        <option value="Cash">Cash</option>
+                        <option value="" disabled selected>-- Pilih Metode --</option>
+                        <option value="Cash" {{ old('metode_pencairan') == 'Cash' ? 'selected' : '' }}>Cash</option>
+                        <option value="Transfer" {{ old('metode_pencairan') == 'Transfer' ? 'selected' : '' }}>Transfer
+                        </option>
                     </select>
                     @error('metode_pencairan')
                         <div class="text-danger">{{ $message }}</div>
@@ -38,7 +39,7 @@
 
                 <div id="rekeningFields" style="display: none;">
                     <div class="mb-3">
-                        <label>No Rekening:</label>
+                        <label>Nomor Rekening:</label>
                         <input type="text" name="no_rekening" class="form-control" value="{{ old('no_rekening') }}">
                         @error('no_rekening')
                             <div class="text-danger">{{ $message }}</div>
@@ -64,24 +65,23 @@
                 </div>
 
                 <div class="mb-3">
-                    <label for="bulan">Bulan</label>
-                    <select id="bulan" name="bulan" class="form-control" onchange="updateBunga()">
-                        <option value="">Pilih Bulan</option>
+                    <label for="pajak_id">Bulan</label>
+                    <select name="pajak_id" id="pajak_id" class="form-control" onchange="updateBunga()">
+                        <option value="">-- Pilih Bulan --</option>
                         @foreach ($pajaks as $pajak)
-                            <option value="{{ $pajak->bulan }}">{{ $pajak->bulan }}</option>
+                            <option value="{{ $pajak->id }}" data-bunga="{{ $pajak->bunga }}">
+                                {{ $pajak->bulan }}
+                            </option>
                         @endforeach
                     </select>
-                    @error('bulan')
+                    @error('pajak_id')
                         <div class="text-danger">{{ $message }}</div>
                     @enderror
                 </div>
 
                 <div class="mb-3">
                     <label for="bunga">Bunga</label>
-                    <input type="text" id="bunga" name="bunga" class="form-control" readonly>
-                    @error('bunga')
-                        <div class="text-danger">{{ $message }}</div>
-                    @enderror
+                    <input type="text" id="bunga" class="form-control" placeholder="Bunga" readonly>
                 </div>
 
                 <div class="mb-3">
@@ -162,14 +162,20 @@
             document.querySelector('form').submit();
         });
 
-        // Bulan >> Bunga
+        // Input Pilih Bulan Otomatis Bunga Keisi %
         const pajak = @json($pajaks);
 
         function updateBunga() {
-            const bulan = document.getElementById('bulan').value;
-            const bunga = pajak.find(item => item.bulan === bulan)?.bunga || '';
-            document.getElementById('bunga').value = bunga;
+            const selected = document.querySelector('#pajak_id');
+            const bunga = selected.options[selected.selectedIndex].getAttribute('data-bunga');
+            document.querySelector('#bunga').value = bunga ? `${bunga}%` : '';
         }
+
+        // METODE PENCAIRAN
+        document.addEventListener('DOMContentLoaded', function() {
+            const metodePencairan = document.querySelector('select[name="metode_pencairan"]').value;
+            toggleRekeningFields();
+        });
 
         function toggleRekeningFields() {
             const metodePencairan = document.querySelector('select[name="metode_pencairan"]').value;
@@ -177,21 +183,20 @@
             const noRekeningInput = document.querySelector('input[name="no_rekening"]');
             const bankInput = document.querySelector('input[name="bank"]');
 
-            // Tampilkan atau sembunyikan field no_rekening dan bank
             if (metodePencairan === 'Transfer') {
-                rekeningFields.style.display = 'block'; // Tampilkan field
-                noRekeningInput.setAttribute('required', 'required'); // Tambahkan atribut required
-                bankInput.setAttribute('required', 'required'); // Tambahkan atribut required
+                rekeningFields.style.display = 'block';
+                noRekeningInput.setAttribute('required', 'required');
+                bankInput.setAttribute('required', 'required');
             } else {
-                rekeningFields.style.display = 'none'; // Sembunyikan field
-                noRekeningInput.removeAttribute('required'); // Hapus atribut required
-                bankInput.removeAttribute('required'); // Hapus atribut required
+                rekeningFields.style.display = 'none';
+                noRekeningInput.removeAttribute('required');
+                bankInput.removeAttribute('required');
             }
         }
 
         // Fungsi untuk memformat angka menjadi format Rupiah
         function formatRupiah(angka, prefix) {
-            if (!angka) return ''; // Jika angka kosong, kembalikan string kosong
+            if (!angka) return ''; // Jika angka kosong, balik dek string kosong
             const numberString = angka.replace(/[^,\d]/g, '').toString();
             const split = numberString.split(',');
             const sisa = split[0].length % 3;
@@ -199,8 +204,8 @@
 
             const ribuan = split[0].substr(sisa).match(/\d{3}/g); // Ambil kelompok ribuan
             if (ribuan) {
-                const separator = sisa ? '.' : ''; // Tambahkan titik jika ada sisa
-                rupiah += separator + ribuan.join('.'); // Gabungkan semua kelompok ribuan
+                const separator = sisa ? '.' : ''; // Tambah titik jika ada sisa
+                rupiah += separator + ribuan.join('.'); // Gabung semua kelompok ribuan
             }
 
             rupiah = split[1] !== undefined ? rupiah + ',' + split[1] : rupiah; // Tambahkan desimal jika ada
@@ -228,13 +233,12 @@
                 nilaiLikuiditasInput.value = ''; // Kosongkan jika tidak ada nilai pasar
             }
         }
-
         // Event listener untuk perhitungan nilai likuiditas
         document.querySelector('input[name="nilai_pasar"]').addEventListener('input', calculateNilaiLikuiditas);
 
         function previewImages(event) {
             const previewContainer = document.getElementById('image-preview');
-            previewContainer.innerHTML = ''; // Clear previous previews
+            previewContainer.innerHTML = '';
             const files = event.target.files;
 
             for (let i = 0; i < files.length; i++) {
@@ -244,9 +248,9 @@
                 reader.onload = function(e) {
                     const img = document.createElement('img');
                     img.src = e.target.result;
-                    img.style.width = '100px'; // Set width of the image
-                    img.style.height = 'auto'; // Maintain aspect ratio
-                    img.style.marginRight = '10px'; // Space between images
+                    img.style.width = '100px';
+                    img.style.height = 'auto';
+                    img.style.marginRight = '10px';
                     previewContainer.appendChild(img);
                 };
 

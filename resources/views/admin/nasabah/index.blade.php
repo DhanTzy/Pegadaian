@@ -43,12 +43,6 @@
                                 </div>
 
                                 <div class="me-2">
-                                    <label for="identitasFilter" class="form-label mb-0">Identitas (KTP) :</label>
-                                    <input type="text" id="identitasFilter" placeholder="Search Identitas"
-                                        class="form-control form-control-sm me-2" style="width: auto;">
-                                </div>
-
-                                <div class="me-2">
                                     <label for="tanggalDaftarFilter" class="form-label mb-0">Tanggal Daftar :</label>
                                     <input type="date" id="tanggalDaftarFilter" class="form-control form-control-sm"
                                         style="width: auto;">
@@ -68,11 +62,9 @@
                                         <th scope="col">ID</th>
                                         <th scope="col">Nomor Identitas (KTP)</th>
                                         <th scope="col">Nama Lengkap</th>
-                                        <th scope="col">Tempat Lahir</th>
-                                        <th scope="col">Tanggal Lahir</th>
-                                        <th scope="col">Status Perkawinan</th>
                                         <th scope="col">Pekerjaan</th>
                                         <th scope="col">Telepon</th>
+                                        <th scope="col">Email</th>
                                         <th scope="col">Tanggal Daftar</th>
                                         <th scope="col">Action</th>
                                     </tr>
@@ -144,14 +136,12 @@
                     }
                 },
                 columns: [
-                    { data: 'id', name: 'id' },
+                    { data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: false, searchable: false },
                     { data: 'nomor_identitas', name: 'nomor_identitas' },
                     { data: 'nama_lengkap', name: 'nama_lengkap' },
-                    { data: 'tempat_lahir', name: 'tempat_lahir' },
-                    { data: 'tanggal_lahir', name: 'tanggal_lahir' },
-                    { data: 'status_perkawinan', name: 'status_perkawinan' },
                     { data: 'pekerjaan', name: 'pekerjaan' },
                     { data: 'telepon', name: 'telepon' },
+                    { data: 'email', name: 'email' },
                     { data: 'created_at', name: 'created_at',
                         render: function(data, type, row) {
                             var date = new Date(data);

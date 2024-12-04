@@ -129,7 +129,13 @@
                                 <li class="nav-item">
                                     <a class="nav-link {{ Route::is('admin.transaksi.pajak.index') ? 'active bg-primary' : '' }}"
                                         href="{{ route('admin.transaksi.pajak.index') }}"> <i class="nav-icon bi bi-circle"></i>
-                                        <p>Pajak</p>
+                                        <p>Daftar Pajak</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link {{ Route::is('admin.karyawan.pekerjaan.index') ? 'active bg-primary' : '' }}"
+                                        href="{{ route('admin.karyawan.pekerjaan.index') }}"> <i class="nav-icon bi bi-circle"></i>
+                                        <p>Daftar Pekerjaan</p>
                                     </a>
                                 </li>
                             </ul>
@@ -237,6 +243,7 @@
     </script> <!--end::OverlayScrollbars Configure--> <!-- OPTIONAL SCRIPTS --> <!-- sortablejs -->
     <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script> <!-- sortablejs -->
     <script>
+        
         const connectedSortables =
             document.querySelectorAll(".connectedSortable");
         connectedSortables.forEach((connectedSortable) => {

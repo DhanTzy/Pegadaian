@@ -27,32 +27,38 @@
             </div>
 
             <div class="mb-3">
-                <label>Metode Pencairan:</label>
-                <select name="metode_pencairan" class="form-select" required onchange="toggleRekeningFields()">
+                <label for="metode_pencairan">Metode Pencairan</label>
+                <select id="metode_pencairan" name="metode_pencairan" class="form-select" onchange="toggleRekeningFields()">
                     <option value="">Pilih Metode</option>
-                    <option value="Transfer" {{ $transaksi->metode_pencairan == 'Transfer' ? 'selected' : '' }}>Transfer
+                    <option value="Transfer"
+                        {{ old('metode_pencairan', $transaksi->metode_pencairan) == 'Transfer' ? 'selected' : '' }}>Transfer
                     </option>
-                    <option value="Cash" {{ $transaksi->metode_pencairan == 'Cash' ? 'selected' : '' }}>Cash</option>
+                    <option value="Cash"
+                        {{ old('metode_pencairan', $transaksi->metode_pencairan) == 'Cash' ? 'selected' : '' }}>Cash
+                    </option>
                 </select>
                 @error('metode_pencairan')
                     <div class="text-danger">{{ $message }}</div>
                 @enderror
             </div>
 
-            <div id="rekeningFields"
-                style="{{ $transaksi->metode_pencairan == 'Transfer' ? 'display: block;' : 'display: none;' }}">
+            <div class="mb-3" id="rekeningFields"
+                style="display: {{ old('metode_pencairan', $transaksi->metode_pencairan) == 'Transfer' ? 'block' : 'none' }}">
                 <div class="mb-3">
-                    <label>No Rekening:</label>
-                    <input type="text" name="no_rekening" class="form-control"
-                        value="{{ old('no_rekening', $transaksi->no_rekening) }}">
+                    <label for="no_rekening">Nomor Rekening</label>
+                    <input type="text" id="no_rekening" name="no_rekening" class="form-control"
+                        value="{{ old('no_rekening', $transaksi->no_rekening) }}"
+                        {{ old('metode_pencairan', $transaksi->metode_pencairan) == 'Transfer' ? 'required' : '' }}>
                     @error('no_rekening')
                         <div class="text-danger">{{ $message }}</div>
                     @enderror
                 </div>
 
                 <div class="mb-3">
-                    <label>Bank:</label>
-                    <input type="text" name="bank" class="form-control" value="{{ old('bank', $transaksi->bank) }}">
+                    <label for="bank">Bank</label>
+                    <input type="text" id="bank" name="bank" class="form-control"
+                        value="{{ old('bank', $transaksi->bank) }}"
+                        {{ old('metode_pencairan', $transaksi->metode_pencairan) == 'Transfer' ? 'required' : '' }}>
                     @error('bank')
                         <div class="text-danger">{{ $message }}</div>
                     @enderror
@@ -69,23 +75,28 @@
             </div>
 
             <div class="form-group mb-3">
-                <label for="bulan">Bulan</label>
-                <select id="bulan" name="bulan" class="form-control" onchange="updateBunga()">
+                <label for="pajak_id">Bulan</label>
+                <select id="pajak_id" name="pajak_id" class="form-control" onchange="updateBunga()">
                     <option value="">Pilih Bulan</option>
                     @foreach ($pajaks as $pajak)
-                        <option value="{{ $pajak->bulan }}"
-                            {{ old('bulan', $transaksi->bulan) == $pajak->bulan ? 'selected' : '' }}>
+                        <option value="{{ $pajak->id }}" data-bunga="{{ $pajak->bunga }}"
+                            {{ old('pajak_id', $transaksi->pajak_id) == $pajak->id ? 'selected' : '' }}>
                             {{ $pajak->bulan }}
                         </option>
                     @endforeach
                 </select>
+                @error('pajak_id')
+                    <div class="text-danger">{{ $message }}</div>
+                @enderror
             </div>
 
-            <!-- Input Bunga -->
             <div class="form-group mb-3">
                 <label for="bunga">Bunga</label>
                 <input type="text" id="bunga" name="bunga" class="form-control"
-                    value="{{ old('bunga', $transaksi->bunga) }}" readonly>
+                       value="{{ old('bunga', $transaksi->bunga) }}" readonly>
+                @error('bunga')
+                    <div class="text-danger">{{ $message }}</div>
+                @enderror
             </div>
 
             <div class="mb-3">
@@ -170,18 +181,24 @@
             document.querySelector('form').submit();
         });
 
-        // Bulan >> Bunga
+        // Input Pilih Bulan Otomatis Bunga Keisi %
         const pajak = @json($pajaks);
 
         function updateBunga() {
-            const bulan = document.getElementById('bulan').value;
-            const bunga = pajak.find(item => item.bulan === bulan)?.bunga || '';
-            document.getElementById('bunga').value = bunga;
+            const selected = document.querySelector('#pajak_id');
+            const bunga = selected.options[selected.selectedIndex].getAttribute('data-bunga');
+            document.querySelector('#bunga').value = bunga ? `${bunga}%` : '';
         }
 
         // Mengisi nilai bunga awal berdasarkan bulan yang sudah dipilih
         document.addEventListener('DOMContentLoaded', () => {
             updateBunga();
+        });
+
+        // METODE PENCAIRAN
+        document.addEventListener('DOMContentLoaded', function() {
+            const metodePencairan = document.querySelector('select[name="metode_pencairan"]').value;
+            toggleRekeningFields();
         });
 
         function toggleRekeningFields() {
@@ -190,17 +207,14 @@
             const noRekeningInput = document.querySelector('input[name="no_rekening"]');
             const bankInput = document.querySelector('input[name="bank"]');
 
-            // Tampilkan atau sembunyikan field no_rekening dan bank
             if (metodePencairan === 'Transfer') {
-                rekeningFields.style.display = 'block'; // Tampilkan field
-                noRekeningInput.setAttribute('required', 'required'); // Tambahkan atribut required
-                bankInput.setAttribute('required', 'required'); // Tambahkan atribut required
+                rekeningFields.style.display = 'block';
+                noRekeningInput.setAttribute('required', 'required');
+                bankInput.setAttribute('required', 'required');
             } else {
-                rekeningFields.style.display = 'none'; // Sembunyikan field
-                noRekeningInput.removeAttribute('required'); // Hapus atribut required
-                bankInput.removeAttribute('required'); // Hapus atribut required
-                noRekeningInput.value = ''; // Reset nilai input no_rekening
-                bankInput.value = ''; // Reset nilai input bank
+                rekeningFields.style.display = 'none';
+                noRekeningInput.removeAttribute('required');
+                bankInput.removeAttribute('required');
             }
         }
 
@@ -243,13 +257,12 @@
                 nilaiLikuiditasInput.value = ''; // Kosongkan jika tidak ada nilai pasar
             }
         }
-
         // Event listener untuk perhitungan nilai likuiditas
         document.querySelector('input[name="nilai_pasar"]').addEventListener('input', calculateNilaiLikuiditas);
 
         function previewImages(event) {
             const previewContainer = document.getElementById('image-preview');
-            previewContainer.innerHTML = ''; // Clear previous previews
+            previewContainer.innerHTML = '';
             const files = event.target.files;
 
             for (let i = 0; i < files.length; i++) {
@@ -259,9 +272,9 @@
                 reader.onload = function(e) {
                     const img = document.createElement('img');
                     img.src = e.target.result;
-                    img.style.width = '100px'; // Set width of the image
-                    img.style.height = 'auto'; // Maintain aspect ratio
-                    img.style.marginRight = '10px'; // Space between images
+                    img.style.width = '100px';
+                    img.style.height = 'auto';
+                    img.style.marginRight = '10px';
                     previewContainer.appendChild(img);
                 };
 

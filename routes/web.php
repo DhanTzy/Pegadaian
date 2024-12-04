@@ -1,16 +1,17 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\AuthController;
-use App\Http\Controllers\NasabahController;
-use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\HomeController;
-use App\Http\Controllers\UserProfileController;
-use App\Http\Controllers\AdminProfileController;
-use App\Http\Controllers\KaryawanController;
-use App\Http\Controllers\TransaksiController;
-use App\Http\Controllers\PajakController;
-use App\Http\Controllers\UserController;
+use App\Http\Controllers\Admin\Profile\AdminProfileController;
+use App\Http\Controllers\Admin\Dashboard\DashboardController;
+use App\Http\Controllers\Admin\Nasabah\NasabahController;
+use App\Http\Controllers\Admin\Karyawan\KaryawanController;
+use App\Http\Controllers\Admin\Karyawan\PekerjaanController;
+use App\Http\Controllers\Admin\Transaksi\TransaksiController;
+use App\Http\Controllers\Admin\Transaksi\PajakController;
+use App\Http\Controllers\User\UserController;
+use App\Http\Controllers\User\Profile\UserProfileController;
 use App\Models\Karyawan;
 use App\Models\Nasabah;
 use App\Models\Transaksi;
@@ -121,4 +122,12 @@ Route::middleware(['auth', 'user-access:admin'])->group(function () {
     Route::put('/admin/karyawan/edit/{id}', [KaryawanController::class, 'update'])->name('admin.karyawan.update');
     Route::delete('/admin/karyawan/destroy/{id}', [KaryawanController::class, 'destroy'])->name('admin.karyawan.destroy');
     Route::get('/admin/karyawan/data', [KaryawanController::class, 'getData'])->name('admin.karyawan.data');
+
+    // Pekerjaan
+    Route::get('/admin/karyawan/pekerjaan', [pekerjaanController::class, 'index'])->name('admin.karyawan.pekerjaan.index');
+    Route::get('/admin/karyawan/pekerjaan/create', [pekerjaanController::class, 'create'])->name('admin.karyawan.pekerjaan.create');
+    Route::post('/admin/karyawan/pekerjaan', [pekerjaanController::class, 'store'])->name('admin.karyawan.pekerjaan.store');
+    Route::get('/admin/karyawan/pekerjaan/{id}/edit', [pekerjaanController::class, 'edit'])->name('admin.karyawan.pekerjaan.edit');
+    Route::put('/admin/karyawan/pekerjaan/{id}', [pekerjaanController::class, 'update'])->name('admin.karyawan.pekerjaan.update');
+    Route::delete('/admin/karyawan/pekerjaan/{id}', [pekerjaanController::class, 'destroy'])->name('admin.karyawan.pekerjaan.destroy');
 });

@@ -44,22 +44,24 @@
 
                                 <div class="me-2">
                                     <label for="pekerjaanFilter" class="form-label mb-0">Pekerjaan :</label>
-                                    <select id="pekerjaanFilter" class="form-select form-select-sm me-2">
-                                        <option value=""> -- Pilih Pekerjaan --</option>
-                                        <option value="Manager">Manager</option>
-                                        <option value="Administrasi">Administrasi</option>
-                                        <option value="Supervisor">Supervisor</option>
-                                        <option value="Approval">Approval</option>
-                                        <option value="Appraisal">Appraisal</option>
-                                        <option value="Kasir">Kasir</option>
-                                        <option value="Customer Service">Customer Service</option>
-                                        <option value="Security">Security</option>
+                                    <select id="pekerjaanFilter" name="pekerjaan_id" class="form-select form-select-sm me-2" style="width: auto;">
+                                        <option value="">Pilih Pekerjaan</option>
+                                        @foreach ($pekerjaans as $pekerjaan)
+                                            <option value="{{ $pekerjaan->id }}"
+                                                {{ request('pekerjaan_id') == $pekerjaan->id ? 'selected' : '' }}>
+                                                {{ $pekerjaan->posisi_pekerjaan }}
+                                            </option>
+                                        @endforeach
                                     </select>
                                 </div>
 
                                 <div class="me-2">
                                     <label for="tanggalGabungFilter" class="form-label mb-0">Tanggal Gabung :</label>
                                     <input type="date" id="tanggalGabungFilter" class="form-control form-control-sm"
+                                        style="width: auto;">
+                                </div>
+                                <div class="me-2">
+                                    <input type="date" id="tanggalAkhirFilter" class="form-control form-control-sm"
                                         style="width: auto;">
                                 </div>
 
@@ -75,10 +77,8 @@
                                         <th scope="col">Nomor Identitas</th>
                                         <th scope="col">Nama Lengkap</th>
                                         <th scope="col">Posisi Pekerjaan</th>
-                                        <th scope="col">Jenis Kelamin</th>
-                                        <th scope="col">Kewarganegaraan</th>
-                                        <th scope="col">Agama</th>
                                         <th scope="col">Telepon</th>
+                                        <th scope="col">Email</th>
                                         <th scope="col">Tanggal Gabung</th>
                                         <th scope="col">Action</th>
                                     </tr>
@@ -106,7 +106,7 @@
                     <p><strong>NIP :</strong> <span id="detailNip"></span></p>
                     <p><strong>No Identitas :</strong> <span id="detailNoIdentitas"></span></p>
                     <p><strong>Nama Lengkap :</strong> <span id="detailNamaLengkap"></span></p>
-                    <p><strong>Posisi Pekerjaan :</strong> <span id="detailPosisiPekerjaan"></span></p>
+                    <p><strong>Posisi Pekerjaan:</strong> <span id="detailPosisiPekerjaan"></span></p>
                     <p><strong>Jenis Kelamin :</strong> <span id="detailJenisKelamin"></span></p>
                     <p><strong>Tempat Lahir :</strong> <span id="detailTempatLahir"></span></p>
                     <p><strong>Tanggal Lahir :</strong> <span id="detailTanggalLahir"></span></p>
@@ -151,22 +151,20 @@
                     data: function(d) {
                         d.nama_lengkap = $('#namaFilter').val(); // Mengirimkan filter ke server
                         d.nip = $('#nipFilter').val();
-                        d.posisi_pekerjaan = $('#pekerjaanFilter').val();
+                        d.pekerjaan_id = $('#pekerjaanFilter').val();
                         d.tanggal_gabung = $('#tanggalGabungFilter').val();
+                        d.tanggal_akhir = $('#tanggalAkhirFilter').val();
                     }
                 },
                 columns: [
-                    { data: 'id', name: 'id' },
+                    { data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: false, searchable: false },
                     { data: 'nip', name: 'nip' },
                     { data: 'no_identitas', name: 'no_identitas' },
                     { data: 'nama_lengkap', name: 'nama_lengkap' },
-                    { data: 'posisi_pekerjaan', name: 'posisi_pekerjaan' },
-                    { data: 'jenis_kelamin', name: 'jenis_kelamin' },
-                    { data: 'kewarganegaraan', name: 'kewarganegaraan' },
-                    { data: 'agama', name: 'agama' },
+                    { data: 'posisi_pekerjaan'},
                     { data: 'no_telepon', name: 'no_telepon' },
-                    { data: 'created_at', name: 'created_at',
-                        render: function(data, type, row) {
+                    { data: 'email', name: 'email' },
+                    { data: 'created_at', name: 'created_at', render: function(data, type, row) {
                             var date = new Date(data);
                             return date.toLocaleDateString('id-ID', {
                                 day: '2-digit',
@@ -188,6 +186,7 @@
                 $('#nipFilter').val('');
                 $('#pekerjaanFilter').val('');
                 $('#tanggalGabungFilter').val('');
+                $('#tanggalAkhirFilter').val('');
                 table.draw();
             });
         });

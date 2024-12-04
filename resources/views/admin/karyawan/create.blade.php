@@ -37,24 +37,14 @@
                 </div>
 
                 <div class="mb-3">
-                    <label class="form-label">Posisi Pekerjaan :</label>
-                    <select name="posisi_pekerjaan" class="form-select" required>
-                        <option value="" disable selected>Pilih Posisi Pekerjaan</option>
-                        <option value="Administrasi" {{ old('posisi_pekerjaan') == 'Administrasi' ? 'selected' : '' }}>
-                            Administrasi</option>
-                        <option value="Supervisor" {{ old('posisi_pekerjaan') == 'Supervisor' ? 'selected' : '' }}>
-                            Supervisor
-                        </option>
-                        <option value="Approval" {{ old('posisi_pekerjaan') == 'Approval' ? 'selected' : '' }}>Approval
-                        </option>
-                        <option value="Appraisal" {{ old('posisi_pekerjaan') == 'Appraisal' ? 'selected' : '' }}>Appraisal
-                        </option>
-                        <option value="Kasir" {{ old('posisi_pekerjaan') == 'Kasir' ? 'selected' : '' }}>Kasir</option>
-                        <option value="Customer Service"
-                            {{ old('posisi_pekerjaan') == 'Customer Service' ? 'selected' : '' }}>
-                            Customer Service</option>
-                        <option value="Security" {{ old('posisi_pekerjaan' == 'Security' ? 'selected' : '') }}>Security
-                        </option>
+                    <label for="pekerjaan_id">Posisi Pekerjaan</label>
+                    <select name="pekerjaan_id" id="pekerjaan_id" class="form-select">
+                        <option value="">Pilih Posisi Pekerjaan</option>
+                        @foreach($pekerjaans as $pekerjaan)
+                            <option value="{{ $pekerjaan->id }}" {{ old('pekerjaan_id', $karyawan->pekerjaan_id ?? '') == $pekerjaan->id ? 'selected' : '' }}>
+                                {{ $pekerjaan->posisi_pekerjaan }}
+                            </option>
+                        @endforeach
                     </select>
                     @error('posisi_pekerjaan')
                         <div class="text-danger">{{ $message }}</div>
@@ -96,8 +86,20 @@
 
                 <div class="mb-3">
                     <label class="form-label">Agama :</label>
-                    <input type="text" name="agama" class="form-control" value="{{ old('agama') }}"
-                        placeholder="Agama Anda" required>
+                    <select name="agama" class="form-select" required>
+                        <option value="" disabled selected>Pilih Agama</option>
+                        <option value="Islam" {{ old('agama') == 'Islam' ? 'selected' : '' }}>Islam
+                        </option>
+                        <option value="Kristen Protestan" {{ old('agama') == 'Kristen Protestan' ? 'selected' : '' }}>
+                            Kristen Protestan
+                        <option value="Kristen Katolik" {{ old('agama') == 'Kristen Katolik' ? 'selected' : '' }}>Kristen
+                            Katolik
+                        <option value="Hindu" {{ old('agama') == 'Hindu' ? 'selected' : '' }}>Hindu
+                        <option value="Buddha" {{ old('agama') == 'Buddha' ? 'selected' : '' }}>Buddha
+                        <option value="Konghucu" {{ old('agama') == 'Konghucu' ? 'selected' : '' }}>Konghucu
+                        <option value="Atheis" {{ old('agama') == 'Atheis' ? 'selected' : '' }}>Atheis
+                        </option>
+                    </select>
                     @error('agama')
                         <div class="text-danger">{{ $message }}</div>
                     @enderror

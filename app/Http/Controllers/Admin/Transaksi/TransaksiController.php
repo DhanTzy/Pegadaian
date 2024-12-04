@@ -1,6 +1,7 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin\Transaksi;
+use App\Http\Controllers\Controller;
 
 use Illuminate\Http\Request;
 use App\Models\Transaksi;
@@ -14,12 +15,13 @@ class TransaksiController extends Controller
 {
     public function index()
     {
-        return view('admin.transaksi.index');
+        $pajaks = Pajak::all();
+        return view('admin.transaksi.index', compact('pajaks'));
     }
 
     public function getData(Request $request)
     {
-        $query = Transaksi::with('jaminan')->where('status_delete', '1');
+        $query = Transaksi::with(['jaminan', 'pajak'])->where('status_delete', '1');
 
         if ($request->has('nama_nasabah') && $request->input('nama_nasabah') != '') {
             $query->where('nama_nasabah', 'LIKE', '%' . $request->input('nama_nasabah') . '%');
@@ -41,13 +43,19 @@ class TransaksiController extends Controller
             $query->where('metode_pencairan', 'LIKE', '%' . $request->input('metode_pencairan') . '%');
         }
 
-        if ($request->has('bulan') && $request->input('bulan') != '') {
-            $query->where('bulan', 'LIKE', '%' . $request->input('bulan') . '%');
+        if ($request->has('pajak_id') && $request->input('pajak_id') != '') {
+            $query->where('pajak_id', 'LIKE', '%' . $request->input('pajak_id') . '%');
         }
 
         return DataTables::of($query)
+            ->addIndexColumn()
+            ->addColumn('bulan', function ($transaksi) {
+                return $transaksi->pajak ? $transaksi->pajak->bulan : '-';
+            })
+            ->addColumn('bunga', function ($transaksi) {
+                return $transaksi->pajak ? $transaksi->pajak->bunga : '-';
+            })
             ->addColumn('action', function ($transaksi) {
-                // Ambil semua foto jaminan
                 $fotoJaminan = '';
                 foreach ($transaksi->jaminan as $jaminan) {
                     $fotoJaminan .= '<img src="' . asset('storage/' . $jaminan->foto_jaminan) . '" style="width: 100px; height: auto; margin: 5px;">';
@@ -62,8 +70,8 @@ class TransaksiController extends Controller
                     data-no_rekening="' . $transaksi->no_rekening . '"
                     data-bank="' . $transaksi->bank . '"
                     data-pengajuan_pinjaman="' . $transaksi->pengajuan_pinjaman . '"
-                    data-bulan="' . $transaksi->bulan . '"
-                    data-bunga="' . $transaksi->bunga . '"
+                    data-bulan="' . $transaksi->pajak->bulan . '"
+                    data-bunga="' . $transaksi->pajak->bunga . '"
                     data-catatan="' . $transaksi->catatan . '"
                     data-jenis_agunan="' . $transaksi->jenis_agunan . '"
                     data-nilai_pasar="' . $transaksi->nilai_pasar . '"
@@ -86,27 +94,47 @@ class TransaksiController extends Controller
 
     public function create()
     {
-        $pajaks = Pajak::all(); // Ambil data pajak dari database
+        $pajaks = Pajak::all();
         return view('admin.transaksi.create', compact('pajaks'));
     }
 
     public function store(Request $request)
     {
-        $request->validate([
+        $rules = [
             'nama_nasabah' => 'required|string',
             'tanggal' => 'required|date',
-            'metode_pencairan' => 'required|string',
-            'no_rekening' => 'nullable|string',
-            'bank' => 'nullable|string',
+            'metode_pencairan' => 'required|string|in:Cash,Transfer',
             'pengajuan_pinjaman' => 'required|string',
-            'bulan' => 'required|string',
-            'bunga' => 'required|string',
+            'pajak_id' => 'required|exists:pajak,id',
             'jenis_agunan' => 'required|string',
             'nilai_pasar' => 'required|string',
             'nilai_likuiditas' => 'required|string',
             'catatan' => 'required|string',
             'foto_jaminan.*' => 'required|image|mimes:jpeg,png,jpg|max:2048',
-        ]);
+        ];
+
+        if ($request->metode_pencairan === 'Transfer') {
+            $rules['no_rekening'] = 'required|string';
+            $rules['bank'] = 'required|string';
+        } else {
+            $rules['no_rekening'] = 'nullable|string';
+            $rules['bank'] = 'nullable|string';
+        }
+
+        $message = [
+            'nama_nasabah.required' => 'Nama Nasabah Wajib Diisi.',
+            'tanggal.required' => 'Tanggal Transaksi Harus Diisi.',
+            'metode_pencairan.required' => 'Metode Pencairan Wajib Di Pilih.',
+            'no_rekening.required' => 'Nomor Rekening Wajib Diisi.',
+            'bank.required' => 'Bank Wajib Diisi.',
+            'pengajuan_pinjaman.required' => 'Pengajuan Pinjaman Wajib Diisi.',
+            'jenis_agunan.required' => 'Jenis Agunan Wajib Diisi.',
+            'nilai_pasar.required' => 'Nilai Pasar Wajib Diisi.',
+            'nilai_likuiditas.required' => 'Nilai Likuiditas Wajib Diisi.',
+            'catatan.required' => 'Catatan Wajib Diisi.',
+        ];
+
+        $request->validate($rules, $message);
 
         // Simpan data transaksi
         $transaksi = Transaksi::create($request->only([
@@ -116,8 +144,7 @@ class TransaksiController extends Controller
             'no_rekening',
             'bank',
             'pengajuan_pinjaman',
-            'bulan',
-            'bunga',
+            'pajak_id',
             'jenis_agunan',
             'nilai_pasar',
             'nilai_likuiditas',
@@ -153,21 +180,29 @@ class TransaksiController extends Controller
 
     public function update(Request $request, $id)
     {
-        $request->validate([
+        $rules = [
             'nama_nasabah' => 'required|string',
             'tanggal' => 'required|date',
-            'metode_pencairan' => 'required|string',
-            'no_rekening' => 'nullable|string',
-            'bank' => 'nullable|string',
+            'metode_pencairan' => 'required|string|in:Cash,Transfer',
             'pengajuan_pinjaman' => 'required|string',
-            'bulan' => 'required|string',
-            'bunga' => 'required|string',
+            'pajak_id' => 'required|exists:pajak,id',
             'jenis_agunan' => 'required|string',
             'nilai_pasar' => 'required|string',
             'nilai_likuiditas' => 'required|string',
             'catatan' => 'required|string',
-            'foto_jaminan.*' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // Validasi foto jaminan
-        ]);
+            'foto_jaminan.*' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+        ];
+
+        if ($request->metode_pencairan === 'Transfer') {
+            $rules['no_rekening'] = 'required|string';
+            $rules['bank'] = 'required|string';
+        } else {
+            $request->merge([
+                'no_rekening' => null,
+                'bank' => null,
+            ]);
+        }
+        $request->validate($rules);
 
         $transaksi = Transaksi::findOrFail($id); // Ambil transaksi berdasarkan ID
 
@@ -179,8 +214,7 @@ class TransaksiController extends Controller
             'no_rekening',
             'bank',
             'pengajuan_pinjaman',
-            'bulan',
-            'bunga',
+            'pajak_id',
             'jenis_agunan',
             'nilai_pasar',
             'nilai_likuiditas',

@@ -13,7 +13,6 @@ return new class extends Migration
             $table->string('nip')->unique();
             $table->string('no_identitas');
             $table->string('nama_lengkap');
-            $table->string('posisi_pekerjaan');
             $table->string('jenis_kelamin');
             $table->string('tempat_lahir');
             $table->date('tanggal_lahir');

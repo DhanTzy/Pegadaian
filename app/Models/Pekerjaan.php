@@ -5,18 +5,17 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Pajak extends Model
+class Pekerjaan extends Model
 {
     use HasFactory;
-    protected $table = 'pajak';
+    protected $table = 'pekerjaan';
 
     protected $fillable = [
-        'bulan',
-        'bunga',
+        'posisi_pekerjaan'
     ];
 
-    public function transaksi()
+    public function karyawan()
     {
-        return $this->hasMany(Transaksi::class);
+        return $this->hasMany(Karyawan::class, 'pekerjaan_id');
     }
 }

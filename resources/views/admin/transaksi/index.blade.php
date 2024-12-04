@@ -61,7 +61,15 @@
 
                                     <div class="me-2">
                                         <label for="bulanFilter" class="form-label mb-0">Bulan :</label>
-                                        <input type="text" id="bulanFilter" placeholder="Search bulan" class="form-control form-control-sm me-2" style="width: auto;">
+                                        <select id="bulanFilter" class="form-select form-select-sm me-2">
+                                            <option value="">-- Pilih Bulan --</option>
+                                        @foreach ($pajaks as $pajak)
+                                            <option value="{{ $pajak->id }}"
+                                                {{ request('pajak_id') == $pajak->id ? 'selected' : '' }}>
+                                                {{ $pajak->bulan }}
+                                            </option>
+                                        @endforeach
+                                    </select>
                                     </div>
 
                                     <button id="filterButton" class="btn btn-success btn-sm">Filter</button>
@@ -75,7 +83,7 @@
                                             <th>Nama Nasabah</th>
                                             <th>Tanggal</th>
                                             <th>Metode Pencairan</th>
-                                            <th>No Rekening</th>
+                                            <th>Nomor Rekening</th>
                                             <th>Bank</th>
                                             <th>Pengajuan Pinjaman</th>
                                             <th>Bulan</th>
@@ -147,19 +155,19 @@
                         d.tanggal = $('#tanggalFilter').val();
                         d.no_rekening = $('#rekeningFilter').val(); // Mengirimkan filter ke server
                         d.metode_pencairan = $('#metodeFilter').val();
-                        d.bulan = $('#bulanFilter').val();
+                        d.pajak_id = $('#bulanFilter').val();
                     }
                 },
                 columns: [
-                    { data: 'id', name: 'id' },
+                    { data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: false, searchable: false },
                     { data: 'nama_nasabah', name: 'nama_nasabah' },
                     { data: 'tanggal', name: 'tanggal' },
                     { data: 'metode_pencairan', name: 'metode_pencairan' },
                     { data: 'no_rekening', name: 'no_rekening'},
                     { data: 'bank', name: 'bank'},
                     { data: 'pengajuan_pinjaman', name: 'pengajuan_pinjaman' },
-                    { data: 'bulan', name: 'bulan' },
-                    { data: 'bunga', name: 'bunga' },
+                    { data: 'bulan' },
+                    { data: 'bunga' },
                     { data: 'action', name: 'action', orderable: false, searchable: false },
                 ],
             });

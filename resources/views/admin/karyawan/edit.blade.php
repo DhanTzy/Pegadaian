@@ -23,8 +23,8 @@
 
                     <div class="mb-3">
                         <label class="form-label">Nomor Identitas (KTP)</label>
-                        <input id="no_identitas" name="no_identitas" type="text"
-                            value="{{ $karyawan->no_identitas }}" class="form-control" required>
+                        <input id="no_identitas" name="no_identitas" type="text" value="{{ $karyawan->no_identitas }}"
+                            class="form-control" required>
                         @error('no_identitas')
                             <div class="text-danger">{{ $message }}</div>
                         @enderror
@@ -41,31 +41,16 @@
 
                     <div class="mb-3">
                         <label class="form-label">Posisi Pekerjaan :</label>
-                        <select name="posisi_pekerjaan" class="form-select" required>
-                            <option value="Administrasi"
-                                {{ old('posisi_pekerjaan', $karyawan->posisi_pekerjaan) == 'Administrasi' ? 'seleted' : '' }}>
-                                Administrasi</option>
-                            <option value="Supervisor"
-                                {{ old('posisi_pekerjaan', $karyawan->posisi_pekerjaan) == 'Supervisor' ? 'selected' : '' }}>
-                                Supervisor</option>
-                            <option value="Approval"
-                                {{ old('posisi_pekerjaan', $karyawan->posisi_pekerjaan) == 'Approval' ? 'selected' : '' }}>
-                                Approval</option>
-                            <option value="Appraisal"
-                                {{ old('posisi_pekerjaan', $karyawan->posisi_pekerjaan) == 'Appraisal' ? 'selected' : '' }}>
-                                Appraisal</option>
-                            <option value="Kasir"
-                                {{ old('posisi_pekerjaan', $karyawan->posisi_pekerjaan) == 'Kasir' ? 'selected' : '' }}>
-                                Kasir
-                            </option>
-                            <option value="Customer Service"
-                                {{ old('posisi_pekerjaan', $karyawan->posisi_pekerjaan) == 'Customer Service' ? 'selected' : '' }}>
-                                Customer Service</option>
-                            <option value="Security"
-                                {{ old('posisi_pekerjaan', $karyawan->posisi_pekerjaan) == 'Security' ? 'selected' : '' }}>
-                                Security</option>
+                        <select name="pekerjaan_id" class="form-select" required>
+                            <option value="" disabled>Pilih Posisi Pekerjaan</option>
+                            @foreach ($pekerjaans as $pekerjaan)
+                                <option value="{{ $pekerjaan->id }}"
+                                    {{ old('pekerjaan_id', $karyawan->pekerjaan_id) == $pekerjaan->id ? 'selected' : '' }}>
+                                    {{ $pekerjaan->posisi_pekerjaan }}
+                                </option>
+                            @endforeach
                         </select>
-                        @error('posisi_pekerjaan')
+                        @error('pekerjaan_id')
                             <div class="text-danger">{{ $message }}</div>
                         @enderror
                     </div>
@@ -108,8 +93,25 @@
 
                     <div class="mb-3">
                         <label class="form-label">Agama :</label>
-                        <input type="text" name="agama" value="{{ old('agama', $karyawan->agama) }}"
-                            class="form-control" required>
+                        <select name="agama" class="form-select" required>
+                            <option value="Islam" {{ old('agama', $karyawan->agama) == 'Islam' ? 'selected' : '' }}>
+                                Islam
+                            </option>
+                            <option value="Kristen Protestan"
+                                {{ old('agama', $karyawan->agama) == 'Kristen Protestan' ? 'selected' : '' }}>Kristen
+                                Protestan</option>
+                            <option value="Kristen Katolik"
+                                {{ old('agama', $karyawan->agama) == 'Kristen Katolik' ? 'selected' : '' }}>Kristen Katolik
+                            </option>
+                            <option value="Hindu" {{ old('agama', $karyawan->agama) == 'Hindu' ? 'selected' : '' }}> Hindu
+                            </option>
+                            <option value="Buddha" {{ old('agama', $karyawan->agama) == 'Buddha' ? 'selected' : '' }}>
+                                Buddha</option>
+                            <option value="Konghucu" {{ old('agama', $karyawan->agama) == 'Konghucu' ? 'selected' : '' }}>
+                                Konghucu</option>
+                            <option value="Atheis" {{ old('agama', $karyawan->agama) == 'Atheis' ? 'selected' : '' }}>
+                                Atheis</option>
+                        </select>
                         @error('agama')
                             <div class="text-danger">{{ $message }}</div>
                         @enderror
