@@ -25,66 +25,6 @@
                 </div>
 
                 <div class="mb-3">
-                    <label>Metode Pencairan:</label>
-                    <select name="metode_pencairan" class="form-select" required onchange="toggleRekeningFields()">
-                        <option value="" disabled selected>-- Pilih Metode --</option>
-                        <option value="Cash" {{ old('metode_pencairan') == 'Cash' ? 'selected' : '' }}>Cash</option>
-                        <option value="Transfer" {{ old('metode_pencairan') == 'Transfer' ? 'selected' : '' }}>Transfer
-                        </option>
-                    </select>
-                    @error('metode_pencairan')
-                        <div class="text-danger">{{ $message }}</div>
-                    @enderror
-                </div>
-
-                <div id="rekeningFields" style="display: none;">
-                    <div class="mb-3">
-                        <label>Nomor Rekening:</label>
-                        <input type="text" name="no_rekening" class="form-control" value="{{ old('no_rekening') }}">
-                        @error('no_rekening')
-                            <div class="text-danger">{{ $message }}</div>
-                        @enderror
-                    </div>
-
-                    <div class="mb-3">
-                        <label>Bank:</label>
-                        <input type="text" name="bank" class="form-control" value="{{ old('bank') }}">
-                        @error('bank')
-                            <div class="text-danger">{{ $message }}</div>
-                        @enderror
-                    </div>
-                </div>
-
-                <div class="mb-3">
-                    <label>Pengajuan Pinjaman:</label>
-                    <input type="text" name="pengajuan_pinjaman" class="form-control"
-                        value="{{ old('pengajuan_pinjaman') }}" required>
-                    @error('pengajuan_pinjaman')
-                        <div class="text-danger">{{ $message }}</div>
-                    @enderror
-                </div>
-
-                <div class="mb-3">
-                    <label for="pajak_id">Bulan</label>
-                    <select name="pajak_id" id="pajak_id" class="form-control" onchange="updateBunga()">
-                        <option value="">-- Pilih Bulan --</option>
-                        @foreach ($pajaks as $pajak)
-                            <option value="{{ $pajak->id }}" data-bunga="{{ $pajak->bunga }}">
-                                {{ $pajak->bulan }}
-                            </option>
-                        @endforeach
-                    </select>
-                    @error('pajak_id')
-                        <div class="text-danger">{{ $message }}</div>
-                    @enderror
-                </div>
-
-                <div class="mb-3">
-                    <label for="bunga">Bunga</label>
-                    <input type="text" id="bunga" class="form-control" placeholder="Bunga" readonly>
-                </div>
-
-                <div class="mb-3">
                     <label>Foto Jaminan:</label>
                     <input type="file" name="foto_jaminan[]" class="form-control" multiple required accept="image/*"
                         onchange="previewImages(event)">
@@ -122,11 +62,81 @@
                 </div>
 
                 <div class="mb-3">
-                    <label>Catatan :</label>
+                    <label>Catatan Barang :</label>
                     <textarea type="text" name="catatan" class="form-control" required>{{ old('catatan') }}</textarea>
                     @error('catatan')
                         <div class="text-danger">{{ $message }}</div>
                     @enderror
+                </div>
+
+                <div class="mb-3">
+                    <label>Pengajuan Pinjaman:</label>
+                    <input type="text" name="pengajuan_pinjaman" class="form-control"
+                        value="{{ old('pengajuan_pinjaman') }}" required>
+                    @error('pengajuan_pinjaman')
+                        <div class="text-danger">{{ $message }}</div>
+                    @enderror
+                </div>
+
+                <div class="mb-3">
+                    <label for="pajak_id">Bulan</label>
+                    <select name="pajak_id" id="pajak_id" class="form-control" onchange="updateBunga()">
+                        <option value="">-- Pilih Bulan --</option>
+                        @foreach ($pajaks as $pajak)
+                            <option value="{{ $pajak->id }}" data-bunga="{{ $pajak->bunga }}">
+                                {{ $pajak->bulan }}
+                            </option>
+                        @endforeach
+                    </select>
+                    @error('pajak_id')
+                        <div class="text-danger">{{ $message }}</div>
+                    @enderror
+                </div>
+
+                <div class="mb-3">
+                    <label for="bunga">Bunga</label>
+                    <input type="text" id="bunga" class="form-control" placeholder="Bunga" readonly>
+                </div>
+
+                <div class="mb-3">
+                    <label for="jumlah_bayar">Jumlah Bayar</label>
+                    <input type="text" name="jumlah_bayar" id="jumlah_bayar" class="form-control" readonly>
+                </div>
+
+                <div class="mb-3">
+                    <label for="per_bulan">Per Bulan</label>
+                    <input type="text" id="per_bulan" class="form-control" placeholder="Per Bulan" readonly>
+                </div>
+
+                <div class="mb-3">
+                    <label>Metode Pencairan:</label>
+                    <select name="metode_pencairan" class="form-select" required onchange="toggleRekeningFields()">
+                        <option value="" disabled selected>-- Pilih Metode --</option>
+                        <option value="Cash" {{ old('metode_pencairan') == 'Cash' ? 'selected' : '' }}>Cash</option>
+                        <option value="Transfer" {{ old('metode_pencairan') == 'Transfer' ? 'selected' : '' }}>Transfer
+                        </option>
+                    </select>
+                    @error('metode_pencairan')
+                        <div class="text-danger">{{ $message }}</div>
+                    @enderror
+                </div>
+
+                <div id="rekeningFields" style="display: none;">
+                    <div class="mb-3">
+                        <label>Nomor Rekening:</label>
+                        <input type="text" name="no_rekening" class="form-control" value="{{ old('no_rekening') }}">
+                        @error('no_rekening')
+                            <div class="text-danger">{{ $message }}</div>
+                        @enderror
+                    </div>
+
+                    <div class="mb-3">
+                        <label>Bank:</label>
+                        <input type="text" name="bank" class="form-control" value="{{ old('bank') }}">
+                        @error('bank')
+                            <div class="text-danger">{{ $message }}</div>
+                        @enderror
+                    </div>
                 </div>
 
                 <div class="modal fade" id="confirmModal" tabindex="-1" aria-labelledby="confirmModalLabel"
@@ -167,9 +177,53 @@
 
         function updateBunga() {
             const selected = document.querySelector('#pajak_id');
-            const bunga = selected.options[selected.selectedIndex].getAttribute('data-bunga');
-            document.querySelector('#bunga').value = bunga ? `${bunga}%` : '';
+            const selectedOption = selected.options[selected.selectedIndex];
+            const bunga = selectedOption.getAttribute('data-bunga');
+            const bungaPersen = bunga ? parseFloat(bunga) / 100 : 0; // Konversi bunga menjadi persentase
+
+            // Menampilkan bunga pada input
+            document.querySelector('#bunga').value = bunga ? `${bunga}` : '';
+
+            // Menghitung jumlah bayar berdasarkan nilai pinjaman yang dibatasi
+            const pengajuanPinjamanInput = document.querySelector('input[name="pengajuan_pinjaman"]');
+            const cleanedPinjaman = pengajuanPinjamanInput.value.replace(/[^0-9,-]+/g,
+            ''); // Menghapus semua karakter non-numerik
+            let jumlahPinjaman = parseFloat(cleanedPinjaman) || 0; // Konversi pengajuan pinjaman ke angka
+
+            // Ambil nilai likuiditas
+            const nilaiLikuiditasInput = document.querySelector('input[name="nilai_likuiditas"]').value;
+            const cleanedLikuiditas = nilaiLikuiditasInput.replace(/[^0-9,-]+/g,
+            ''); // Menghapus semua karakter non-numerik
+            const nilaiLikuiditas = parseFloat(cleanedLikuiditas) || 0; // Konversi nilai likuiditas ke angka
+
+            // Batasi jumlah pinjaman ke nilai likuiditas
+            if (jumlahPinjaman > nilaiLikuiditas) {
+                jumlahPinjaman = nilaiLikuiditas; // Batasi pinjaman ke nilai likuiditas
+                pengajuanPinjamanInput.value = formatRupiah(jumlahPinjaman.toString(), 'Rp'); // Perbarui input pinjaman
+            }
+
+            // Menghitung jumlah bayar
+            const jumlahBayar = jumlahPinjaman * (1 + bungaPersen); // Perhitungan jumlah bayar dengan bunga
+
+            // Membulatkan jumlah bayar ke angka bulat dan menampilkannya dengan format Rupiah
+            const roundedJumlahBayar = Math.round(jumlahBayar);
+            document.querySelector('#jumlah_bayar').value = formatRupiah(roundedJumlahBayar.toString(), 'Rp');
+
+            // Menghitung per bulan
+            const jumlahBulan = selectedOption ? parseInt(selectedOption.value) : 0;
+            let bayarPerBulan = jumlahBulan > 0 ? jumlahBayar / jumlahBulan : 0; // Perhitungan bayar per bulan
+
+            // Pembulatan ke ribuan terdekat
+            bayarPerBulan = Math.round(bayarPerBulan / 1000) * 1000; // Pembulatan ke ribuan terdekat
+
+            // Menampilkan per bulan
+            document.querySelector('#per_bulan').value = bayarPerBulan ?
+                formatRupiah(bayarPerBulan.toFixed(0), 'Rp') :
+                '';
         }
+        document.querySelector('#pajak_id').addEventListener('change', updateBunga);
+        document.querySelector('input[name="pengajuan_pinjaman"]').addEventListener('input', updateBunga);
+
 
         // METODE PENCAIRAN
         document.addEventListener('DOMContentLoaded', function() {
@@ -234,7 +288,23 @@
             }
         }
         // Event listener untuk perhitungan nilai likuiditas
-        document.querySelector('input[name="nilai_pasar"]').addEventListener('input', calculateNilaiLikuiditas);
+        document.querySelector('input[name="pengajuan_pinjaman"]').addEventListener('input', function(e) {
+            const pengajuanPinjamanInput = e.target;
+            const nilaiLikuiditasInput = document.querySelector('input[name="nilai_likuiditas"]');
+
+            // Ambil nilai likuiditas
+            const nilaiLikuiditas = parseFloat(nilaiLikuiditasInput.value.replace(/[^\d]/g, '')) || 0;
+
+            // Ambil nilai input pengajuan pinjaman
+            let pengajuanPinjaman = parseFloat(pengajuanPinjamanInput.value.replace(/[^\d]/g, '')) || 0;
+
+            // Jika nilai pengajuan melebihi nilai likuiditas
+            if (pengajuanPinjaman > nilaiLikuiditas) {
+                pengajuanPinjaman = nilaiLikuiditas; // Set ke nilai maksimum (nilai likuiditas)
+                pengajuanPinjamanInput.value = formatRupiah(pengajuanPinjaman.toFixed(0),
+                    'Rp'); // Format ulang ke Rupiah
+            }
+        });
 
         function previewImages(event) {
             const previewContainer = document.getElementById('image-preview');

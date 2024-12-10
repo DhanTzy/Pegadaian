@@ -83,11 +83,11 @@
                                             <th>Nama Nasabah</th>
                                             <th>Tanggal</th>
                                             <th>Metode Pencairan</th>
-                                            <th>Nomor Rekening</th>
-                                            <th>Bank</th>
                                             <th>Pengajuan Pinjaman</th>
-                                            <th>Bulan</th>
+                                            <th>Jangka Waktu</th>
                                             <th>Bunga</th>
+                                            <th>Jumlah Bayar</th>
+                                            <th>Per-Bulan</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
@@ -116,12 +116,6 @@
                 <div class="modal-body">
                     <p><strong>Nama Nasabah :</strong> <span id="detailNamaNasabah"></span></p>
                     <p><strong>Tanggal :</strong> <span id="detailTanggal"></span></p>
-                    <p><strong>Metode Pencairan :</strong> <span id="detailMetodePencairan"></span></p>
-                    <p><strong>Nomor Rekening :</strong> <span id="detailNoRekening"></span></p>
-                    <p><strong>Bank :</strong> <span id="detailBank"></span></p>
-                    <p><strong>Pengajuan Pinjaman :</strong> <span id="detailPengajuanPinjaman"></span></p>
-                    <p><strong>Bulan :</strong> <span id="detailBulan"></span></p>
-                    <p><strong>Bunga :</strong> <span id="detailBunga"></span></p>
                     <p><strong>Foto Jaminan (Barang) :</strong> <br>
                         <div id="detailFotoJaminan" style="display: flex; flex-wrap: wrap;"></div>
                     </p>
@@ -129,6 +123,14 @@
                     <p><strong>Nilai Pasar Agunan :</strong> <span id="detailNilaiPasar"></span></p>
                     <p><strong>NIlai Likuiditas Agunan :</strong> <span id="detailNilaiLikuiditas"></span></p>
                     <p><strong>Catatan Barang :</strong> <span id="detailCatatan"></span></p>
+                    <p><strong>Pengajuan Pinjaman :</strong> <span id="detailPengajuanPinjaman"></span></p>
+                    <p><strong>Jangka Waktu :</strong> <span id="detailBulan"></span></p>
+                    <p><strong>Bunga :</strong> <span id="detailBunga"></span></p>
+                    <p><strong>Jumlah Bayar :</strong> <span id="detailJumlahBayar"></span></p>
+                    <p><strong>Per Bulan :</strong> <span id="detailPerBulan"></span></p>
+                    <p><strong>Metode Pencairan :</strong> <span id="detailMetodePencairan"></span></p>
+                    <p><strong>Nomor Rekening :</strong> <span id="detailNoRekening"></span></p>
+                    <p><strong>Bank :</strong> <span id="detailBank"></span></p>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -163,11 +165,11 @@
                     { data: 'nama_nasabah', name: 'nama_nasabah' },
                     { data: 'tanggal', name: 'tanggal' },
                     { data: 'metode_pencairan', name: 'metode_pencairan' },
-                    { data: 'no_rekening', name: 'no_rekening'},
-                    { data: 'bank', name: 'bank'},
                     { data: 'pengajuan_pinjaman', name: 'pengajuan_pinjaman' },
                     { data: 'bulan' },
                     { data: 'bunga' },
+                    { data: 'jumlah_bayar', name: 'jumlah_bayar'},
+                    { data: 'per_bulan', name: 'per_bulan'},
                     { data: 'action', name: 'action', orderable: false, searchable: false },
                 ],
             });
@@ -198,6 +200,8 @@
             var pengajuanPinjaman = button.getAttribute('data-pengajuan_pinjaman');
             var bulan = button.getAttribute('data-bulan');
             var bunga = button.getAttribute('data-bunga');
+            var jumlahBayar = button.getAttribute('data-jumlah_bayar');
+            var perBulan = button.getAttribute('data-per_bulan');
             var jenisAgunan = button.getAttribute('data-jenis_agunan');
             var nilaiPasar = button.getAttribute('data-nilai_pasar');
             var nilaiLikuiditas = button.getAttribute('data-nilai_likuiditas');
@@ -213,6 +217,8 @@
             document.querySelector('#detailPengajuanPinjaman').textContent = pengajuanPinjaman;
             document.querySelector('#detailBulan').textContent = bulan;
             document.querySelector('#detailBunga').textContent = bunga;
+            document.querySelector('#detailJumlahBayar').textContent = jumlahBayar;
+            document.querySelector('#detailPerBulan').textContent = perBulan;
             document.querySelector('#detailJenisAgunan').textContent = jenisAgunan;
             document.querySelector('#detailNilaiPasar').textContent = nilaiPasar;
             document.querySelector('#detailNilaiLikuiditas').textContent = nilaiLikuiditas;

@@ -72,6 +72,8 @@ class TransaksiController extends Controller
                     data-pengajuan_pinjaman="' . $transaksi->pengajuan_pinjaman . '"
                     data-bulan="' . $transaksi->pajak->bulan . '"
                     data-bunga="' . $transaksi->pajak->bunga . '"
+                    data-jumlah_bayar="' . $transaksi->jumlah_bayar . '"
+                    data-per_bulan="' . $transaksi->per_bulan . '"
                     data-catatan="' . $transaksi->catatan . '"
                     data-jenis_agunan="' . $transaksi->jenis_agunan . '"
                     data-nilai_pasar="' . $transaksi->nilai_pasar . '"
@@ -106,6 +108,8 @@ class TransaksiController extends Controller
             'metode_pencairan' => 'required|string|in:Cash,Transfer',
             'pengajuan_pinjaman' => 'required|string',
             'pajak_id' => 'required|exists:pajak,id',
+            'jumlah_bayar' => 'nullable',
+            'per_bulan' => 'nullable',
             'jenis_agunan' => 'required|string',
             'nilai_pasar' => 'required|string',
             'nilai_likuiditas' => 'required|string',
@@ -145,6 +149,8 @@ class TransaksiController extends Controller
             'bank',
             'pengajuan_pinjaman',
             'pajak_id',
+            'jumlah_bayar',
+            'per_bulan',
             'jenis_agunan',
             'nilai_pasar',
             'nilai_likuiditas',
@@ -186,6 +192,8 @@ class TransaksiController extends Controller
             'metode_pencairan' => 'required|string|in:Cash,Transfer',
             'pengajuan_pinjaman' => 'required|string',
             'pajak_id' => 'required|exists:pajak,id',
+            'jumlah_bayar' => 'nullable',
+            'per_bulan' => 'nullable',
             'jenis_agunan' => 'required|string',
             'nilai_pasar' => 'required|string',
             'nilai_likuiditas' => 'required|string',
@@ -215,6 +223,8 @@ class TransaksiController extends Controller
             'bank',
             'pengajuan_pinjaman',
             'pajak_id',
+            'jumlah_bayar',
+            'per_bulan',
             'jenis_agunan',
             'nilai_pasar',
             'nilai_likuiditas',

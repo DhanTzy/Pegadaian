@@ -18,6 +18,8 @@ class Transaksi extends Model
         'bank',
         'pengajuan_pinjaman',
         'pajak_id',
+        'jumlah_bayar',
+        'per_bulan',
         'jenis_agunan',
         'nilai_pasar',
         'nilai_likuiditas',
