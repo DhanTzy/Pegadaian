@@ -16,11 +16,12 @@ class UserAccess
     public function handle(Request $request, Closure $next, $userType)
     {
         // dd(auth()->user()->type);
-        if (auth()->user()->type == $userType) {
+        $user = auth()->user();
+
+        if ($user && (is_array($userType) ? in_array($user->type, $userType) : $user->type == $userType)) {
             return $next($request);
         }
 
-        // Jika tipe pengguna tidak sesuai, kembalikan halaman 403 (Forbidden)
-        return abort(403, 'Kamu tidak memiliki akses halaman ini Mending tidur saja.');
+        return abort(403, 'Kamu tidak memiliki akses halaman ini. Mending tidur saja.');
     }
 }

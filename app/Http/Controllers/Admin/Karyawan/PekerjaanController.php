@@ -1,8 +1,8 @@
 <?php
 
 namespace App\Http\Controllers\Admin\Karyawan;
-use App\Http\Controllers\Controller;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Pekerjaan;
 
@@ -16,14 +16,13 @@ class PekerjaanController extends Controller
 
     public function create()
     {
-        $pekerjaans = Pekerjaan::all();
-        return view('admin.karyawan.pekerjaan.create', compact('pekerjaans'));
+        return view('admin.karyawan.pekerjaan.create');
     }
 
     public function store(Request $request)
     {
         $request->validate([
-            'posisi_pekerjaan' => 'required|string|max:255',
+            'posisi_pekerjaan' => 'required|string|max:255|unique:pekerjaan,posisi_pekerjaan',
         ]);
 
         Pekerjaan::create($request->all());
@@ -39,7 +38,7 @@ class PekerjaanController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'posisi_pekerjaan' => 'required|string|max:255',
+            'posisi_pekerjaan' => 'required|string|max:255|unique:pekerjaan,posisi_pekerjaan,' . $id,
         ]);
 
         $pekerjaan = Pekerjaan::findOrFail($id);

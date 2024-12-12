@@ -186,14 +186,12 @@
 
             // Menghitung jumlah bayar berdasarkan nilai pinjaman yang dibatasi
             const pengajuanPinjamanInput = document.querySelector('input[name="pengajuan_pinjaman"]');
-            const cleanedPinjaman = pengajuanPinjamanInput.value.replace(/[^0-9,-]+/g,
-            ''); // Menghapus semua karakter non-numerik
+            const cleanedPinjaman = pengajuanPinjamanInput.value.replace(/[^0-9,-]+/g, ''); // Menghapus semua karakter non-numerik
             let jumlahPinjaman = parseFloat(cleanedPinjaman) || 0; // Konversi pengajuan pinjaman ke angka
 
             // Ambil nilai likuiditas
             const nilaiLikuiditasInput = document.querySelector('input[name="nilai_likuiditas"]').value;
-            const cleanedLikuiditas = nilaiLikuiditasInput.replace(/[^0-9,-]+/g,
-            ''); // Menghapus semua karakter non-numerik
+            const cleanedLikuiditas = nilaiLikuiditasInput.replace(/[^0-9,-]+/g, ''); // Menghapus semua karakter non-numerik
             const nilaiLikuiditas = parseFloat(cleanedLikuiditas) || 0; // Konversi nilai likuiditas ke angka
 
             // Batasi jumlah pinjaman ke nilai likuiditas
@@ -218,14 +216,12 @@
 
             // Menampilkan per bulan
             document.querySelector('#per_bulan').value = bayarPerBulan ?
-                formatRupiah(bayarPerBulan.toFixed(0), 'Rp') :
-                '';
+                formatRupiah(bayarPerBulan.toFixed(0), 'Rp') : '';
         }
         document.querySelector('#pajak_id').addEventListener('change', updateBunga);
         document.querySelector('input[name="pengajuan_pinjaman"]').addEventListener('input', updateBunga);
 
-
-        // METODE PENCAIRAN
+        // Metode Pencairan : Cash > Transfer ( No.Rekening, Bank )
         document.addEventListener('DOMContentLoaded', function() {
             const metodePencairan = document.querySelector('select[name="metode_pencairan"]').value;
             toggleRekeningFields();
@@ -265,8 +261,6 @@
             rupiah = split[1] !== undefined ? rupiah + ',' + split[1] : rupiah; // Tambahkan desimal jika ada
             return prefix ? prefix + ' ' + rupiah : rupiah;
         }
-
-        // Tambahkan event listener untuk format Rupiah
         document.querySelectorAll('input[name="pengajuan_pinjaman"], input[name="nilai_pasar"]').forEach(input => {
             input.addEventListener('input', function() {
                 const value = this.value.replace(/\./g, ''); // Hapus titik sebelumnya
@@ -287,7 +281,6 @@
                 nilaiLikuiditasInput.value = ''; // Kosongkan jika tidak ada nilai pasar
             }
         }
-        // Event listener untuk perhitungan nilai likuiditas
         document.querySelector('input[name="pengajuan_pinjaman"]').addEventListener('input', function(e) {
             const pengajuanPinjamanInput = e.target;
             const nilaiLikuiditasInput = document.querySelector('input[name="nilai_likuiditas"]');
@@ -306,6 +299,7 @@
             }
         });
 
+        // Preview Foto Jaminan
         function previewImages(event) {
             const previewContainer = document.getElementById('image-preview');
             previewContainer.innerHTML = '';

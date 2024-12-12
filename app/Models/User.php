@@ -47,11 +47,17 @@ class User extends Authenticatable
     ];
 
     protected function type(): Attribute
-    {
-        return new Attribute(
-            get: fn($value) => ["user", "admin", "approval", "appraisal", "customer service"][$value],
-        );
-    }
+{
+    return new Attribute(
+        get: fn($value) => [
+            0 => "user",
+            1 => "admin",
+            2 => "approval",
+            3 => "appraisal",
+            4 => "customer service",
+        ][$value] ?? "unknown", // Tambahkan fallback untuk nilai yang tidak dikenali
+    );
+}
 
     public function profile()
     {

@@ -19,8 +19,10 @@
                             <h3 class="card-title">Bordered Table</h3>
                         </div>
                         <div class="card-body">
-                            <a href="{{ route('admin.transaksi.pajak.create') }}"
-                                class="btn btn-primary float-left mb-2">Tambah Pajak</a>
+                            <button type="button" class="btn btn-primary float-left mb-2" id="btnTambahPajak"
+                                data-bs-toggle="modal" data-bs-target="#modalForm">
+                                Tambah Pajak
+                            </button>
 
                             @if (Session::has('success'))
                                 <div class="alert alert-success" role="alert">
@@ -44,8 +46,12 @@
                                             <td>{{ $pajak->bulan }}</td>
                                             <td>{{ $pajak->bunga }}</td>
                                             <td>
-                                                <a href="{{ route('admin.transaksi.pajak.edit', $pajak->id) }}"
-                                                    class="btn btn-warning btn-sm me-2">Edit</a>
+                                                <button type="button" class="btn btn-warning btn-sm me-2 btnEditPajak"
+                                                    data-id="{{ $pajak->id }}" data-bulan="{{ $pajak->bulan }}"
+                                                    data-bunga="{{ $pajak->bunga }}" data-bs-toggle="modal"
+                                                    data-bs-target="#modalForm">
+                                                    Edit
+                                                </button>
                                                 <form action="{{ route('admin.transaksi.pajak.destroy', $pajak->id) }}"
                                                     method="POST" style="display: inline;">
                                                     @csrf
@@ -59,4 +65,89 @@
                                 </tbody>
                             </table>
                         </div>
-                    @endsection
+
+                        <!-- Modal -->
+                        <div class="modal fade" id="modalForm" tabindex="-1" aria-labelledby="modalFormLabel"
+                            aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <form id="formPajak" method="POST">
+                                        @csrf
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="modalFormLabel">Tambah/Edit Pajak</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div class="mb-3">
+                                                <label for="bulan" class="form-label">Bulan</label>
+                                                <input type="text" class="form-control" id="bulan" name="bulan"
+                                                    required>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="bunga" class="form-label">Bunga</label>
+                                                <input type="text" class="form-control" id="bunga" name="bunga"
+                                                    required>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary"
+                                                data-bs-dismiss="modal">Tutup</button>
+                                            <button type="submit" class="btn btn-primary">Simpan</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- End Modal -->
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const formPajak = document.getElementById("formPajak");
+            const modalLabel = document.getElementById("modalFormLabel");
+            const bulanInput = document.getElementById("bulan");
+            const bungaInput = document.getElementById("bunga");
+
+            // Handle Tambah Pajak
+            document.getElementById("btnTambahPajak").addEventListener("click", function() {
+                formPajak.action = "{{ route('admin.transaksi.pajak.store') }}";
+                formPajak.method = "POST";
+                formPajak.querySelector('input[name="_method"]')?.remove(); // Hapus method PUT jika ada
+                bulanInput.value = "";
+                bungaInput.value = "";
+                modalLabel.textContent = "Tambah Pajak";
+            });
+
+            // Handle Edit Pajak
+            document.querySelectorAll(".btnEditPajak").forEach(button => {
+                button.addEventListener("click", function() {
+                    const id = this.getAttribute("data-id");
+                    const bulan = this.getAttribute("data-bulan");
+                    const bunga = this.getAttribute("data-bunga");
+
+                    formPajak.action = `/admin/transaksi/pajak/${id}`;
+                    formPajak.method = "POST";
+
+                    // Tambahkan input hidden untuk method PUT
+                    let methodInput = formPajak.querySelector('input[name="_method"]');
+                    if (!methodInput) {
+                        methodInput = document.createElement('input');
+                        methodInput.type = "hidden";
+                        methodInput.name = "_method";
+                        methodInput.value = "PUT";
+                        formPajak.appendChild(methodInput);
+                    }
+
+                    bulanInput.value = bulan;
+                    bungaInput.value = bunga;
+                    modalLabel.textContent = "Edit Pajak";
+                });
+            });
+        });
+    </script>
+@endsection

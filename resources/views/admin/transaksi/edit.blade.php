@@ -237,8 +237,7 @@
 
             // Menampilkan per bulan
             document.querySelector('#per_bulan').value = bayarPerBulan ?
-                formatRupiah(bayarPerBulan.toFixed(0), 'Rp') :
-                '';
+                formatRupiah(bayarPerBulan.toFixed(0), 'Rp') : '';
         }
         document.querySelector('#pajak_id').addEventListener('change', updateBunga);
         document.querySelector('input[name="pengajuan_pinjaman"]').addEventListener('input', updateBunga);
@@ -248,7 +247,7 @@
             updateBunga();
         });
 
-        // METODE PENCAIRAN
+        // Metode Pencarian : Cash > Transfer ( No.Rekening, Bank )
         document.addEventListener('DOMContentLoaded', function() {
             const metodePencairan = document.querySelector('select[name="metode_pencairan"]').value;
             toggleRekeningFields();
@@ -288,8 +287,6 @@
             rupiah = split[1] !== undefined ? rupiah + ',' + split[1] : rupiah; // Tambahkan desimal jika ada
             return prefix ? prefix + ' ' + rupiah : rupiah;
         }
-
-        // Tambahkan event listener untuk format Rupiah
         document.querySelectorAll('input[name="pengajuan_pinjaman"], input[name="nilai_pasar"]').forEach(input => {
             input.addEventListener('input', function() {
                 const value = this.value.replace(/\./g, ''); // Hapus titik sebelumnya
@@ -310,9 +307,9 @@
                 nilaiLikuiditasInput.value = ''; // Kosongkan jika tidak ada nilai pasar
             }
         }
-        // Event listener untuk perhitungan nilai likuiditas
         document.querySelector('input[name="nilai_pasar"]').addEventListener('input', calculateNilaiLikuiditas);
 
+        // Preview Foto Jaminan
         function previewImages(event) {
             const previewContainer = document.getElementById('image-preview');
             previewContainer.innerHTML = '';
