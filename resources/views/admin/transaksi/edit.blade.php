@@ -90,7 +90,7 @@
                 <select id="pajak_id" name="pajak_id" class="form-control" onchange="updateBunga()">
                     <option value="">Pilih Bulan</option>
                     @foreach ($pajaks as $pajak)
-                        <option value="{{ $pajak->id }}" data-bunga="{{ $pajak->bunga }}"
+                        <option value="{{ $pajak->id }}" data-bunga="{{ $pajak->bunga }} " data-bulan="{{ $pajak->bulan }}"
                             {{ old('pajak_id', $transaksi->pajak_id) == $pajak->id ? 'selected' : '' }}>
                             {{ $pajak->bulan }}
                         </option>
@@ -199,45 +199,45 @@
         function updateBunga() {
             const selected = document.querySelector('#pajak_id');
             const selectedOption = selected.options[selected.selectedIndex];
+
+            // Ambil bunga dan bulan dari atribut data pada option
             const bunga = selectedOption.getAttribute('data-bunga');
-            const bungaPersen = bunga ? parseFloat(bunga) / 100 : 0; // Konversi bunga menjadi persentase
+            const bulan = selectedOption.getAttribute('data-bulan');
+            const bungaPersen = bunga ? parseFloat(bunga) / 100 : 0;
+            const jumlahBulan = bulan ? parseInt(bulan) : 0;
 
             // Menampilkan bunga pada input
             document.querySelector('#bunga').value = bunga ? `${bunga}` : '';
 
             // Menghitung jumlah bayar berdasarkan nilai pinjaman yang dibatasi
             const pengajuanPinjamanInput = document.querySelector('input[name="pengajuan_pinjaman"]');
-            const cleanedPinjaman = pengajuanPinjamanInput.value.replace(/[^0-9,-]+/g, ''); // Menghapus semua karakter non-numerik
-            let jumlahPinjaman = parseFloat(cleanedPinjaman) || 0; // Konversi pengajuan pinjaman ke angka
+            const cleanedPinjaman = pengajuanPinjamanInput.value.replace(/[^0-9,-]+/g, '');
+            let jumlahPinjaman = parseFloat(cleanedPinjaman) || 0;
 
             // Ambil nilai likuiditas
             const nilaiLikuiditasInput = document.querySelector('input[name="nilai_likuiditas"]').value;
-            const cleanedLikuiditas = nilaiLikuiditasInput.replace(/[^0-9,-]+/g, ''); // Menghapus semua karakter non-numerik
-            const nilaiLikuiditas = parseFloat(cleanedLikuiditas) || 0; // Konversi nilai likuiditas ke angka
+            const cleanedLikuiditas = nilaiLikuiditasInput.replace(/[^0-9,-]+/g, '');
+            const nilaiLikuiditas = parseFloat(cleanedLikuiditas) || 0;
 
             // Batasi jumlah pinjaman ke nilai likuiditas
             if (jumlahPinjaman > nilaiLikuiditas) {
-                jumlahPinjaman = nilaiLikuiditas; // Batasi pinjaman ke nilai likuiditas
-                pengajuanPinjamanInput.value = formatRupiah(jumlahPinjaman.toString(), 'Rp'); // Perbarui input pinjaman
+                jumlahPinjaman = nilaiLikuiditas;
+                pengajuanPinjamanInput.value = formatRupiah(jumlahPinjaman.toString(), 'Rp');
             }
 
             // Menghitung jumlah bayar
-            const jumlahBayar = jumlahPinjaman * (1 + bungaPersen); // Perhitungan jumlah bayar dengan bunga
-
-            // Membulatkan jumlah bayar ke angka bulat dan menampilkannya dengan format Rupiah
+            const jumlahBayar = jumlahPinjaman * (1 + bungaPersen);
             const roundedJumlahBayar = Math.round(jumlahBayar);
             document.querySelector('#jumlah_bayar').value = formatRupiah(roundedJumlahBayar.toString(), 'Rp');
 
             // Menghitung per bulan
-            const jumlahBulan = selectedOption ? parseInt(selectedOption.value) : 0;
-            let bayarPerBulan = jumlahBulan > 0 ? jumlahBayar / jumlahBulan : 0; // Perhitungan bayar per bulan
+            let bayarPerBulan = jumlahBulan > 0 ? jumlahBayar / jumlahBulan : 0;
 
             // Pembulatan ke ribuan terdekat
-            bayarPerBulan = Math.round(bayarPerBulan / 1000) * 1000; // Pembulatan ke ribuan terdekat
+            bayarPerBulan = Math.round(bayarPerBulan / 1000) * 1000;
 
             // Menampilkan per bulan
-            document.querySelector('#per_bulan').value = bayarPerBulan ?
-                formatRupiah(bayarPerBulan.toFixed(0), 'Rp') : '';
+            document.querySelector('#per_bulan').value = bayarPerBulan ? formatRupiah(bayarPerBulan.toFixed(0), 'Rp') : '';
         }
         document.querySelector('#pajak_id').addEventListener('change', updateBunga);
         document.querySelector('input[name="pengajuan_pinjaman"]').addEventListener('input', updateBunga);

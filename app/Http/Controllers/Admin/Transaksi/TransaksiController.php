@@ -139,7 +139,7 @@ class TransaksiController extends Controller
         ];
 
         $request->validate($rules, $message);
-
+        
         // Simpan data transaksi
         $transaksi = Transaksi::create($request->only([
             'nama_nasabah',
