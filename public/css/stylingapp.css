@@ -5,7 +5,10 @@ body {
 }
 .nav-item {
     margin-right: 10px;
-    justify-items: center !important;
+    display: block !important;
+}
+.menu-open > .nav-treeview {
+    display: block !important;
 }
 .logoprofile {
     height: 30px;

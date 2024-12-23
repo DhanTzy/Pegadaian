@@ -37,22 +37,7 @@
                                 data-lte-icon="maximize" class="bi bi-arrows-fullscreen"></i> <i
                                 data-lte-icon="minimize" class="bi bi-fullscreen-exit" style="display: none;"></i>
                         </a>
-                    </li> <!--end::Fullscreen Toggle--> <!--begin::User Menu Dropdown-->
-                    {{-- <li class="nav-item"><a href="#" class="nav-link" data-bs-toggle="dropdown"
-                            style="margin-bottom: 5px;">
-                            <img src="{{ asset('storage/profile_images/' . auth()->user()->image) }}" alt="Profile"
-                                class="logoprofile">
-                        <ul class="dropdown-menu dropdown-menu-end p-1">
-                            <li class="profiledropdown"><a href="{{ route('admin.profile') }}" class="btn btn-success">Profile</a></li>
-                            <li class="profiledropdown"><a href="{{ route('logout') }}" class="btn btn-primary">Logout</a></li>
-                            <li class="profiledropdown">
-                                <a href="{{ route('admin.profile') }}" class="btn btn-success">Profile</a>
-                            </li>
-                            <li class="profiledropdown">
-                                <a href="{{ route('logout') }}" class="btn btn-primary">Logout</a>
-                            </li>
-                        </ul>
-                    </li> --}}
+                    </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link nav-icon-hover" href="javascript:void(0)" id="drop2"
                             data-bs-toggle="dropdown" aria-expanded="false">
@@ -105,9 +90,9 @@
                                 <p>Transaksi</p>
                             </a>
                         </li>
-                        <li class="nav-item"> <a href="#"
-                                class="nav-link {{ Route::is('admin.nasabah', 'admin.karyawan') ? 'show' : '' }}"> <i
-                                    class="nav-icon bi bi-table"></i>
+                        <li class="nav-item {{ Route::is('admin.nasabah', 'admin.karyawan', 'admin.transaksi.pajak.index', 'admin.karyawan.pekerjaan.index') ? 'menu-open' : '' }}">
+                            <a href="#" class="nav-link {{ Route::is('admin.nasabah', 'admin.karyawan', 'admin.transaksi.pajak.index', 'admin.karyawan.pekerjaan.index') ? 'active' : '' }}">
+                                <i class="nav-icon bi bi-table"></i>
                                 <p>
                                     Data Master
                                     <i class="nav-arrow bi bi-chevron-right"></i>
@@ -116,61 +101,34 @@
                             <ul class="nav nav-treeview">
                                 <li class="nav-item">
                                     <a class="nav-link {{ Route::is('admin.nasabah') ? 'active bg-primary' : '' }}"
-                                        href="{{ route('admin.nasabah') }}"> <i class="nav-icon bi bi-circle"></i>
+                                        href="{{ route('admin.nasabah') }}">
+                                        <i class="nav-icon bi bi-circle"></i>
                                         <p>Nasabah</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link {{ Route::is('admin.karyawan') ? 'active bg-primary' : '' }}"
-                                        href="{{ route('admin.karyawan') }}"> <i class="nav-icon bi bi-circle"></i>
+                                        href="{{ route('admin.karyawan') }}">
+                                        <i class="nav-icon bi bi-circle"></i>
                                         <p>Karyawan</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link {{ Route::is('admin.transaksi.pajak.index') ? 'active bg-primary' : '' }}"
-                                        href="{{ route('admin.transaksi.pajak.index') }}"> <i class="nav-icon bi bi-circle"></i>
+                                        href="{{ route('admin.transaksi.pajak.index') }}">
+                                        <i class="nav-icon bi bi-circle"></i>
                                         <p>Daftar Pajak</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link {{ Route::is('admin.karyawan.pekerjaan.index') ? 'active bg-primary' : '' }}"
-                                        href="{{ route('admin.karyawan.pekerjaan.index') }}"> <i class="nav-icon bi bi-circle"></i>
+                                        href="{{ route('admin.karyawan.pekerjaan.index') }}">
+                                        <i class="nav-icon bi bi-circle"></i>
                                         <p>Daftar Pekerjaan</p>
                                     </a>
                                 </li>
                             </ul>
                         </li>
-                        <!-- <li class="nav-item"> <a href="#" class="nav-link"> <i class="nav-icon bi bi-clipboard-fill"></i>
-                                <p>
-                                    Layout Options
-                                    <span class="nav-badge badge text-bg-secondary me-3">6</span> <i class="nav-arrow bi bi-chevron-right"></i>
-                                </p>
-                            </a>
-                            <ul class="nav nav-treeview">
-                                <li class="nav-item"> <a href="./layout/unfixed-sidebar.html" class="nav-link"> <i class="nav-icon bi bi-circle"></i>
-                                        <p>Default Sidebar</p>
-                                    </a> </li>
-                                <li class="nav-item"> <a href="./layout/fixed-sidebar.html" class="nav-link"> <i class="nav-icon bi bi-circle"></i>
-                                        <p>Fixed Sidebar</p>
-                                    </a> </li>
-                                <li class="nav-item"> <a href="./layout/layout-custom-area.html" class="nav-link"> <i class="nav-icon bi bi-circle"></i>
-                                        <p>Layout <small>+ Custom Area </small></p>
-                                    </a> </li>
-                                <li class="nav-item"> <a href="./layout/sidebar-mini.html" class="nav-link"> <i class="nav-icon bi bi-circle"></i>
-                                        <p>Sidebar Mini</p>
-                                    </a> </li>
-                                <li class="nav-item"> <a href="./layout/collapsed-sidebar.html" class="nav-link"> <i class="nav-icon bi bi-circle"></i>
-                                        <p>Sidebar Mini <small>+ Collapsed</small></p>
-                                    </a> </li>
-                                <li class="nav-item"> <a href="./layout/logo-switch.html" class="nav-link"> <i class="nav-icon bi bi-circle"></i>
-                                        <p>Sidebar Mini <small>+ Logo Switch</small></p>
-                                    </a> </li>
-                                <li class="nav-item"> <a href="./layout/layout-rtl.html" class="nav-link"> <i class="nav-icon bi bi-circle"></i>
-                                        <p>Layout RTL</p>
-                                    </a> </li>
-                            </ul>
-                        </li>-->
-
                     </ul> <!--end::Sidebar Menu-->
                 </nav>
             </div> <!--end::Sidebar Wrapper-->
