@@ -85,13 +85,17 @@
                             </a>
                         </li>
                         <li class="nav-item"> <a
-                                class="nav-link {{ Route::is('admin.transaksi') ? 'active bg-primary' : '' }}"
+                                class="nav-link {{ Route::is('admin.transaksi', 'admin.transaksi.create', 'admin.transaksi.edit') ? 'active bg-primary' : '' }}"
                                 href="{{ route('admin.transaksi') }}"><i class="nav-icon bi bi-palette"></i>
                                 <p>Transaksi</p>
                             </a>
                         </li>
-                        <li class="nav-item {{ Route::is('admin.nasabah', 'admin.karyawan', 'admin.transaksi.pajak.index', 'admin.karyawan.pekerjaan.index') ? 'menu-open' : '' }}">
-                            <a href="#" class="nav-link {{ Route::is('admin.nasabah', 'admin.karyawan', 'admin.transaksi.pajak.index', 'admin.karyawan.pekerjaan.index') ? 'active' : '' }}">
+                        <li class="nav-item {{ Route::is('admin.nasabah', 'admin.nasabah.create', 'admin.nasabah.edit',
+                        'admin.karyawan', 'admin.karyawan.create', 'admin.karyawan.edit',
+                        'admin.transaksi.pajak.index', 'admin.karyawan.pekerjaan.index') ? 'menu-open' : '' }}">
+                            <a href="#" class="nav-link {{ Route::is('admin.nasabah', 'admin.nasabah.create', 'admin.nasabah.edit',
+                            'admin.karyawan', 'admin.karyawan.create', 'admin.karyawan.edit',
+                            'admin.transaksi.pajak.index', 'admin.karyawan.pekerjaan.index') ? 'active' : '' }}">
                                 <i class="nav-icon bi bi-table"></i>
                                 <p>
                                     Data Master
@@ -100,14 +104,14 @@
                             </a>
                             <ul class="nav nav-treeview">
                                 <li class="nav-item">
-                                    <a class="nav-link {{ Route::is('admin.nasabah') ? 'active bg-primary' : '' }}"
+                                    <a class="nav-link {{ Route::is('admin.nasabah', 'admin.nasabah.create', 'admin.nasabah.edit') ? 'active bg-primary' : '' }}"
                                         href="{{ route('admin.nasabah') }}">
                                         <i class="nav-icon bi bi-circle"></i>
                                         <p>Nasabah</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link {{ Route::is('admin.karyawan') ? 'active bg-primary' : '' }}"
+                                    <a class="nav-link {{ Route::is('admin.karyawan', 'admin.karyawan.create', 'admin.karyawan.edit') ? 'active bg-primary' : '' }}"
                                         href="{{ route('admin.karyawan') }}">
                                         <i class="nav-icon bi bi-circle"></i>
                                         <p>Karyawan</p>
@@ -129,6 +133,7 @@
                                 </li>
                             </ul>
                         </li>
+
                     </ul> <!--end::Sidebar Menu-->
                 </nav>
             </div> <!--end::Sidebar Wrapper-->
