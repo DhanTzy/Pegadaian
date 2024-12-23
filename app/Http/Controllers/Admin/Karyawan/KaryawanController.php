@@ -78,13 +78,13 @@ class KaryawanController extends Controller
                     data-anggota_keluarga="' . htmlspecialchars(json_encode($anggotaKeluarga)) . '"
                     data-foto_ktp="' . asset('storage/' . $karyawan->foto_ktp) . '"
                     data-foto_kk="' . asset('storage/' . $karyawan->foto_kk) . '">
-                Detail
+                <i class="fas fa-info-circle"></i>
             </button>
-            <a href="' . route('admin.karyawan.edit', $karyawan->id) . '" class="btn btn-success btn-sm me-2">Edit</a>
+            <a href="' . route('admin.karyawan.edit', $karyawan->id) . '" class="btn btn-success btn-sm me-2"><i class="fas fa-edit"></i></a>
             <form action="' . route('admin.karyawan.destroy', $karyawan->id) . '" method="POST" style="display:inline;">
                 ' . csrf_field() . '
                 ' . method_field('DELETE') . '
-                <button type="submit" class="btn btn-danger btn-sm me-2" onclick="return confirm(\'Yakin ingin menghapus data ini?\')">Hapus</button>
+                <button type="submit" class="btn btn-danger btn-sm me-2" onclick="return confirm(\'Yakin ingin menghapus data ini?\')"><i class="fas fa-trash-alt"></i></button>
             </form>
         ';
             })

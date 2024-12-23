@@ -59,14 +59,14 @@ class NasabahController extends Controller
                         data-email="' . $nasabah->email . '"
                         data-nama_orang_tua="' . $nasabah->nama_orang_tua . '"
                         data-foto_ktp_sim="' . asset('storage/' . $nasabah->foto_ktp_sim) . '">
-                    Detail
+                    <i class="fas fa-info-circle"></i>
                 </button>
-                <a href="' . route('admin.nasabah.edit', $nasabah->id) . '" class="btn btn-success btn-sm me-2">Edit</a>
+                <a href="' . route('admin.nasabah.edit', $nasabah->id) . '" class="btn btn-success btn-sm me-2"><i class="fas fa-edit"></i></a>
                 <form action="' . route('admin.nasabah.destroy', $nasabah->id) . '" method="POST"
                       onsubmit="return confirm(\'Apakah Anda Yakin Menghapus Data Ini?\')" class="d-inline">
                     ' . csrf_field() . '
                     ' . method_field('DELETE') . '
-                    <button class="btn btn-danger btn-sm me-2">Delete</button>
+                    <button class="btn btn-danger btn-sm me-2"><i class="fas fa-trash-alt"></i></button>
                 </form>
             ';
             })->editColumn('tanggal_lahir', function ($nasabah) {

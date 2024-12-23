@@ -50,14 +50,14 @@
                                                     data-id="{{ $pajak->id }}" data-bulan="{{ $pajak->bulan }}"
                                                     data-bunga="{{ $pajak->bunga }}" data-bs-toggle="modal"
                                                     data-bs-target="#modalForm">
-                                                    Edit
+                                                    <i class="fas fa-edit"></i>
                                                 </button>
                                                 <form action="{{ route('admin.transaksi.pajak.destroy', $pajak->id) }}"
                                                     method="POST" style="display: inline;">
                                                     @csrf
                                                     @method('DELETE')
                                                     <button type="submit" class="btn btn-danger btn-sm me-2"
-                                                        onclick="return confirm('Yakin ingin menghapus?')">Hapus</button>
+                                                        onclick="return confirm('Yakin ingin menghapus?')"><i class="fas fa-trash-alt"></i></button>
                                                 </form>
                                             </td>
                                         </tr>

@@ -192,8 +192,8 @@
                         </div>
                     </div>
                     <div class="footerlogo padding-auto p-5">
-                        <img src="{{ asset('img/footer.png') }}" class="logo-footer" alt="logo" width="50"
-                            width="50" height="auto">
+                        <img src="{{ asset('img/sigma.png') }}" class="brand-image" alt="logo" width="100"
+                            width="100" height="auto">
                     </div>
                 </div>
     </div>
@@ -243,7 +243,7 @@
     </script> <!--end::OverlayScrollbars Configure--> <!-- OPTIONAL SCRIPTS --> <!-- sortablejs -->
     <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script> <!-- sortablejs -->
     <script>
-        
+
         const connectedSortables =
             document.querySelectorAll(".connectedSortable");
         connectedSortables.forEach((connectedSortable) => {

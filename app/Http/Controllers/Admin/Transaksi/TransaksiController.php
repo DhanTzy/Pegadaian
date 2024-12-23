@@ -79,14 +79,14 @@ class TransaksiController extends Controller
                     data-nilai_pasar="' . $transaksi->nilai_pasar . '"
                     data-nilai_likuiditas="' . $transaksi->nilai_likuiditas . '"
                     data-foto_jaminan="' . htmlspecialchars($fotoJaminan) . '">
-                Detail
+                <i class="fas fa-info-circle"></i>
             </button>
-            <a href="' . route('admin.transaksi.edit', $transaksi->id) . '" class="btn btn-success btn-sm me-2">Edit</a>
+            <a href="' . route('admin.transaksi.edit', $transaksi->id) . '" class="btn btn-success btn-sm me-2"><i class="fas fa-edit"></i></a>
             <form action="' . route('admin.transaksi.destroy', $transaksi->id) . '" method="POST"
                   onsubmit="return confirm(\'Apakah Anda Yakin Menghapus Data Ini?\')" class="d-inline">
                 ' . csrf_field() . '
                 ' . method_field('DELETE') . '
-                <button class="btn btn-danger btn-sm me-2">Delete</button>
+                <button class="btn btn-danger btn-sm me-2"><i class="fas fa-trash-alt"></i></button>
             </form>
         ';
             })->editColumn('tanggal', function ($transkasi) {
@@ -139,7 +139,7 @@ class TransaksiController extends Controller
         ];
 
         $request->validate($rules, $message);
-        
+
         // Simpan data transaksi
         $transaksi = Transaksi::create($request->only([
             'nama_nasabah',

@@ -54,7 +54,7 @@
                                                     data-id="{{ $pekerjaan->id }}"
                                                     data-posisi="{{ $pekerjaan->posisi_pekerjaan }}" data-bs-toggle="modal"
                                                     data-bs-target="#modalForm">
-                                                    Edit
+                                                    <i class="fas fa-edit"></i>
                                                 </button>
                                                 <form
                                                     action="{{ route('admin.karyawan.pekerjaan.destroy', $pekerjaan->id) }}"
@@ -62,7 +62,7 @@
                                                     @csrf
                                                     @method('DELETE')
                                                     <button type="submit" class="btn btn-danger btn-sm me-2"
-                                                        onclick="return confirm('Yakin ingin menghapus?')">Hapus</button>
+                                                        onclick="return confirm('Yakin ingin menghapus?')"><i class="fas fa-trash-alt"></i></button>
                                                 </form>
                                             </td>
                                         </tr>
