@@ -79,8 +79,10 @@
                 </p>
                 <p class="text-center">atau</p>
                 <div class="icon">
-                    <i class="fa-brands fa-google"></i>
-                    <i class="fa-brands fa-facebook"></i>
+                    <button class="google-btn">
+                        <img src="https://img.icons8.com/color/48/000000/google-logo.png" alt="Google Logo">
+                        <span>Lanjutkan Dengan Google</span>
+                    </button>
                 </div>
             </form>
         </div>
