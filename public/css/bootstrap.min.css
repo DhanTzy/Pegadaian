@@ -11772,3 +11772,36 @@ fieldset:disabled .btn {
 .google-btn:hover {
     background-color: #f1f1f1;
 }
+@media (max-width: 768px) {
+        .boxlogin{
+            display: none;
+        }
+}
+/* Styling untuk input-group */
+.input-groupi {
+    display: flex;
+    align-items: center;
+}
+
+/* Styling untuk input-group-text */
+.input-group-texti {
+    background-color: #f8f9fa;
+    border: 1px solid #ced4da;
+    cursor: pointer;
+    padding: 10px; /* Sesuaikan padding */
+    display: flex;
+    align-items: center; /* Pastikan ikon sejajar vertikal */
+    justify-content: center;
+    border-radius: 5px; /* Opsional, untuk menyamakan radius dengan input */
+}
+
+/* Styling untuk ikon */
+.input-group-text i {
+    font-size: 1rem;
+    color: #6c757d; /* Warna ikon */
+    transition: color 0.3s ease;
+}
+
+.input-group-text:hover i {
+    color: #007bff; /* Warna ikon saat hover */
+}

@@ -21,9 +21,8 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </head>
 
-<body class="px-5">
-    <div class="row">
-        <div class="col-xl-6">
+<body>
+        <div class="container login-con">
             <div class="login-form container row justify-content-end">
                 <br>
                 <img src="{{ asset('img/gadai.png') }}" alt="logo" class="logo" />
@@ -83,7 +82,7 @@
             </div>
         </div>
 
-        <div class="col-xl-6">
+        <div class="container boxlogin">
             <div class="container box position-relative" style="height: 100%;">
                 <img src="{{ asset('img/bgSAN.png') }}" alt="background" class="position-absolute"
                     style="width: 100%; height: 100%;">
@@ -93,7 +92,6 @@
                 </div>
             </div>
         </div>
-    </div>
 
     <script>
         function togglePassword(fieldId) {
