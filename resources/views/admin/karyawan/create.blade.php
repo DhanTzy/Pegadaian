@@ -237,10 +237,10 @@
                         </div>
                     </div>
                 </div>
-                <button type="button" class="btn btn-primary w-20" data-bs-toggle="modal"
-                    data-bs-target="#confirmModal">Tambah Data
+                <button type="button" class="btn btn-primary w-20" style="background-color: #183354;" data-bs-toggle="modal"
+                    data-bs-target="#confirmModal"><i class="bi bi-send"></i> Tambah Data
                 </button>
-                <a href="{{ url('admin/karyawan') }}" class="btn btn-secondary w-20">Kembali</a>
+                <a href="{{ url('admin/karyawan') }}" class="btn btn-secondary w-20"><i class="bi bi-x-lg"></i> Batal</a>
             </form>
         </div>
     </div>

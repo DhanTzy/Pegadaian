@@ -1,10 +1,12 @@
 <?php
 
 namespace App\Http\Controllers\Admin\Nasabah;
+
 use App\Http\Controllers\Controller;
 
 use Illuminate\Http\Request;
 use App\Models\Nasabah;
+use App\Models\Transaksi;
 use Illuminate\Support\Facades\File;
 use Yajra\DataTables\DataTables;
 use Carbon\Carbon;
@@ -20,17 +22,14 @@ class NasabahController extends Controller
     {
         $query = Nasabah::where('status_delete', '1');
 
-        // Pencarian berdasarkan nama lengkap
         if ($request->has('nama_lengkap') && $request->input('nama_lengkap') != '') {
             $query->where('nama_lengkap', 'LIKE', '%' . $request->input('nama_lengkap') . '%');
         }
 
-        // Pencarian berdasarkan nomor identitas
         if ($request->has('nomor_identitas') && $request->input('nomor_identitas') != '') {
             $query->where('nomor_identitas', 'LIKE', '%' . $request->input('nomor_identitas') . '%');
         }
 
-        // Filter berdasarkan rentang tanggal created_at
         if ($request->has('tanggal_daftar') && $request->input('tanggal_daftar') != '') {
             $query->where('created_at', '>=', $request->input('tanggal_daftar'));
         }
@@ -42,26 +41,28 @@ class NasabahController extends Controller
         return DataTables::of($query)
             ->addIndexColumn()
             ->addColumn('action', function ($nasabah) {
+                $transaksi = $nasabah->transaksi()->first();
                 return '
                 <button type="button" class="btn btn-info btn-sm me-2"
                         data-bs-toggle="modal"
                         data-bs-target="#nasabahDetailModal"
-                        data-nomor_identitas="' . $nasabah->nomor_identitas . '"
                         data-nama_lengkap="' . $nasabah->nama_lengkap . '"
+                        data-nomor_identitas="' . $nasabah->nomor_identitas . '"
+                        data-alamat_lengkap="' . $nasabah->alamat_lengkap . '"
+                        data-kelurahan="' . $nasabah->kelurahan . '"
+                        data-kecamatan="' . $nasabah->kecamatan . '"
+                        data-kabupaten="' . $nasabah->kabupaten . '"
+                        data-propinsi="' . $nasabah->propinsi . '"
                         data-tempat_lahir="' . $nasabah->tempat_lahir . '"
                         data-tanggal_lahir="' . Carbon::parse($nasabah->tanggal_lahir)->format('d-m-Y') . '"
-                        data-status_perkawinan="' . $nasabah->status_perkawinan . '"
-                        data-pekerjaan="' . $nasabah->pekerjaan . '"
                         data-telepon="' . $nasabah->telepon . '"
                         data-created_at="' . Carbon::parse($nasabah->created_at)->format('d-m-Y') . '"
-                        data-alamat_lengkap="' . $nasabah->alamat_lengkap . '"
-                        data-kode_pos="' . $nasabah->kode_pos . '"
-                        data-email="' . $nasabah->email . '"
-                        data-nama_orang_tua="' . $nasabah->nama_orang_tua . '"
-                        data-foto_ktp_sim="' . asset('storage/' . $nasabah->foto_ktp_sim) . '">
+                        data-pengajuan_pinjaman="' . ($transaksi ? $transaksi->pengajuan_pinjaman : '') . '"
+                        data-jangka_waktu="' . ($transaksi ? $transaksi->jangka_waktu : '') . '"
+                        data-jenis_jaminan="' . ($transaksi ? $transaksi->jenis_jaminan : '') . '"
+                        data-foto_ktp="' . asset('storage/' . $nasabah->foto_ktp) . '">
                     <i class="fas fa-info-circle"></i>
                 </button>
-                <a href="' . route('admin.nasabah.edit', $nasabah->id) . '" class="btn btn-success btn-sm me-2"><i class="fas fa-edit"></i></a>
                 <form action="' . route('admin.nasabah.destroy', $nasabah->id) . '" method="POST"
                       onsubmit="return confirm(\'Apakah Anda Yakin Menghapus Data Ini?\')" class="d-inline">
                     ' . csrf_field() . '
@@ -82,47 +83,23 @@ class NasabahController extends Controller
     public function store(Request $request)
     {
         $validatedData = $request->validate([
-            'nomor_identitas' => 'required|string|max:16|unique:nasabahs,nomor_identitas',
             'nama_lengkap' => 'required|string|max:255',
+            'nomor_identitas' => 'required|string|max:16|unique:nasabahs,nomor_identitas',
+            'alamat_lengkap' => 'required|string',
+            'kelurahan' => 'required|string|max:100',
+            'kecamatan' => 'required|string|max:100',
+            'kabupaten' => 'required|string|max:100',
+            'propinsi' => 'required|string|max:100',
             'tempat_lahir' => 'required|string|max:100',
             'tanggal_lahir' => 'required|date',
-            'status_perkawinan' => 'required|in:Belum Menikah,Menikah',
-            'alamat_lengkap' => 'required|string',
-            'kode_pos' => 'required|digits:5',
-            'pekerjaan' => 'required|string|max:100',
-            'email' => 'required|email|unique:nasabahs,email',
             'telepon' => 'required|numeric|digits_between:10,13|unique:nasabahs,telepon',
-            'nama_orang_tua' => 'required|string|max:255',
-            'foto_ktp_sim' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
-        ], [
-            'nomor_identitas.required' => 'Nomor identitas wajib diisi.',
-            'nomor_identitas.max' => 'Nomor identitas tidak boleh lebih dari 16 karakter.',
-            'nomor_identitas.unique' => 'Nomor identitas sudah terdaftar. Mohon masukkan nomor indentitas anda dengan benar.',
-            'nama_lengkap.required' => 'Nama lengkap wajib diisi.',
-            'tempat_lahir.required' => 'Tempat lahir lengkap wajib diisi.',
-            'tanggal_lahir.required' => 'Tanggal lahir wajib diisi.',
-            'status_perkawinan.required' => 'Status wajib diisi.',
-            'alamat_lengkap.required' => 'Alamat lengkap wajib diisi.',
-            'kode_pos.digits' => 'Kode pos harus terdiri dari 5 digit.',
-            'kode_pos.required' => 'Kode pos wajib disi.',
-            'pekerjaan.required' => 'Pekerjaan wajib diisi.',
-            'email.required' => 'Email wajib diisi.',
-            'email.unique' => 'Email sudah terdaftar. Mohon masukkan email anda dengan benar.',
-            'telepon.digits_between' => 'Nomor telepon harus antara 10 hingga 13 digit.',
-            'telepon.required' => 'Nomor telepon wajib disi.',
-            'telepon.unique' => 'Telepon sudah terdaftar. Mohon masukkan nomor telepon anda dengan benar.',
-            'nama_orang_tua.required' => 'Nama orang tua wajib disi.',
-            'foto_ktp_sim.required' => 'Foto KTP/SIM wajib diunggah.',
-            'foto_ktp_sim.image' => 'File yang diunggah harus berupa gambar.',
-            'foto_ktp_sim.mimes' => 'Foto harus berformat jpeg, png, jpg, atau gif.',
-            'foto_ktp_sim.max' => 'Ukuran foto tidak boleh lebih dari 2MB.',
+            'foto_ktp' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
-        $path = $request->file('foto_ktp_sim')->store('nasabah/foto', 'public');
+        $path = $request->file('foto_ktp')->store('nasabah/foto', 'public');
 
-        // Simpan ke database
         Nasabah::create(array_merge($validatedData, [
-            'foto_ktp_sim' => $path,
+            'foto_ktp' => $path,
         ]));
 
         return redirect()->route('admin.nasabah')->with('success', 'Nasabah added successfully');
@@ -146,34 +123,29 @@ class NasabahController extends Controller
         $nasabah = Nasabah::findOrFail($id);
 
         $validatedData = $request->validate([
-            'nomor_identitas' => 'required|string|max:16|unique:nasabahs,nomor_identitas,' . $nasabah->id,
             'nama_lengkap' => 'required|string|max:255',
+            'nomor_identitas' => 'required|string|max:16|unique:nasabahs,nomor_identitas,' . $nasabah->id,
+            'alamat_lengkap' => 'required|string',
+            'kelurahan' => 'required|string|max:100',
+            'kecamatan' => 'required|string|max:100',
+            'kabupaten' => 'required|string|max:100',
+            'propinsi' => 'required|string|max:100',
             'tempat_lahir' => 'required|string|max:100',
             'tanggal_lahir' => 'required|date',
-            'status_perkawinan' => 'required|in:Belum Menikah,Menikah',
-            'alamat_lengkap' => 'required|string',
-            'kode_pos' => 'required|digits:5',
-            'pekerjaan' => 'required|string|max:100',
-            'email' => 'required|email|unique:nasabahs,email,' . $nasabah->id,
             'telepon' => 'required|numeric|digits_between:10,13|unique:nasabahs,telepon,' . $nasabah->id,
-            'nama_orang_tua' => 'required|string|max:255',
-            'foto_ktp_sim' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-        ], [
-            'nomor_identitas.unique' => 'Nomor identitas sudah terdaftar. Mohon masukkan nomor indentitas anda dengan benar.',
-            'email.unique' => 'Email sudah terdaftar. Mohon masukkan email anda dengan benar.',
-            'telepon.unique' => 'Telepon sudah terdaftar. Mohon masukkan nomor telepon anda dengan benar.',
+            'foto_ktp' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
 
-        if ($request->hasFile('foto_ktp_sim')) {
-            if ($nasabah->foto_ktp_sim) {
-                $oldFilePath = public_path('storage/' . $nasabah->foto_ktp_sim);
+        if ($request->hasFile('foto_ktp')) {
+            if ($nasabah->foto_ktp) {
+                $oldFilePath = public_path('storage/' . $nasabah->foto_ktp);
                 if (File::exists($oldFilePath)) {
                     File::delete($oldFilePath);
                 }
             }
-            $filePath = $request->file('foto_ktp_sim')->store('nasabah/foto', 'public');
-            $validatedData['foto_ktp_sim'] = $filePath;
+            $filePath = $request->file('foto_ktp')->store('nasabah/foto', 'public');
+            $validatedData['foto_ktp'] = $filePath;
         }
         $nasabah->update($validatedData);
 

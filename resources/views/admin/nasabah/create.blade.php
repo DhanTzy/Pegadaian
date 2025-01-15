@@ -11,7 +11,16 @@
             @csrf
 
             <div class="mb-3">
-                <label class="form-label">Nomor Identitas (KTP)</label>
+                <label class="form-label">Nama Lengkap</label>
+                <input id="nama_lengkap" name="nama_lengkap" type="text" class="form-control"
+                    value="{{ old('nama_lengkap') }}" placeholder="Nama Lengkap Anda" required>
+                @error('nama_lengkap')
+                    <div class="text-danger">{{ $message }}</div>
+                @enderror
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">NIK</label>
                 <input id="nomor_identitas" name="nomor_identitas" type="text" class="form-control"
                     value="{{ old('nomor_identitas') }}" placeholder="Nomor Identitas Anda" required>
                 @error('nomor_identitas')
@@ -20,10 +29,45 @@
             </div>
 
             <div class="mb-3">
-                <label class="form-label">Nama Lengkap</label>
-                <input id="nama_lengkap" name="nama_lengkap" type="text" class="form-control"
-                    value="{{ old('nama_lengkap') }}" placeholder="Nama Lengkap Anda" required>
-                @error('nama_lengkap')
+                <label class="form-label">Alamat Lengkap</label>
+                <textarea name="alamat_lengkap" rows="3" class="form-control" placeholder="Alamat Anda" required>{{ old('alamat_lengkap') }}</textarea>
+                @error('alamat_lengkap')
+                    <div class="text-danger">{{ $message }}</div>
+                @enderror
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Kelurahan</label>
+                <input id="kelurahan" name="kelurahan" type="text" class="form-control" value="{{ old('kelurahan') }}"
+                    placeholder="Kelurahan" required>
+                @error('kelurahan')
+                    <div class="text-danger">{{ $message }}</div>
+                @enderror
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Kecamatan</label>
+                <input id="kecamatan" name="kecamatan" type="text" class="form-control" value="{{ old('kecamatan') }}"
+                    placeholder="kecamatan " required>
+                @error('kecamatan')
+                    <div class="text-danger">{{ $message }}</div>
+                @enderror
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Kabupaten</label>
+                <input id="kabupaten" name="kabupaten" type="text" class="form-control" value="{{ old('kabupaten') }}"
+                    placeholder="kabupaten" required>
+                @error('kabupaten')
+                    <div class="text-danger">{{ $message }}</div>
+                @enderror
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Propinsi</label>
+                <input id="propinsi" name="propinsi" type="text" class="form-control" value="{{ old('propinsi') }}"
+                    placeholder="propinsi" required>
+                @error('propinsi')
                     <div class="text-danger">{{ $message }}</div>
                 @enderror
             </div>
@@ -48,58 +92,6 @@
             </div>
 
             <div class="mb-3">
-                <label class="form-label">Status Perkawinan</label>
-                <div class="input-group">
-                    <select name="status_perkawinan" class="form-select" required>
-                        <option value="" disabled selected>Pilih Status Perkawinan</option>
-                        <option value="Belum Menikah" {{ old('status_perkawinan') == 'Belum Menikah' ? 'selected' : '' }}>
-                            Belum Menikah</option>
-                        <option value="Menikah" {{ old('status_perkawinan') == 'Menikah' ? 'selected' : '' }}>Menikah
-                        </option>
-                    </select>
-
-                </div>
-                @error('status_perkawinan')
-                    <div class="text-danger">{{ $message }}</div>
-                @enderror
-            </div>
-
-            <div class="mb-3">
-                <label class="form-label">Alamat Lengkap</label>
-                <textarea name="alamat_lengkap" rows="3" class="form-control" placeholder="Alamat Anda" required>{{ old('alamat_lengkap') }}</textarea>
-                @error('alamat_lengkap')
-                    <div class="text-danger">{{ $message }}</div>
-                @enderror
-            </div>
-
-            <div class="mb-3">
-                <label class="form-label">Kode Pos</label>
-                <input id="kode_pos" name="kode_pos" type="text" class="form-control" value="{{ old('kode_pos') }}"
-                    placeholder="Kode Pos Anda" required>
-                @error('kode_pos')
-                    <div class="text-danger">{{ $message }}</div>
-                @enderror
-            </div>
-
-            <div class="mb-3">
-                <label class="form-label">Pekerjaan</label>
-                <input id="pekerjaan" name="pekerjaan" type="text" class="form-control" value="{{ old('pekerjaan') }}"
-                    placeholder="Pekerjaan Anda" required>
-                @error('pekerjaan')
-                    <div class="text-danger">{{ $message }}</div>
-                @enderror
-            </div>
-
-            <div class="mb-3">
-                <label class="form-label">Email</label>
-                <input id="email" name="email" type="email" class="form-control" value="{{ old('email') }}"
-                    placeholder="Email Anda" required>
-                @error('email')
-                    <div class="text-danger">{{ $message }}</div>
-                @enderror
-            </div>
-
-            <div class="mb-3">
                 <label class="form-label">Telepon</label>
                 <input type="text" name="telepon" class="form-control" value="{{ old('telepon') }}"
                     placeholder="Nomor Telepon Anda" required>
@@ -109,19 +101,10 @@
             </div>
 
             <div class="mb-3">
-                <label class="form-label">Nama Orang Tua (Ayah/Ibu)</label>
-                <input id="nama_orang_tua" name="nama_orang_tua" type="text" class="form-control"
-                    value="{{ old('nama_orang_tua') }}" placeholder="Nama Orang Tua Anda" required>
-                @error('nama_orang_tua')
-                    <div class="text-danger">{{ $message }}</div>
-                @enderror
-            </div>
-
-            <div class="mb-3">
-                <label class="form-label">Foto KTP/SIM</label>
-                <input type="file" name="foto_ktp_sim" class="form-control" accept="image/*" required
+                <label class="form-label">Foto KTP </label>
+                <input type="file" name="foto_ktp" class="form-control" accept="image/*" required
                     onchange="previewImage(event)">
-                @error('foto_ktp_sim')
+                @error('foto_ktp')
                     <div class="text-danger">{{ $message }}</div>
                 @enderror
                 <img id="imagePreview" src="#" alt="Preview Foto"
@@ -148,10 +131,10 @@
                     </div>
                 </div>
             </div>
-            <button type="button" class="btn btn-primary w-20" data-bs-toggle="modal"
-                data-bs-target="#confirmModal">Tambah Data
+            <button type="button" class="btn btn-primary w-20" style="background-color: #183354;" data-bs-toggle="modal"
+                data-bs-target="#confirmModal"><i class="bi bi-send"></i> Tambah Data
             </button>
-            <a href="{{ url('admin/nasabah') }}" class="btn btn-secondary w-20">Kembali</a>
+            <a href="{{ url('admin/nasabah') }}" class="btn btn-danger w-20"><i class="bi bi-x-lg"></i> Batal</a>
         </form>
     </div>
 </div>

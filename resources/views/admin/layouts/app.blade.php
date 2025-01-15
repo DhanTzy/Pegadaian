@@ -76,40 +76,112 @@
                 <nav class="mt-5">
                     <ul class="nav sidebar-menu flex-column" data-lte-toggle="treeview" role="menu"
                         data-accordion="false">
-                        <li class="nav-item"> <a
+                        {{-- <li class="nav-item"> <a
                                 class="nav-link {{ Route::is('admin.home') ? 'active bg-primary' : '' }}"
                                 href="{{ route('admin.home') }}"> <i class="nav-icon bi bi-speedometer"></i>
                                 <p>
                                     Dashboard
                                 </p>
                             </a>
-                        </li>
-                        <li class="nav-item"> <a
-                                class="nav-link {{ Route::is('admin.transaksi', 'admin.transaksi.create', 'admin.transaksi.edit') ? 'active bg-primary' : '' }}"
-                                href="{{ route('admin.transaksi') }}"><i class="nav-icon bi bi-palette"></i>
-                                <p>Transaksi</p>
-                            </a>
-                        </li>
-                        <li class="nav-item {{ Route::is('admin.nasabah', 'admin.nasabah.create', 'admin.nasabah.edit',
-                        'admin.karyawan', 'admin.karyawan.create', 'admin.karyawan.edit',
-                        'admin.transaksi.pajak.index', 'admin.karyawan.pekerjaan.index') ? 'menu-open' : '' }}">
-                            <a href="#" class="nav-link {{ Route::is('admin.nasabah', 'admin.nasabah.create', 'admin.nasabah.edit',
-                            'admin.karyawan', 'admin.karyawan.create', 'admin.karyawan.edit',
-                            'admin.transaksi.pajak.index', 'admin.karyawan.pekerjaan.index') ? 'active' : '' }}">
-                                <i class="nav-icon bi bi-table"></i>
+                        </li> --}}
+
+                        @php
+                            $isTransaksi = Route::is(
+                                'admin.transaksi',
+                                'admin.transaksi.create',
+                                'admin.transaksi.edit',
+                            );
+                            $isNasabah = Route::is('admin.nasabah', 'admin.nasabah.create', 'admin.nasabah.edit');
+                        @endphp
+
+                        <li class="nav-item {{ $isTransaksi || $isNasabah ? 'menu-open' : '' }}">
+                            <a href="#" class="nav-link {{ $isTransaksi || $isNasabah ? 'active' : '' }}">
+                                <i class="bi bi-person-fill-check"></i>
                                 <p>
-                                    Data Master
+                                    Customer Service
+                                    <i class="nav-arrow bi bi-chevron-right"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item {{ $isNasabah ? 'menu-open' : '' }}">
+                                    <a href="#" class="nav-link {{ $isNasabah ? 'active' : '' }}">
+                                        <i class="nav-icon bi bi-table"></i>
+                                        <p>
+                                            Pendaftaran
+                                            <i class="nav-arrow bi bi-chevron-right"></i>
+                                        </p>
+                                    </a>
+                                    <ul class="nav nav-treeview">
+                                        <li class="nav-item">
+                                            <a class="nav-link {{ $isNasabah ? 'active bg-primary' : '' }}"
+                                                href="{{ route('admin.nasabah') }}">
+                                                <i class="nav-icon bi bi-circle"></i>
+                                                <p>Nasabah</p>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link {{ $isTransaksi ? 'active bg-primary' : '' }}"
+                                        href="{{ route('admin.transaksi') }}">
+                                        <i class="bi bi-wallet"></i>
+                                        <p>Transaksi Pengajuan</p>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+
+                        <li class="nav-item {{ Route::is('admin.appraisal.index') ? 'menu-open' : '' }}">
+                            <a href="#"
+                                class="nav-link {{ Route::is('admin.appraisal.index') ? 'active' : '' }}">
+                                <i class="bi bi-person-fill-exclamation"></i>
+                                <p>
+                                    Appraisal
                                     <i class="nav-arrow bi bi-chevron-right"></i>
                                 </p>
                             </a>
                             <ul class="nav nav-treeview">
                                 <li class="nav-item">
-                                    <a class="nav-link {{ Route::is('admin.nasabah', 'admin.nasabah.create', 'admin.nasabah.edit') ? 'active bg-primary' : '' }}"
-                                        href="{{ route('admin.nasabah') }}">
+                                    <a class="nav-link {{ Route::is('admin.appraisal.index') ? 'active bg-primary' : '' }}"
+                                        href="{{ route('admin.appraisal.index') }}">
                                         <i class="nav-icon bi bi-circle"></i>
-                                        <p>Nasabah</p>
+                                        <p>Penilaian</p>
                                     </a>
                                 </li>
+                            </ul>
+                        </li>
+
+                        <li class="nav-item {{ Route::is('admin.approval.index') ? 'menu-open' : '' }}">
+                            <a href="#"
+                                class="nav-link {{ Route::is('admin.approval.index') ? 'active' : '' }}">
+                                <i class="bi bi-person-fill-check"></i>
+                                <p>
+                                    Approval
+                                    <i class="nav-arrow bi bi-chevron-right"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a class="nav-link {{ Route::is('admin.approval.index') ? 'active bg-primary' : '' }}"
+                                        href="{{ route('admin.approval.index') }}">
+                                        <i class="nav-icon bi bi-circle"></i>
+                                        <p>Persetujuan</p>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+
+                        <li
+                            class="nav-item {{ Route::is('admin.karyawan', 'admin.karyawan.create', 'admin.karyawan.edit') ? 'menu-open' : '' }}">
+                            <a href="#"
+                                class="nav-link {{ Route::is('admin.karyawan', 'admin.karyawan.create', 'admin.karyawan.edit') ? 'active' : '' }}">
+                                <i class="bi bi-gear"></i>
+                                <p>
+                                    Pengaturan
+                                    <i class="nav-arrow bi bi-chevron-right"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
                                 <li class="nav-item">
                                     <a class="nav-link {{ Route::is('admin.karyawan', 'admin.karyawan.create', 'admin.karyawan.edit') ? 'active bg-primary' : '' }}"
                                         href="{{ route('admin.karyawan') }}">
@@ -117,23 +189,8 @@
                                         <p>Karyawan</p>
                                     </a>
                                 </li>
-                                <li class="nav-item">
-                                    <a class="nav-link {{ Route::is('admin.transaksi.pajak.index') ? 'active bg-primary' : '' }}"
-                                        href="{{ route('admin.transaksi.pajak.index') }}">
-                                        <i class="nav-icon bi bi-circle"></i>
-                                        <p>Daftar Pajak</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link {{ Route::is('admin.karyawan.pekerjaan.index') ? 'active bg-primary' : '' }}"
-                                        href="{{ route('admin.karyawan.pekerjaan.index') }}">
-                                        <i class="nav-icon bi bi-circle"></i>
-                                        <p>Daftar Pekerjaan</p>
-                                    </a>
-                                </li>
                             </ul>
                         </li>
-
                     </ul> <!--end::Sidebar Menu-->
                 </nav>
             </div> <!--end::Sidebar Wrapper-->
@@ -206,7 +263,6 @@
     </script> <!--end::OverlayScrollbars Configure--> <!-- OPTIONAL SCRIPTS --> <!-- sortablejs -->
     <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script> <!-- sortablejs -->
     <script>
-
         const connectedSortables =
             document.querySelectorAll(".connectedSortable");
         connectedSortables.forEach((connectedSortable) => {

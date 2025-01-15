@@ -12,9 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('transaksi', function (Blueprint $table) {
-            Schema::table('transaksi', function (Blueprint $table) {
-                $table->string('per_bulan')->after('jumlah_bayar')->nullable();
-            });
+            $table->unsignedBigInteger('nasabah_id')->nullable()->after('id');
+            $table->foreign('nasabah_id')->references('id')->on('nasabahs')->onDelete('cascade');
         });
     }
 

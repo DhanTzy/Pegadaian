@@ -1,4 +1,4 @@
-@extends('admin.layouts.app')
+{{-- @extends('admin.layouts.app')
 
 @section('title', 'Create Transaksi')
 
@@ -9,69 +9,18 @@
             <form action="{{ route('admin.transaksi.store') }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <div class="mb-3">
-                    <label>Nama Nasabah:</label>
-                    <input type="text" name="nama_nasabah" class="form-control" value="{{ old('nama_nasabah') }}" required>
-                    @error('nama_nasabah')
-                        <div class="text-danger">{{ $message }}</div>
-                    @enderror
-                </div>
-
-                <div class="mb-3">
-                    <label>Tanggal:</label>
-                    <input type="date" name="tanggal" class="form-control" value="{{ old('tanggal') }}" required>
-                    @error('tanggal')
-                        <div class="text-danger">{{ $message }}</div>
-                    @enderror
-                </div>
-
-                <div class="mb-3">
-                    <label>Foto Jaminan:</label>
-                    <input type="file" name="foto_jaminan[]" class="form-control" multiple required accept="image/*"
-                        onchange="previewImages(event)">
-                    @error('foto_jaminan')
-                        <div class="text-danger">{{ $message }}</div>
-                    @enderror
-                    <div id="image-preview" class="mt-3"></div>
-                </div>
-
-                <div class="mb-3">
-                    <label>Jenis Agunan :</label>
-                    <input type="text" name="jenis_agunan" class="form-control" value="{{ old('jenis_agunan') }}"
-                        required>
-                    @error('jenis_agunan')
-                        <div class="text-danger">{{ $message }}</div>
-                    @enderror
-                </div>
-
-                <div class="mb-3">
-                    <label>Nilai Pasar Agunan :</label>
-                    <input type="text" name="nilai_pasar" class="form-control" value="{{ old('nilai_pasar') }}" required
-                        oninput="calculateNilaiLikuiditas()">
-                    @error('nilai_pasar')
-                        <div class="text-danger">{{ $message }}</div>
-                    @enderror
-                </div>
-
-                <div class="mb-3">
-                    <label>Nilai Likuiditas Agunan :</label>
-                    <input type="text" name="nilai_likuiditas" class="form-control"
-                        value="{{ old('nilai_likuiditas') }}" required readonly>
-                    @error('nilai_likuiditas')
-                        <div class="text-danger">{{ $message }}</div>
-                    @enderror
-                </div>
-
-                <div class="mb-3">
-                    <label>Catatan Barang :</label>
-                    <textarea type="text" name="catatan" class="form-control" required>{{ old('catatan') }}</textarea>
-                    @error('catatan')
-                        <div class="text-danger">{{ $message }}</div>
-                    @enderror
+                    <label for="nasabah_id">Pilih Nasabah</label>
+                    <select name="nasabah_id" id="nasabah_id" class="form-select" required>
+                        <option value="">-- Pilih Nasabah --</option>
+                        @foreach($nasabah as $n)
+                            <option value="{{ $n->id }}">{{ $n->nama_lengkap }}</option>
+                        @endforeach
+                    </select>
                 </div>
 
                 <div class="mb-3">
                     <label>Pengajuan Pinjaman:</label>
-                    <input type="text" name="pengajuan_pinjaman" class="form-control"
+                    <input type="text" name="pengajuan_pinjaman" id="pengajuan_pinjaman" class="form-control"
                         value="{{ old('pengajuan_pinjaman') }}" required>
                     @error('pengajuan_pinjaman')
                         <div class="text-danger">{{ $message }}</div>
@@ -79,64 +28,21 @@
                 </div>
 
                 <div class="mb-3">
-                    <label for="pajak_id">Bulan</label>
-                    <select name="pajak_id" id="pajak_id" class="form-control" onchange="updateBunga()">
-                        <option value="">-- Pilih Bulan --</option>
-                        @foreach ($pajaks as $pajak)
-                            <option value="{{ $pajak->id }}" data-bunga="{{ $pajak->bunga }}" data-bulan="{{ $pajak->bulan }}">
-                                {{ $pajak->bulan }}
-                            </option>
-                        @endforeach
-                    </select>
-                    @error('pajak_id')
+                    <label>Jangka Waktu:</label>
+                    <input type="text" name="jangka_waktu" class="form-control" value="{{ old('jangka_waktu') }}"
+                        required>
+                    @error('jangka_waktu')
                         <div class="text-danger">{{ $message }}</div>
                     @enderror
                 </div>
 
                 <div class="mb-3">
-                    <label for="bunga">Bunga</label>
-                    <input type="text" id="bunga" class="form-control" placeholder="Bunga" readonly>
-                </div>
-
-                <div class="mb-3">
-                    <label for="jumlah_bayar">Jumlah Bayar</label>
-                    <input type="text" name="jumlah_bayar" id="jumlah_bayar" class="form-control" readonly>
-                </div>
-
-                <div class="mb-3">
-                    <label for="per_bulan">Per Bulan</label>
-                    <input type="text" id="per_bulan" class="form-control" placeholder="Per Bulan" readonly>
-                </div>
-
-                <div class="mb-3">
-                    <label>Metode Pencairan:</label>
-                    <select name="metode_pencairan" class="form-select" required onchange="toggleRekeningFields()">
-                        <option value="" disabled selected>-- Pilih Metode --</option>
-                        <option value="Cash" {{ old('metode_pencairan') == 'Cash' ? 'selected' : '' }}>Cash</option>
-                        <option value="Transfer" {{ old('metode_pencairan') == 'Transfer' ? 'selected' : '' }}>Transfer
-                        </option>
-                    </select>
-                    @error('metode_pencairan')
+                    <label>Jenis Jaminan:</label>
+                    <input type="text" name="jenis_jaminan" class="form-control" value="{{ old('jenis_jaminan') }}"
+                        required>
+                    @error('jenis_jaminan')
                         <div class="text-danger">{{ $message }}</div>
                     @enderror
-                </div>
-
-                <div id="rekeningFields" style="display: none;">
-                    <div class="mb-3">
-                        <label>Nomor Rekening:</label>
-                        <input type="text" name="no_rekening" class="form-control" value="{{ old('no_rekening') }}">
-                        @error('no_rekening')
-                            <div class="text-danger">{{ $message }}</div>
-                        @enderror
-                    </div>
-
-                    <div class="mb-3">
-                        <label>Bank:</label>
-                        <input type="text" name="bank" class="form-control" value="{{ old('bank') }}">
-                        @error('bank')
-                            <div class="text-danger">{{ $message }}</div>
-                        @enderror
-                    </div>
                 </div>
 
                 <div class="modal fade" id="confirmModal" tabindex="-1" aria-labelledby="confirmModalLabel"
@@ -172,130 +78,26 @@
             document.querySelector('form').submit();
         });
 
-        // Input Pilih Bulan Otomatis Bunga Keisi %
-        const pajak = @json($pajaks);
-
-        function updateBunga() {
-            const selected = document.querySelector('#pajak_id');
-            const selectedOption = selected.options[selected.selectedIndex];
-
-            // Ambil bunga dan bulan dari atribut data pada option
-            const bunga = selectedOption.getAttribute('data-bunga');
-            const bulan = selectedOption.getAttribute('data-bulan');
-            const bungaPersen = bunga ? parseFloat(bunga) / 100 : 0;
-            const jumlahBulan = bulan ? parseInt(bulan) : 0;
-
-            // Menampilkan bunga pada input
-            document.querySelector('#bunga').value = bunga ? `${bunga}` : '';
-
-            // Menghitung jumlah bayar berdasarkan nilai pinjaman yang dibatasi
-            const pengajuanPinjamanInput = document.querySelector('input[name="pengajuan_pinjaman"]');
-            const cleanedPinjaman = pengajuanPinjamanInput.value.replace(/[^0-9,-]+/g, '');
-            let jumlahPinjaman = parseFloat(cleanedPinjaman) || 0;
-
-            // Ambil nilai likuiditas
-            const nilaiLikuiditasInput = document.querySelector('input[name="nilai_likuiditas"]').value;
-            const cleanedLikuiditas = nilaiLikuiditasInput.replace(/[^0-9,-]+/g, '');
-            const nilaiLikuiditas = parseFloat(cleanedLikuiditas) || 0;
-
-            // Batasi jumlah pinjaman ke nilai likuiditas
-            if (jumlahPinjaman > nilaiLikuiditas) {
-                jumlahPinjaman = nilaiLikuiditas;
-                pengajuanPinjamanInput.value = formatRupiah(jumlahPinjaman.toString(), 'Rp');
-            }
-
-            // Menghitung jumlah bayar
-            const jumlahBayar = jumlahPinjaman * (1 + bungaPersen);
-            const roundedJumlahBayar = Math.round(jumlahBayar);
-            document.querySelector('#jumlah_bayar').value = formatRupiah(roundedJumlahBayar.toString(), 'Rp');
-
-            // Menghitung per bulan
-            let bayarPerBulan = jumlahBulan > 0 ? jumlahBayar / jumlahBulan : 0;
-
-            // Pembulatan ke ribuan terdekat
-            bayarPerBulan = Math.round(bayarPerBulan / 1000) * 1000;
-
-            // Menampilkan per bulan
-            document.querySelector('#per_bulan').value = bayarPerBulan ? formatRupiah(bayarPerBulan.toFixed(0), 'Rp') : '';
-        }
-        document.querySelector('#pajak_id').addEventListener('change', updateBunga);
-        document.querySelector('input[name="pengajuan_pinjaman"]').addEventListener('input', updateBunga);
-
-        // Metode Pencairan : Cash > Transfer ( No.Rekening, Bank )
-        document.addEventListener('DOMContentLoaded', function() {
-            const metodePencairan = document.querySelector('select[name="metode_pencairan"]').value;
-            toggleRekeningFields();
-        });
-
-        function toggleRekeningFields() {
-            const metodePencairan = document.querySelector('select[name="metode_pencairan"]').value;
-            const rekeningFields = document.getElementById('rekeningFields');
-            const noRekeningInput = document.querySelector('input[name="no_rekening"]');
-            const bankInput = document.querySelector('input[name="bank"]');
-
-            if (metodePencairan === 'Transfer') {
-                rekeningFields.style.display = 'block';
-                noRekeningInput.setAttribute('required', 'required');
-                bankInput.setAttribute('required', 'required');
-            } else {
-                rekeningFields.style.display = 'none';
-                noRekeningInput.removeAttribute('required');
-                bankInput.removeAttribute('required');
-            }
-        }
-
         // Fungsi untuk memformat angka menjadi format Rupiah
         function formatRupiah(angka, prefix) {
-            if (!angka) return ''; // Jika angka kosong, balik dek string kosong
-            const numberString = angka.replace(/[^,\d]/g, '').toString();
-            const split = numberString.split(',');
-            const sisa = split[0].length % 3;
-            let rupiah = split[0].substr(0, sisa); // Ambil bagian awal angka
+            var number_string = angka.replace(/[^,\d]/g, '').toString(),
+                split = number_string.split(','),
+                sisa = split[0].length % 3,
+                rupiah = split[0].substr(0, sisa),
+                ribuan = split[0].substr(sisa).match(/\d{3}/gi);
 
-            const ribuan = split[0].substr(sisa).match(/\d{3}/g); // Ambil kelompok ribuan
             if (ribuan) {
-                const separator = sisa ? '.' : ''; // Tambah titik jika ada sisa
-                rupiah += separator + ribuan.join('.'); // Gabung semua kelompok ribuan
+                separator = sisa ? '.' : '';
+                rupiah += separator + ribuan.join('.');
             }
 
-            rupiah = split[1] !== undefined ? rupiah + ',' + split[1] : rupiah; // Tambahkan desimal jika ada
-            return prefix ? prefix + ' ' + rupiah : rupiah;
+            rupiah = split[1] != undefined ? rupiah + ',' + split[1] : rupiah;
+            return prefix == undefined ? rupiah : (rupiah ? 'Rp ' + rupiah : '');
         }
-        document.querySelectorAll('input[name="pengajuan_pinjaman"], input[name="nilai_pasar"]').forEach(input => {
-            input.addEventListener('input', function() {
-                const value = this.value.replace(/\./g, ''); // Hapus titik sebelumnya
-                this.value = value ? formatRupiah(value, 'Rp') : ''; // Format hanya jika ada nilai
-            });
-        });
 
-        // Nilai Likuiditas Dari Hasil Menginput Nilai Pasar
-        function calculateNilaiLikuiditas() {
-            const nilaiPasarInput = document.querySelector('input[name="nilai_pasar"]');
-            const nilaiLikuiditasInput = document.querySelector('input[name="nilai_likuiditas"]');
-
-            if (nilaiPasarInput.value) {
-                const nilaiPasar = parseFloat(nilaiPasarInput.value.replace(/[^\d]/g, '')) || 0;
-                const nilaiLikuiditas = nilaiPasar * 0.7; // Kalkulasi 70%
-                nilaiLikuiditasInput.value = formatRupiah(nilaiLikuiditas.toFixed(0), 'Rp');
-            } else {
-                nilaiLikuiditasInput.value = ''; // Kosongkan jika tidak ada nilai pasar
-            }
-        }
-        document.querySelector('input[name="pengajuan_pinjaman"]').addEventListener('input', function(e) {
-            const pengajuanPinjamanInput = e.target;
-            const nilaiLikuiditasInput = document.querySelector('input[name="nilai_likuiditas"]');
-
-            // Ambil nilai likuiditas
-            const nilaiLikuiditas = parseFloat(nilaiLikuiditasInput.value.replace(/[^\d]/g, '')) || 0;
-
-            // Ambil nilai input pengajuan pinjaman
-            let pengajuanPinjaman = parseFloat(pengajuanPinjamanInput.value.replace(/[^\d]/g, '')) || 0;
-
-            // Jika nilai pengajuan melebihi nilai likuiditas
-            if (pengajuanPinjaman > nilaiLikuiditas) {
-                pengajuanPinjaman = nilaiLikuiditas; // Set ke nilai maksimum (nilai likuiditas)
-                pengajuanPinjamanInput.value = formatRupiah(pengajuanPinjaman.toFixed(0), 'Rp'); // Format ulang ke Rupiah
-            }
+        // Event listener untuk memformat input pengajuan pinjaman
+        document.getElementById('pengajuan_pinjaman').addEventListener('keyup', function(e) {
+            this.value = formatRupiah(this.value, 'Rp ');
         });
 
         // Preview Foto Jaminan
@@ -321,4 +123,4 @@
             }
         }
     </script>
-@endsection
+@endsection --}}

@@ -16,11 +16,12 @@
             </div>
             <div class="app-content">
                 <div class="card mb-4">
-                    <div class="card-header">
-                        <h3 class="card-title">Bordered Table</h3>
+                    <div class="card-header" style="display: flex; justify-content: center; align-items: center;">
+                        <p id="current-info" style="margin: 0; font-size: 16px;"></p>
                     </div>
                     <div class="card-body">
-                        <a href="{{ route('admin.karyawan.create') }}" class="btn btn-primary float-left mb-2">Input Data
+                        <a href="{{ route('admin.karyawan.create') }}" class="btn btn-primary float-left mb-3"
+                            style="background-color : #0095FF;"><i class="bi bi-plus-lg"></i> Input Data
                             Karyawan</a>
                         @if (Session::has('success'))
                             <div class="alert alert-success" role="alert">
@@ -44,7 +45,8 @@
 
                                 <div class="me-2">
                                     <label for="pekerjaanFilter" class="form-label mb-0">Pekerjaan :</label>
-                                    <select id="pekerjaanFilter" name="pekerjaan_id" class="form-select form-select-sm me-2" style="width: auto;">
+                                    <select id="pekerjaanFilter" name="pekerjaan_id" class="form-select form-select-sm me-2"
+                                        style="width: auto;">
                                         <option value="">Pilih Pekerjaan</option>
                                         @foreach ($pekerjaans as $pekerjaan)
                                             <option value="{{ $pekerjaan->id }}"
@@ -142,6 +144,27 @@
     <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
 
     <script>
+        function updateTime() {
+            const now = new Date();
+            const dayString = now.toLocaleDateString('id-ID', {
+                weekday: 'long'
+            });
+            const dateString = now.toLocaleDateString('id-ID', {
+                day: '2-digit',
+                month: '2-digit',
+                year: 'numeric'
+            });
+            const timeString = now.toLocaleTimeString('id-ID', {
+                hour: '2-digit',
+                minute: '2-digit'
+            });
+            const fullString = `${dayString}, ${dateString}, ${timeString}`;
+
+            document.getElementById('current-info').innerText = fullString;
+        }
+        setInterval(updateTime, 1000);
+        updateTime();
+
         $(document).ready(function() {
             var table = $('#karyawanTable').DataTable({
                 processing: true,
@@ -156,15 +179,39 @@
                         d.tanggal_akhir = $('#tanggalAkhirFilter').val();
                     }
                 },
-                columns: [
-                    { data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: false, searchable: false },
-                    { data: 'nip', name: 'nip' },
-                    { data: 'no_identitas', name: 'no_identitas' },
-                    { data: 'nama_lengkap', name: 'nama_lengkap' },
-                    { data: 'posisi_pekerjaan'},
-                    { data: 'no_telepon', name: 'no_telepon' },
-                    { data: 'email', name: 'email' },
-                    { data: 'created_at', name: 'created_at', render: function(data, type, row) {
+                columns: [{
+                        data: 'DT_RowIndex',
+                        name: 'DT_RowIndex',
+                        orderable: false,
+                        searchable: false
+                    },
+                    {
+                        data: 'nip',
+                        name: 'nip'
+                    },
+                    {
+                        data: 'no_identitas',
+                        name: 'no_identitas'
+                    },
+                    {
+                        data: 'nama_lengkap',
+                        name: 'nama_lengkap'
+                    },
+                    {
+                        data: 'posisi_pekerjaan'
+                    },
+                    {
+                        data: 'no_telepon',
+                        name: 'no_telepon'
+                    },
+                    {
+                        data: 'email',
+                        name: 'email'
+                    },
+                    {
+                        data: 'created_at',
+                        name: 'created_at',
+                        render: function(data, type, row) {
                             var date = new Date(data);
                             return date.toLocaleDateString('id-ID', {
                                 day: '2-digit',
@@ -173,7 +220,12 @@
                             });
                         }
                     },
-                    { data: 'action', name: 'action', orderable: false, searchable: false },
+                    {
+                        data: 'action',
+                        name: 'action',
+                        orderable: false,
+                        searchable: false
+                    },
                 ],
             });
 

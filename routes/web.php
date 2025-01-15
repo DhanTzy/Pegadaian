@@ -9,7 +9,8 @@ use App\Http\Controllers\Admin\Nasabah\NasabahController;
 use App\Http\Controllers\Admin\Karyawan\KaryawanController;
 use App\Http\Controllers\Admin\Karyawan\PekerjaanController;
 use App\Http\Controllers\Admin\Transaksi\TransaksiController;
-use App\Http\Controllers\Admin\Transaksi\PajakController;
+use App\Http\Controllers\Admin\Appraisal\AppraisalController;
+use App\Http\Controllers\Admin\Approval\ApprovalController;
 use App\Http\Controllers\User\UserController;
 use App\Http\Controllers\User\Profile\UserProfileController;
 use App\Models\Karyawan;
@@ -46,27 +47,7 @@ Route::controller(AuthController::class)->group(function () {
     Route::get('logout', 'logout')->middleware('auth')->name('logout');
 });
 
-//Normal Users Routes List
-Route::middleware(['auth', 'user-access:user'])->group(function () {
-    Route::get('/home', [HomeController::class, 'index'])->name('home');
 
-    // User Profil
-    Route::get('/user/profile', [UserProfileController::class, 'show'])->name('user.profile');
-    Route::put('/user/profile', [UserProfileController::class, 'update'])->name('user.profile.update');
-
-
-    // Gadai Emas
-    Route::get('/gadaiemas', [UserController::class, 'gadaiemas'])->name('gadaiemas');
-
-    // History
-    Route::get('/history', [UserController::class, 'history'])->name('history');
-
-    // Cabang
-    Route::get('/cabang', [UserController::class, 'cabang'])->name('cabang');
-
-    // Membership
-    Route::get('/membership', [UserController::class, 'membership'])->name('membership');
-});
 
 //Admin Routes List
 Route::middleware(['auth', 'user-access:admin'])->group(function () {
@@ -74,23 +55,37 @@ Route::middleware(['auth', 'user-access:admin'])->group(function () {
     // Dashboard
     Route::get('/admin/home', [DashboardController::class, 'adminHome'])->name('admin.home');
 
+    // Nasabah
+    Route::get('/admin/nasabah', [NasabahController::class, 'index'])->name('admin.nasabah');
+    Route::get('/nasabah', [NasabahController::class, 'index'])->name('admin.nasabah.index');
+    Route::get('/admin/nasabah/create', [NasabahController::class, 'create'])->name('admin.nasabah.create');
+    Route::post('/admin/nasabah/store', [NasabahController::class, 'store'])->name('admin.nasabah.store');
+    Route::delete('/admin/nasabah/destroy/{id}', [NasabahController::class, 'destroy'])->name('admin.nasabah.destroy');
+    Route::get('/admin/nasabah/data', [NasabahController::class, 'getData'])->name('admin.nasabah.data');
+
     // Transaksi
     Route::get('/admin/transaksi', [TransaksiController::class, 'index'])->name('admin.transaksi');
     Route::get('/transaksi', [TransaksiController::class, 'index'])->name('admin.transaksi.index');
     Route::get('/admin/transaksi/create', [TransaksiController::class, 'create'])->name('admin.transaksi.create');
     Route::post('/admin/transaksi', [TransaksiController::class, 'store'])->name('admin.transaksi.store');
-    Route::get('/admin/transaksi/{id}/edit', [TransaksiController::class, 'edit'])->name('admin.transaksi.edit');
-    Route::put('/admin/transaksi/{id}', [TransaksiController::class, 'update'])->name('admin.transaksi.update');
     Route::delete('/admin/transaksi/{id}', [TransaksiController::class, 'destroy'])->name('admin.transaksi.destroy');
     Route::get('/admin/transaksi/data', [TransaksiController::class, 'getData'])->name('admin.transaksi.data');
 
-    // Pajak
-    Route::get('/admin/transaksi/pajak', [PajakController::class, 'index'])->name('admin.transaksi.pajak.index');
-    Route::get('/admin/transaksi/pajak/create', [PajakController::class, 'create'])->name('admin.transaksi.pajak.create');
-    Route::post('/admin/transaksi/pajak', [PajakController::class, 'store'])->name('admin.transaksi.pajak.store');
-    Route::get('/admin/transaksi/pajak/{id}/edit', [PajakController::class, 'edit'])->name('admin.transaksi.pajak.edit');
-    Route::put('/admin/transaksi/pajak/{id}', [PajakController::class, 'update'])->name('admin.transaksi.pajak.update');
-    Route::delete('/admin/transaksi/pajak/{id}', [PajakController::class, 'destroy'])->name('admin.transaksi.pajak.destroy');
+    // Appraisal Routes
+    Route::prefix('admin/appraisal')->name('admin.appraisal.')->group(function () {
+        Route::get('/', [AppraisalController::class, 'index'])->name('index');
+        Route::get('/data', [AppraisalController::class, 'getData'])->name('data');
+        Route::get('/{id}/edit', [AppraisalController::class, 'edit'])->name('edit');
+        Route::put('/{id}', [AppraisalController::class, 'update'])->name('update');
+    });
+
+    // Approval Routes
+    Route::prefix('admin/approval')->name('admin.approval.')->group(function () {
+        Route::get('/', [ApprovalController::class, 'index'])->name('index');
+        Route::get('/data', [ApprovalController::class, 'getData'])->name('data');
+        Route::get('/{id}/edit', [ApprovalController::class, 'edit'])->name('edit');
+        Route::put('/{id}', [ApprovalController::class, 'update'])->name('update');
+    });
 
     Route::get('auth/password', function () {
         return view('auth.password');
@@ -102,16 +97,6 @@ Route::middleware(['auth', 'user-access:admin'])->group(function () {
     // Profile
     Route::get('/admin/profile', [AdminProfileController::class, 'adminProfile'])->name('admin.profile');
     Route::put('/admin/profile', [AdminProfileController::class, 'updateProfile'])->name('admin.profile.update');
-
-    // Nasabah
-    Route::get('/admin/nasabah', [NasabahController::class, 'index'])->name('admin.nasabah');
-    Route::get('/nasabah', [NasabahController::class, 'index'])->name('admin.nasabah.index');
-    Route::get('/admin/nasabah/create', [NasabahController::class, 'create'])->name('admin.nasabah.create');
-    Route::post('/admin/nasabah/store', [NasabahController::class, 'store'])->name('admin.nasabah.store');
-    Route::get('/admin/nasabah/edit/{id}', [NasabahController::class, 'edit'])->name('admin.nasabah.edit');
-    Route::put('/admin/nasabah/edit/{id}', [NasabahController::class, 'update'])->name('admin.nasabah.update');
-    Route::delete('/admin/nasabah/destroy/{id}', [NasabahController::class, 'destroy'])->name('admin.nasabah.destroy');
-    Route::get('/admin/nasabah/data', [NasabahController::class, 'getData'])->name('admin.nasabah.data');
 
     // Karyawan
     Route::get('/admin/karyawan', [KaryawanController::class, 'index'])->name('admin.karyawan');
@@ -131,3 +116,34 @@ Route::middleware(['auth', 'user-access:admin'])->group(function () {
     Route::put('/admin/karyawan/pekerjaan/{id}', [pekerjaanController::class, 'update'])->name('admin.karyawan.pekerjaan.update');
     Route::delete('/admin/karyawan/pekerjaan/{id}', [pekerjaanController::class, 'destroy'])->name('admin.karyawan.pekerjaan.destroy');
 });
+
+// //Normal Users Routes List
+// Route::middleware(['auth', 'user-access:user'])->group(function () {
+//     Route::get('/home', [HomeController::class, 'index'])->name('home');
+
+//     // User Profil
+//     Route::get('/user/profile', [UserProfileController::class, 'show'])->name('user.profile');
+//     Route::put('/user/profile', [UserProfileController::class, 'update'])->name('user.profile.update');
+
+
+//     // Gadai Emas
+//     Route::get('/gadaiemas', [UserController::class, 'gadaiemas'])->name('gadaiemas');
+
+//     // History
+//     Route::get('/history', [UserController::class, 'history'])->name('history');
+
+//     // Cabang
+//     Route::get('/cabang', [UserController::class, 'cabang'])->name('cabang');
+
+//     // Membership
+//     Route::get('/membership', [UserController::class, 'membership'])->name('membership');
+// });
+//
+
+// Pajak
+// Route::get('/admin/transaksi/pajak', [PajakController::class, 'index'])->name('admin.transaksi.pajak.index');
+// Route::get('/admin/transaksi/pajak/create', [PajakController::class, 'create'])->name('admin.transaksi.pajak.create');
+// Route::post('/admin/transaksi/pajak', [PajakController::class, 'store'])->name('admin.transaksi.pajak.store');
+// Route::get('/admin/transaksi/pajak/{id}/edit', [PajakController::class, 'edit'])->name('admin.transaksi.pajak.edit');
+// Route::put('/admin/transaksi/pajak/{id}', [PajakController::class, 'update'])->name('admin.transaksi.pajak.update');
+// Route::delete('/admin/transaksi/pajak/{id}', [PajakController::class, 'destroy'])->name('admin.transaksi.pajak.destroy');

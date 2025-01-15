@@ -11,18 +11,22 @@ class Nasabah extends Model
     protected $table = 'nasabahs';
 
     protected $fillable = [
-        'nomor_identitas',
         'nama_lengkap',
+        'nomor_identitas',
+        'alamat_lengkap',
+        'kelurahan',
+        'kecamatan',
+        'kabupaten',
+        'propinsi',
         'tempat_lahir',
         'tanggal_lahir',
-        'status_perkawinan',
-        'alamat_lengkap',
-        'kode_pos',
-        'pekerjaan',
-        'email',
         'telepon',
-        'nama_orang_tua',
-        'foto_ktp_sim',
+        'foto_ktp',
         'status_delete',
     ];
+
+    public function transaksi()
+    {
+        return $this->hasMany(Transaksi::class);
+    }
 }

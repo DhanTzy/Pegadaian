@@ -17,12 +17,11 @@
             </div> <!--end::App Content Header--> <!--begin::App Content-->
             <div class="app-content"> <!--begin::Container-->
                 <div class="card mb-4">
-                    <div class="card-header">
-                        <h3 class="card-title">Bordered Table</h3>
-                    </div> <!-- /.card-header -->
+                    <div class="card-header" style="display: flex; justify-content: center; align-items: center;">
+                        <p id="current-info" style="margin: 0; font-size: 16px;"></p>
+                    </div>
                     <div class="card-body">
-                        <a href="{{ route('admin.nasabah.create') }}" class="btn btn-primary float-left mb-2">Input Data
-                            Nasabah</a>
+                        <a href="{{ route('admin.nasabah.create') }}" class="btn btn-primary float-left mb-3" style="background-color : #0095FF;"><i class="bi bi-plus-lg"></i> Tambah Daftar Nasabah</a>
                         @if (Session::has('success'))
                             <div class="alert alert-success" role="alert">
                                 {{ Session::get('success') }}
@@ -60,12 +59,16 @@
                                 <thead class="table-dark text-center">
                                     <tr>
                                         <th scope="col">ID</th>
-                                        <th scope="col">Nomor Identitas (KTP)</th>
                                         <th scope="col">Nama Lengkap</th>
-                                        <th scope="col">Pekerjaan</th>
+                                        <th scope="col">NIK</th>
+                                        <th scope="col">Alamat</th>
+                                        <th scope="col">Kelurahan</th>
+                                        <th scope="col">Kecamatan</th>
+                                        <th scope="col">Kabupaten</th>
+                                        <th scope="col">Propinsi</th>
+                                        <th scope="col">Tempat Lahir</th>
+                                        <th scope="col">Tanggal Lahir</th>
                                         <th scope="col">Telepon</th>
-                                        <th scope="col">Email</th>
-                                        <th scope="col">Tanggal Daftar</th>
                                         <th scope="col">Action</th>
                                     </tr>
                                 </thead>
@@ -86,21 +89,23 @@
                                             aria-label="Close"></button>
                                     </div>
                                     <div class="modal-body">
-                                        <p><strong>Nomor Identitas (KTP):</strong> <span id="detailNomorIdentitas"></span>
-                                        </p>
                                         <p><strong>Nama Lengkap:</strong> <span id="detailNamaLengkap"></span></p>
+                                        <p><strong>Nik:</strong> <span id="detailNomorIdentitas"></span></p>
+                                        <p><strong>Alamat Lengkap:</strong> <span id="detailAlamatLengkap"></span></p>
+                                        <p><strong>Kelurahan:</strong> <span id="detailKelurahan"></span></p>
+                                        <p><strong>Kecamatan:</strong> <span id="detailKecamatan"></span></p>
+                                        <p><strong>Kabupaten:</strong> <span id="detailKabupaten"></span></p>
+                                        <p><strong>Propinsi:</strong> <span id="detailPropinsi"></span></p>
                                         <p><strong>Tempat Lahir:</strong> <span id="detailTempatLahir"></span></p>
                                         <p><strong>Tanggal Lahir:</strong> <span id="detailTanggalLahir"></span></p>
-                                        <p><strong>Status Perkawinan:</strong> <span id="detailStatusPerkawinan"></span></p>
-                                        <p><strong>Pekerjaan:</strong> <span id="detailPekerjaan"></span></p>
                                         <p><strong>Telepon:</strong> <span id="detailTelepon"></span></p>
                                         <p><strong>Tanggal Daftar:</strong> <span id="detailTanggalDaftar"></span></p>
-                                        <p><strong>Alamat Lengkap:</strong> <span id="detailAlamatLengkap"></span></p>
-                                        <p><strong>Kode Pos:</strong> <span id="detailKodePos"></span></p>
-                                        <p><strong>Email:</strong> <span id="detailEmail"></span></p>
-                                        <p><strong>Nama Orang Tua:</strong> <span id="detailNamaOrangTua"></span></p>
-                                        <p><strong>Foto KTP/SIM:</strong> <br>
-                                            <img id="detailFotoKTP" src="" alt="Foto KTP/SIM"
+                                        <p><strong>Pengajuan Pinjaman:</strong> <span id="detailPengajuanPinjaman"></span>
+                                        </p>
+                                        <p><strong>Jangka Waktu:</strong> <span id="detailJangkaWaktu"></span></p>
+                                        <p><strong>Jenis Jaminan:</strong> <span id="detailJenisJaminan"></span></p>
+                                        <p><strong>Foto KTP:</strong> <br>
+                                            <img id="detailFotoKtp" src="" alt="Foto KTP/SIM"
                                                 style="width: 100px; height: auto;">
                                         </p>
                                     </div>
@@ -122,6 +127,27 @@
     <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
 
     <script>
+        function updateTime() {
+            const now = new Date();
+            const dayString = now.toLocaleDateString('id-ID', {
+                weekday: 'long'
+            });
+            const dateString = now.toLocaleDateString('id-ID', {
+                day: '2-digit',
+                month: '2-digit',
+                year: 'numeric'
+            });
+            const timeString = now.toLocaleTimeString('id-ID', {
+                hour: '2-digit',
+                minute: '2-digit'
+            });
+            const fullString = `${dayString}, ${dateString}, ${timeString}`;
+
+            document.getElementById('current-info').innerText = fullString;
+        }
+        setInterval(updateTime, 1000);
+        updateTime();
+
         $(document).ready(function() {
             var table = $('#nasabahTable').DataTable({
                 processing: true,
@@ -135,24 +161,59 @@
                         d.tanggal_akhir = $('#tanggalAkhirFilter').val();
                     }
                 },
-                columns: [
-                    { data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: false, searchable: false },
-                    { data: 'nomor_identitas', name: 'nomor_identitas' },
-                    { data: 'nama_lengkap', name: 'nama_lengkap' },
-                    { data: 'pekerjaan', name: 'pekerjaan' },
-                    { data: 'telepon', name: 'telepon' },
-                    { data: 'email', name: 'email' },
-                    { data: 'created_at', name: 'created_at',
-                        render: function(data, type, row) {
-                            var date = new Date(data);
-                            return date.toLocaleDateString('id-ID', {
-                                day: '2-digit',
-                                month: '2-digit',
-                                year: 'numeric'
-                            });
-                        }
+
+                columns: [{
+                        data: 'DT_RowIndex',
+                        name: 'DT_RowIndex',
+                        orderable: false,
+                        searchable: false
                     },
-                    { data: 'action', name: 'action', orderable: false, searchable: false },
+                    {
+                        data: 'nama_lengkap',
+                        name: 'nama_lengkap'
+                    },
+                    {
+                        data: 'nomor_identitas',
+                        name: 'nomor_identitas'
+                    },
+                    {
+                        data: 'alamat_lengkap',
+                        name: 'alamat_lengkap'
+                    },
+                    {
+                        data: 'kelurahan',
+                        name: 'kelurahan'
+                    },
+                    {
+                        data: 'kecamatan',
+                        name: 'kecamatan'
+                    },
+                    {
+                        data: 'kabupaten',
+                        name: 'kabupaten'
+                    },
+                    {
+                        data: 'propinsi',
+                        name: 'propinsi'
+                    },
+                    {
+                        data: 'tempat_lahir',
+                        name: 'tempat_lahir'
+                    },
+                    {
+                        data: 'tanggal_lahir',
+                        name: 'tanggal_lahir'
+                    },
+                    {
+                        data: 'telepon',
+                        name: 'telepon'
+                    },
+                    {
+                        data: 'action',
+                        name: 'action',
+                        orderable: false,
+                        searchable: false
+                    },
                 ],
             });
 
@@ -172,33 +233,37 @@
         var nasabahDetailModal = document.getElementById('nasabahDetailModal');
         nasabahDetailModal.addEventListener('show.bs.modal', function(event) {
             var button = event.relatedTarget;
-            var nomorIdentitas = button.getAttribute('data-nomor_identitas');
             var namaLengkap = button.getAttribute('data-nama_lengkap');
+            var nomorIdentitas = button.getAttribute('data-nomor_identitas');
+            var alamatLengkap = button.getAttribute('data-alamat_lengkap');
+            var kelurahan = button.getAttribute('data-kelurahan');
+            var kecamatan = button.getAttribute('data-kecamatan');
+            var kabupaten = button.getAttribute('data-kabupaten');
+            var propinsi = button.getAttribute('data-propinsi');
             var tempatLahir = button.getAttribute('data-tempat_lahir');
             var tanggalLahir = button.getAttribute('data-tanggal_lahir');
-            var statusPerkawinan = button.getAttribute('data-status_perkawinan');
-            var pekerjaan = button.getAttribute('data-pekerjaan');
             var telepon = button.getAttribute('data-telepon');
             var tanggalDaftar = button.getAttribute('data-created_at');
-            var alamatLengkap = button.getAttribute('data-alamat_lengkap');
-            var kodePos = button.getAttribute('data-kode_pos');
-            var email = button.getAttribute('data-email');
-            var namaOrangTua = button.getAttribute('data-nama_orang_tua');
-            var fotoKTP = button.getAttribute('data-foto_ktp_sim');
+            var pengajuanPinjaman = button.getAttribute('data-pengajuan_pinjaman');
+            var jangkaWaktu = button.getAttribute('data-jangka_waktu');
+            var jenisJaminan = button.getAttribute('data-jenis_jaminan');
+            var fotoKtp = button.getAttribute('data-foto_ktp');
 
-            document.querySelector('#detailNomorIdentitas').textContent = nomorIdentitas;
             document.querySelector('#detailNamaLengkap').textContent = namaLengkap;
+            document.querySelector('#detailNomorIdentitas').textContent = nomorIdentitas;
+            document.querySelector('#detailAlamatLengkap').textContent = alamatLengkap;
+            document.querySelector('#detailKelurahan').textContent = kelurahan;
+            document.querySelector('#detailKecamatan').textContent = kecamatan;
+            document.querySelector('#detailKabupaten').textContent = kabupaten;
+            document.querySelector('#detailPropinsi').textContent = propinsi;
             document.querySelector('#detailTempatLahir').textContent = tempatLahir;
             document.querySelector('#detailTanggalLahir').textContent = tanggalLahir;
-            document.querySelector('#detailStatusPerkawinan').textContent = statusPerkawinan;
-            document.querySelector('#detailPekerjaan').textContent = pekerjaan;
             document.querySelector('#detailTelepon').textContent = telepon;
             document.querySelector('#detailTanggalDaftar').textContent = tanggalDaftar;
-            document.querySelector('#detailAlamatLengkap').textContent = alamatLengkap;
-            document.querySelector('#detailKodePos').textContent = kodePos;
-            document.querySelector('#detailEmail').textContent = email;
-            document.querySelector('#detailNamaOrangTua').textContent = namaOrangTua;
-            document.querySelector('#detailFotoKTP').src = fotoKTP;
+            document.querySelector('#detailPengajuanPinjaman').textContent = pengajuanPinjaman;
+            document.querySelector('#detailJangkaWaktu').textContent = jangkaWaktu;
+            document.querySelector('#detailJenisJaminan').textContent = jenisJaminan;
+            document.querySelector('#detailFotoKtp').src = fotoKtp;
         });
     </script>
 @endsection

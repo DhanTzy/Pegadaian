@@ -10,16 +10,16 @@ return new class extends Migration
     {
         Schema::create('transaksi', function (Blueprint $table) {
             $table->id();
-            $table->string('nama_nasabah');
-            $table->date('tanggal');
-            $table->string('metode_pencairan');
-            $table->string('no_rekening')->nullable();
-            $table->string('bank')->nullable();
-            $table->string('pengajuan_pinjaman');
-            $table->string('jenis_agunan');
-            $table->string('nilai_pasar');
-            $table->string('nilai_likuiditas');
-            $table->text('catatan');
+            $table->string('pengajuan_pinjaman')->nullable();
+            $table->string('jangka_waktu')->nullable();
+            $table->string('jenis_jaminan')->nullable();
+            $table->string('nilai_pasar')->nullable();
+            $table->string('nilai_likuiditas')->nullable();
+            $table->string('putusan_pinjaman')->nullable();
+            $table->string('bunga')->nullable();
+            $table->string('bunga_perbulan')->nullable();
+            $table->string('pelunasan')->nullable();
+            $table->string('biaya_administarasi')->nullable();
             $table->string('status_delete')->default('1');
             $table->timestamps();
         });

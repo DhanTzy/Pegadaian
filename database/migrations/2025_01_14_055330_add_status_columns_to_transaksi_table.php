@@ -12,10 +12,14 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('transaksi', function (Blueprint $table) {
-            Schema::table('transaksi', function (Blueprint $table) {
-                $table->string('jumlah_bayar')->after('pajak_id')->nullable();
-            });
+            $table->enum('status_transaksi', [
+                'menunggu appraisal',
+                'appraisal selesai',
+                'menunggu approval',
+                'approval selesai',
+            ])->default('menunggu appraisal')->after('biaya_administrasi');
         });
+        
     }
 
     /**

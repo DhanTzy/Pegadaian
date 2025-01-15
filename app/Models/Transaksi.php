@@ -9,31 +9,30 @@ class Transaksi extends Model
 {
     use HasFactory;
 
-    protected $table = 'transaksi'; // Nama tabel
+    protected $table = 'transaksi';
     protected $fillable = [
-        'nama_nasabah',
-        'tanggal',
-        'metode_pencairan',
-        'no_rekening',
-        'bank',
+        'nasabah_id',
         'pengajuan_pinjaman',
-        'pajak_id',
-        'jumlah_bayar',
-        'per_bulan',
-        'jenis_agunan',
+        'jangka_waktu',
+        'jenis_jaminan',
         'nilai_pasar',
         'nilai_likuiditas',
-        'catatan',
+        'putusan_pinjaman',
+        'bunga',
+        'bunga_perbulan',
+        'pelunasan',
+        'biaya_administrasi',
+        'status_transaksi',
         'status_delete',
     ];
 
-    public function pajak()
-    {
-        return $this->belongsTo(Pajak::class, 'pajak_id');
-    }
-
     public function jaminan()
     {
-        return $this->hasMany(TransaksiJaminan::class); // Relasi one-to-many ke TransaksiJaminan
+        return $this->hasMany(TransaksiJaminan::class);
+    }
+
+    public function nasabah()
+    {
+        return $this->belongsTo(Nasabah::class);
     }
 }

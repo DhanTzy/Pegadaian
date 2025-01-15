@@ -9,7 +9,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('nasabahs', function (Blueprint $table) {
-            $table->string('foto_ktp_sim')->nullable()->after('nama_orang_tua');
+            $table->string('foto_ktp')->nullable()->after('telepon');
         });
     }
 
