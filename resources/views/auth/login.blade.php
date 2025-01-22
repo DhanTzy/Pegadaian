@@ -63,21 +63,6 @@
 
                     <!-- Login Button -->
                     <button class="btn btn-primary" type="submit">Login</button>
-
-                    <!-- Signup Link -->
-                    <div class="mt-3">
-                        Belum punya akun? <a href="{{ route('register') }}" class="text-primary">Sign up</a> sekarang.
-                    </div>
-
-                    <p class="text-center mt-5">atau</p>
-
-                    <!-- Social Media Login Icons -->
-                    <div class="icon">
-                        <button class="google-btn">
-                            <img src="https://img.icons8.com/color/48/000000/google-logo.png" alt="Google Logo">
-                            <span>Lanjutkan Dengan Google</span>
-                        </button>
-                    </div>
                 </form>
             </div>
         </div>

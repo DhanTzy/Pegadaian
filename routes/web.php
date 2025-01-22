@@ -2,17 +2,16 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\AuthController;
+use App\Http\Controllers\Auth\UserController;
+use App\Http\Controllers\Profile\ProfileController;
+use App\Http\Controllers\Dashboard\DashboardController;
+use App\Http\Controllers\Nasabah\NasabahController;
+use App\Http\Controllers\Karyawan\KaryawanController;
+use App\Http\Controllers\Karyawan\PekerjaanController;
+use App\Http\Controllers\Transaksi\TransaksiController;
+use App\Http\Controllers\Transaksi\AppraisalController;
+use App\Http\Controllers\Transaksi\ApprovalController;
 use App\Http\Controllers\HomeController;
-use App\Http\Controllers\Admin\Profile\AdminProfileController;
-use App\Http\Controllers\Admin\Dashboard\DashboardController;
-use App\Http\Controllers\Admin\Nasabah\NasabahController;
-use App\Http\Controllers\Admin\Karyawan\KaryawanController;
-use App\Http\Controllers\Admin\Karyawan\PekerjaanController;
-use App\Http\Controllers\Admin\Transaksi\TransaksiController;
-use App\Http\Controllers\Admin\Appraisal\AppraisalController;
-use App\Http\Controllers\Admin\Approval\ApprovalController;
-use App\Http\Controllers\User\UserController;
-use App\Http\Controllers\User\Profile\UserProfileController;
 use App\Models\Karyawan;
 use App\Models\Nasabah;
 use App\Models\Transaksi;
@@ -47,103 +46,72 @@ Route::controller(AuthController::class)->group(function () {
     Route::get('logout', 'logout')->middleware('auth')->name('logout');
 });
 
-
-
 //Admin Routes List
-Route::middleware(['auth', 'user-access:admin'])->group(function () {
+Route::middleware(['role:admin'])->group(function () {
 
     // Dashboard
-    Route::get('/admin/home', [DashboardController::class, 'adminHome'])->name('admin.home');
+    Route::get('/home', [DashboardController::class, 'Home'])->name('home');
 
-    // Nasabah
-    Route::get('/admin/nasabah', [NasabahController::class, 'index'])->name('admin.nasabah');
-    Route::get('/nasabah', [NasabahController::class, 'index'])->name('admin.nasabah.index');
-    Route::get('/admin/nasabah/create', [NasabahController::class, 'create'])->name('admin.nasabah.create');
-    Route::post('/admin/nasabah/store', [NasabahController::class, 'store'])->name('admin.nasabah.store');
-    Route::delete('/admin/nasabah/destroy/{id}', [NasabahController::class, 'destroy'])->name('admin.nasabah.destroy');
-    Route::get('/admin/nasabah/data', [NasabahController::class, 'getData'])->name('admin.nasabah.data');
-
-    // Transaksi
-    Route::get('/admin/transaksi', [TransaksiController::class, 'index'])->name('admin.transaksi');
-    Route::get('/transaksi', [TransaksiController::class, 'index'])->name('admin.transaksi.index');
-    Route::get('/admin/transaksi/create', [TransaksiController::class, 'create'])->name('admin.transaksi.create');
-    Route::post('/admin/transaksi', [TransaksiController::class, 'store'])->name('admin.transaksi.store');
-    Route::delete('/admin/transaksi/{id}', [TransaksiController::class, 'destroy'])->name('admin.transaksi.destroy');
-    Route::get('/admin/transaksi/data', [TransaksiController::class, 'getData'])->name('admin.transaksi.data');
-
-    // Appraisal Routes
-    Route::prefix('admin/appraisal')->name('admin.appraisal.')->group(function () {
-        Route::get('/', [AppraisalController::class, 'index'])->name('index');
-        Route::get('/data', [AppraisalController::class, 'getData'])->name('data');
-        Route::get('/{id}/edit', [AppraisalController::class, 'edit'])->name('edit');
-        Route::put('/{id}', [AppraisalController::class, 'update'])->name('update');
-    });
-
-    // Approval Routes
-    Route::prefix('admin/approval')->name('admin.approval.')->group(function () {
-        Route::get('/', [ApprovalController::class, 'index'])->name('index');
-        Route::get('/data', [ApprovalController::class, 'getData'])->name('data');
-        Route::get('/{id}/edit', [ApprovalController::class, 'edit'])->name('edit');
-        Route::put('/{id}', [ApprovalController::class, 'update'])->name('update');
-    });
+    // Kelola Akun
+    Route::get('/users', [UserController::class, 'index'])->name('users.index');
+    Route::get('/users/create', [UserController::class, 'create'])->name('users.create');
+    Route::post('/users', [UserController::class, 'store'])->name('users.store');
+    Route::get('/users/{user}/edit', [UserController::class, 'edit'])->name('users.edit');
+    Route::put('/users/{user}', [UserController::class, 'update'])->name('users.update');
+    Route::delete('/users/{user}', [UserController::class, 'destroy'])->name('users.destroy');
 
     Route::get('auth/password', function () {
         return view('auth.password');
     })->name('auth.password');
-
     Route::get('password/change', [AuthController::class, 'changePassword'])->name('password.change');
     Route::post('password/change', [AuthController::class, 'changePasswordSave'])->name('password.change.save');
 
     // Profile
-    Route::get('/admin/profile', [AdminProfileController::class, 'adminProfile'])->name('admin.profile');
-    Route::put('/admin/profile', [AdminProfileController::class, 'updateProfile'])->name('admin.profile.update');
+    Route::get('/profile', [ProfileController::class, 'profile'])->name('profile.index');
+    Route::put('/profile', [ProfileController::class, 'updateProfile'])->name('profile.update');
+
+    // Nasabah
+    Route::get('/nasabah', [NasabahController::class, 'index'])->name('nasabah.index');
+    Route::get('/nasabah/create', [NasabahController::class, 'create'])->name('nasabah.create');
+    Route::post('/nasabah/store', [NasabahController::class, 'store'])->name('nasabah.store');
+    Route::delete('/nasabah/destroy/{id}', [NasabahController::class, 'destroy'])->name('nasabah.destroy');
+    Route::get('/nasabah/data', [NasabahController::class, 'getData'])->name('nasabah.data');
+
+    // { --
+    // Transaksi
+    Route::get('/transaksi', [TransaksiController::class, 'index'])->name('transaksi.index');
+    Route::get('/transaksi/create', [TransaksiController::class, 'create'])->name('transaksi.create');
+    Route::post('/transaksi', [TransaksiController::class, 'store'])->name('transaksi.store');
+    Route::delete('/transaksi/{id}', [TransaksiController::class, 'destroy'])->name('transaksi.destroy');
+    Route::get('/transaksi/data', [TransaksiController::class, 'getData'])->name('transaksi.data');
+
+    // Appraisal Routes masih satu kolom dengan transaksi cuman kepisah aja ada yang kolomnya di transaksi ada yang di appraisal
+    Route::get('/appraisal', [AppraisalController::class, 'index'])->name('appraisal.index');
+    Route::get('/appraisal/data', [AppraisalController::class, 'getData'])->name('appraisal.data');
+    Route::get('/appraisal/{id}/edit', [AppraisalController::class, 'edit'])->name('appraisal.edit');
+    Route::put('/appraisal/{id}', [AppraisalController::class, 'update'])->name('appraisal.update');
+
+    // Approval Routes masih satu kolom dengan transaksi cuman kepisah aja ada yang kolomnya di transaksi ada yang di approval
+    Route::get('/approval', [ApprovalController::class, 'index'])->name('approval.index');
+    Route::get('/approval/data', [ApprovalController::class, 'getData'])->name('approval.data');
+    Route::get('/approval/{id}/edit', [ApprovalController::class, 'edit'])->name('approval.edit');
+    Route::put('/approval/{id}', [ApprovalController::class, 'update'])->name('approval.update');
+    // } --
 
     // Karyawan
-    Route::get('/admin/karyawan', [KaryawanController::class, 'index'])->name('admin.karyawan');
-    Route::get('/karyawan', [KaryawanController::class, 'index'])->name('admin.karyawan.index');
-    Route::get('/admin/karyawan/create', [KaryawanController::class, 'create'])->name('admin.karyawan.create');
-    Route::post('/admin/karyawan/store', [KaryawanController::class, 'store'])->name('admin.karyawan.store');
-    Route::get('/admin/karyawan/edit/{id}', [KaryawanController::class, 'edit'])->name('admin.karyawan.edit');
-    Route::put('/admin/karyawan/edit/{id}', [KaryawanController::class, 'update'])->name('admin.karyawan.update');
-    Route::delete('/admin/karyawan/destroy/{id}', [KaryawanController::class, 'destroy'])->name('admin.karyawan.destroy');
-    Route::get('/admin/karyawan/data', [KaryawanController::class, 'getData'])->name('admin.karyawan.data');
+    Route::get('/karyawan', [KaryawanController::class, 'index'])->name('karyawan.index');
+    Route::get('/karyawan/create', [KaryawanController::class, 'create'])->name('karyawan.create');
+    Route::post('/karyawan/store', [KaryawanController::class, 'store'])->name('karyawan.store');
+    Route::get('/karyawan/edit/{id}', [KaryawanController::class, 'edit'])->name('karyawan.edit');
+    Route::put('/karyawan/edit/{id}', [KaryawanController::class, 'update'])->name('karyawan.update');
+    Route::delete('/karyawan/destroy/{id}', [KaryawanController::class, 'destroy'])->name('karyawan.destroy');
+    Route::get('/karyawan/data', [KaryawanController::class, 'getData'])->name('karyawan.data');
 
     // Pekerjaan
-    Route::get('/admin/karyawan/pekerjaan', [pekerjaanController::class, 'index'])->name('admin.karyawan.pekerjaan.index');
-    Route::get('/admin/karyawan/pekerjaan/create', [pekerjaanController::class, 'create'])->name('admin.karyawan.pekerjaan.create');
-    Route::post('/admin/karyawan/pekerjaan', [pekerjaanController::class, 'store'])->name('admin.karyawan.pekerjaan.store');
-    Route::get('/admin/karyawan/pekerjaan/{id}/edit', [pekerjaanController::class, 'edit'])->name('admin.karyawan.pekerjaan.edit');
-    Route::put('/admin/karyawan/pekerjaan/{id}', [pekerjaanController::class, 'update'])->name('admin.karyawan.pekerjaan.update');
-    Route::delete('/admin/karyawan/pekerjaan/{id}', [pekerjaanController::class, 'destroy'])->name('admin.karyawan.pekerjaan.destroy');
+    Route::get('/karyawan/pekerjaan', [pekerjaanController::class, 'index'])->name('karyawan.pekerjaan.index');
+    Route::get('/karyawan/pekerjaan/create', [pekerjaanController::class, 'create'])->name('karyawan.pekerjaan.create');
+    Route::post('/karyawan/pekerjaan', [pekerjaanController::class, 'store'])->name('karyawan.pekerjaan.store');
+    Route::get('/karyawan/pekerjaan/{id}/edit', [pekerjaanController::class, 'edit'])->name('karyawan.pekerjaan.edit');
+    Route::put('/karyawan/pekerjaan/{id}', [pekerjaanController::class, 'update'])->name('karyawan.pekerjaan.update');
+    Route::delete('/karyawan/pekerjaan/{id}', [pekerjaanController::class, 'destroy'])->name('karyawan.pekerjaan.destroy');
 });
-
-// //Normal Users Routes List
-// Route::middleware(['auth', 'user-access:user'])->group(function () {
-//     Route::get('/home', [HomeController::class, 'index'])->name('home');
-
-//     // User Profil
-//     Route::get('/user/profile', [UserProfileController::class, 'show'])->name('user.profile');
-//     Route::put('/user/profile', [UserProfileController::class, 'update'])->name('user.profile.update');
-
-
-//     // Gadai Emas
-//     Route::get('/gadaiemas', [UserController::class, 'gadaiemas'])->name('gadaiemas');
-
-//     // History
-//     Route::get('/history', [UserController::class, 'history'])->name('history');
-
-//     // Cabang
-//     Route::get('/cabang', [UserController::class, 'cabang'])->name('cabang');
-
-//     // Membership
-//     Route::get('/membership', [UserController::class, 'membership'])->name('membership');
-// });
-//
-
-// Pajak
-// Route::get('/admin/transaksi/pajak', [PajakController::class, 'index'])->name('admin.transaksi.pajak.index');
-// Route::get('/admin/transaksi/pajak/create', [PajakController::class, 'create'])->name('admin.transaksi.pajak.create');
-// Route::post('/admin/transaksi/pajak', [PajakController::class, 'store'])->name('admin.transaksi.pajak.store');
-// Route::get('/admin/transaksi/pajak/{id}/edit', [PajakController::class, 'edit'])->name('admin.transaksi.pajak.edit');
-// Route::put('/admin/transaksi/pajak/{id}', [PajakController::class, 'update'])->name('admin.transaksi.pajak.update');
-// Route::delete('/admin/transaksi/pajak/{id}', [PajakController::class, 'destroy'])->name('admin.transaksi.pajak.destroy');

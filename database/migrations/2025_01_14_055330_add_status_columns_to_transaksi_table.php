@@ -13,13 +13,13 @@ return new class extends Migration
     {
         Schema::table('transaksi', function (Blueprint $table) {
             $table->enum('status_transaksi', [
-                'menunggu appraisal',
-                'appraisal selesai',
-                'menunggu approval',
-                'approval selesai',
-            ])->default('menunggu appraisal')->after('biaya_administrasi');
+                'Menunggu Appraisal',
+                'Appraisal Selesai',
+                'Menunggu Approval',
+                'Approval Selesai',
+            ])->default('Menunggu Appraisal')->after('biaya_administrasi');
         });
-        
+
     }
 
     /**

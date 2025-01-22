@@ -23,7 +23,8 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        'type',
+        'role',
+        'status_active',
         'image',
     ];
 
@@ -45,19 +46,6 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
-
-    protected function type(): Attribute
-{
-    return new Attribute(
-        get: fn($value) => [
-            0 => "user",
-            1 => "admin",
-            2 => "approval",
-            3 => "appraisal",
-            4 => "customer service",
-        ][$value] ?? "unknown", // Tambahkan fallback untuk nilai yang tidak dikenali
-    );
-}
 
     public function profile()
     {

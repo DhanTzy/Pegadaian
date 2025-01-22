@@ -39,12 +39,11 @@ class AuthController extends Controller
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
-            'type' => "1"
+            'role' => 'customer service'
         ]);
 
         return redirect()->route('login');
     }
-
 
     public function login()
     {
@@ -66,7 +65,6 @@ class AuthController extends Controller
             ]);
         }
 
-        // Cek kombinasi email dan password
         if (!Auth::attempt($request->only('email', 'password'), $request->boolean('remember'))) {
             throw ValidationException::withMessages([
                 'password' => 'Password yang anda masukkan salah, Silahkan isi dengan benar.'
@@ -76,22 +74,14 @@ class AuthController extends Controller
         $request->session()->regenerate();
 
         $user = auth()->user();
-        if ($user->type == 'admin') {
+        if ($user->role == 'admin') {
             if (is_null($user->image) || empty($user->name)) {
                 return redirect()->route('admin.profile')->with('message', 'Silakan Lengkapi Profil Anda Terlebih Dahulu');
-            }
-            return redirect()->route('admin.home');
-        }
-
-        if ($user->type == 'user') {
-            if (is_null($user->image) || empty($user->name)) {
-                return redirect()->route('user.profile')->with('message', 'Silakan Lengkapi Profil Anda Terlebih Dahulu');
             }
             return redirect()->route('home');
         }
         return redirect()->route('dashboard');
     }
-
 
     public function logout(Request $request)
     {
@@ -104,7 +94,7 @@ class AuthController extends Controller
 
     public function changePassword()
     {
-        return view('auth/password');
+        return view('auth.password');
     }
 
     public function changePasswordSave(Request $request)
