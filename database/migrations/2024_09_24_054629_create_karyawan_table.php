@@ -18,9 +18,8 @@ return new class extends Migration
             $table->date('tanggal_lahir');
             $table->string('agama');
             $table->string('kewarganegaraan');
-            $table->string('status_perkawinan');
             $table->string('no_telepon');
-            $table->string('email');
+            $table->string('email')->nullable();
             $table->text('alamat_lengkap');
             $table->string('kode_pos');
             $table->string('foto_ktp')->nullable();

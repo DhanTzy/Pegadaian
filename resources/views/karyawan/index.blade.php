@@ -75,9 +75,9 @@
                                 <thead class="table-dark text-center">
                                     <tr>
                                         <th scope="col">ID</th>
+                                        <th scope="col">Nama Lengkap</th>
                                         <th scope="col">NIP</th>
                                         <th scope="col">Nomor Identitas</th>
-                                        <th scope="col">Nama Lengkap</th>
                                         <th scope="col">Posisi Pekerjaan</th>
                                         <th scope="col">Telepon</th>
                                         {{-- <th scope="col">Email</th> --}}
@@ -105,9 +105,9 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
+                    <p><strong>Nama Lengkap :</strong> <span id="detailNamaLengkap"></span></p>
                     <p><strong>NIP :</strong> <span id="detailNip"></span></p>
                     <p><strong>No Identitas :</strong> <span id="detailNoIdentitas"></span></p>
-                    <p><strong>Nama Lengkap :</strong> <span id="detailNamaLengkap"></span></p>
                     <p><strong>Posisi Pekerjaan:</strong> <span id="detailPosisiPekerjaan"></span></p>
                     <p><strong>Jenis Kelamin :</strong> <span id="detailJenisKelamin"></span></p>
                     <p><strong>Tempat Lahir :</strong> <span id="detailTempatLahir"></span></p>
@@ -180,9 +180,9 @@
                     }
                 },
                 columns: [{ data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: false, searchable: false },
+                    { data: 'nama_lengkap', name: 'nama_lengkap' },
                     { data: 'nip', name: 'nip' },
                     { data: 'no_identitas', name: 'no_identitas' },
-                    { data: 'nama_lengkap', name: 'nama_lengkap' },
                     { data: 'posisi_pekerjaan' },
                     { data: 'no_telepon', name: 'no_telepon' },
                     // { data: 'email', name: 'email' },
@@ -219,9 +219,9 @@
         var karyawanDetailModal = document.getElementById('karyawanDetailModal');
         karyawanDetailModal.addEventListener('show.bs.modal', function(event) {
             var button = event.relatedTarget;
+            var namaLengkap = button.getAttribute('data-nama_lengkap');
             var nip = button.getAttribute('data-nip');
             var noIdentitas = button.getAttribute('data-no_identitas');
-            var namaLengkap = button.getAttribute('data-nama_lengkap');
             var posisiPekerjaan = button.getAttribute('data-posisi_pekerjaan');
             var jenisKelamin = button.getAttribute('data-jenis_kelamin');
             var tempatLahir = button.getAttribute('data-tempat_lahir');
@@ -239,9 +239,9 @@
             var fotoKTP = button.getAttribute('data-foto_ktp');
             // var fotoKK = button.getAttribute('data-foto_kk');
 
+            karyawanDetailModal.querySelector('#detailNamaLengkap').textContent = namaLengkap;
             karyawanDetailModal.querySelector('#detailNip').textContent = nip;
             karyawanDetailModal.querySelector('#detailNoIdentitas').textContent = noIdentitas;
-            karyawanDetailModal.querySelector('#detailNamaLengkap').textContent = namaLengkap;
             karyawanDetailModal.querySelector('#detailPosisiPekerjaan').textContent = posisiPekerjaan;
             karyawanDetailModal.querySelector('#detailJenisKelamin').textContent = jenisKelamin;
             karyawanDetailModal.querySelector('#detailTempatLahir').textContent = tempatLahir;

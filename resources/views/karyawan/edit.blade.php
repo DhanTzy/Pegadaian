@@ -13,6 +13,15 @@
                     @method('PUT')
 
                     <div class="mb-3">
+                        <label class="form-label">Nama Lengkap <span class="text-danger">*</span></label>
+                        <input id="nama_lengkap" name="nama_lengkap" type="text"
+                            value="{{ old('nama_lengkap', $karyawan->nama_lengkap) }}" class="form-control" required>
+                        @error('nama_lengkap')
+                            <div class="text-danger">{{ $message }}</div>
+                        @enderror
+                    </div>
+                    
+                    <div class="mb-3">
                         <label class="form-label">NIP <span class="text-danger">*</span></label>
                         <input type="text" id="nip" name="nip" value="{{ $karyawan->nip }}" class="form-control"
                             required>
@@ -26,15 +35,6 @@
                         <input id="no_identitas" name="no_identitas" type="text" value="{{ $karyawan->no_identitas }}"
                             class="form-control" required>
                         @error('no_identitas')
-                            <div class="text-danger">{{ $message }}</div>
-                        @enderror
-                    </div>
-
-                    <div class="mb-3">
-                        <label class="form-label">Nama Lengkap <span class="text-danger">*</span></label>
-                        <input id="nama_lengkap" name="nama_lengkap" type="text"
-                            value="{{ old('nama_lengkap', $karyawan->nama_lengkap) }}" class="form-control" required>
-                        @error('nama_lengkap')
                             <div class="text-danger">{{ $message }}</div>
                         @enderror
                     </div>

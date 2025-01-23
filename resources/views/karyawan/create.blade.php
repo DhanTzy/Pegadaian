@@ -10,6 +10,15 @@
                 @csrf
 
                 <div class="mb-3">
+                    <label class="form-label">Nama Lengkap <span class="text-danger">*</span></label>
+                    <input id="nama_lengkap" name="nama_lengkap" type="text" class="form-control"
+                        value="{{ old('nama_lengkap') }}" placeholder="Nama Lengkap Anda" required>
+                    @error('nama_lengkap')
+                        <div class="text-danger">{{ $message }}</div>
+                    @enderror
+                </div>
+                
+                <div class="mb-3">
                     <label class="form-label">NIP <span class="text-danger">*</span></label>
                     <input type="text" name="nip" id="nip" class="form-control" value="{{ old('nip') }}"
                         placeholder="Nomor Induk Pegawai" required>
@@ -23,15 +32,6 @@
                     <input id="no_identitas" name="no_identitas" type="text" class="form-control"
                         value="{{ old('no_identitas') }}" placeholder="No Identitas Anda" required>
                     @error('no_identitas')
-                        <div class="text-danger">{{ $message }}</div>
-                    @enderror
-                </div>
-
-                <div class="mb-3">
-                    <label class="form-label">Nama Lengkap <span class="text-danger">*</span></label>
-                    <input id="nama_lengkap" name="nama_lengkap" type="text" class="form-control"
-                        value="{{ old('nama_lengkap') }}" placeholder="Nama Lengkap Anda" required>
-                    @error('nama_lengkap')
                         <div class="text-danger">{{ $message }}</div>
                     @enderror
                 </div>
