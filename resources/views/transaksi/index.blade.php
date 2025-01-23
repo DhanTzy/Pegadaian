@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('\layouts.app')
 
 @section('title', 'Home Transaksi List')
 
@@ -48,7 +48,7 @@
                                             <th>Jangka Waktu</th>
                                             <th>Jenis Jaminan</th>
                                             <th>Status</th>
-                                            <th>Action</th>
+                                            <th>Aksi</th>
                                         </tr>
                                     </thead>
                                     <tbody class="text-center">
@@ -74,7 +74,7 @@
                     <form action="{{ route('transaksi.store') }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         <div class="mb-3">
-                            <label for="nasabah_id">Pilih Debitur</label>
+                            <label for="nasabah_id">Pilih Debitur <span class="text-danger">*</span></label>
                             <select name="nasabah_id" id="nasabah_id" class="form-select" required>
                                 <option value="">-- Pilih Debitur --</option>
                                 @foreach ($nasabah as $n)
@@ -89,7 +89,7 @@
                         </div>
 
                         <div class="mb-3">
-                            <label>Pengajuan Pinjaman:</label>
+                            <label>Pengajuan Pinjaman <span class="text-danger">*</span></label>
                             <input type="text" name="pengajuan_pinjaman" id="pengajuan_pinjaman" class="form-control"
                                 value="{{ old('pengajuan_pinjaman') }}" required>
                             @error('pengajuan_pinjaman')
@@ -98,7 +98,7 @@
                         </div>
 
                         <div class="mb-3">
-                            <label>Jangka Waktu:</label>
+                            <label>Jangka Waktu <span class="text-danger">*</span></label>
                             <input type="text" name="jangka_waktu" class="form-control" value="{{ old('jangka_waktu') }}"
                                 required>
                             @error('jangka_waktu')
@@ -107,7 +107,7 @@
                         </div>
 
                         <div class="mb-3">
-                            <label>Jenis Jaminan:</label>
+                            <label>Jenis Jaminan <span class="text-danger">*</span></label>
                             <input type="text" name="jenis_jaminan" class="form-control"
                                 value="{{ old('jenis_jaminan') }}" required>
                             @error('jenis_jaminan')

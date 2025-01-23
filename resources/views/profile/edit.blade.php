@@ -47,7 +47,7 @@
                                 </div>
 
                                 <div class="row mb-3">
-                                    <label for="name" class="col-md-4 col-form-label">Nama</label>
+                                    <label for="name" class="col-md-4 col-form-label">Nama <span class="text-danger">*</span></label>
                                     <div class="col-md-8">
                                         <input type="text" class="form-control" id="name" name="name"
                                             value="{{ old('name', auth()->user()->name) }}">
@@ -58,7 +58,7 @@
                                 </div>
 
                                 <div class="row mb-3">
-                                    <label for="nip" class="col-md-4 col-form-label">NIP</label>
+                                    <label for="nip" class="col-md-4 col-form-label">NIP <span class="text-danger">*</span></label>
                                     <div class="col-md-8">
                                         <input type="nip" class="form-control" id="nip" name="nip"
                                             value="{{ old('nip', auth()->user()->profile ? auth()->user()->profile->nip : '') }}">
@@ -69,7 +69,7 @@
                                 </div>
 
                                 <div class="row mb-3">
-                                    <label for="nomor_identitas" class="col-md-4 col-form-label">Nomor Identitas</label>
+                                    <label for="nomor_identitas" class="col-md-4 col-form-label">Nomor Identitas <span class="text-danger">*</span></label>
                                     <div class="col-md-8">
                                         <input type="nomor_identitas" class="form-control" id="nomor_identitas"
                                             name="nomor_identitas"
@@ -81,7 +81,7 @@
                                 </div>
 
                                 <div class="row mb-3">
-                                    <label for="tempat_lahir" class="col-md-4 col-form-label">Tempat Lahir</label>
+                                    <label for="tempat_lahir" class="col-md-4 col-form-label">Tempat Lahir <span class="text-danger">*</span></label>
                                     <div class="col-md-8">
                                         <input type="tempat_lahir" class="form-control" id="tempat_lahir"
                                             name="tempat_lahir"
@@ -93,7 +93,7 @@
                                 </div>
 
                                 <div class="row mb-3">
-                                    <label for="tanggal_lahir" class="col-md-4 col-form-label">Tanggal Lahir</label>
+                                    <label for="tanggal_lahir" class="col-md-4 col-form-label">Tanggal Lahir <span class="text-danger">*</span></label>
                                     <div class="col-md-8">
                                         <input type="date" class="form-control" id="tanggal_lahir" name="tanggal_lahir"
                                             value="{{ old('tanggal_lahir', auth()->user()->profile ? auth()->user()->profile->tanggal_lahir : '') }}">
@@ -104,26 +104,26 @@
                                 </div>
 
                                 <div class="row mb-3">
-                                    <label for="status_perkawinan" class="col-md-4 col-form-label">Status Perkawinan</label>
+                                    <label for="jenis_kelamin" class="col-md-4 col-form-label">Jenis Kelamin <span class="text-danger">*</span></label>
                                     <div class="col-md-8">
-                                        <select id="status_perkawinan" name="status_perkawinan"
-                                            class="form-select @error('status_perkawinan') is-invalid @enderror">
-                                            <option value="">Pilih Status</option>
-                                            <option value="Menikah"
-                                                {{ old('status_perkawinan', auth()->user()->profile ? auth()->user()->profile->status_perkawinan : '') == 'Menikah' ? 'selected' : '' }}>
-                                                Menikah</option>
-                                            <option value="Belum Menikah"
-                                                {{ old('status_perkawinan', auth()->user()->profile ? auth()->user()->profile->status_perkawinan : '') == 'Belum Menikah' ? 'selected' : '' }}>
-                                                Belum Menikah</option>
+                                        <select id="jenis_kelamin" name="jenis_kelamin"
+                                            class="form-select @error('jenis_kelamin') is-invalid @enderror">
+                                            <option value="">Pilih Jenis Kelamin</option>
+                                            <option value="Laki-Laki"
+                                                {{ old('jenis_kelamin', auth()->user()->profile ? auth()->user()->profile->jenis_kelamin : '') == 'Laki-Laki' ? 'selected' : '' }}>
+                                                Laki-Laki</option>
+                                            <option value="Wanita"
+                                                {{ old('jenis_kelamin', auth()->user()->profile ? auth()->user()->profile->jenis_kelamin : '') == 'Wanita' ? 'selected' : '' }}>
+                                                Wanita</option>
                                         </select>
-                                        @error('status_perkawinan')
+                                        @error('jenis_kelamin')
                                             <div class="text-danger">{{ $message }}</div>
                                         @enderror
                                     </div>
                                 </div>
 
                                 <div class="row mb-3">
-                                    <label for="alamat_lengkap" class="col-md-4 col-form-label">Alamat Lengkap</label>
+                                    <label for="alamat_lengkap" class="col-md-4 col-form-label">Alamat <span class="text-danger">*</span></label>
                                     <div class="col-md-8">
                                         <textarea id="alamat_lengkap" name="alamat_lengkap" class="form-control @error('alamat_lengkap') is-invalid @enderror">{{ old('alamat_lengkap', auth()->user()->profile ? auth()->user()->profile->alamat_lengkap : '') }}</textarea>
                                         @error('alamat_lengkap')
@@ -133,7 +133,7 @@
                                 </div>
 
                                 <div class="row mb-3">
-                                    <label for="kode_pos" class="col-md-4 col-form-label">Kode Pos</label>
+                                    <label for="kode_pos" class="col-md-4 col-form-label">Kode Pos <span class="text-danger">*</span></label>
                                     <div class="col-md-8">
                                         <input type="text" class="form-control" id="kode_pos" name="kode_pos"
                                             value="{{ old('kode_pos', auth()->user()->profile ? auth()->user()->profile->kode_pos : '') }}">
@@ -144,7 +144,7 @@
                                 </div>
 
                                 <div class="row mb-3">
-                                    <label for="email" class="col-md-4 col-form-label">Email</label>
+                                    <label for="email" class="col-md-4 col-form-label">Email <span class="text-danger">*</span></label>
                                     <div class="col-md-8">
                                         <input type="email" class="form-control" id="email" name="email"
                                             value="{{ old('email', Auth::user()->email) }}" disabled>
@@ -155,7 +155,7 @@
                                 </div>
 
                                 <div class="row mb-3">
-                                    <label for="telepon" class="col-md-4 col-form-label">Telepon</label>
+                                    <label for="telepon" class="col-md-4 col-form-label">Telepon <span class="text-danger">*</span></label>
                                     <div class="col-md-8">
                                         <input type="number" class="form-control" id="telepon" name="telepon"
                                             value="{{ old('telepon', auth()->user()->profile ? auth()->user()->profile->telepon : '') }}">
@@ -165,20 +165,8 @@
                                     </div>
                                 </div>
 
-                                {{-- <div class="row mb-3">
-                                    <label for="nama_orang_tua" class="col-md-4 col-form-label">Nama Orang Tua</label>
-                                    <div class="col-md-8">
-                                        <input type="text" class="form-control" id="nama_orang_tua"
-                                            name="nama_orang_tua"
-                                            value="{{ old('nama_orang_tua', auth()->user()->profile ? auth()->user()->profile->nama_orang_tua : '') }}">
-                                        @error('nama_orang_tua')
-                                            <div class="text-danger">{{ $message }}</div>
-                                        @enderror
-                                    </div>
-                                </div> --}}
-
                                 <div class="row mb-5">
-                                    <label for="created_at" class="col-md-4 col-form-label">Akun Dibuat</label>
+                                    <label for="created_at" class="col-md-4 col-form-label">Akun Dibuat <span class="text-danger">*</span></label>
                                     <div class="col-md-8">
                                         <input type="text" class="form-control" id="created_at"
                                             value="{{ Auth::user()->created_at->format('d M Y') }}" disabled>
@@ -186,7 +174,7 @@
                                 </div>
 
                                 <div class="text-end">
-                                    <a href="{{ url('home') }}" class="btn btn-secondary">Kembali</a>
+                                    <a href="{{ url('profile') }}" class="btn btn-secondary">Kembali</a>
                                     <button type="button" class="btn btn-primary w-20" data-bs-toggle="modal"
                                         data-bs-target="#editConfirmModal">Perbarui Data</button>
                                 </div>
@@ -223,7 +211,6 @@
 @push('script')
     <script>
         document.getElementById('confirmEditSubmit').addEventListener('click', function() {
-            // Submit form after confirmation
             document.querySelector('form').submit();
         });
 

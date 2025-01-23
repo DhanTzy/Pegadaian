@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('tempat_lahir');
             $table->date('tanggal_lahir');
             $table->string('telepon');
-            $table->string('status_delete')->default('1');
+            $table->enum('status_delete', ['1 Restore', '0 Delete'])->default('1 Restore');
             $table->timestamps();
         });
     }

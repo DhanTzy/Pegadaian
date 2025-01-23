@@ -44,7 +44,7 @@
                         </a>
                         <div class="dropdown-menu dropdown-menu-end dropdown-menu-animate-up" aria-labelledby="drop2">
                             <div class="message-body">
-                                <a href="{{ route('profile.index') }}"
+                                <a href="{{ route('profile.show') }}"
                                     class="d-flex align-items-center gap-2 dropdown-item">
                                     <i class="fa-solid fa-user"></i>
                                     <p class="mb-0 fs-6">Profile</p>
@@ -55,8 +55,7 @@
                                     <p class="mb-0 fs-6">Ubah Password</p>
                                 </a>
                                 <div class="d-flex justify-content-center">
-                                    <a href="{{ route('logout') }}"
-                                        class="btn btn-outline-danger my-2 d-block w-75">Logout</a>
+                                    <a href="#" class="btn btn-outline-danger my-2 d-block w-75" id="logoutBtn">Logout</a>
                                 </div>
                             </div>
                         </div>
@@ -65,7 +64,7 @@
             </div>
         </nav>
 
-        <aside class="app-sidebar bg-body-secondary shadow" data-bs-theme="dark">
+        <aside class="app-sidebar bg-body-secondary shadow " data-bs-theme="dark">
             <div class="sidebar-brand"> <a href="" class="brand-link"><img src="{{ asset('img/Sidebar.png') }}"
                         alt="AdminLTE Logo" class="brand-image opacity-75 shadow">
             </div>
@@ -74,8 +73,8 @@
                     <ul class="nav sidebar-menu flex-column" data-lte-toggle="treeview" role="menu"
                         data-accordion="false">
                         <li class="nav-item"> <a
-                                class="nav-link {{ Route::is('home') ? 'active bg-primary' : '' }}"
-                                href="{{ route('home') }}"> <i class="nav-icon bi bi-speedometer"></i>
+                                class="nav-link {{ Route::is('dashboard.index') ? 'active bg-primary' : '' }}"
+                                href="{{ route('dashboard.index') }}"> <i class="nav-icon bi bi-speedometer"></i>
                                 <p>
                                     Dashboard
                                 </p>
@@ -168,10 +167,9 @@
                             </ul>
                         </li>
 
-                        <li
-                            class="nav-item {{ Route::is('karyawan.index', 'karyawan.create', 'karyawan.edit', 'users.index', 'users.create', 'users.edit') ? 'menu-open' : '' }}">
+                        <li class="nav-item {{ Route::is('karyawan.index', 'karyawan.create', 'karyawan.edit', 'users.index', 'users.create', 'users.edit', 'karyawan.pekerjaan.index', 'karyawan.pekerjaan.create', 'karyawan.pekerjaan.edit') ? 'menu-open' : '' }}">
                             <a href="#"
-                                class="nav-link {{ Route::is('karyawan.index', 'karyawan.create', 'karyawan.edit', 'users.index', 'users.create', 'users.edit') ? 'active' : '' }}">
+                                class="nav-link {{ Route::is('karyawan.index', 'karyawan.create', 'karyawan.edit', 'users.index', 'users.create', 'users.edit', 'karyawan.pekerjaan.index', 'karyawan.pekerjaan.create', 'karyawan.pekerjaan.edit') ? 'active' : '' }}">
                                 <i class="bi bi-gear"></i>
                                 <p>
                                     Pengaturan
@@ -182,15 +180,22 @@
                                 <li class="nav-item">
                                     <a class="nav-link {{ Route::is('karyawan.index', 'karyawan.create', 'karyawan.edit') ? 'active bg-primary' : '' }}"
                                         href="{{ route('karyawan.index') }}">
-                                        <i class="bi bi-person-badge-fill"></i>
-                                        <p>Karyawan</p>
+                                        <i class="bi bi-person-lines-fill"></i>
+                                        <p>Daftar Karyawan</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link {{ Route::is('karyawan.pekerjaan.index', 'karyawan.pekerjaan.create', 'karyawan.pekerjaan.edit') ? 'active bg-primary' : '' }}"
+                                        href="{{ route('karyawan.pekerjaan.index') }}">
+                                        <i class="bi bi-list-columns"></i>
+                                        <p>Daftar Posisi Pekerjaan</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link {{ Route::is('users.index', 'users.create', 'users.edit') ? 'active bg-primary' : '' }}"
                                         href="{{ route('users.index') }}">
-                                        <i class="bi bi-card-list"></i>
-                                        <p>Pengelola Akun</p>
+                                        <i class="bi bi-person-vcard"></i>
+                                        <p>Daftar Pengelola Akun</p>
                                     </a>
                                 </li>
                             </ul>
@@ -232,6 +237,13 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
     <script>
+        document.getElementById('logoutBtn').addEventListener('click', function(e) {
+        e.preventDefault();
+        const logoutConfirmed = confirm('Apakah Anda yakin ingin logout?');
+        if (logoutConfirmed) {
+            window.location.href = "{{ route('logout') }}";
+        }
+    });
         $(document).ready(function() {
             $('#myTable').DataTable();
         });

@@ -54,9 +54,6 @@ class TransaksiController extends Controller
                     ' . method_field('DELETE') . '
                     <button class="btn btn-danger btn-sm me-2"><i class="fas fa-trash-alt"></i></button>
                 </form>
-                <a href="" class="btn btn-warning btn-sm me-2" target="_blank">
-                    <i class="fas fa-print"></i>
-                </a>
             ';
             })->rawColumns(['action'])->make(true);
     }

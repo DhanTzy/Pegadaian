@@ -13,7 +13,7 @@
                     @method('PUT')
 
                     <div class="mb-3">
-                        <label class="form-label">NIP</label>
+                        <label class="form-label">NIP <span class="text-danger">*</span></label>
                         <input type="text" id="nip" name="nip" value="{{ $karyawan->nip }}" class="form-control"
                             required>
                         @error('nip')
@@ -22,7 +22,7 @@
                     </div>
 
                     <div class="mb-3">
-                        <label class="form-label">Nomor Identitas (KTP)</label>
+                        <label class="form-label">Nomor Identitas <span class="text-danger">*</span></label>
                         <input id="no_identitas" name="no_identitas" type="text" value="{{ $karyawan->no_identitas }}"
                             class="form-control" required>
                         @error('no_identitas')
@@ -31,7 +31,7 @@
                     </div>
 
                     <div class="mb-3">
-                        <label class="form-label">Nama Lengkap :</label>
+                        <label class="form-label">Nama Lengkap <span class="text-danger">*</span></label>
                         <input id="nama_lengkap" name="nama_lengkap" type="text"
                             value="{{ old('nama_lengkap', $karyawan->nama_lengkap) }}" class="form-control" required>
                         @error('nama_lengkap')
@@ -40,7 +40,7 @@
                     </div>
 
                     <div class="mb-3">
-                        <label class="form-label">Posisi Pekerjaan :</label>
+                        <label class="form-label">Posisi Pekerjaan <span class="text-danger">*</span></label>
                         <select name="pekerjaan_id" class="form-select" required>
                             <option value="" disabled>Pilih Posisi Pekerjaan</option>
                             @foreach ($pekerjaans as $pekerjaan)
@@ -56,7 +56,7 @@
                     </div>
 
                     <div class="mb-3">
-                        <label class="form-label">Jenis Kelamin :</label>
+                        <label class="form-label">Jenis Kelamin <span class="text-danger">*</span></label>
                         <select name="jenis_kelamin" class="form-select" required>
                             <option value="Laki-laki"
                                 {{ old('jenis_kelamin', $karyawan->jenis_kelamin) == 'Laki-laki' ? 'selected' : '' }}>
@@ -74,7 +74,7 @@
 
                     <div class="row mb-3">
                         <div class="col">
-                            <label class="form-label">Tempat Lahir :</label>
+                            <label class="form-label">Tempat Lahir <span class="text-danger">*</span></label>
                             <input type="text" name="tempat_lahir"
                                 value="{{ old('tempat_lahir', $karyawan->tempat_lahir) }}" class="form-control" required>
                             @error('tempat_lahir')
@@ -82,7 +82,7 @@
                             @enderror
                         </div>
                         <div class="col">
-                            <label class="form-label">Tanggal Lahir :</label>
+                            <label class="form-label">Tanggal Lahir <span class="text-danger">*</span></label>
                             <input type="date" name="tanggal_lahir"
                                 value="{{ old('tanggal_lahir', $karyawan->tanggal_lahir) }}" class="form-control" required>
                             @error('tanggal_lahir')
@@ -92,7 +92,7 @@
                     </div>
 
                     <div class="mb-3">
-                        <label class="form-label">Agama :</label>
+                        <label class="form-label">Agama <span class="text-danger">*</span></label>
                         <select name="agama" class="form-select" required>
                             <option value="Islam" {{ old('agama', $karyawan->agama) == 'Islam' ? 'selected' : '' }}>
                                 Islam
@@ -118,7 +118,7 @@
                     </div>
 
                     <div class="mb-3">
-                        <label class="form-label">Kewarganegaraan :</label>
+                        <label class="form-label">Kewarganegaraan <span class="text-danger">*</span></label>
                         <input type="text" name="kewarganegaraan"
                             value="{{ old('kewarganegaraan', $karyawan->kewarganegaraan) }}" class="form-control" required>
                         @error('kewarganegaraan')
@@ -126,8 +126,8 @@
                         @enderror
                     </div>
 
-                    <div class="mb-3">
-                        <label class="form-label">Status Perkawinan :</label>
+                    {{-- <div class="mb-3">
+                        <label class="form-label">Status Perkawinan <span class="text-danger">*</span></label>
                         <select name="status_perkawinan" class="form-select" required>
                             <option value="Belum Menikah"
                                 {{ old('status_perkawinan', $karyawan->status_perkawinan) == 'Belum Menikah' ? 'selected' : '' }}>
@@ -139,10 +139,10 @@
                         @error('status_perkawinan')
                             <div class="text-danger">{{ $message }}</div>
                         @enderror
-                    </div>
+                    </div> --}}
 
                     <div class="mb-3">
-                        <label class="form-label">Nomor Telepon :</label>
+                        <label class="form-label">Nomor Telepon <span class="text-danger">*</span></label>
                         <input type="text" name="no_telepon" value="{{ old('no_telepon', $karyawan->no_telepon) }}"
                             class="form-control" required>
                         @error('no_telepon')
@@ -160,7 +160,7 @@
                     </div> --}}
 
                     <div class="mb-3">
-                        <label class="form-label">Alamat Lengkap :</label>
+                        <label class="form-label">Alamat <span class="text-danger">*</span></label>
                         <textarea name="alamat_lengkap" placeholder="Alamat Lengkap" rows="3" class="form-control" required>{{ old('alamat_lengkap', $karyawan->alamat_lengkap) }}</textarea>
                         @error('alamat_lengkap')
                             <div class="text-danger">{{ $message }}</div>
@@ -168,7 +168,7 @@
                     </div>
 
                     <div class="mb-3">
-                        <label class="form-label">Kode Pos :</label>
+                        <label class="form-label">Kode Pos <span class="text-danger">*</span></label>
                         <input id="kode_pos" name="kode_pos" type="text" value="{{ $karyawan->kode_pos }}"
                             class="form-control" required>
                         @error('kode_pos')
@@ -218,7 +218,7 @@
                     </div> --}}
 
                     <div class="mb-3">
-                        <label class="form-label">Foto KTP :</label>
+                        <label class="form-label">Foto KTP <span class="text-danger">*</span></label>
                         <input type="file" name="foto_ktp" class="form-control" accept="image/*" id="foto_ktp_input"
                             onchange="previewFoto('foto_ktp_input', 'foto_ktp_preview')">
 

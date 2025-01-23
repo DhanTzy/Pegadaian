@@ -69,29 +69,29 @@
                     </div>
                     <div class="modal-body">
                         <div class="mb-3">
-                            <label for="jenis_jaminan" class="form-label">Jenis Jaminan</label>
+                            <label for="jenis_jaminan" class="form-label">Jenis Jaminan <span class="text-danger">*</span></label>
                             <input type="text" class="form-control" id="jenis_jaminan" name="jenis_jaminan" readonly>
                         </div>
 
                         <div class="mb-3">
-                            <label for="foto_jaminan" class="form-label">Upload Foto</label>
+                            <label for="foto_jaminan" class="form-label">Upload Foto <span class="text-danger">*</span></label>
                             <input type="file" class="form-control" id="foto_jaminan" name="foto_jaminan[]" multiple
                                 accept="image/*">
                         </div>
 
                         <div class="mb-3">
-                            <label class="form-label">Foto Jaminan</label>
+                            <label class="form-label">Foto Jaminan </label>
                             <div id="fotoPreviewContainer" class="d-flex flex-wrap" style="display: none;">
                             </div>
                         </div>
 
                         <div class="mb-3">
-                            <label for="nilai_pasar" class="form-label">Nilai Pasar</label>
+                            <label for="nilai_pasar" class="form-label">Nilai Pasar <span class="text-danger">*</span></label>
                             <input type="text" class="form-control" id="nilai_pasar" name="nilai_pasar">
                         </div>
 
                         <div class="mb-3">
-                            <label for="nilai_likuiditas" class="form-label">Nilai Likuiditas</label>
+                            <label for="nilai_likuiditas" class="form-label">Nilai Likuiditas <span class="text-danger">*</span></label>
                             <input type="text" class="form-control" id="nilai_likuiditas" name="nilai_likuiditas">
                         </div>
 
@@ -145,7 +145,8 @@
                 processing: true,
                 serverSide: true,
                 ajax: "{{ route('appraisal.data') }}",
-                columns: [{ data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: false, searchable: false },
+                columns: [
+                    { data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: false, searchable: false },
                     { data: 'jenis_jaminan', name: 'jenis_jaminan' },
                     { data: 'nilai_pasar', name: 'nilai_pasar' },
                     { data: 'nilai_likuiditas', name: 'nilai_likuiditas' },

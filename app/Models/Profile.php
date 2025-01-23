@@ -16,11 +16,10 @@ class Profile extends Model
         'nomor_identitas',
         'tempat_lahir',
         'tanggal_lahir',
-        'status_perkawinan',
+        'jenis_kelamin',
         'alamat_lengkap',
         'kode_pos',
         'telepon',
-        'nama_orang_tua',
     ];
 
     // Relasi dengan tabel users

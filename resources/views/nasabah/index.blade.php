@@ -69,7 +69,7 @@
                                         <th scope="col">Tempat Lahir</th>
                                         <th scope="col">Tanggal Lahir</th>
                                         <th scope="col">Telepon</th>
-                                        <th scope="col">Action</th>
+                                        <th scope="col">Aksi</th>
                                     </tr>
                                 </thead>
                                 <tbody class="text-center">

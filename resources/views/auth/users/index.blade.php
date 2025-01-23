@@ -19,8 +19,8 @@
                             <p class="fw-bold" id="current-info" style="margin: 0; font-size: 16px; color:red"></p>
                         </div>
                         <div class="card-body">
-                            <button onclick="window.location='{{ route('users.create') }}'"
-                                class="btn btn-primary mb-3" style="background-color: #0095FF;">
+                            <button onclick="window.location='{{ route('users.create') }}'" class="btn btn-primary mb-3"
+                                style="background-color: #0095FF;">
                                 <i class="bi bi-plus-lg"></i> Tambah Data Akun
                             </button>
 
@@ -37,7 +37,7 @@
                             @endif
 
                             <div class="table-responsive">
-                                <table id="transaksiTable" class="table table-striped table-bordered">
+                                <table id="usersTable" class="table table-striped table-bordered">
                                     <thead class="table-dark text-center">
                                         <tr>
                                             <th>No</th>
@@ -47,28 +47,8 @@
                                             <th>Aksi</th>
                                         </tr>
                                     </thead>
-                                    <tbody>
-                                        @foreach ($users as $user)
-                                        <tr @if ($user->role === 'admin') style="background-color: #f8f9fa; font-weight: bold;" @endif>
-                                                <td class="text-center">{{ $loop->iteration }}</td>
-                                                <td class="text-center">{{ $user->name }}</td>
-                                                <td class="text-center">{{ $user->email }}</td>
-                                                <td class="text-center">{{ $user->role }}</td>
-                                                <td class="text-center">
-                                                    @if ($user->role === 'admin')
-                                                    @else
-                                                        <form action="{{ route('admin.users.destroy', $user->id) }}" method="POST" style="display: inline-block;">
-                                                            @csrf
-                                                            @method('DELETE')
-                                                            <button type="submit" class="btn btn-danger"
-                                                                onclick="return confirm('Yakin ingin menghapus akun ini?')">
-                                                                <i class="fas fa-trash-alt"></i>
-                                                            </button>
-                                                        </form>
-                                                    @endif
-                                                </td>
-                                            </tr>
-                                        @endforeach
+                                    <tbody class="text-center">
+
                                     </tbody>
                                 </table>
                             </div>
@@ -79,7 +59,26 @@
         </div>
     </div>
 
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+
     <script>
+        $(document).ready(function() {
+            let table = $('#usersTable').DataTable({
+                processing: true,
+                serverSide: true,
+                ajax: "{{ route('users.data') }}",
+                columns: [
+                    { data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: false, searchable: false },
+                    { data: 'name', name: 'name' },
+                    { data: 'email', name: 'email' },
+                    { data: 'role', name:'role'},
+                    { data: 'action', name: 'action', orderable: false, searchable: false }
+                ]
+            });
+        });
+
         function updateTime() {
             const now = new Date();
             const dayString = now.toLocaleDateString('id-ID', {

@@ -21,7 +21,7 @@ class Karyawan extends Model
         'tanggal_lahir',
         'agama',
         'kewarganegaraan',
-        'status_perkawinan',
+        // 'status_perkawinan',
         'no_telepon',
         'email',
         'alamat_lengkap',

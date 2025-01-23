@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Profile;
 use App\Http\Controllers\Controller;
 
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Profile;
@@ -11,16 +12,24 @@ use Illuminate\Support\Facades\Storage;
 
 class ProfileController extends Controller
 {
-    public function profile()
+    public function show()
     {
-        return view('profile.index');
+        return view('profile.show');
     }
 
-    public function updateProfile(Request $request)
+    public function edit()
     {
-        // Ambil user dan profile terkait
+        return view('profile.edit');
+    }
+
+    public function Update(Request $request)
+    {
+        if (!Auth::check()) {
+            return redirect()->route('login')->with('error', 'Anda perlu login terlebih dahulu.');
+        }
         $user = Auth::user();
         $profile = $user->profile;
+        // dd($profile);
 
         // Validasi input
         $request->validate([
@@ -30,11 +39,10 @@ class ProfileController extends Controller
             'nomor_identitas' => 'required|string|max:16|unique:profile,nomor_identitas,' . ($profile->id ?? 'null'),
             'tempat_lahir' => 'required|string|max:100',
             'tanggal_lahir' => 'required|date',
-            'status_perkawinan' => 'required|string|max:50',
+            'jenis_kelamin' => 'required|string|max:50',
             'alamat_lengkap' => 'required|string',
             'kode_pos' => 'required|string|max:10',
             'telepon' => 'required|string|max:15',
-            // 'nama_orang_tua' => 'required|string|max:255',
         ], [
             'nip.required' => 'NIP wajib diisi.',
             'nip.max' => 'NIP tidak boleh lebih dari 18 karakter.',
@@ -70,14 +78,13 @@ class ProfileController extends Controller
         $profile->nomor_identitas = $request->nomor_identitas;
         $profile->tempat_lahir = $request->tempat_lahir;
         $profile->tanggal_lahir = $request->tanggal_lahir;
-        $profile->status_perkawinan = $request->status_perkawinan;
+        $profile->jenis_kelamin = $request->jenis_kelamin;
         $profile->alamat_lengkap = $request->alamat_lengkap;
         $profile->kode_pos = $request->kode_pos;
         $profile->telepon = $request->telepon;
-        // $profile->nama_orang_tua = $request->nama_orang_tua;
 
         $profile->save();
 
-        return redirect()->route('profile.index')->with('success', 'Profil berhasil diperbarui.');
+        return redirect()->route('profile.show')->with('success', 'Profil berhasil diperbarui.');
     }
 }

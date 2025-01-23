@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('bunga')->nullable();
             $table->string('bunga_perbulan')->nullable();
             $table->string('pelunasan')->nullable();
-            $table->string('biaya_administarasi')->nullable();
+            $table->string('biaya_administrasi')->nullable();
             $table->string('status_delete')->default('1');
             $table->timestamps();
         });

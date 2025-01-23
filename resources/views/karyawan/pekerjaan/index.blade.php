@@ -15,8 +15,8 @@
                 </div>
                 <div class="app-content">
                     <div class="card mb-4">
-                        <div class="card-header">
-                            <h3 class="card-title">Bordered Table</h3>
+                        <div class="card-header" style="display: flex; justify-content: center; align-items: center;">
+                            <p class="fw-bold" id="current-info" style="margin: 0; font-size: 16px; color:red"></p>
                         </div>
                         <div class="card-body">
                             <button type="button" class="btn btn-primary float-left mb-2" id="btnTambahPekerjaan"
@@ -56,13 +56,13 @@
                                                     data-bs-target="#modalForm">
                                                     <i class="fas fa-edit"></i>
                                                 </button>
-                                                <form
-                                                    action="{{ route('admin.karyawan.pekerjaan.destroy', $pekerjaan->id) }}"
+                                                <form action="{{ route('karyawan.pekerjaan.destroy', $pekerjaan->id) }}"
                                                     method="POST" style="display: inline;">
                                                     @csrf
                                                     @method('DELETE')
                                                     <button type="submit" class="btn btn-danger btn-sm me-2"
-                                                        onclick="return confirm('Yakin ingin menghapus?')"><i class="fas fa-trash-alt"></i></button>
+                                                        onclick="return confirm('Yakin ingin menghapus?')"><i
+                                                            class="fas fa-trash-alt"></i></button>
                                                 </form>
                                             </td>
                                         </tr>
@@ -112,13 +112,34 @@
     </div>
 
     <script>
+        function updateTime() {
+            const now = new Date();
+            const dayString = now.toLocaleDateString('id-ID', {
+                weekday: 'long'
+            });
+            const dateString = now.toLocaleDateString('id-ID', {
+                day: '2-digit',
+                month: '2-digit',
+                year: 'numeric'
+            });
+            const timeString = now.toLocaleTimeString('id-ID', {
+                hour: '2-digit',
+                minute: '2-digit'
+            });
+            const fullString = `${dayString}, ${dateString}, ${timeString}`;
+
+            document.getElementById('current-info').innerText = fullString;
+        }
+        setInterval(updateTime, 1000);
+        updateTime();
+
         document.addEventListener("DOMContentLoaded", function() {
             const formPekerjaan = document.getElementById("formPekerjaan");
             const modalLabel = document.getElementById("modalFormLabel");
             const posisiInput = document.getElementById("posisi_pekerjaan");
 
             document.getElementById("btnTambahPekerjaan").addEventListener("click", function() {
-                formPekerjaan.action = "{{ route('admin.karyawan.pekerjaan.store') }}";
+                formPekerjaan.action = "{{ route('karyawan.pekerjaan.store') }}";
                 formPekerjaan.method = "POST";
                 posisiInput.value = "";
                 modalLabel.textContent = "Tambah Pekerjaan";

@@ -44,11 +44,6 @@
                     <div class="input-groupi">
                         <input type="password" id="password" name="password" class="form-control"
                             placeholder="Masukkan password" autocomplete="off" required />
-                        <div class="input-group-append">
-                            <span class="input-group-texti toggle-password" onclick="togglePassword('password')">
-                                <i class="fa fa-eye"></i>
-                            </span>
-                        </div>
                     </div>
                     @error('password')
                         <span class="text-danger">{{ $message }}</span>
@@ -60,11 +55,6 @@
                     <div class="input-groupi">
                         <input type="password" id="password_confirmation" name="password_confirmation"
                             class="form-control" placeholder="Masukkan ulang password" autocomplete="off" required />
-                        <div class="input-group-append">
-                            <span class="input-group-texti" onclick="togglePassword('password_confirmation')">
-                                <i class="fa fa-eye"></i>
-                            </span>
-                        </div>
                     </div>
                     @error('password_confirmation')
                         <span class="text-danger">{{ $message }}</span>
@@ -89,32 +79,15 @@
     </div>
 
     <div class="container boxlogin">
-            <div class="container box position-relative" style="height: 100%;">
-                <img src="{{ asset('img/bgSAN.png') }}" alt="background" class="position-absolute"
-                    style="width: 100%; height: 100%;">
-                <div class="position-absolute d-flex justify-content-center align-items-center"
-                    style="left: 0; right: 0; top: 0; bottom: 0; margin: auto;">
-                    <img src="{{ asset('img/SANabsolute.png') }}" width="400" alt="centered-image">
-                </div>
+        <div class="container box position-relative" style="height: 100%;">
+            <img src="{{ asset('img/bgSAN.png') }}" alt="background" class="position-absolute"
+                style="width: 100%; height: 100%;">
+            <div class="position-absolute d-flex justify-content-center align-items-center"
+                style="left: 0; right: 0; top: 0; bottom: 0; margin: auto;">
+                <img src="{{ asset('img/SANabsolute.png') }}" width="400" alt="centered-image">
             </div>
         </div>
-
-    <script>
-        function togglePassword(fieldId) {
-    const passwordField = document.getElementById(fieldId);
-    const icon = passwordField.nextElementSibling.querySelector('i');
-    if (passwordField.type === 'password') {
-        passwordField.type = 'text';
-        icon.classList.remove('fa-eye');
-        icon.classList.add('fa-eye-slash');
-    } else {
-        passwordField.type = 'password';
-        icon.classList.remove('fa-eye-slash');
-        icon.classList.add('fa-eye');
-    }
-}
-    </script>
-
+    </div>
 </body>
 
 </html>

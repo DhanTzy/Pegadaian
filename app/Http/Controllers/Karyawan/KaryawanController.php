@@ -69,8 +69,7 @@ class KaryawanController extends Controller
                     data-tanggal_lahir="' .  Carbon::parse($karyawan->tanggal_lahir)->format('d-m-Y') . '"
                     data-agama="' . $karyawan->agama . '"
                     data-no_telepon="' . $karyawan->no_telepon . '"
-                    data-kewarganegaraan="' . $karyawan->kewarganegaraan . '"
-                    data-status_perkawinan="' . $karyawan->status_perkawinan . '"
+                    data-kewarganegaraan="' . $karyawan->kewarganegaraan . '"   
                     data-alamat_lengkap="' . $karyawan->alamat_lengkap . '"
                     data-kode_pos="' . $karyawan->kode_pos . '"
                     data-created_at="' . Carbon::parse($karyawan->created_at)->format('d-m-Y') . '"
@@ -107,7 +106,7 @@ class KaryawanController extends Controller
             'tanggal_lahir' => 'required|date',
             'agama' => 'required|string',
             'kewarganegaraan' => 'required|string',
-            'status_perkawinan' => 'required|in:Belum Menikah,Menikah',
+            // 'status_perkawinan' => 'required|in:Belum Menikah,Menikah',
             'no_telepon' => 'required|string|max:13|unique:karyawan,no_telepon',
             'alamat_lengkap' => 'required|string',
             'kode_pos' => 'required|digits:5',
@@ -132,8 +131,8 @@ class KaryawanController extends Controller
             'tanggal_lahir.date' => 'Tanggal lahir harus berupa tanggal yang valid.',
             'agama.required' => 'Agama wajib diisi.',
             'kewarganegaraan.required' => 'Kewarganegaraan wajib diisi.',
-            'status_perkawinan.required' => 'Status perkawinan wajib diisi.',
-            'status_perkawinan.in' => 'Status perkawinan hanya boleh Belum Menikah atau Menikah.',
+            // 'status_perkawinan.required' => 'Status perkawinan wajib diisi.',
+            // 'status_perkawinan.in' => 'Status perkawinan hanya boleh Belum Menikah atau Menikah.',
             'no_telepon.required' => 'Nomor telepon wajib diisi.',
             'no_telepon.unique' => 'Telepon sudah terdaftar. Mohon masukkan nomor telepon anda dengan benar.',
             'alamat_lengkap.required' => 'Alamat lengkap wajib diisi.',
@@ -210,7 +209,7 @@ class KaryawanController extends Controller
             'tanggal_lahir' => 'required|date',
             'agama' => 'required|string',
             'kewarganegaraan' => 'required|string',
-            'status_perkawinan' => 'required|in:Belum Menikah,Menikah',
+            // 'status_perkawinan' => 'required|in:Belum Menikah,Menikah',
             'alamat_lengkap' => 'required|string',
             'kode_pos' => 'required|digits:5',
             'foto_ktp' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',

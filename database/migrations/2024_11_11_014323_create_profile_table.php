@@ -22,7 +22,6 @@ return new class extends Migration
             $table->text('alamat_lengkap');
             $table->string('kode_pos');
             $table->string('telepon');
-            $table->string('nama_orang_tua');
             $table->timestamps();
         });
     }

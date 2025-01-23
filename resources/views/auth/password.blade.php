@@ -36,7 +36,7 @@
                 </div>
             </div>
             <button type="submit" class="btn btn-primary">Simpan</button>
-            <a href="{{ url('admin/home') }}" class="btn btn-secondary w-20">Kembali</a>
+            <a href="{{ url('dashboard') }}" class="btn btn-secondary w-20">Kembali</a>
         </form>
     </div>
 @endsection

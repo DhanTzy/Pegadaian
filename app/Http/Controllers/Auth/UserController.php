@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Yajra\DataTables\DataTables;
 use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
@@ -19,6 +20,31 @@ class UserController extends Controller
                 WHEN role = 'customer service' THEN 4
                 ELSE 5 END")->orderBy('name')->get();
         return view('auth.users.index', compact('users'));
+    }
+
+    public function getData(Request $request)
+    {
+        $query = User::where('status_active', 'active');
+
+        return DataTables::of($query)
+            ->addIndexColumn()
+            ->addColumn('action', function ($user) {
+                if ($user->role === 'admin') {
+                    return ''; 
+                }
+
+                return '
+                <form action="' . route('users.destroy', $user->id) . '" method="POST" style="display: inline-block;">
+                    ' . csrf_field() . '
+                    ' . method_field('DELETE') . '
+                    <button type="submit" class="btn btn-danger" onclick="return confirm(\'Yakin ingin menghapus akun ini?\')">
+                        <i class="fas fa-trash-alt"></i>
+                    </button>
+                </form>
+            ';
+            })
+            ->rawColumns(['action'])
+            ->make(true);
     }
 
     public function create()
@@ -46,7 +72,7 @@ class UserController extends Controller
             'status_active' => 'active',
         ]);
 
-        return redirect()->route('auth.users.index')->with('success', 'Akun berhasil dibuat.');
+        return redirect()->route('users.index')->with('success', 'Akun berhasil dibuat.');
     }
 
     public function destroy(User $user)
@@ -54,7 +80,7 @@ class UserController extends Controller
         $user->status_active = 'inactive';
         $user->save();
 
-        return redirect()->route('auth.users.index')->with('success', 'Akun berhasil dinonaktifkan.');
+        return redirect()->route('users.index')->with('success', 'Akun berhasil dinonaktifkan.');
     }
 
     // public function edit(User $user)

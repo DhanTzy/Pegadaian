@@ -18,8 +18,9 @@ class HasRole
      */
     public function handle(Request $request, Closure $next, string $role)
     {
-        
-        if (Auth::check() && Auth::user()->role === $role) {
+        // dd(auth()->user()->role);
+        $user = auth()->user();
+        if ($user && (is_array($role) ? in_array($user->role, $role) : $user->role == $role)) {
             return $next($request);
         }
 

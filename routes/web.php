@@ -47,15 +47,16 @@ Route::controller(AuthController::class)->group(function () {
 });
 
 //Admin Routes List
-Route::middleware(['role:admin'])->group(function () {
+Route::middleware(['auth', 'role:admin'])->group(function () {
 
     // Dashboard
-    Route::get('/home', [DashboardController::class, 'Home'])->name('home');
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
 
     // Kelola Akun
     Route::get('/users', [UserController::class, 'index'])->name('users.index');
     Route::get('/users/create', [UserController::class, 'create'])->name('users.create');
     Route::post('/users', [UserController::class, 'store'])->name('users.store');
+    Route::get('/users/data', [UserController::class, 'getData'])->name('users.data');
     Route::get('/users/{user}/edit', [UserController::class, 'edit'])->name('users.edit');
     Route::put('/users/{user}', [UserController::class, 'update'])->name('users.update');
     Route::delete('/users/{user}', [UserController::class, 'destroy'])->name('users.destroy');
@@ -67,8 +68,9 @@ Route::middleware(['role:admin'])->group(function () {
     Route::post('password/change', [AuthController::class, 'changePasswordSave'])->name('password.change.save');
 
     // Profile
-    Route::get('/profile', [ProfileController::class, 'profile'])->name('profile.index');
-    Route::put('/profile', [ProfileController::class, 'updateProfile'])->name('profile.update');
+    Route::get('/profile', [ProfileController::class, 'show'])->name('profile.show');
+    Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update');
 
     // Nasabah
     Route::get('/nasabah', [NasabahController::class, 'index'])->name('nasabah.index');

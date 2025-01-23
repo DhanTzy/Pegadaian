@@ -22,77 +22,61 @@
 </head>
 
 <body>
-        <div class="container login-con">
-            <div class="login-form container row justify-content-end">
-                <br>
-                <img src="{{ asset('img/gadai.png') }}" alt="logo" class="logo" />
-                <h1 class="fs-1 fw-semibold font-poppins">Masuk</h1>
-                <p>Selamat datang di Aplikasi Go Pegadaian. Ayo masuk ke akunmu supaya kamu bisa menikmati banyak fitur.
-                </p>
-                <hr style="background-color: black; height: 1px; border: none;">
+    <div class="container login-con">
+        <div class="login-form container row justify-content-end">
+            <br>
+            <img src="{{ asset('img/gadai.png') }}" alt="logo" class="logo" />
+            <h1 class="fs-1 fw-semibold font-poppins">Masuk</h1>
+            <p>Selamat datang di Aplikasi Go Pegadaian. Ayo masuk ke akunmu supaya kamu bisa menikmati banyak fitur.
+            </p>
+            <hr style="background-color: black; height: 1px; border: none;">
 
-                <form method="post" action="{{ route('login.action') }}">
-                    @csrf
-
-                    <!-- Email Field -->
-                    <div class="form-group">
-                        <label for="email">Your email</label>
-                        <input type="email" name="email" id="email" class="form-control"
-                            placeholder="name@company.com" required>
-                        @error('email')
-                            <span class="text-danger">{{ $message }}</span>
-                        @enderror
+            <form method="post" action="{{ route('login.action') }}">
+                @csrf
+                @if ($errors->has('email'))
+                    <div class="alert alert-danger">
+                        {{ $errors->first('email') }}
                     </div>
+                @endif
 
-                    <!-- Password Field -->
-                    <div class="form-group">
-                        <label for="password">Password</label>
-                        <div class="input-group">
-                            <input type="password" name="password" id="password" class="form-control"
-                                placeholder="password" required>
-                            <div class="input-group-append">
-                                <span class="input-group-text" onclick="togglePassword('password')">
-                                    <i class="fa fa-eye"></i>
-                                </span>
-                            </div>
-                        </div>
-                        @error('password')
-                            <span class="text-danger">{{ $message }}</span>
-                        @enderror
-                    </div>
-
-                    <!-- Login Button -->
-                    <button class="btn btn-primary" type="submit">Login</button>
-                </form>
-            </div>
-        </div>
-
-        <div class="container boxlogin">
-            <div class="container box position-relative" style="height: 100%;">
-                <img src="{{ asset('img/bgSAN.png') }}" alt="background" class="position-absolute"
-                    style="width: 100%; height: 100%;">
-                <div class="position-absolute d-flex justify-content-center align-items-center"
-                    style="left: 0; right: 0; top: 0; bottom: 0; margin: auto;">
-                    <img src="{{ asset('img/SANabsolute.png') }}" width="400" alt="centered-image">
+                <!-- Email Field -->
+                <div class="form-group">
+                    <label for="email">Your email</label>
+                    <input type="email" name="email" id="email" class="form-control"
+                        placeholder="name@company.com" required>
+                    @if ($errors->has('email') && !$errors->first('email') === 'Akun anda sedang tidak aktif, mohon aktifkan lewat admin.')
+                        <span class="text-danger">{{ $errors->first('email') }}</span>
+                    @endif
                 </div>
+
+                <!-- Password Field -->
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <div class="input-group">
+                        <input type="password" name="password" id="password" class="form-control"
+                            placeholder="password" required>
+                    </div>
+                    @error('password')
+                        <span class="text-danger">{{ $message }}</span>
+                    @enderror
+                </div>
+
+                <!-- Login Button -->
+                <button class="btn btn-primary" type="submit">Login</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="container boxlogin">
+        <div class="container box position-relative" style="height: 100%;">
+            <img src="{{ asset('img/bgSAN.png') }}" alt="background" class="position-absolute"
+                style="width: 100%; height: 100%;">
+            <div class="position-absolute d-flex justify-content-center align-items-center"
+                style="left: 0; right: 0; top: 0; bottom: 0; margin: auto;">
+                <img src="{{ asset('img/SANabsolute.png') }}" width="400" alt="centered-image">
             </div>
         </div>
-
-    <script>
-        function togglePassword(fieldId) {
-            const field = document.getElementById(fieldId);
-            const icon = field.nextElementSibling.querySelector('i');
-            if (field.type === "password") {
-                field.type = "text";
-                icon.classList.remove('fa-eye');
-                icon.classList.add('fa-eye-slash');
-            } else {
-                field.type = "password";
-                icon.classList.remove('fa-eye-slash');
-                icon.classList.add('fa-eye');
-            }
-        }
-    </script>
+    </div>
 </body>
 
 </html>

@@ -11,7 +11,7 @@
             @csrf
 
             <div class="mb-3">
-                <label class="form-label">Nama Lengkap</label>
+                <label class="form-label">Nama Lengkap <span class="text-danger">*</span></label>
                 <input id="nama_lengkap" name="nama_lengkap" type="text" class="form-control"
                     value="{{ old('nama_lengkap') }}" placeholder="Nama Lengkap Anda" required>
                 @error('nama_lengkap')
@@ -20,16 +20,16 @@
             </div>
 
             <div class="mb-3">
-                <label class="form-label">NIK</label>
+                <label class="form-label">NIK <span class="text-danger">*</span></label>
                 <input id="nomor_identitas" name="nomor_identitas" type="text" class="form-control"
-                    value="{{ old('nomor_identitas') }}" placeholder="Nomor Identitas Anda" required>
+                    value="{{ old('nomor_identitas') }}" placeholder="Masukkan NIK" required>
                 @error('nomor_identitas')
                     <div class="text-danger">{{ $message }}</div>
                 @enderror
             </div>
 
             <div class="mb-3">
-                <label class="form-label">Alamat Lengkap</label>
+                <label class="form-label">Alamat <span class="text-danger">*</span></label>
                 <textarea name="alamat_lengkap" rows="3" class="form-control" placeholder="Alamat Anda" required>{{ old('alamat_lengkap') }}</textarea>
                 @error('alamat_lengkap')
                     <div class="text-danger">{{ $message }}</div>
@@ -37,7 +37,7 @@
             </div>
 
             <div class="mb-3">
-                <label class="form-label">Kelurahan</label>
+                <label class="form-label">Kelurahan <span class="text-danger">*</span></label>
                 <input id="kelurahan" name="kelurahan" type="text" class="form-control" value="{{ old('kelurahan') }}"
                     placeholder="Kelurahan" required>
                 @error('kelurahan')
@@ -46,7 +46,7 @@
             </div>
 
             <div class="mb-3">
-                <label class="form-label">Kecamatan</label>
+                <label class="form-label">Kecamatan <span class="text-danger">*</span></label>
                 <input id="kecamatan" name="kecamatan" type="text" class="form-control" value="{{ old('kecamatan') }}"
                     placeholder="kecamatan " required>
                 @error('kecamatan')
@@ -55,7 +55,7 @@
             </div>
 
             <div class="mb-3">
-                <label class="form-label">Kabupaten</label>
+                <label class="form-label">Kabupaten <span class="text-danger">*</span></label>
                 <input id="kabupaten" name="kabupaten" type="text" class="form-control" value="{{ old('kabupaten') }}"
                     placeholder="kabupaten" required>
                 @error('kabupaten')
@@ -64,7 +64,7 @@
             </div>
 
             <div class="mb-3">
-                <label class="form-label">Propinsi</label>
+                <label class="form-label">Propinsi <span class="text-danger">*</span></label>
                 <input id="propinsi" name="propinsi" type="text" class="form-control" value="{{ old('propinsi') }}"
                     placeholder="propinsi" required>
                 @error('propinsi')
@@ -74,7 +74,7 @@
 
             <div class="row mb-3">
                 <div class="col">
-                    <label class="form-label">Tempat Lahir</label>
+                    <label class="form-label">Tempat Lahir <span class="text-danger">*</span></label>
                     <input type="text" name="tempat_lahir" class="form-control"
                         value="{{ old('tempat_lahir') }}"placeholder="Tempat Lahir Anda" required>
                     @error('tempat_lahir')
@@ -82,7 +82,7 @@
                     @enderror
                 </div>
                 <div class="col">
-                    <label class="form-label">Tanggal Lahir</label>
+                    <label class="form-label">Tanggal Lahir <span class="text-danger">*</span></label>
                     <input type="date" name="tanggal_lahir" class="form-control" value="{{ old('tanggal_lahir') }}"
                         required>
                     @error('tanggal_lahir')
@@ -92,7 +92,7 @@
             </div>
 
             <div class="mb-3">
-                <label class="form-label">Telepon</label>
+                <label class="form-label">Telepon <span class="text-danger">*</span></label>
                 <input type="text" name="telepon" class="form-control" value="{{ old('telepon') }}"
                     placeholder="Nomor Telepon Anda" required>
                 @error('telepon')
@@ -101,7 +101,7 @@
             </div>
 
             <div class="mb-3">
-                <label class="form-label">Foto KTP </label>
+                <label class="form-label">Foto KTP <span class="text-danger">*</span></label>
                 <input type="file" name="foto_ktp" class="form-control" accept="image/*" required
                     onchange="previewImage(event)">
                 @error('foto_ktp')

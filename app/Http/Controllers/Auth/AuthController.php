@@ -65,6 +65,12 @@ class AuthController extends Controller
             ]);
         }
 
+        if ($user->status_active === 'inactive') {
+            throw ValidationException::withMessages([
+                'email' => 'Akun anda sedang tidak aktif, mohon aktifkan kembali dengan menghubungi admin.',
+            ]);
+        }
+
         if (!Auth::attempt($request->only('email', 'password'), $request->boolean('remember'))) {
             throw ValidationException::withMessages([
                 'password' => 'Password yang anda masukkan salah, Silahkan isi dengan benar.'
@@ -76,9 +82,9 @@ class AuthController extends Controller
         $user = auth()->user();
         if ($user->role == 'admin') {
             if (is_null($user->image) || empty($user->name)) {
-                return redirect()->route('admin.profile')->with('message', 'Silakan Lengkapi Profil Anda Terlebih Dahulu');
+                return redirect()->route('profile')->with('message', 'Silakan Lengkapi Profil Anda Terlebih Dahulu');
             }
-            return redirect()->route('home');
+            return redirect()->route('dashboard.index');
         }
         return redirect()->route('dashboard');
     }
@@ -117,9 +123,9 @@ class AuthController extends Controller
         }
 
         // Update password
-        $user->update([
-            'password' => Hash::make($request->new_password),
-        ]);
+        $user = User::find($user->id);
+        $user->password = Hash::make($request->new_password);
+        $user->save();
 
         return redirect()->route('auth.password')->with('success', 'Password berhasil diubah.');
     }

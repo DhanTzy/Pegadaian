@@ -82,7 +82,7 @@
                                         <th scope="col">Telepon</th>
                                         {{-- <th scope="col">Email</th> --}}
                                         <th scope="col">Tanggal Bergabung</th>
-                                        <th scope="col">Action</th>
+                                        <th scope="col">Aksi</th>
                                     </tr>
                                 </thead>
                                 <tbody class="text-center">
@@ -115,9 +115,9 @@
                     <p><strong>Agama :</strong> <span id="detailAgama"></span></p>
                     <p><strong>Telepon :</strong> <span id="detailNoTelepon"></span></p>
                     <p><strong>Kewarganegaraan :</strong> <span id="detailKewarganegaraan"></span></p>
-                    <p><strong>Status Perkawinan :</strong> <span id="detailStatusPerkawinan"></span></p>
+                    {{-- <p><strong>Status Perkawinan :</strong> <span id="detailStatusPerkawinan"></span></p> --}}
                     {{-- <p><strong>Email :</strong> <span id="detailEmail"></span></p> --}}
-                    <p><strong>Alamat Lengkap :</strong> <span id="detailAlamatLengkap"></span></p>
+                    <p><strong>Alamat :</strong> <span id="detailAlamatLengkap"></span></p>
                     <p><strong>Kode Pos :</strong> <span id="detailKodePos"></span></p>
                     {{-- <p><strong>Anggota Keluarga :</strong></p>
                     <ul id="detailAnggotaKeluarga">
@@ -230,7 +230,7 @@
             var noTelepon = button.getAttribute('data-no_telepon');
             var tanggalGabung = button.getAttribute('data-created_at');
             var kewarganegaraan = button.getAttribute('data-kewarganegaraan');
-            var statusPerkawinan = button.getAttribute('data-status_perkawinan');
+            // var statusPerkawinan = button.getAttribute('data-status_perkawinan');
             // var email = button.getAttribute('data-email');
             var alamatLengkap = button.getAttribute('data-alamat_lengkap');
             var kodePos = button.getAttribute('data-kode_pos');
@@ -250,7 +250,7 @@
             karyawanDetailModal.querySelector('#detailNoTelepon').textContent = noTelepon;
             karyawanDetailModal.querySelector('#detailTanggalGabung').textContent = tanggalGabung;
             karyawanDetailModal.querySelector('#detailKewarganegaraan').textContent = kewarganegaraan;
-            karyawanDetailModal.querySelector('#detailStatusPerkawinan').textContent = statusPerkawinan;
+            // karyawanDetailModal.querySelector('#detailStatusPerkawinan').textContent = statusPerkawinan;
             // karyawanDetailModal.querySelector('#detailEmail').textContent = email;
             karyawanDetailModal.querySelector('#detailAlamatLengkap').textContent = alamatLengkap;
             karyawanDetailModal.querySelector('#detailKodePos').textContent = kodePos;

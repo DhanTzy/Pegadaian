@@ -73,49 +73,49 @@
                     </div>
                     <div class="modal-body">
                         <div class="mb-3">
-                            <label for="jenis_jaminan" class="form-label">Jenis Jaminan</label>
+                            <label for="jenis_jaminan" class="form-label">Jenis Jaminan <span class="text-danger">*</span></label>
                             <input type="text" class="form-control" id="jenis_jaminan" name="jenis_jaminan" readonly>
                         </div>
 
                         <div class="mb-3">
-                            <label class="form-label">Foto Jaminan</label>
+                            <label class="form-label">Foto Jaminan <span class="text-danger">*</span></label>
                             <div id="modalFotoJaminan" class="d-flex flex-wrap" style="display: none;">
                             </div>
                         </div>
 
                         <div class="mb-3">
-                            <label for="nilai_pasar" class="form-label">Nilai Pasar</label>
+                            <label for="nilai_pasar" class="form-label">Nilai Pasar <span class="text-danger">*</span></label>
                             <input type="text" class="form-control" id="nilai_pasar" name="nilai_pasar" readonly>
                         </div>
 
                         <div class="mb-3">
-                            <label for="nilai_likuiditas" class="form-label">Nilai Likuiditas</label>
+                            <label for="nilai_likuiditas" class="form-label">Nilai Likuiditas <span class="text-danger">*</span></label>
                             <input type="text" class="form-control" id="nilai_likuiditas" name="nilai_likuiditas"
                                 readonly>
                         </div>
 
                         <div class="mb-3">
-                            <label for="putusan_pinjaman" class="form-label">Putusan Pinjaman</label>
+                            <label for="putusan_pinjaman" class="form-label">Putusan Pinjaman <span class="text-danger">*</span></label>
                             <input type="text" class="form-control" id="putusan_pinjaman" name="putusan_pinjaman">
                         </div>
 
                         <div class="mb-3">
-                            <label for="bunga" class="form-label">Bunga</label>
+                            <label for="bunga" class="form-label">Bunga <span class="text-danger">*</span></label>
                             <input type="text" class="form-control" id="bunga" name="bunga">
                         </div>
 
                         <div class="mb-3">
-                            <label for="bunga_perbulan" class="form-label">Bunga Perbulan</label>
+                            <label for="bunga_perbulan" class="form-label">Bunga Perbulan <span class="text-danger">*</span></label>
                             <input type="text" class="form-control" id="bunga_perbulan" name="bunga_perbulan">
                         </div>
 
                         <div class="mb-3">
-                            <label for="pelunasan" class="form-label">Pelunasan</label>
+                            <label for="pelunasan" class="form-label">Pelunasan <span class="text-danger">*</span></label>
                             <input type="text" class="form-control" id="pelunasan" name="pelunasan">
                         </div>
 
                         <div class="mb-3">
-                            <label for="biaya_administrasi" class="form-label">Biaya Administrasi</label>
+                            <label for="biaya_administrasi" class="form-label">Biaya Administrasi <span class="text-danger">*</span></label>
                             <input type="text" class="form-control" id="biaya_administrasi" name="biaya_administrasi"
                                 readonly>
                         </div>

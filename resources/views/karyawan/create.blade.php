@@ -10,7 +10,7 @@
                 @csrf
 
                 <div class="mb-3">
-                    <label class="form-label">NIP</label>
+                    <label class="form-label">NIP <span class="text-danger">*</span></label>
                     <input type="text" name="nip" id="nip" class="form-control" value="{{ old('nip') }}"
                         placeholder="Nomor Induk Pegawai" required>
                     @error('nip')
@@ -19,7 +19,7 @@
                 </div>
 
                 <div class="mb-3">
-                    <label class="form-label">Nomor Identitas (KTP)</label>
+                    <label class="form-label">Nomor Identitas <span class="text-danger">*</span></label>
                     <input id="no_identitas" name="no_identitas" type="text" class="form-control"
                         value="{{ old('no_identitas') }}" placeholder="No Identitas Anda" required>
                     @error('no_identitas')
@@ -28,7 +28,7 @@
                 </div>
 
                 <div class="mb-3">
-                    <label class="form-label">Nama Lengkap :</label>
+                    <label class="form-label">Nama Lengkap <span class="text-danger">*</span></label>
                     <input id="nama_lengkap" name="nama_lengkap" type="text" class="form-control"
                         value="{{ old('nama_lengkap') }}" placeholder="Nama Lengkap Anda" required>
                     @error('nama_lengkap')
@@ -37,7 +37,7 @@
                 </div>
 
                 <div class="mb-3">
-                    <label for="pekerjaan_id">Posisi Pekerjaan</label>
+                    <label for="pekerjaan_id">Posisi Pekerjaan <span class="text-danger">*</span></label>
                     <select name="pekerjaan_id" id="pekerjaan_id" class="form-select">
                         <option value="">Pilih Posisi Pekerjaan</option>
                         @foreach($pekerjaans as $pekerjaan)
@@ -52,7 +52,7 @@
                 </div>
 
                 <div class="mb-3">
-                    <label class="form-label">Jenis Kelamin :</label>
+                    <label class="form-label">Jenis Kelamin <span class="text-danger">*</span></label>
                     <select name="jenis_kelamin" class="form-select" required>
                         <option value="" disabled selected>Pilih Jenis Kelamin</option>
                         <option value="Laki-laki" {{ old('jenis_kelamin') == 'Laki-laki' ? 'selected' : '' }}>Laki-laki
@@ -67,7 +67,7 @@
 
                 <div class="row mb-3">
                     <div class="col">
-                        <label class="form-label">Tempat Lahir :</label>
+                        <label class="form-label">Tempat Lahir <span class="text-danger">*</span></label>
                         <input type="text" name="tempat_lahir" class="form-control" value="{{ old('tempat_lahir') }}"
                             placeholder="Tempat Lahir Anda" required>
                         @error('tempat_lahir')
@@ -75,7 +75,7 @@
                         @enderror
                     </div>
                     <div class="col">
-                        <label class="form-label">Tanggal Lahir :</label>
+                        <label class="form-label">Tanggal Lahir <span class="text-danger">*</span></label>
                         <input type="date" name="tanggal_lahir" class="form-control" value="{{ old('tanggal_lahir') }}"
                             required>
                         @error('tanggal_lahir')
@@ -85,20 +85,20 @@
                 </div>
 
                 <div class="mb-3">
-                    <label class="form-label">Agama :</label>
+                    <label class="form-label">Agama <span class="text-danger">*</span></label>
                     <select name="agama" class="form-select" required>
                         <option value="" disabled selected>Pilih Agama</option>
                         <option value="Islam" {{ old('agama') == 'Islam' ? 'selected' : '' }}>Islam
                         </option>
                         <option value="Kristen Protestan" {{ old('agama') == 'Kristen Protestan' ? 'selected' : '' }}>
-                            Kristen Protestan
+                            Kristen Protestan </option>
                         <option value="Kristen Katolik" {{ old('agama') == 'Kristen Katolik' ? 'selected' : '' }}>Kristen
-                            Katolik
-                        <option value="Hindu" {{ old('agama') == 'Hindu' ? 'selected' : '' }}>Hindu
-                        <option value="Buddha" {{ old('agama') == 'Buddha' ? 'selected' : '' }}>Buddha
-                        <option value="Konghucu" {{ old('agama') == 'Konghucu' ? 'selected' : '' }}>Konghucu
-                        <option value="Atheis" {{ old('agama') == 'Atheis' ? 'selected' : '' }}>Atheis
-                        </option>
+                            Katolik </option>
+                        <option value="Hindu" {{ old('agama') == 'Hindu' ? 'selected' : '' }}>Hindu </option>
+                        <option value="Buddha" {{ old('agama') == 'Buddha' ? 'selected' : '' }}>Buddha </option>
+                        <option value="Konghucu" {{ old('agama') == 'Konghucu' ? 'selected' : '' }}>Konghucu </option>
+                        <option value="Khong Guan" {{ old('agama') == 'Khong Guan' ? 'selected' : '' }}>Khong Guan </option>
+                        <option value="Atheis" {{ old('agama') == 'Atheis' ? 'selected' : '' }}>Atheis </option>
                     </select>
                     @error('agama')
                         <div class="text-danger">{{ $message }}</div>
@@ -106,7 +106,7 @@
                 </div>
 
                 <div class="mb-3">
-                    <label class="form-label">Kewarganegaraan :</label>
+                    <label class="form-label">Kewarganegaraan <span class="text-danger">*</span></label>
                     <input type="text" name="kewarganegaraan" class="form-control" value="{{ old('kewarganegaraan') }}"
                         placeholder="Kewarganegaraan Anda" required>
                     @error('kewarganegaraan')
@@ -114,8 +114,8 @@
                     @enderror
                 </div>
 
-                <div class="mb-3">
-                    <label class="form-label">Status Perkawinan :</label>
+                {{-- <div class="mb-3">
+                    <label class="form-label">Status Perkawinan <span class="text-danger">*</span></label>
                     <select name="status_perkawinan" class="form-select" required>
                         <option value="" disabled selected>Pilih Status Perkawinan</option>
                         <option value="Belum Menikah" {{ old('status_perkawinan') == 'Belum Menikah' ? 'selected' : '' }}>
@@ -127,10 +127,10 @@
                     @error('status_perkawinan')
                         <div class="text-danger">{{ $message }}</div>
                     @enderror
-                </div>
+                </div> --}}
 
                 <div class="mb-3">
-                    <label class="form-label">Nomor Telepon :</label>
+                    <label class="form-label">Nomor Telepon <span class="text-danger">*</span></label>
                     <input type="text" name="no_telepon" class="form-control" value="{{ old('no_telepon') }}"
                         placeholder="Nomor Telepon Anda" required>
                     @error('no_telepon')
@@ -148,7 +148,7 @@
                 </div> --}}
 
                 <div class="mb-3">
-                    <label class="form-label">Alamat Lengkap :</label>
+                    <label class="form-label">Alamat <span class="text-danger">*</span></label>
                     <textarea name="alamat_lengkap" rows="3" class="form-control" placeholder="Alamat Anda" required>{{ old('alamat_lengkap') }}</textarea>
                     @error('alamat_lengkap')
                         <div class="text-danger">{{ $message }}</div>
@@ -156,7 +156,7 @@
                 </div>
 
                 <div class="mb-3">
-                    <label class="form-label">Kode Pos</label>
+                    <label class="form-label">Kode Pos <span class="text-danger">*</span></label>
                     <input name="kode_pos" type="text" class="form-control" value="{{ old('kode_pos') }}"
                         placeholder="Kode Pos Anda" required>
                     @error('kode_pos')
@@ -198,7 +198,7 @@
                 </div> --}}
 
                 <div class="mb-3">
-                    <label class="form-label">Foto KTP :</label>
+                    <label class="form-label">Foto KTP <span class="text-danger">*</span></label>
                     <input type="file" name="foto_ktp" class="form-control" accept="image/*" id="foto_ktp_input"
                         onchange="previewKTP()">
                     <img id="foto_ktp_preview" class="img-fluid mt-2" style="max-width: 150px; display: none;">
