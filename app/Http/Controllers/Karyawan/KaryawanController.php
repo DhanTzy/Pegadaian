@@ -51,13 +51,6 @@ class KaryawanController extends Controller
                 return $karyawan->pekerjaan ? $karyawan->pekerjaan->posisi_pekerjaan : '-';
             })
             ->addColumn('action', function ($karyawan) {
-                $anggotaKeluarga = $karyawan->anggotaKeluarga->map(function ($anggota) {
-                    return [
-                        'status_kekeluargaan' => $anggota->status_kekeluargaan,
-                        'nama' => $anggota->nama,
-                        'nik' => $anggota->nik,
-                    ];
-                });
                 return '
             <button class="btn btn-info btn-sm me-2" data-bs-toggle="modal" data-bs-target="#karyawanDetailModal"
                     data-nip="' . $karyawan->nip . '"
