@@ -10,6 +10,12 @@
             </div>
         @endif
 
+        @if (session('message'))
+            <div class="alert alert-success">
+                {{ session('message') }}
+            </div>
+        @endif
+
         <div class="row">
             <div class="row justify-content-center">
                 <div class="col-lg-12">
@@ -47,7 +53,8 @@
                                 </div>
 
                                 <div class="row mb-3">
-                                    <label for="name" class="col-md-4 col-form-label">Nama <span class="text-danger">*</span></label>
+                                    <label for="name" class="col-md-4 col-form-label">Nama <span
+                                            class="text-danger">*</span></label>
                                     <div class="col-md-8">
                                         <input type="text" class="form-control" id="name" name="name"
                                             value="{{ old('name', auth()->user()->name) }}">
@@ -58,7 +65,8 @@
                                 </div>
 
                                 <div class="row mb-3">
-                                    <label for="nip" class="col-md-4 col-form-label">NIP <span class="text-danger">*</span></label>
+                                    <label for="nip" class="col-md-4 col-form-label">NIP <span
+                                            class="text-danger">*</span></label>
                                     <div class="col-md-8">
                                         <input type="nip" class="form-control" id="nip" name="nip"
                                             value="{{ old('nip', auth()->user()->profile ? auth()->user()->profile->nip : '') }}">
@@ -69,7 +77,8 @@
                                 </div>
 
                                 <div class="row mb-3">
-                                    <label for="nomor_identitas" class="col-md-4 col-form-label">Nomor Identitas <span class="text-danger">*</span></label>
+                                    <label for="nomor_identitas" class="col-md-4 col-form-label">Nomor Identitas <span
+                                            class="text-danger">*</span></label>
                                     <div class="col-md-8">
                                         <input type="nomor_identitas" class="form-control" id="nomor_identitas"
                                             name="nomor_identitas"
@@ -81,7 +90,8 @@
                                 </div>
 
                                 <div class="row mb-3">
-                                    <label for="tempat_lahir" class="col-md-4 col-form-label">Tempat Lahir <span class="text-danger">*</span></label>
+                                    <label for="tempat_lahir" class="col-md-4 col-form-label">Tempat Lahir <span
+                                            class="text-danger">*</span></label>
                                     <div class="col-md-8">
                                         <input type="tempat_lahir" class="form-control" id="tempat_lahir"
                                             name="tempat_lahir"
@@ -93,7 +103,8 @@
                                 </div>
 
                                 <div class="row mb-3">
-                                    <label for="tanggal_lahir" class="col-md-4 col-form-label">Tanggal Lahir <span class="text-danger">*</span></label>
+                                    <label for="tanggal_lahir" class="col-md-4 col-form-label">Tanggal Lahir <span
+                                            class="text-danger">*</span></label>
                                     <div class="col-md-8">
                                         <input type="date" class="form-control" id="tanggal_lahir" name="tanggal_lahir"
                                             value="{{ old('tanggal_lahir', auth()->user()->profile ? auth()->user()->profile->tanggal_lahir : '') }}">
@@ -104,7 +115,8 @@
                                 </div>
 
                                 <div class="row mb-3">
-                                    <label for="jenis_kelamin" class="col-md-4 col-form-label">Jenis Kelamin <span class="text-danger">*</span></label>
+                                    <label for="jenis_kelamin" class="col-md-4 col-form-label">Jenis Kelamin <span
+                                            class="text-danger">*</span></label>
                                     <div class="col-md-8">
                                         <select id="jenis_kelamin" name="jenis_kelamin"
                                             class="form-select @error('jenis_kelamin') is-invalid @enderror">
@@ -123,9 +135,11 @@
                                 </div>
 
                                 <div class="row mb-3">
-                                    <label for="alamat_lengkap" class="col-md-4 col-form-label">Alamat <span class="text-danger">*</span></label>
+                                    <label for="alamat_lengkap" class="col-md-4 col-form-label">Alamat <span
+                                            class="text-danger">*</span></label>
                                     <div class="col-md-8">
-                                        <textarea id="alamat_lengkap" name="alamat_lengkap" class="form-control @error('alamat_lengkap') is-invalid @enderror">{{ old('alamat_lengkap', auth()->user()->profile ? auth()->user()->profile->alamat_lengkap : '') }}</textarea>
+                                        <textarea id="alamat_lengkap" name="alamat_lengkap"
+                                            class="form-control @error('alamat_lengkap') is-invalid @enderror">{{ old('alamat_lengkap', auth()->user()->profile ? auth()->user()->profile->alamat_lengkap : '') }}</textarea>
                                         @error('alamat_lengkap')
                                             <div class="text-danger">{{ $message }}</div>
                                         @enderror
@@ -133,7 +147,8 @@
                                 </div>
 
                                 <div class="row mb-3">
-                                    <label for="kode_pos" class="col-md-4 col-form-label">Kode Pos <span class="text-danger">*</span></label>
+                                    <label for="kode_pos" class="col-md-4 col-form-label">Kode Pos <span
+                                            class="text-danger">*</span></label>
                                     <div class="col-md-8">
                                         <input type="text" class="form-control" id="kode_pos" name="kode_pos"
                                             value="{{ old('kode_pos', auth()->user()->profile ? auth()->user()->profile->kode_pos : '') }}">
@@ -144,7 +159,8 @@
                                 </div>
 
                                 <div class="row mb-3">
-                                    <label for="email" class="col-md-4 col-form-label">Email <span class="text-danger">*</span></label>
+                                    <label for="email" class="col-md-4 col-form-label">Email <span
+                                            class="text-danger">*</span></label>
                                     <div class="col-md-8">
                                         <input type="email" class="form-control" id="email" name="email"
                                             value="{{ old('email', Auth::user()->email) }}" disabled>
@@ -155,7 +171,8 @@
                                 </div>
 
                                 <div class="row mb-3">
-                                    <label for="telepon" class="col-md-4 col-form-label">Telepon <span class="text-danger">*</span></label>
+                                    <label for="telepon" class="col-md-4 col-form-label">Telepon <span
+                                            class="text-danger">*</span></label>
                                     <div class="col-md-8">
                                         <input type="number" class="form-control" id="telepon" name="telepon"
                                             value="{{ old('telepon', auth()->user()->profile ? auth()->user()->profile->telepon : '') }}">
@@ -166,7 +183,8 @@
                                 </div>
 
                                 <div class="row mb-5">
-                                    <label for="created_at" class="col-md-4 col-form-label">Akun Dibuat <span class="text-danger">*</span></label>
+                                    <label for="created_at" class="col-md-4 col-form-label">Akun Dibuat <span
+                                            class="text-danger">*</span></label>
                                     <div class="col-md-8">
                                         <input type="text" class="form-control" id="created_at"
                                             value="{{ Auth::user()->created_at->format('d M Y') }}" disabled>

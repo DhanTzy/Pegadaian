@@ -30,6 +30,14 @@ class TransaksiController extends Controller
                 foreach ($transaksi->jaminan as $jaminan) {
                     $fotoJaminan .= '<img src="' . asset('storage/' . $jaminan->foto_jaminan) . '" style="width: 100px; margin: 5px;">';
                 }
+                $printButton = '';
+                if ($transaksi->status_transaksi == 'Approval Selesai') {
+                    $printButton = '
+                         <a href="" class="btn btn-succes btn-sm me-2" target="_blank">
+                            <i class="fas fa-print"></i>
+                        </a>
+                    ';
+                }
                 return '
                 <button type="button" class="btn btn-info btn-sm me-2"
                         data-bs-toggle="modal"
@@ -48,6 +56,7 @@ class TransaksiController extends Controller
                         data-biaya_administrasi="' . $transaksi->biaya_administrasi . '">
                     <i class="fas fa-info-circle"></i>
                 </button>
+                ' . $printButton . '
                 <form action="' . route('transaksi.destroy', $transaksi->id) . '" method="POST"
                       onsubmit="return confirm(\'Apakah Anda Yakin Menghapus Data Ini?\')" class="d-inline">
                     ' . csrf_field() . '

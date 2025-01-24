@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Karyawan;
 use App\Models\Pekerjaan;
-use App\Models\AnggotaKeluarga;
 use Carbon\Carbon;
 use Yajra\DataTables\DataTables;
 use Illuminate\Support\Facades\File;
@@ -23,7 +22,7 @@ class KaryawanController extends Controller
     public function getData(Request $request)
     {
         $query = Karyawan::with('pekerjaan')
-            ->where('status_delete', '1');
+            ->where('status_delete', '1 Restore');
 
         if ($request->has('nama_lengkap') && $request->input('nama_lengkap') != '') {
             $query->where('nama_lengkap', 'LIKE', '%' . $request->input('nama_lengkap') . '%');
@@ -286,7 +285,7 @@ class KaryawanController extends Controller
         $karyawan = Karyawan::find($id);
 
         if ($karyawan) {
-            $karyawan->status_delete = '0';
+            $karyawan->status_delete = '0 Delete';
             $karyawan->save();
             return redirect()->route('karyawan.index')->with('success', 'Data berhasil dihapus.');
         }

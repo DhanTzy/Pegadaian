@@ -18,33 +18,6 @@ class AuthController extends Controller
         $this->middleware('guest')->except(['logout', 'changePassword', 'changePasswordSave']);
     }
 
-    public function register()
-    {
-        return view('auth/register');
-    }
-
-    public function registerSave(Request $request)
-    {
-        Validator::make($request->all(), [
-            'name' => 'required',
-            'email' => 'required|email|unique:users,email',
-            'password' => 'required|confirmed'
-        ], [
-            'email.unique' => 'Email sudah terdaftar. Silakan gunakan email lain.',
-            'email.required' => 'Email wajib diisi.',
-            'password_confirmation' => 'Konfirmasi password tidak cocok.'
-        ])->validate();
-
-        User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-            'role' => 'customer service'
-        ]);
-
-        return redirect()->route('login');
-    }
-
     public function login()
     {
         return view('auth/login');
@@ -82,10 +55,31 @@ class AuthController extends Controller
         $user = auth()->user();
         if ($user->role == 'admin') {
             if (is_null($user->image) || empty($user->name)) {
-                return redirect()->route('profile')->with('message', 'Silakan Lengkapi Profil Anda Terlebih Dahulu');
+                return redirect()->route('profile.edit')->with('message', 'Silakan Lengkapi Profil Anda Terlebih Dahulu');
             }
             return redirect()->route('dashboard.index');
         }
+        // $user = auth()->user();
+        // if ($user->role == 'approval') {
+        //     if (is_null($user->image) || empty($user->name)) {
+        //         return redirect()->route('profile.edit')->with('message', 'Silakan Lengkapi Profil Anda Terlebih Dahulu');
+        //     }
+        //     return redirect()->route('dashboard.index');
+        // }
+        // $user = auth()->user();
+        // if ($user->role == 'appraisal') {
+        //     if (is_null($user->image) || empty($user->name)) {
+        //         return redirect()->route('profile.edit')->with('message', 'Silakan Lengkapi Profil Anda Terlebih Dahulu');
+        //     }
+        //     return redirect()->route('dashboard.index');
+        // }
+        // $user = auth()->user();
+        // if ($user->role == 'customer service') {
+        //     if (is_null($user->image) || empty($user->name)) {
+        //         return redirect()->route('profile.edit')->with('message', 'Silakan Lengkapi Profil Anda Terlebih Dahulu');
+        //     }
+        //     return redirect()->route('dashboard.index');
+        // }
         return redirect()->route('dashboard');
     }
 
@@ -130,3 +124,31 @@ class AuthController extends Controller
         return redirect()->route('auth.password')->with('success', 'Password berhasil diubah.');
     }
 }
+
+    // public function register()
+    // {
+    //     return view('auth/register');
+    // }
+
+    // public function registerSave(Request $request)
+    // {
+    //     Validator::make($request->all(), [
+    //         'name' => 'required',
+    //         'email' => 'required|email|unique:users,email',
+    //         'password' => 'required|confirmed'
+    //     ], [
+    //         'email.unique' => 'Email sudah terdaftar. Silakan gunakan email lain.',
+    //         'email.required' => 'Email wajib diisi.',
+    //         'password_confirmation' => 'Konfirmasi password tidak cocok.'
+    //     ])->validate();
+
+    //     User::create([
+    //         'name' => $request->name,
+    //         'email' => $request->email,
+    //         'password' => Hash::make($request->password),
+    //         'role' => 'customer service'
+    //     ]);
+
+    //     return redirect()->route('login');
+    // }
+

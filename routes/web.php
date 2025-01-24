@@ -28,17 +28,13 @@ use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 |
 */
 
-// Route::get('/', function () {
-//     return view('home');
-// })->name('home');
-
 Route::get('/', function () {
     return redirect()->route('login');
 });
 
 Route::controller(AuthController::class)->group(function () {
-    Route::get('register', 'register')->name('register');
-    Route::post('register', 'registerSave')->name('register.save');
+    // Route::get('register', 'register')->name('register');
+    // Route::post('register', 'registerSave')->name('register.save');
 
     Route::get('login', 'login')->name('login');
     Route::post('login', 'loginAction')->name('login.action');
