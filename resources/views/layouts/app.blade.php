@@ -64,16 +64,16 @@
             </div>
         </nav>
 
-        <aside class="app-sidebar bg-body-secondary shadow " data-bs-theme="dark">
-            <div class="sidebar-brand"> <a href="" class="brand-link"><img src="{{ asset('img/Sidebar.png') }}"
-                        alt="AdminLTE Logo" class="brand-image opacity-75 shadow">
+        <aside class="app-sidebar bg-body-secondary" data-bs-theme="dark">
+            <div class="sidebar-brand"> <a href="" class="brand-link"><img src="{{ asset('img/gadai.png') }}"
+                        alt="AdminLTE Logo" class="brand-image opacity-75">
             </div>
             <div class="sidebar-wrapper">
                 <nav class="mt-5">
                     <ul class="nav sidebar-menu flex-column" data-lte-toggle="treeview" role="menu"
                         data-accordion="false">
                         <li class="nav-item"> <a
-                                class="nav-link {{ Route::is('dashboard.index') ? 'active bg-primary' : '' }}"
+                                class="nav-link text-black {{ Route::is('dashboard.index') ? 'active bg-white' : '' }}"
                                 href="{{ route('dashboard.index') }}"> <i class="nav-icon bi bi-speedometer"></i>
                                 <p>
                                     Dashboard
@@ -91,7 +91,7 @@
                         @endphp
 
                         <li class="nav-item {{ $isTransaksi || $isNasabah ? 'menu-open' : '' }}">
-                            <a href="#" class="nav-link {{ $isTransaksi || $isNasabah ? 'active' : '' }}">
+                            <a href="#" class="nav-link text-black {{ $isTransaksi || $isNasabah ? 'active bg-white' : '' }}">
                                 <i class="bi bi-person-fill-check"></i>
                                 <p>
                                     Customer Service
@@ -99,8 +99,8 @@
                                 </p>
                             </a>
                             <ul class="nav nav-treeview">
-                                <li class="nav-item {{ $isNasabah ? 'menu-open' : '' }}">
-                                    <a href="#" class="nav-link {{ $isNasabah ? 'active' : '' }}">
+                                <li class="nav-item text-black {{ $isNasabah ? 'menu-open' : '' }}">
+                                    <a href="#" class="nav-link text-black {{ $isNasabah ? 'active bg-white' : '' }}">
                                         <i class="nav-icon bi bi-table"></i>
                                         <p>
                                             Pendaftaran
@@ -109,7 +109,7 @@
                                     </a>
                                     <ul class="nav nav-treeview">
                                         <li class="nav-item">
-                                            <a class="nav-link {{ $isNasabah ? 'active bg-primary' : '' }}"
+                                            <a class="nav-link text-black {{ $isNasabah ? 'active bg-white' : '' }}"
                                                 href="{{ route('nasabah.index') }}">
                                                 <i class="nav-icon bi bi-circle"></i>
                                                 <p>Nasabah</p>
@@ -118,7 +118,7 @@
                                     </ul>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link {{ $isTransaksi ? 'active bg-primary' : '' }}"
+                                    <a class="nav-link text-black {{ $isTransaksi ? 'active bg-white' : '' }}"
                                         href="{{ route('transaksi.index') }}">
                                         <i class="bi bi-wallet"></i>
                                         <p>Transaksi Pengajuan</p>
@@ -129,7 +129,7 @@
 
                         <li class="nav-item {{ Route::is('appraisal.index') ? 'menu-open' : '' }}">
                             <a href="#"
-                                class="nav-link {{ Route::is('appraisal.index') ? 'active' : '' }}">
+                                class="nav-link text-black {{ Route::is('appraisal.index') ? 'active bg-white' : '' }}">
                                 <i class="bi bi-person-fill-exclamation"></i>
                                 <p>
                                     Appraisal
@@ -138,7 +138,7 @@
                             </a>
                             <ul class="nav nav-treeview">
                                 <li class="nav-item">
-                                    <a class="nav-link {{ Route::is('appraisal.index') ? 'active bg-primary' : '' }}"
+                                    <a class="nav-link text-black {{ Route::is('appraisal.index') ? 'active bg-white' : '' }}"
                                         href="{{ route('appraisal.index') }}">
                                         <i class="nav-icon bi bi-circle"></i>
                                         <p>Penilaian</p>
@@ -149,7 +149,7 @@
 
                         <li class="nav-item {{ Route::is('approval.index') ? 'menu-open' : '' }}">
                             <a href="#"
-                                class="nav-link {{ Route::is('approval.index') ? 'active' : '' }}">
+                                class="nav-link text-black {{ Route::is('approval.index') ? 'active bg-white' : '' }}">
                                 <i class="bi bi-person-fill-check"></i>
                                 <p>
                                     Approval
@@ -158,7 +158,7 @@
                             </a>
                             <ul class="nav nav-treeview">
                                 <li class="nav-item">
-                                    <a class="nav-link {{ Route::is('approval.index') ? 'active bg-primary' : '' }}"
+                                    <a class="nav-link text-black {{ Route::is('approval.index') ? 'active bg-white' : '' }}"
                                         href="{{ route('approval.index') }}">
                                         <i class="nav-icon bi bi-circle"></i>
                                         <p>Persetujuan</p>
@@ -169,7 +169,7 @@
 
                         <li class="nav-item {{ Route::is('karyawan.index', 'karyawan.create', 'karyawan.edit', 'users.index', 'users.create', 'users.edit', 'karyawan.pekerjaan.index', 'karyawan.pekerjaan.create', 'karyawan.pekerjaan.edit') ? 'menu-open' : '' }}">
                             <a href="#"
-                                class="nav-link {{ Route::is('karyawan.index', 'karyawan.create', 'karyawan.edit', 'users.index', 'users.create', 'users.edit', 'karyawan.pekerjaan.index', 'karyawan.pekerjaan.create', 'karyawan.pekerjaan.edit') ? 'active' : '' }}">
+                                class="nav-link text-black {{ Route::is('karyawan.index', 'karyawan.create', 'karyawan.edit', 'users.index', 'users.create', 'users.edit', 'karyawan.pekerjaan.index', 'karyawan.pekerjaan.create', 'karyawan.pekerjaan.edit') ? 'active bg-white' : '' }}">
                                 <i class="bi bi-gear"></i>
                                 <p>
                                     Pengaturan
@@ -178,21 +178,21 @@
                             </a>
                             <ul class="nav nav-treeview">
                                 <li class="nav-item">
-                                    <a class="nav-link {{ Route::is('karyawan.index', 'karyawan.create', 'karyawan.edit') ? 'active bg-primary' : '' }}"
+                                    <a class="nav-link text-black {{ Route::is('karyawan.index', 'karyawan.create', 'karyawan.edit') ? 'active bg-white' : '' }}"
                                         href="{{ route('karyawan.index') }}">
                                         <i class="bi bi-person-lines-fill"></i>
                                         <p>Daftar Karyawan</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link {{ Route::is('karyawan.pekerjaan.index', 'karyawan.pekerjaan.create', 'karyawan.pekerjaan.edit') ? 'active bg-primary' : '' }}"
+                                    <a class="nav-link text-black {{ Route::is('karyawan.pekerjaan.index', 'karyawan.pekerjaan.create', 'karyawan.pekerjaan.edit') ? 'active bg-white' : '' }}"
                                         href="{{ route('karyawan.pekerjaan.index') }}">
                                         <i class="bi bi-list-columns"></i>
                                         <p>Daftar Posisi Pekerjaan</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link {{ Route::is('users.index', 'users.create', 'users.edit') ? 'active bg-primary' : '' }}"
+                                    <a class="nav-link text-black {{ Route::is('users.index', 'users.create', 'users.edit') ? 'active bg-white' : '' }}"
                                         href="{{ route('users.index') }}">
                                         <i class="bi bi-person-vcard"></i>
                                         <p>Daftar Pengelola Akun</p>
@@ -206,7 +206,7 @@
         </aside>
         <main class="app-main">
             @yield('contents')
-            <footer class="footercontainer align-items-center mt-5 bg-footer text-white">
+            <footer class="footercontainer align-items-center pt-5 mb-0 bg-footer text-white">
                 <!-- Hak Cipta -->
                 <div class="d-flex align-items-center justify-content-center p-5">
                     <div class="text-white">
@@ -214,19 +214,17 @@
                             oleh undang-undang hak cipta.</p>
                         <hr>
                         <div class="float-left">
-                            <a class="text-white" href="#">Privasi</a> |
-                            <a class="text-white" href="#">Hak Cipta</a> |
-                            <a class="text-white" href="#">Instagram</a> |
-                            <a class="text-white" href="#">Facebook</a>
+                            <td>Gadai Kita</td> |
+                            <td>Sigma Artha Nusantara</td>
                         </div>
                     </div>
                     <div class="footerlogo padding-auto p-5">
-                        <img src="{{ asset('img/sigma.png') }}" class="brand-image" alt="logo" width="100"
+                        <img src="{{ asset('img/sigma2.png') }}" class="brand-image" alt="logo" width="200"
                             width="100" height="auto">
                     </div>
                 </div>
+            </footer>
     </div>
-    </footer>
     </main>
     </div>
     </div>

@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\CetakController;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Auth\UserController;
 use App\Http\Controllers\Profile\ProfileController;
@@ -82,6 +83,8 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::post('/transaksi', [TransaksiController::class, 'store'])->name('transaksi.store');
     Route::delete('/transaksi/{id}', [TransaksiController::class, 'destroy'])->name('transaksi.destroy');
     Route::get('/transaksi/data', [TransaksiController::class, 'getData'])->name('transaksi.data');
+    // Cetak
+    Route::get('/transaksi/cetak', [CetakController::class, 'index'])->name('cetak.index');
 
     // Appraisal Routes masih satu kolom dengan transaksi cuman kepisah aja ada yang kolomnya di transaksi ada yang di appraisal
     Route::get('/appraisal', [AppraisalController::class, 'index'])->name('appraisal.index');
