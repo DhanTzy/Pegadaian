@@ -8,6 +8,7 @@ use App\Models\Karyawan;
 use App\Models\Transaksi;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class DashboardController extends Controller
 {
@@ -18,6 +19,9 @@ class DashboardController extends Controller
 
     public function index()
     {
+        // $user = Auth::user();
+        // dd($user->roles->pluck('name'));
+
         $totalNasabah = Nasabah::count();
         $totalKaryawan = Karyawan::count();
         $totalTransaksi = Transaksi::count();

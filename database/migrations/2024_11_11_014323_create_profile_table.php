@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('nomor_identitas')->unique();
             $table->string('tempat_lahir');
             $table->date('tanggal_lahir');
-            $table->string('status_perkawinan');
+            $table->string('jenis_kelamin');
             $table->text('alamat_lengkap');
             $table->string('kode_pos');
             $table->string('telepon');
