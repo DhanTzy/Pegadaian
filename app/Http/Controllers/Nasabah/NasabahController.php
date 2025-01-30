@@ -13,6 +13,11 @@ use Carbon\Carbon;
 
 class NasabahController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('role:admin|customer service');
+    }
+
     public function index()
     {
         return view('nasabah.index');

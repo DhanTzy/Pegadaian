@@ -97,13 +97,13 @@
                             @enderror
                         </div>
 
-                        <div class="mb-3">
-                            <label>Jangka Waktu <span class="text-danger">*</span></label>
-                            <input type="text" name="jangka_waktu" class="form-control" value="{{ old('jangka_waktu') }}"
-                                required>
-                            @error('jangka_waktu')
+                        <div class="mb-3"> 
+                            <label>Jangka Waktu <span class="text-danger">*</span></label> 
+                            <input type="text" name="jangka_waktu" id="jangka_waktu" class="form-control" 
+                                value="{{ old('jangka_waktu') }}" required>
+                            @error('jangka_waktu') 
                                 <div class="text-danger">{{ $message }}</div>
-                            @enderror
+                            @enderror 
                         </div>
 
                         <div class="mb-3">
@@ -269,5 +269,16 @@
                 }
             });
         });
+        $(document).ready(function() {
+        $('#jangka_waktu').on('input', function(e) {
+            let cursorPos = this.selectionStart;
+            let value = $(this).val().replace(/[^0-9]/g, '');
+            
+            if(value) {
+                $(this).val(value + ' Bulan');
+                this.setSelectionRange(cursorPos, cursorPos);
+            }
+        });
+    });
     </script>
 @endsection

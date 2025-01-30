@@ -44,7 +44,7 @@ Route::controller(AuthController::class)->group(function () {
 });
 
 //Admin Routes List
-Route::middleware(['auth', 'role:admin'])->group(function () {
+Route::middleware(['auth'])->group(function () {
 
     // Dashboard
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard.index');

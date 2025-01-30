@@ -12,6 +12,11 @@ use Illuminate\Support\Facades\File;
 
 class KaryawanController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('role:admin');
+    }
+    
     public function index()
     {
         $pekerjaans = Pekerjaan::all();

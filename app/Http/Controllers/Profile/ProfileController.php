@@ -12,6 +12,11 @@ use Illuminate\Support\Facades\Storage;
 
 class ProfileController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('role:admin|customer service|approval|appraisal');
+    }
+
     public function show()
     {
         return view('profile.show');

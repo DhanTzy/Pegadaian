@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Hash;
 use App\Models\User;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\ValidationException;
+use Spatie\Permission\Models\Role;
 
 class AuthController extends Controller
 {
@@ -30,7 +31,6 @@ class AuthController extends Controller
             'password' => 'required'
         ])->validate();
 
-        // Cek apakah email terdaftar
         $user = User::where('email', $request->email)->first();
         if (!$user) {
             throw ValidationException::withMessages([
@@ -53,34 +53,13 @@ class AuthController extends Controller
         $request->session()->regenerate();
 
         $user = auth()->user();
-        if ($user->role == 'admin') {
+        if ($user->hasRole('admin') ||$user->hasRole('approval') || $user->hasRole('appraisal') || $user->hasRole('customer service')){
             if (is_null($user->image) || empty($user->name)) {
                 return redirect()->route('profile.edit')->with('message', 'Silakan Lengkapi Profil Anda Terlebih Dahulu');
             }
             return redirect()->route('dashboard.index');
         }
-        // $user = auth()->user();
-        // if ($user->role == 'approval') {
-        //     if (is_null($user->image) || empty($user->name)) {
-        //         return redirect()->route('profile.edit')->with('message', 'Silakan Lengkapi Profil Anda Terlebih Dahulu');
-        //     }
-        //     return redirect()->route('dashboard.index');
-        // }
-        // $user = auth()->user();
-        // if ($user->role == 'appraisal') {
-        //     if (is_null($user->image) || empty($user->name)) {
-        //         return redirect()->route('profile.edit')->with('message', 'Silakan Lengkapi Profil Anda Terlebih Dahulu');
-        //     }
-        //     return redirect()->route('dashboard.index');
-        // }
-        // $user = auth()->user();
-        // if ($user->role == 'customer service') {
-        //     if (is_null($user->image) || empty($user->name)) {
-        //         return redirect()->route('profile.edit')->with('message', 'Silakan Lengkapi Profil Anda Terlebih Dahulu');
-        //     }
-        //     return redirect()->route('dashboard.index');
-        // }
-        return redirect()->route('dashboard');
+        return redirect()->route('dashboard.index');
     }
 
     public function logout(Request $request)
@@ -124,31 +103,3 @@ class AuthController extends Controller
         return redirect()->route('auth.password')->with('success', 'Password berhasil diubah.');
     }
 }
-
-    // public function register()
-    // {
-    //     return view('auth/register');
-    // }
-
-    // public function registerSave(Request $request)
-    // {
-    //     Validator::make($request->all(), [
-    //         'name' => 'required',
-    //         'email' => 'required|email|unique:users,email',
-    //         'password' => 'required|confirmed'
-    //     ], [
-    //         'email.unique' => 'Email sudah terdaftar. Silakan gunakan email lain.',
-    //         'email.required' => 'Email wajib diisi.',
-    //         'password_confirmation' => 'Konfirmasi password tidak cocok.'
-    //     ])->validate();
-
-    //     User::create([
-    //         'name' => $request->name,
-    //         'email' => $request->email,
-    //         'password' => Hash::make($request->password),
-    //         'role' => 'customer service'
-    //     ]);
-
-    //     return redirect()->route('login');
-    // }
-

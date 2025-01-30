@@ -10,6 +10,11 @@ use Yajra\DataTables\DataTables;
 
 class TransaksiController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('role:admin|customer service');
+    }
+
     public function index()
     {
         $nasabah = Nasabah::where('status_delete', '1 Restore')->orderBy('created_at', 'desc')->get();
@@ -28,7 +33,9 @@ class TransaksiController extends Controller
             ->addColumn('action', function ($transaksi) {
                 $fotoJaminan = '';
                 foreach ($transaksi->jaminan as $jaminan) {
-                    $fotoJaminan .= '<img src="' . asset('storage/' . $jaminan->foto_jaminan) . '" style="width: 100px; margin: 5px;">';
+                    $fotoJaminan .= '<a href="' . asset('storage/' . $jaminan->foto_jaminan) . '" target="_blank" class="me-2 text-decoration-none">
+                                <i class="bi bi-image"></i> Foto Jaminan
+                            </a>';
                 }
                 $printButton = '';
                 if ($transaksi->status_transaksi == 'Approval Selesai') {

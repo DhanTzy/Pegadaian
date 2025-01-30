@@ -7,19 +7,18 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
 use Illuminate\Support\Facades\Hash;
+use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('role:admin');
+    }
+    
     public function index()
     {
-        $users = User::where('status_active', 'active')
-            ->orderByRaw(" CASE
-                WHEN role = 'admin' THEN 1
-                WHEN role = 'appraisal' THEN 2
-                WHEN role = 'approval' THEN 3
-                WHEN role = 'customer service' THEN 4
-                ELSE 5 END")->orderBy('name')->get();
-        return view('auth.users.index', compact('users'));
+        return view('auth.users.index');
     }
 
     public function getData(Request $request)
@@ -28,9 +27,12 @@ class UserController extends Controller
 
         return DataTables::of($query)
             ->addIndexColumn()
+            ->addColumn('roles', function ($user) {
+                return $user->getRoleNames()->implode(', ');
+            })
             ->addColumn('action', function ($user) {
-                if ($user->role === 'admin') {
-                    return ''; 
+                if ($user->hasRole('admin')) {
+                    return '';
                 }
 
                 return '
@@ -41,7 +43,7 @@ class UserController extends Controller
                         <i class="fas fa-trash-alt"></i>
                     </button>
                 </form>
-            ';
+                ';
             })
             ->rawColumns(['action'])
             ->make(true);
@@ -49,7 +51,8 @@ class UserController extends Controller
 
     public function create()
     {
-        return view('auth.users.create');
+        $roles = Role::all();
+        return view('auth.users.create', compact('roles'));
     }
 
     public function store(Request $request)
@@ -64,47 +67,30 @@ class UserController extends Controller
             'email.unique' => 'Email sudah terdaftar. Silakan gunakan email lain.',
         ]);
 
-        User::create([
+        $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
-            'role' => $request->role,
             'status_active' => 'active',
         ]);
+
+        $user->assignRole($request->role);
 
         return redirect()->route('users.index')->with('success', 'Akun berhasil dibuat.');
     }
 
-    public function destroy(User $user)
+    public function destroy($id)
     {
+        $user = User::findOrFail($id);
+
+        if ($user->hasRole('admin')) {
+            return redirect()->route('users.index')->with('error', 'Admin tidak bisa dihapus.');
+        }
+
         $user->status_active = 'inactive';
         $user->save();
 
-        return redirect()->route('users.index')->with('success', 'Akun berhasil dinonaktifkan.');
+        $user->delete();
+        return redirect()->route('users.index')->with('success', 'Akun berhasil dihapus.');
     }
-
-    // public function edit(User $user)
-    // {
-    //     return view('auth.users.edit', compact('user'));
-    // }
-
-    // public function update(Request $request, User $user)
-    // {
-    //     $request->validate([
-    //         'name' => 'required|string|max:255',
-    //         'email' => 'required|email|unique:users,email,' . $user->id,
-    //         'password' => 'nullable|string|confirmed',
-    //         'role' => 'required|in:admin,approval,appraisal,customer service',
-    //     ]);
-
-    //     $user->update([
-    //         'name' => $request->name,
-    //         'email' => $request->email,
-    //         'role' => $request->role,
-    //         'password' => $request->password ? Hash::make($request->password) : $user->password,
-    //     ]);
-
-    //     return redirect()->route('auth.users.index')->with('success', 'Akun berhasil diperbarui.');
-    // }
-
 }

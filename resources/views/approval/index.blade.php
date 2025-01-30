@@ -72,66 +72,70 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <div class="mb-3">
-                            <label for="jenis_jaminan" class="form-label">Jenis Jaminan <span class="text-danger">*</span></label>
-                            <input type="text" class="form-control" id="jenis_jaminan" name="jenis_jaminan" readonly>
-                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="jenis_jaminan" class="form-label">Jenis Jaminan <span class="text-danger">*</span></label>
+                                    <input type="text" class="form-control" id="jenis_jaminan" name="jenis_jaminan" readonly>
+                                </div>
+    
+                                <div class="mb-3">
+                                    <label for="nilai_pasar" class="form-label">Nilai Pasar <span class="text-danger">*</span></label>
+                                    <input type="text" class="form-control" id="nilai_pasar" name="nilai_pasar" readonly>
+                                </div>
+    
+                                <div class="mb-3">
+                                    <label for="nilai_likuiditas" class="form-label">Nilai Likuiditas <span class="text-danger">*</span></label>
+                                    <input type="text" class="form-control" id="nilai_likuiditas" name="nilai_likuiditas" readonly>
+                                </div>
+    
+                                <div class="mb-3">
+                                    <label for="putusan_pinjaman" class="form-label">Putusan Pinjaman <span class="text-danger">*</span></label>
+                                    <input type="text" class="form-control" id="putusan_pinjaman" name="putusan_pinjaman">
+                                </div>
 
-                        <div class="mb-3">
-                            <label class="form-label">Foto Jaminan <span class="text-danger">*</span></label>
-                            <div id="modalFotoJaminan" class="d-flex flex-wrap" style="display: none;">
+                                <div class="mb-3">
+                                    <label class="form-label">Foto Jaminan <span class="text-danger">*</span></label>
+                                    <div id="modalFotoJaminan" class="d-flex gap-2"></div>
+                                </div>
+                            </div>
+    
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="bunga" class="form-label">Bunga <span class="text-danger">*</span></label>
+                                    <input type="text" class="form-control" id="bunga" name="bunga">
+                                </div>
+    
+                                <div class="mb-3">
+                                    <label for="bunga_perbulan" class="form-label">Bunga Perbulan <span class="text-danger">*</span></label>
+                                    <input type="text" class="form-control" id="bunga_perbulan" name="bunga_perbulan">
+                                </div>
+    
+                                <div class="mb-3">
+                                    <label for="pelunasan" class="form-label">Pelunasan <span class="text-danger">*</span></label>
+                                    <input type="text" class="form-control" id="pelunasan" name="pelunasan">
+                                </div>
+    
+                                <div class="mb-3">
+                                    <label for="biaya_administrasi" class="form-label">Biaya Administrasi <span class="text-danger">*</span></label>
+                                    <input type="text" class="form-control" id="biaya_administrasi" name="biaya_administrasi" readonly>
+                                </div>
+
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal"><i class="bi bi-x-lg"></i> Batal</button>
+                                    <button type="submit" class="btn btn-primary" style="background-color: #183354;" id="saveButton"><i class="bi bi-send"></i> Simpan</button>
+                                </div>
+                                {{-- <div class="mb-3">
+                                    <label for="status_transaksi" class="form-label">Status</label>
+                                    <select class="form-select" id="status_transaksi" name="status_transaksi" disabled>
+                                        <option value="menunggu approval">Menunggu Approval</option>
+                                        <option value="approval selesai">Approval Selesai</option>
+                                        <option value="ditolak">Ditolak</option>
+                                    </select>
+                                </div> --}}
                             </div>
                         </div>
-
-                        <div class="mb-3">
-                            <label for="nilai_pasar" class="form-label">Nilai Pasar <span class="text-danger">*</span></label>
-                            <input type="text" class="form-control" id="nilai_pasar" name="nilai_pasar" readonly>
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="nilai_likuiditas" class="form-label">Nilai Likuiditas <span class="text-danger">*</span></label>
-                            <input type="text" class="form-control" id="nilai_likuiditas" name="nilai_likuiditas"
-                                readonly>
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="putusan_pinjaman" class="form-label">Putusan Pinjaman <span class="text-danger">*</span></label>
-                            <input type="text" class="form-control" id="putusan_pinjaman" name="putusan_pinjaman">
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="bunga" class="form-label">Bunga <span class="text-danger">*</span></label>
-                            <input type="text" class="form-control" id="bunga" name="bunga">
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="bunga_perbulan" class="form-label">Bunga Perbulan <span class="text-danger">*</span></label>
-                            <input type="text" class="form-control" id="bunga_perbulan" name="bunga_perbulan">
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="pelunasan" class="form-label">Pelunasan <span class="text-danger">*</span></label>
-                            <input type="text" class="form-control" id="pelunasan" name="pelunasan">
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="biaya_administrasi" class="form-label">Biaya Administrasi <span class="text-danger">*</span></label>
-                            <input type="text" class="form-control" id="biaya_administrasi" name="biaya_administrasi"
-                                readonly>
-                        </div>
-
-                        {{-- <div class="mb-3">
-                            <label for="status_transaksi" class="form-label">Status</label>
-                            <select class="form-select" id="status_transaksi" name="status_transaksi" disabled>
-                                <option value="menunggu approval">Menunggu Approval</option>
-                                <option value="approval selesai">Approval Selesai</option>
-                                <option value="ditolak">Ditolak</option>
-                            </select>
-                        </div> --}}
                     </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal"><i class="bi bi-x-lg"></i> Batal</button>
-                        <button type="submit" class="btn btn-primary" style="background-color: #183354;" id="saveButton"><i class="bi bi-send"></i> Simpan</button>
                     </div>
                 </div>
             </form>
@@ -269,9 +273,15 @@
             calculateValues();
         });
 
-        $(document).on('input', '#bunga', function() {
-            let value = $(this).val().replace('%', '');
-            $(this).val(value + '%');
+        $(document).ready(function() {
+            $('#bunga').on('input', function(e) {
+                let cursorPos = this.selectionStart;
+                let value = $(this).val().replace(/[^0-9]/g, '');
+                if(value) {
+                    $(this).val(value + '%');
+                    this.setSelectionRange(cursorPos, cursorPos);
+                }
+            });
         });
 
         $(document).on('input', '#nilai_pasar, #nilai_likuiditas, #bunga_perbulan, #pelunasan, #biaya_administrasi',

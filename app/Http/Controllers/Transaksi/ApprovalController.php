@@ -10,6 +10,11 @@ use Yajra\DataTables\DataTables;
 
 class ApprovalController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('role:admin|approval');
+    }
+
     public function index()
     {
         $transaksi = Transaksi::where('status_transaksi', 'Menunggu Approval')->get();
@@ -28,7 +33,9 @@ class ApprovalController extends Controller
             ->addColumn('action', function ($transaksi) {
                 $fotoJaminan = '';
                 foreach ($transaksi->jaminan as $jaminan) {
-                    $fotoJaminan .= '<img src="' . asset('storage/' . $jaminan->foto_jaminan) . '" style="width: 100px; margin: 5px;">';
+                    $fotoJaminan .= '<a href="' . asset('storage/' . $jaminan->foto_jaminan) . '" target="_blank" class="me-2 text-decoration-none">
+                                <i class="bi bi-image"></i> Foto Jaminan
+                            </a>';
                 }
                 return '
             <button type="button" class="btn btn-success btn-sm me-2"

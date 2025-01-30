@@ -8,6 +8,11 @@ use App\Models\Pekerjaan;
 
 class PekerjaanController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('role:admin');
+    }
+    
     public function index()
     {
         $pekerjaans = Pekerjaan::all();

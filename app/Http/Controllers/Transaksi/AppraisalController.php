@@ -11,6 +11,11 @@ use Yajra\DataTables\DataTables;
 
 class AppraisalController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('role:admin|appraisal');
+    }
+
     public function index()
     {
         $transaksiTersedia = Transaksi::where('status_transaksi', 'menunggu appraisal')->exists();

@@ -11,6 +11,11 @@ use Illuminate\Http\Request;
 
 class DashboardController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('role:admin|customer service|approval|appraisal');
+    }
+
     public function index()
     {
         $totalNasabah = Nasabah::count();
