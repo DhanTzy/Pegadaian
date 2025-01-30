@@ -10,7 +10,7 @@ class CetakController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('role:customer service');
+        $this->middleware('role:admin|customer service');
     }
 
     public function index()
