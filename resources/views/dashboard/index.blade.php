@@ -3,12 +3,24 @@
 @section('title', 'Dashboard')
 
 @section('contents')
+    <style>
+    #totalTransaksiChart {
+        max-height: 300px;
+    }
+</style>
     <main class="app-main">
         <div class="app-content-header">
             <div class="container-fluid">
-                <div class="row">
-                    <div class="col-sm-6">
-                        {{-- <p class="fw-bold" id="current-info" style="margin: 0; font-size: 16px; color:red"></p> --}}
+                <div class="row justify-content-center">
+                    <div class="col-sm-4">
+                        <div class="text-center">
+                            <img src="{{ asset('img/sigma.png') }}" alt="logo" style="width: auto; height: 90px; ">
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <p class="fw-bold">Kompak</p>
+                        <p class="fw-bold">Berintegritas</p>
+                        <p class="fw-bold">Sukses Bersama</p>
                     </div>
                 </div>
             </div>
@@ -74,7 +86,7 @@
 
         </div>
         <div class="card mt-4">
-            <div class="card-body">
+            <div class="card-body" style="height: 10%;">
                 <h5 class="card-title">Grafik Transaksi Pinjaman</h5>
                 <canvas id="totalTransaksiChart" style="height: 100px;"></canvas>
             </div>
@@ -114,23 +126,25 @@
                 ]
             },
             options: {
-                responsive: true,
-                scales: {
-                    x: {
-                        title: {
-                            display: true,
-                            text: 'Bulan'
-                        }
-                    },
-                    y: {
-                        title: {
-                            display: true,
-                            text: 'Jumlah'
-                        },
-                        beginAtZero: true
-                    }
-                }
+    responsive: true,
+    maintainAspectRatio: false, // Tambahkan ini
+    scales: {
+        x: {
+            title: {
+                display: true,
+                text: 'Bulan'
             }
+        },
+        y: {
+            title: {
+                display: true,
+                text: 'Jumlah'
+            },
+            beginAtZero: true
+        }
+    }
+}
+
         });
 
         function updateTime() {

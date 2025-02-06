@@ -16,7 +16,7 @@ class KaryawanController extends Controller
     {
         $this->middleware('role:admin');
     }
-    
+
     public function index()
     {
         $pekerjaans = Pekerjaan::all();
@@ -27,7 +27,7 @@ class KaryawanController extends Controller
     public function getData(Request $request)
     {
         $query = Karyawan::with('pekerjaan')
-            ->where('status_delete', '1 Restore');
+            ->where('status_delete', '1');
 
         if ($request->has('nama_lengkap') && $request->input('nama_lengkap') != '') {
             $query->where('nama_lengkap', 'LIKE', '%' . $request->input('nama_lengkap') . '%');
