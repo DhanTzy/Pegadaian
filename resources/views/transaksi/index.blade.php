@@ -22,7 +22,8 @@
                         </div>
                         <div class="card-body">
                             <button type="button" class="btn btn-primary float-left mb-2" data-bs-toggle="modal"
-                                data-bs-target="#transaksiModal" style="background-color : #0095FF;"><i class="bi bi-plus-lg"></i>
+                                data-bs-target="#transaksiModal" style="background-color : #0095FF;"><i
+                                    class="bi bi-plus-lg"></i>
                                 Tambah Pengajuan Pinjaman
                             </button>
 
@@ -136,8 +137,10 @@
                         </div>
 
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-danger" data-bs-dismiss="modal"><i class="bi bi-x-lg"></i> Batal</button>
-                            <button type="submit" class="btn btn-primary" style="background-color: #183354;" onclick="return confirmSave()"><i class="bi bi-send"></i> Simpan</button>
+                            <button type="button" class="btn btn-danger" data-bs-dismiss="modal"><i class="bi bi-x-lg"></i>
+                                Batal</button>
+                            <button type="submit" class="btn btn-primary" style="background-color: #183354;"
+                                onclick="return confirmSave()"><i class="bi bi-send"></i> Simpan</button>
                         </div>
                     </form>
                 </div>
@@ -178,6 +181,47 @@
             </div>
         </div>
     </div>
+    <div class="modal fade" id="cetakModal" tabindex="-1" aria-labelledby="cetakModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="cetakModalLabel">Cetak Transaksi</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form action="{{ route('cetak.print') }}" method="post" target="_blank">
+                    @csrf
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label for="jenisCetak" class="form-label">Pilih Jenis Cetakan</label>
+                            <input type="hidden" name="id_transaksi" id="id_transaksi">
+                            <input type="hidden" name="id_nasabah" id="id_nasabah">
+                            <select class="form-select" id="jenisCetak" name="jenisCetak">
+                                <option value="data">Cetak Data</option>
+                                <option value="pendaftaran">Cetak Pendaftaran</option>
+                                <option value="kwitansi">Cetak Kwitansi</option>
+                                <option value="sph">Cetak SPH</option>
+                                <option value="gadai">Cetak Gadai</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary" onclick="cetakPDF()">Cetak PDF</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function cetakPDF() {
+            var jenisCetak = document.getElementById('jenisCetak').value;
+            alert('Mencetak PDF dengan jenis: ' + jenisCetak + 'ID Transaksi = ' + document.getElementById('id_transaksi').value + 'ID Nasabah = ' + document.getElementById('id_nasabah').value);
+            // Tambahkan logika untuk mencetak PDF sesuai dengan jenis yang dipilih
+
+        }
+    </script>
+
 
     <!-- Include DataTables CSS and JS -->
     <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
@@ -223,6 +267,17 @@
                     { data: 'status_transaksi', name: 'status_transaksi' },
                     { data: 'action', name: 'action', orderable: false, searchable: false },
                 ],
+                initComplete: function() {
+                    document.querySelectorAll('.btn-cetak').forEach(function(btn) {
+                        btn.addEventListener('click', function() {
+                            var nasabahId = this.getAttribute('data-nasabah');
+                            var transaksiId = this.getAttribute('data-id');
+                            document.getElementById('id_transaksi').value = transaksiId;
+                            document.getElementById('id_nasabah').value = nasabahId;
+
+                        });
+                    });
+                }
             });
         });
 

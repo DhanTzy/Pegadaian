@@ -40,9 +40,10 @@ class TransaksiController extends Controller
                 $printButton = '';
                 if ($transaksi->status_transaksi == 'Approval Selesai') {
                     $printButton = '
-                    <a href="' . route('cetak.index', ['nasabahId' => $transaksi->nasabah_id, 'transaksiId' => $transaksi->id]) . '" class="btn btn-success btn-sm me-2" target="_blank">
-                        <i class="fas fa-print"></i>
-                    </a>
+                    <button type="button" class="btn btn-success btn-cetak btn-sm float-left" data-bs-toggle="modal" data-id="' . $transaksi->id . '"
+                                data-bs-target="#cetakModal" data-nasabah="'.$transaksi->nasabah_id.'">
+                                <i class="fas fa-print"></i>
+                        </button>
                     ';
                 }
                 return '

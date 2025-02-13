@@ -28,4 +28,34 @@ class CetakController extends Controller
 
         return $pdf->stream();
     }
+
+    public function print(Request $request)
+    {
+        $transaksiId = $request->id_transaksi;
+        $nasabahId = 1;
+        $jenisCetak = $request->jenisCetak;
+
+        $nasabah = Nasabah::find($nasabahId);
+        $transaksi = Transaksi::where('nasabah_id', $nasabahId)->where('id', $transaksiId)->first();
+
+        $user = Auth::user();
+
+
+        switch ($request->jenisCetak) {
+            case 'data':
+                return $pdf->stream();
+                break;
+            case 'pendaftaran':
+                $pdf = Pdf::loadView('cetak.index', compact('nasabah', 'transaksi', 'user'));
+                return $pdf->stream();
+                break;
+            case 'kwitansi':
+                return "PDF Kwitansi";
+                break;
+
+            default:
+
+                break;
+        }
+    }
 }

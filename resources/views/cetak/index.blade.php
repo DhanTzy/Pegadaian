@@ -84,31 +84,31 @@
                     Jenis Jaminan
                 </td>
                 <td>
-                    {{ $nasabah->nama_lengkap }}
+                    {{ $nasabah->nama_lengkap ?? "-" }}
                     <br>
-                    {{ $nasabah->nomor_identitas }}
+                    {{ $nasabah->nomor_identitas ?? "-" }}
                     <br>
-                    {{ $nasabah->alamat_lengkap }}
+                    {{ $nasabah->alamat_lengkap ?? "-" }}
                     <br>
-                    {{ $nasabah->kelurahan }}
+                    {{ $nasabah->kelurahan ?? "-" }}
                     <br>
-                    {{ $nasabah->kecamatan }}
+                    {{ $nasabah->kecamatan ?? "-" }}
                     <br>
-                    {{ $nasabah->kabupaten }}
+                    {{ $nasabah->kabupaten ?? "-" }}
                     <br>
-                    {{ $nasabah->propinsi }}
+                    {{ $nasabah->propinsi ?? "-" }}
                     <br>
-                    {{ $nasabah->tempat_lahir }}
+                    {{ $nasabah->tempat_lahir ?? "-" }}
                     <br>
-                    {{ \Carbon\Carbon::parse($nasabah->tanggal_lahir)->format('d F Y') }}
+                    {{ $nasabah->tanggal_lahir ? \Carbon\Carbon::parse($nasabah->tanggal_lahir)->format('d F Y') : "-" }}
                     <br>
-                    {{ $nasabah->telepon }}
+                    {{ $nasabah->telepon ?? "-" }}
                     <br>
-                    {{ $transaksi->pengajuan_pinjaman }}
+                    {{ $transaksi->pengajuan_pinjaman ?? "-" }}
                     <br>
-                    {{ $transaksi->jangka_waktu }}
+                    {{ $transaksi->jangka_waktu ?? "-" }}
                     <br>
-                    {{ $transaksi->jenis_jaminan }}
+                    {{ $transaksi->jenis_jaminan ?? "-" }}
                     <br>
                 </td>
             </tr>
@@ -130,11 +130,11 @@
                     Nilai Likuiditas APS
                 </td>
                 <td>
-                    {{ $transaksi->jenis_jaminan }}
+                    {{ $transaksi->jenis_jaminan ?? "-" }}
                     <br>
-                    {{ $transaksi->nilai_pasar_aps }}
+                    {{ $transaksi->nilai_pasar_aps ?? "-" }}
                     <br>
-                    {{ $transaksi->nilai_likuiditas_aps }}
+                    {{ $transaksi->nilai_likuiditas_aps ?? "-" }}
                 </td>
             </tr>
             <tr>
@@ -164,23 +164,23 @@
                     Biaya Administrasi
                 </td>
                 <td>
-                    {{ $transaksi->jenis_jaminan }}
+                    {{ $transaksi->jenis_jaminan ?? "-" }}
                     <br>
-                    {{ $transaksi->nilai_pasar_apv }}
+                    {{ $transaksi->nilai_pasar_apv ?? "-" }}
                     <br>
-                    {{ $transaksi->nilai_likuiditas_apv }}
+                    {{ $transaksi->nilai_likuiditas_apv ?? "-" }}
                     <br>
-                    {{ $transaksi->putusan_pinjaman }}
+                    {{ $transaksi->putusan_pinjaman ?? "-" }}
                     <br>
-                    {{ $transaksi->jangka_waktu }}
+                    {{ $transaksi->jangka_waktu ?? "-" }}
                     <br>
-                    {{ $transaksi->bunga }}
+                    {{ $transaksi->bunga ?? "-" }}
                     <br>
-                    {{ $transaksi->bunga_perbulan }}
+                    {{ $transaksi->bunga_perbulan ?? "-" }}
                     <br>
-                    {{ $transaksi->pelunasan }}
+                    {{ $transaksi->pelunasan ?? "-" }}
                     <br>
-                    {{ $transaksi->biaya_administrasi }}
+                    {{ $transaksi->biaya_administrasi ?? "-" }}
                 </td>
             </tr>
             <tr>
