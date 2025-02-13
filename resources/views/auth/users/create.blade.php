@@ -16,11 +16,13 @@
             <form action="{{ route('users.store') }}" method="POST">
                 @csrf
                 <div class="mb-3">
-                    <label for="name" class="form-label">Nama</label>
-                    <input type="text" name="name" class="form-control" required>
-                    @error('name')
-                        <div class="invalid-feedback">{{ $message }}</div>
-                    @enderror
+                    <label for="karyawan_id" class="form-label">Nama Karyawan</label>
+                    <select name="karyawan_id" id="karyawan_id" class="form-control" required>
+                        <option value="">-- Pilih Karyawan --</option>
+                        @foreach($karyawans as $karyawan)
+                            <option value="{{ $karyawan->id }}">{{ $karyawan->nama_lengkap }}</option>
+                        @endforeach
+                    </select>
                 </div>
 
                 <div class="mb-3">
@@ -58,7 +60,7 @@
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
                 </div>
-                
+
                 <button type="submit" class="btn btn-primary" style="background-color: #183354;"
                     onclick="return confirm('Apakah Anda yakin ingin menambah akun ini?')"><i class="bi bi-send"></i> Tambah
                     Data</button>

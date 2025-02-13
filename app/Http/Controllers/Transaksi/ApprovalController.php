@@ -43,9 +43,7 @@ class ApprovalController extends Controller
                     data-bs-target="#approvalModal"
                     data-id="' . $transaksi->id . '"
                     data-jenis_jaminan="' . $transaksi->jenis_jaminan . '"
-                    data-foto_jaminan="' . e($fotoJaminan) . '"
-                    data-nilai_pasar="' . $transaksi->nilai_pasar . '"
-                    data-nilai_likuiditas="' . $transaksi->nilai_likuiditas . '">
+                    data-foto_jaminan="' . e($fotoJaminan) . '">
                 <i class="fas fa-check-circle"></i>
             </button>';
             })->rawColumns(['action'])->make(true);
@@ -54,6 +52,8 @@ class ApprovalController extends Controller
     public function update(Request $request, $id)
     {
         $validated = $request->validate([
+            'nilai_pasar_apv' => 'nullable|string',
+            'nilai_likuiditas_apv' => 'nullable|string',
             'putusan_pinjaman' => 'nullable|string',
             'bunga' => 'nullable|string',
             'bunga_perbulan' => 'nullable|string',
@@ -65,7 +65,7 @@ class ApprovalController extends Controller
         $transaksi = Transaksi::findOrFail($id);
 
         // Cek apakah semua data yang diperlukan sudah terisi
-        $isComplete = $request->filled(['putusan_pinjaman', 'bunga', 'bunga_perbulan', 'pelunasan', 'biaya_administrasi']);
+        $isComplete = $request->filled(['nilai_pasar_apv', 'nilai_likuiditas_apv', 'putusan_pinjaman', 'bunga', 'bunga_perbulan', 'pelunasan', 'biaya_administrasi']);
         if (!$isComplete) {
             return redirect()->back()->with('error', 'Lengkapi semua data terlebih dahulu!');
         }

@@ -25,7 +25,7 @@ class NasabahController extends Controller
 
     public function getData(Request $request)
     {
-        $query = Nasabah::where('status_delete', '1 Restore ')->orderBy('created_at', 'desc');
+        $query = Nasabah::where('status_delete', '1 Restore ')->orderBy('created_at', 'asc');
 
         if ($request->has('nama_lengkap') && $request->input('nama_lengkap') != '') {
             $query->where('nama_lengkap', 'LIKE', '%' . $request->input('nama_lengkap') . '%');

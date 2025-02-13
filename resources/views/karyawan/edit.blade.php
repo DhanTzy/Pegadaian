@@ -20,7 +20,7 @@
                             <div class="text-danger">{{ $message }}</div>
                         @enderror
                     </div>
-                    
+
                     <div class="mb-3">
                         <label class="form-label">NIP <span class="text-danger">*</span></label>
                         <input type="text" id="nip" name="nip" value="{{ $karyawan->nip }}" class="form-control"
@@ -39,7 +39,7 @@
                         @enderror
                     </div>
 
-                    <div class="mb-3">
+                    {{-- <div class="mb-3">
                         <label class="form-label">Posisi Pekerjaan <span class="text-danger">*</span></label>
                         <select name="pekerjaan_id" class="form-select" required>
                             <option value="" disabled>Pilih Posisi Pekerjaan</option>
@@ -53,7 +53,7 @@
                         @error('pekerjaan_id')
                             <div class="text-danger">{{ $message }}</div>
                         @enderror
-                    </div>
+                    </div> --}}
 
                     <div class="mb-3">
                         <label class="form-label">Jenis Kelamin <span class="text-danger">*</span></label>

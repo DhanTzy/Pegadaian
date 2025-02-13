@@ -78,17 +78,17 @@
                                     <label for="jenis_jaminan" class="form-label">Jenis Jaminan <span class="text-danger">*</span></label>
                                     <input type="text" class="form-control" id="jenis_jaminan" name="jenis_jaminan" readonly>
                                 </div>
-    
+
                                 <div class="mb-3">
-                                    <label for="nilai_pasar" class="form-label">Nilai Pasar <span class="text-danger">*</span></label>
-                                    <input type="text" class="form-control" id="nilai_pasar" name="nilai_pasar" readonly>
+                                    <label for="nilai_pasar_apv" class="form-label">Nilai Pasar <span class="text-danger">*</span></label>
+                                    <input type="text" class="form-control" id="nilai_pasar_apv" name="nilai_pasar_apv">
                                 </div>
-    
+
                                 <div class="mb-3">
-                                    <label for="nilai_likuiditas" class="form-label">Nilai Likuiditas <span class="text-danger">*</span></label>
-                                    <input type="text" class="form-control" id="nilai_likuiditas" name="nilai_likuiditas" readonly>
+                                    <label for="nilai_likuiditas_apv" class="form-label">Nilai Likuiditas <span class="text-danger">*</span></label>
+                                    <input type="text" class="form-control" id="nilai_likuiditas_apv" name="nilai_likuiditas_apv">
                                 </div>
-    
+
                                 <div class="mb-3">
                                     <label for="putusan_pinjaman" class="form-label">Putusan Pinjaman <span class="text-danger">*</span></label>
                                     <input type="text" class="form-control" id="putusan_pinjaman" name="putusan_pinjaman">
@@ -99,23 +99,23 @@
                                     <div id="modalFotoJaminan" class="d-flex gap-2"></div>
                                 </div>
                             </div>
-    
+
                             <div class="col-md-6">
                                 <div class="mb-3">
                                     <label for="bunga" class="form-label">Bunga <span class="text-danger">*</span></label>
                                     <input type="text" class="form-control" id="bunga" name="bunga">
                                 </div>
-    
+
                                 <div class="mb-3">
                                     <label for="bunga_perbulan" class="form-label">Bunga Perbulan <span class="text-danger">*</span></label>
-                                    <input type="text" class="form-control" id="bunga_perbulan" name="bunga_perbulan">
+                                    <input type="text" class="form-control" id="bunga_perbulan" name="bunga_perbulan" readonly>
                                 </div>
-    
+
                                 <div class="mb-3">
                                     <label for="pelunasan" class="form-label">Pelunasan <span class="text-danger">*</span></label>
-                                    <input type="text" class="form-control" id="pelunasan" name="pelunasan">
+                                    <input type="text" class="form-control" id="pelunasan" name="pelunasan" readonly>
                                 </div>
-    
+
                                 <div class="mb-3">
                                     <label for="biaya_administrasi" class="form-label">Biaya Administrasi <span class="text-danger">*</span></label>
                                     <input type="text" class="form-control" id="biaya_administrasi" name="biaya_administrasi" readonly>
@@ -176,8 +176,8 @@
                 ajax: "{{ route('approval.data') }}",
                 columns: [{ data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: false, searchable: false },
                     { data: 'jenis_jaminan', name: 'jenis_jaminan' },
-                    { data: 'nilai_pasar', name: 'nilai_pasar' },
-                    { data: 'nilai_likuiditas', name: 'nilai_likuiditas' },
+                    { data: 'nilai_pasar_apv', name: 'nilai_pasar_apv' },
+                    { data: 'nilai_likuiditas_apv', name: 'nilai_likuiditas_apv' },
                     { data: 'jangka_waktu', name: 'jangka_waktu' },
                     { data: 'bunga', name: 'bunga' },
                     { data: 'bunga_perbulan', name: 'bunga_perbulan' },
@@ -192,7 +192,7 @@
                 let button = $(event.relatedTarget);
                 let modal = $(this);
 
-                modal.find('#biaya_administrasi').val(formatRupiah('20000'));
+                modal.find('#biaya_administrasi').val('');
                 modal.find('#putusan_pinjaman').val('');
                 modal.find('#bunga').val('');
                 modal.find('#bunga_perbulan').val('');
@@ -212,6 +212,35 @@
                 modal.find('#approvalForm').attr('action', "{{ url('approval') }}/" + button.data(
                     'id'));
             });
+        });
+        document.addEventListener("DOMContentLoaded", function () {
+            const putusanPinjamanInput = document.getElementById("putusan_pinjaman");
+            const biayaAdministrasiInput = document.getElementById("biaya_administrasi");
+
+            function formatRupiah(angka) {
+                return new Intl.NumberFormat("id-ID", {
+                    style: "currency",
+                    currency: "IDR",
+                    minimumFractionDigits: 0,
+                }).format(angka);
+            }
+
+            function hitungBiayaAdministrasi() {
+                let putusanPinjaman = putusanPinjamanInput.value.replace(/\D/g, "");
+                putusanPinjaman = parseFloat(putusanPinjaman) || 0;
+
+                let biayaAdministrasi = 0;
+
+                if (putusanPinjaman > 0) {
+                    if (putusanPinjaman <= 20000000) {
+                        biayaAdministrasi = putusanPinjaman * 0.025; // 2,5%
+                    } else {
+                        biayaAdministrasi = putusanPinjaman * 0.01; // 1%
+                    }
+                }
+                biayaAdministrasiInput.value = formatRupiah(biayaAdministrasi);
+            }
+            putusanPinjamanInput.addEventListener("input", hitungBiayaAdministrasi);
         });
 
         $('#saveButton').on('click', function(event) {
@@ -253,10 +282,17 @@
         }
 
         $(document).on('input',
-            '#nilai_pasar, #nilai_likuiditas, #putusan_pinjaman, #bunga_perbulan, #pelunasan, #biaya_administrasi',
+            '#nilai_pasar_apv, #nilai_likuiditas_apv, #putusan_pinjaman, #bunga_perbulan, #pelunasan, #biaya_administrasi',
             function() {
                 this.value = formatRupiah(this.value);
             });
+        $('#nilai_pasar_apv').on('input', function() {
+            let nilaiPasar = $(this).val().replace(/[^0-9]/g, '');
+            if (nilaiPasar) {
+                let nilaiLikuiditas = (parseFloat(nilaiPasar) * 0.7).toFixed(0);
+                $('#nilai_likuiditas_apv').val(formatRupiah(nilaiLikuiditas));
+            }
+        });
 
         function calculateValues() {
             let putusanPinjaman = parseFloat($('#putusan_pinjaman').val().replace(/[^,\d]/g, '').replace(',', '.')) || 0;
@@ -284,9 +320,9 @@
             });
         });
 
-        $(document).on('input', '#nilai_pasar, #nilai_likuiditas, #bunga_perbulan, #pelunasan, #biaya_administrasi',
-            function() {
-                this.value = formatRupiah(this.value);
-            });
+        // $(document).on('input', '#nilai_pasar, #nilai_likuiditas, #bunga_perbulan, #pelunasan, #biaya_administrasi',
+        //     function() {
+        //         this.value = formatRupiah(this.value);
+        //     });
     </script>
 @endsection

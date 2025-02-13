@@ -50,8 +50,8 @@
     <div class="container">
         <div class="header">Gadai Kita</div>
         <h2>Form Pendaftaran</h2>
-        <p><strong>Tanggal:</strong> {{ \Carbon\Carbon::now()->format('d/m/Y') }} &nbsp;&nbsp;&nbsp; <strong>No. Pendaftaran:</strong> 001/Pend-01/2025</p>
-        <p><strong>Pangkal:</strong> 012</p>
+        <p><strong>Tanggal:</strong> {{ \Carbon\Carbon::now()->format('d/m/Y') }} &nbsp;&nbsp;&nbsp; <strong>No. Pendaftaran:</strong> {{ $transaksi->no_pendaftaran }}</p>
+        <p><strong>Pangkal:</strong> {{ $transaksi->no_pangkal }}</p>
 
         <table>
             <tr>
@@ -125,16 +125,16 @@
                 <td>
                     Jenis Jaminan
                     <br>
-                    Nilai Pasar Wajar
+                    Nilai Pasar Wajar APS
                     <br>
-                    Nilai Likuiditas
+                    Nilai Likuiditas APS
                 </td>
                 <td>
                     {{ $transaksi->jenis_jaminan }}
                     <br>
-                    {{ $transaksi->nilai_pasar }}
+                    {{ $transaksi->nilai_pasar_aps }}
                     <br>
-                    {{ $transaksi->nilai_likuiditas }}
+                    {{ $transaksi->nilai_likuiditas_aps }}
                 </td>
             </tr>
             <tr>
@@ -147,9 +147,9 @@
                 <td>
                     Jenis Jaminan
                     <br>
-                    Nilai Pasar Wajar
+                    Nilai Pasar Wajar APV
                     <br>
-                    Nilai Likuiditas
+                    Nilai Likuiditas APV
                     <br>
                     Putusan Pinjaman
                     <br>
@@ -166,9 +166,9 @@
                 <td>
                     {{ $transaksi->jenis_jaminan }}
                     <br>
-                    {{ $transaksi->nilai_pasar }}
+                    {{ $transaksi->nilai_pasar_apv }}
                     <br>
-                    {{ $transaksi->nilai_likuiditas }}
+                    {{ $transaksi->nilai_likuiditas_apv }}
                     <br>
                     {{ $transaksi->putusan_pinjaman }}
                     <br>

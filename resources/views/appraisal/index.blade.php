@@ -86,13 +86,13 @@
                         </div>
 
                         <div class="mb-3">
-                            <label for="nilai_pasar" class="form-label">Nilai Pasar <span class="text-danger">*</span></label>
-                            <input type="text" class="form-control" id="nilai_pasar" name="nilai_pasar">
+                            <label for="nilai_pasar_aps" class="form-label">Nilai Pasar <span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" id="nilai_pasar_aps" name="nilai_pasar_aps">
                         </div>
 
                         <div class="mb-3">
-                            <label for="nilai_likuiditas" class="form-label">Nilai Likuiditas <span class="text-danger">*</span></label>
-                            <input type="text" class="form-control" id="nilai_likuiditas" name="nilai_likuiditas">
+                            <label for="nilai_likuiditas_aps" class="form-label">Nilai Likuiditas <span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" id="nilai_likuiditas_aps" name="nilai_likuiditas_aps">
                         </div>
 
                         {{-- <div class="mb-3">
@@ -148,8 +148,8 @@
                 columns: [
                     { data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: false, searchable: false },
                     { data: 'jenis_jaminan', name: 'jenis_jaminan' },
-                    { data: 'nilai_pasar', name: 'nilai_pasar' },
-                    { data: 'nilai_likuiditas', name: 'nilai_likuiditas' },
+                    { data: 'nilai_pasar_aps', name: 'nilai_pasar_aps' },
+                    { data: 'nilai_likuiditas_aps', name: 'nilai_likuiditas_aps' },
                     { data: 'status_transaksi', name: 'status_transaksi' },
                     { data: 'action', name: 'action', orderable: false, searchable: false }
                 ]
@@ -160,8 +160,8 @@
                 let modal = $(this);
 
                 modal.find('#jenis_jaminan').val(button.data('jenis_jaminan'));
-                modal.find('#nilai_pasar').val(button.data('nilai_pasar'));
-                modal.find('#nilai_likuiditas').val(button.data('nilai_likuiditas'));
+                modal.find('#nilai_pasar_aps').val(button.data('nilai_pasar_aps'));
+                modal.find('#nilai_likuiditas_aps').val(button.data('nilai_likuiditas_aps'));
                 modal.find('#foto_jaminan_existing').html(button.data('foto_jaminan'));
 
                 let url = "{{ route('appraisal.update', ':id') }}";
@@ -200,15 +200,15 @@
             return prefix + rupiah;
         }
 
-        $(document).on('input', '#nilai_pasar, #nilai_likuiditas', function() {
+        $(document).on('input', '#nilai_pasar_aps, #nilai_likuiditas_aps', function() {
             this.value = formatRupiah(this.value);
         });
 
-        $('#nilai_pasar').on('input', function() {
+        $('#nilai_pasar_aps').on('input', function() {
             let nilaiPasar = $(this).val().replace(/[^0-9]/g, '');
             if (nilaiPasar) {
                 let nilaiLikuiditas = (parseFloat(nilaiPasar) * 0.7).toFixed(0);
-                $('#nilai_likuiditas').val(formatRupiah(nilaiLikuiditas));
+                $('#nilai_likuiditas_aps').val(formatRupiah(nilaiLikuiditas));
             }
         });
 

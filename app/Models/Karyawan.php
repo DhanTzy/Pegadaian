@@ -15,7 +15,7 @@ class Karyawan extends Model
         'nip',
         'no_identitas',
         'nama_lengkap',
-        'pekerjaan_id',
+        // 'pekerjaan_id',
         'jenis_kelamin',
         'tempat_lahir',
         'tanggal_lahir',
@@ -34,6 +34,11 @@ class Karyawan extends Model
     {
         return $this->belongsTo(Pekerjaan::class);
     }
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
 
     // Relasi ke model Anggota Keluarga
     public function anggotaKeluarga()

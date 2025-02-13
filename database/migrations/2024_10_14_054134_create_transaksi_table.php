@@ -10,11 +10,15 @@ return new class extends Migration
     {
         Schema::create('transaksi', function (Blueprint $table) {
             $table->id();
+            $table->string('no_pendaftaran')->nullable();
+            $table->string('no_pangkal')->nullable();
             $table->string('pengajuan_pinjaman')->nullable();
             $table->string('jangka_waktu')->nullable();
             $table->string('jenis_jaminan')->nullable();
-            $table->string('nilai_pasar')->nullable();
-            $table->string('nilai_likuiditas')->nullable();
+            $table->string('nilai_pasar_aps')->nullable();
+            $table->string('nilai_likuiditas_aps')->nullable();
+            $table->string('nilai_pasar_apv')->nullable();
+            $table->string('nilai_likuiditas_apv')->nullable();
             $table->string('putusan_pinjaman')->nullable();
             $table->string('bunga')->nullable();
             $table->string('bunga_perbulan')->nullable();

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Models\Karyawan;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
 use Illuminate\Support\Facades\Hash;
@@ -15,7 +16,7 @@ class UserController extends Controller
     {
         $this->middleware('role:admin');
     }
-    
+
     public function index()
     {
         return view('auth.users.index');
@@ -52,29 +53,35 @@ class UserController extends Controller
     public function create()
     {
         $roles = Role::all();
-        return view('auth.users.create', compact('roles'));
+        $karyawans = Karyawan::doesntHave('user')->get();
+        return view('auth.users.create', compact('roles', 'karyawans'));
     }
 
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'required|string|max:255|unique:users,name',
+            'karyawan_id' => 'required|exists:karyawan,id',
             'email' => 'required|email|unique:users,email',
             'password' => 'required|string|confirmed',
             'role' => 'required|in:admin,approval,appraisal,customer service',
         ], [
-            'name.unique' => 'Nama sudah terdaftar. Silakan pilih nama lain.',
+            'karyawan_id.unique' => 'Nama sudah terdaftar. Silakan pilih nama lain.',
             'email.unique' => 'Email sudah terdaftar. Silakan gunakan email lain.',
         ]);
 
+        $karyawan = Karyawan::findOrFail($request->karyawan_id);
+
         $user = User::create([
-            'name' => $request->name,
+            'name' => $karyawan->nama_lengkap,
             'email' => $request->email,
             'password' => Hash::make($request->password),
             'status_active' => 'active',
         ]);
 
         $user->assignRole($request->role);
+
+        $karyawan->user_id = $user->id;
+        $karyawan->save();
 
         return redirect()->route('users.index')->with('success', 'Akun berhasil dibuat.');
     }

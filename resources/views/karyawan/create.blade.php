@@ -17,7 +17,7 @@
                         <div class="text-danger">{{ $message }}</div>
                     @enderror
                 </div>
-                
+
                 <div class="mb-3">
                     <label class="form-label">NIP <span class="text-danger">*</span></label>
                     <input type="text" name="nip" id="nip" class="form-control" value="{{ old('nip') }}"
@@ -36,7 +36,7 @@
                     @enderror
                 </div>
 
-                <div class="mb-3">
+                {{-- <div class="mb-3">
                     <label for="pekerjaan_id">Posisi Pekerjaan <span class="text-danger">*</span></label>
                     <select name="pekerjaan_id" id="pekerjaan_id" class="form-select">
                         <option value="">Pilih Posisi Pekerjaan</option>
@@ -49,7 +49,7 @@
                     @error('posisi_pekerjaan')
                         <div class="text-danger">{{ $message }}</div>
                     @enderror
-                </div>
+                </div> --}}
 
                 <div class="mb-3">
                     <label class="form-label">Jenis Kelamin <span class="text-danger">*</span></label>

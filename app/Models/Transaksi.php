@@ -11,12 +11,16 @@ class Transaksi extends Model
 
     protected $table = 'transaksi';
     protected $fillable = [
+        'no_pendaftaran',
+        'no_pangkal',
         'nasabah_id',
         'pengajuan_pinjaman',
         'jangka_waktu',
         'jenis_jaminan',
-        'nilai_pasar',
-        'nilai_likuiditas',
+        'nilai_pasar_aps',
+        'nilai_likuiditas_aps',
+        'nilai_pasar_apv',
+        'nilai_likuiditas_apv',
         'putusan_pinjaman',
         'bunga',
         'bunga_perbulan',

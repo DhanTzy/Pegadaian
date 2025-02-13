@@ -43,7 +43,7 @@
                                         class="form-control form-control-sm me-2" style="width: auto;">
                                 </div>
 
-                                <div class="me-2">
+                                {{-- <div class="me-2">
                                     <label for="pekerjaanFilter" class="form-label mb-0">Pekerjaan :</label>
                                     <select id="pekerjaanFilter" name="pekerjaan_id" class="form-select form-select-sm me-2"
                                         style="width: auto;">
@@ -55,7 +55,7 @@
                                             </option>
                                         @endforeach
                                     </select>
-                                </div>
+                                </div> --}}
 
                                 <div class="me-2">
                                     <label for="tanggalGabungFilter" class="form-label mb-0">Tanggal Gabung :</label>
@@ -78,7 +78,7 @@
                                         <th scope="col">Nama Lengkap</th>
                                         <th scope="col">NIP</th>
                                         <th scope="col">Nomor Identitas</th>
-                                        <th scope="col">Posisi Pekerjaan</th>
+                                        {{-- <th scope="col">Posisi Pekerjaan</th> --}}
                                         <th scope="col">Telepon</th>
                                         {{-- <th scope="col">Email</th> --}}
                                         <th scope="col">Tanggal Bergabung</th>
@@ -108,7 +108,7 @@
                     <p><strong>Nama Lengkap :</strong> <span id="detailNamaLengkap"></span></p>
                     <p><strong>NIP :</strong> <span id="detailNip"></span></p>
                     <p><strong>No Identitas :</strong> <span id="detailNoIdentitas"></span></p>
-                    <p><strong>Posisi Pekerjaan:</strong> <span id="detailPosisiPekerjaan"></span></p>
+                    {{-- <p><strong>Posisi Pekerjaan:</strong> <span id="detailPosisiPekerjaan"></span></p> --}}
                     <p><strong>Jenis Kelamin :</strong> <span id="detailJenisKelamin"></span></p>
                     <p><strong>Tempat Lahir :</strong> <span id="detailTempatLahir"></span></p>
                     <p><strong>Tanggal Lahir :</strong> <span id="detailTanggalLahir"></span></p>
@@ -183,7 +183,7 @@
                     { data: 'nama_lengkap', name: 'nama_lengkap' },
                     { data: 'nip', name: 'nip' },
                     { data: 'no_identitas', name: 'no_identitas' },
-                    { data: 'posisi_pekerjaan' },
+                    // { data: 'posisi_pekerjaan' },
                     { data: 'no_telepon', name: 'no_telepon' },
                     // { data: 'email', name: 'email' },
                     { data: 'created_at', name: 'created_at', render: function(data, type, row)
@@ -207,7 +207,7 @@
             $('#resetButton').on('click', function() {
                 $('#namaFilter').val('');
                 $('#nipFilter').val('');
-                $('#pekerjaanFilter').val('');
+                // $('#pekerjaanFilter').val('');
                 $('#tanggalGabungFilter').val('');
                 $('#tanggalAkhirFilter').val('');
                 table.draw();
@@ -222,7 +222,7 @@
             var namaLengkap = button.getAttribute('data-nama_lengkap');
             var nip = button.getAttribute('data-nip');
             var noIdentitas = button.getAttribute('data-no_identitas');
-            var posisiPekerjaan = button.getAttribute('data-posisi_pekerjaan');
+            // var posisiPekerjaan = button.getAttribute('data-posisi_pekerjaan');
             var jenisKelamin = button.getAttribute('data-jenis_kelamin');
             var tempatLahir = button.getAttribute('data-tempat_lahir');
             var tanggalLahir = button.getAttribute('data-tanggal_lahir');
@@ -242,7 +242,7 @@
             karyawanDetailModal.querySelector('#detailNamaLengkap').textContent = namaLengkap;
             karyawanDetailModal.querySelector('#detailNip').textContent = nip;
             karyawanDetailModal.querySelector('#detailNoIdentitas').textContent = noIdentitas;
-            karyawanDetailModal.querySelector('#detailPosisiPekerjaan').textContent = posisiPekerjaan;
+            // karyawanDetailModal.querySelector('#detailPosisiPekerjaan').textContent = posisiPekerjaan;
             karyawanDetailModal.querySelector('#detailJenisKelamin').textContent = jenisKelamin;
             karyawanDetailModal.querySelector('#detailTempatLahir').textContent = tempatLahir;
             karyawanDetailModal.querySelector('#detailTanggalLahir').textContent = tanggalLahir;

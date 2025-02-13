@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Karyawan;
 use App\Models\Pekerjaan;
+use App\Models\User;
 use Carbon\Carbon;
 use Yajra\DataTables\DataTables;
 use Illuminate\Support\Facades\File;
@@ -27,7 +28,7 @@ class KaryawanController extends Controller
     public function getData(Request $request)
     {
         $query = Karyawan::with('pekerjaan')
-            ->where('status_delete', '1');
+            ->where('status_delete', '1 Restore');
 
         if ($request->has('nama_lengkap') && $request->input('nama_lengkap') != '') {
             $query->where('nama_lengkap', 'LIKE', '%' . $request->input('nama_lengkap') . '%');
@@ -60,7 +61,6 @@ class KaryawanController extends Controller
                     data-nip="' . $karyawan->nip . '"
                     data-no_identitas="' . $karyawan->no_identitas . '"
                     data-nama_lengkap="' . $karyawan->nama_lengkap . '"
-                    data-posisi_pekerjaan="' . $karyawan->pekerjaan->posisi_pekerjaan . '"
                     data-jenis_kelamin="' . $karyawan->jenis_kelamin . '"
                     data-tempat_lahir="' . $karyawan->tempat_lahir . '"
                     data-tanggal_lahir="' .  Carbon::parse($karyawan->tanggal_lahir)->format('d-m-Y') . '"
@@ -84,7 +84,7 @@ class KaryawanController extends Controller
                 return Carbon::parse($karyawan->tanggal_lahir)->format('d-m-Y');
             })->rawColumns(['action'])->make(true);
     }
-
+                // data-posisi_pekerjaan="' . $karyawan->pekerjaan->posisi_pekerjaan . '"
     public function create()
     {
         $pekerjaans = Pekerjaan::all();
@@ -97,7 +97,7 @@ class KaryawanController extends Controller
             'nip' => 'required|string|max:18|unique:karyawan,nip',
             'no_identitas' => 'required|string|max:16|unique:karyawan,no_identitas',
             'nama_lengkap' => 'required|string',
-            'pekerjaan_id' => 'required|exists:pekerjaan,id',
+            // 'pekerjaan_id' => 'required|exists:pekerjaan,id',
             'jenis_kelamin' => 'required|in:Laki-laki,Perempuan',
             'tempat_lahir' => 'required|string',
             'tanggal_lahir' => 'required|date',
@@ -199,7 +199,7 @@ class KaryawanController extends Controller
             'no_identitas' => 'required|string|max:16|unique:karyawan,no_identitas,' . $karyawan->id,
             'no_telepon' => 'required|string|max:13|unique:karyawan,no_telepon,' . $karyawan->id,
             'nama_lengkap' => 'required|string',
-            'pekerjaan_id' => 'required|exists:pekerjaan,id',
+            // 'pekerjaan_id' => 'required|exists:pekerjaan,id',
             'jenis_kelamin' => 'required|in:Laki-laki,Perempuan',
             'tempat_lahir' => 'required|string',
             'tanggal_lahir' => 'required|date',

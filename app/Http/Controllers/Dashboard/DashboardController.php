@@ -17,21 +17,25 @@ class DashboardController extends Controller
         $this->middleware('role:admin|customer service|approval|appraisal');
     }
 
-    public function index()
+    public function index(Request $request)
     {
         // $user = Auth::user();
         // dd($user->roles->pluck('name'));
 
-        $totalNasabah = Nasabah::count();
-        $totalKaryawan = Karyawan::count();
-        $totalTransaksi = Transaksi::count();
+        $selectedYear = $request->input('year', Carbon::now()->year);
+
+        $totalNasabah = Nasabah::whereYear('created_at', $selectedYear)->count();
+        $totalKaryawan = Karyawan::whereYear('created_at', $selectedYear)->count();
+        $totalTransaksi = Transaksi::whereYear('created_at', $selectedYear)->count();
 
         $monthlyDataTransaksi = Transaksi::selectRaw('MONTH(created_at) as month, COUNT(*) as count')
+            ->whereYear('created_at', $selectedYear)
             ->groupBy('month')
             ->orderBy('month')
             ->get();
 
         $monthlyDataNasabah = Nasabah::selectRaw('MONTH(created_at) as month, COUNT(*) as count')
+            ->whereYear('created_at', $selectedYear)
             ->groupBy('month')
             ->orderBy('month')
             ->get();
@@ -48,6 +52,21 @@ class DashboardController extends Controller
             $nasabahCounts[] = $monthlyDataNasabah->where('month', $index + 1)->first()->count ?? 0;
         }
 
-        return view('dashboard.index', compact('months', 'totalNasabah', 'totalKaryawan', 'totalTransaksi', 'transactionCounts', 'nasabahCounts'));
+        // Ambil tahun-tahun yang tersedia dari database
+        $availableYears = Transaksi::selectRaw('YEAR(created_at) as year')
+            ->distinct()
+            ->orderBy('year', 'desc')
+            ->pluck('year');
+
+        return view('dashboard.index', compact(
+            'months',
+            'totalNasabah',
+            'totalKaryawan',
+            'totalTransaksi',
+            'transactionCounts',
+            'nasabahCounts',
+            'selectedYear',
+            'availableYears'
+        ));
     }
 }

@@ -75,9 +75,10 @@
                     <ul class="nav sidebar-menu flex-column" data-lte-toggle="treeview" role="menu"
                         data-accordion="false">
                         @hasanyrole('admin|approval|appraisal|customer service')
-                            <li class="nav-item"> <a
-                                    class="nav-link text-black {{ Route::is('dashboard.index') ? 'active bg-white' : '' }}"
-                                    href="{{ route('dashboard.index') }}"> <i class="nav-icon bi bi-speedometer"></i>
+                            <li class="nav-item">
+                                <a class="nav-link text-black {{ Route::is('dashboard.index') ? 'active bg-white' : '' }}"
+                                    href="{{ route('dashboard.index') }}">
+                                    <i class="nav-icon bi bi-speedometer"></i>
                                     <p>
                                         Dashboard
                                     </p>
@@ -94,33 +95,21 @@
                             <li class="nav-item {{ $isTransaksi || $isNasabah ? 'menu-open' : '' }}">
                                 <a href="#"
                                     class="nav-link text-black {{ $isTransaksi || $isNasabah ? 'active bg-white' : '' }}">
-                                    <i class="bi bi-person-fill-check"></i>
+                                    <i class="nav-icon bi bi-table"></i>
                                     <p>
-                                        Customer Service
+                                        Pendaftaran
                                         <i class="nav-arrow bi bi-chevron-right"></i>
                                     </p>
                                 </a>
                                 <ul class="nav nav-treeview">
-                                    <li class="nav-item text-black {{ $isNasabah ? 'menu-open' : '' }}">
-                                        <a href="#"
-                                            class="nav-link text-black {{ $isNasabah ? 'active bg-white' : '' }}">
-                                            <i class="nav-icon bi bi-table"></i>
-                                            <p>
-                                                Pendaftaran
-                                                <i class="nav-arrow bi bi-chevron-right"></i>
-                                            </p>
+                                    <li class="nav-item {{ $isNasabah ? 'menu-open' : '' }}">
+                                        <a class="nav-link text-black {{ $isNasabah ? 'active bg-white' : '' }}"
+                                            href="{{ route('nasabah.index') }}">
+                                            <i class="nav-icon bi bi-people"></i>
+                                            <p>Nasabah</p>
                                         </a>
-                                        <ul class="nav nav-treeview">
-                                            <li class="nav-item">
-                                                <a class="nav-link text-black {{ $isNasabah ? 'active bg-white' : '' }}"
-                                                    href="{{ route('nasabah.index') }}">
-                                                    <i class="nav-icon bi bi-circle"></i>
-                                                    <p>Nasabah</p>
-                                                </a>
-                                            </li>
-                                        </ul>
                                     </li>
-                                    <li class="nav-item">
+                                    <li class="nav-item {{ $isTransaksi ? 'menu-open' : '' }}">
                                         <a class="nav-link text-black {{ $isTransaksi ? 'active bg-white' : '' }}"
                                             href="{{ route('transaksi.index') }}">
                                             <i class="bi bi-wallet"></i>
@@ -133,45 +122,21 @@
 
                         @hasanyrole('admin|appraisal')
                             <li class="nav-item {{ Route::is('appraisal.index') ? 'menu-open' : '' }}">
-                                <a href="#"
-                                    class="nav-link text-black {{ Route::is('appraisal.index') ? 'active bg-white' : '' }}">
-                                    <i class="bi bi-person-fill-exclamation"></i>
-                                    <p>
-                                        Appraisal
-                                        <i class="nav-arrow bi bi-chevron-right"></i>
-                                    </p>
+                                <a class="nav-link text-black {{ Route::is('appraisal.index') ? 'active bg-white' : '' }}"
+                                    href="{{ route('appraisal.index') }}">
+                                    <i class="bi bi-list-check"></i>
+                                    <p>Penilaian</p>
                                 </a>
-                                <ul class="nav nav-treeview">
-                                    <li class="nav-item">
-                                        <a class="nav-link text-black {{ Route::is('appraisal.index') ? 'active bg-white' : '' }}"
-                                            href="{{ route('appraisal.index') }}">
-                                            <i class="nav-icon bi bi-circle"></i>
-                                            <p>Penilaian</p>
-                                        </a>
-                                    </li>
-                                </ul>
                             </li>
                         @endhasanyrole
 
                         @hasanyrole('admin|approval')
                             <li class="nav-item {{ Route::is('approval.index') ? 'menu-open' : '' }}">
-                                <a href="#"
-                                    class="nav-link text-black {{ Route::is('approval.index') ? 'active bg-white' : '' }}">
-                                    <i class="bi bi-person-fill-check"></i>
-                                    <p>
-                                        Approval
-                                        <i class="nav-arrow bi bi-chevron-right"></i>
-                                    </p>
+                                <a class="nav-link text-black {{ Route::is('approval.index') ? 'active bg-white' : '' }}"
+                                    href="{{ route('approval.index') }}">
+                                    <i class="bi bi-building-check"></i>
+                                    <p>Persetujuan</p>
                                 </a>
-                                <ul class="nav nav-treeview">
-                                    <li class="nav-item">
-                                        <a class="nav-link text-black {{ Route::is('approval.index') ? 'active bg-white' : '' }}"
-                                            href="{{ route('approval.index') }}">
-                                            <i class="nav-icon bi bi-circle"></i>
-                                            <p>Persetujuan</p>
-                                        </a>
-                                    </li>
-                                </ul>
                             </li>
                         @endhasanyrole
 
@@ -195,19 +160,19 @@
                                         </a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link text-black {{ Route::is('karyawan.pekerjaan.index', 'karyawan.pekerjaan.create', 'karyawan.pekerjaan.edit') ? 'active bg-white' : '' }}"
-                                            href="{{ route('karyawan.pekerjaan.index') }}">
-                                            <i class="bi bi-list-columns"></i>
-                                            <p>Daftar Posisi Pekerjaan</p>
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
                                         <a class="nav-link text-black {{ Route::is('users.index', 'users.create', 'users.edit') ? 'active bg-white' : '' }}"
                                             href="{{ route('users.index') }}">
                                             <i class="bi bi-person-vcard"></i>
                                             <p>Daftar Pengelola Akun</p>
                                         </a>
                                     </li>
+                                    {{-- <li class="nav-item">
+                                    <a class="nav-link text-black {{ Route::is('karyawan.pekerjaan.index', 'karyawan.pekerjaan.create', 'karyawan.pekerjaan.edit') ? 'active bg-white' : '' }}"
+                                        href="{{ route('karyawan.pekerjaan.index') }}">
+                                        <i class="bi bi-list-columns"></i>
+                                        <p>Daftar Posisi Pekerjaan</p>
+                                    </a>
+                                    </li> --}}
                                 </ul>
                             </li>
                         @endhasanyrole
@@ -235,7 +200,7 @@
                     </div>
                 </div>
             </footer>
-        </div>
+    </div>
     </main>
     </div>
     </div>

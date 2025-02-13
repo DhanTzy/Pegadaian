@@ -17,13 +17,13 @@ class TransaksiController extends Controller
 
     public function index()
     {
-        $nasabah = Nasabah::where('status_delete', '1 Restore')->orderBy('created_at', 'desc')->get();
+        $nasabah = Nasabah::where('status_delete', '1 Restore')->orderBy('created_at', 'asc')->get();
         return view('transaksi.index', compact('nasabah'));
     }
 
     public function getData(Request $request)
     {
-        $query = Transaksi::with('nasabah')->where('status_delete', '1 Restore')->orderBy('created_at', 'desc')->get();
+        $query = Transaksi::with('nasabah')->where('status_delete', '1 Restore')->orderBy('created_at', 'asc')->get();
 
         return DataTables::of($query)
             ->addIndexColumn()
@@ -49,13 +49,17 @@ class TransaksiController extends Controller
                 <button type="button" class="btn btn-info btn-sm me-2"
                         data-bs-toggle="modal"
                         data-bs-target="#transaksiDetailModal"
+                        data-no_pendaftaran="' . $transaksi->no_pendaftaran . '"
+                        data-no_pangkal="' . $transaksi->no_pangkal . '"
                         data-nasabah_id="' . $transaksi->nasabah->nama_lengkap . '"
                         data-pengajuan_pinjaman="' . $transaksi->pengajuan_pinjaman . '"
                         data-jangka_waktu="' . $transaksi->jangka_waktu . '"
                         data-jenis_jaminan="' . $transaksi->jenis_jaminan . '"
                         data-foto_jaminan="' . e($fotoJaminan) . '"
-                        data-nilai_pasar="' . $transaksi->nilai_pasar . '"
-                        data-nilai_likuiditas="' . $transaksi->nilai_likuiditas . '"
+                        data-nilai_pasar_aps="' . $transaksi->nilai_pasar_aps . '"
+                        data-nilai_likuiditas_aps="' . $transaksi->nilai_likuiditas_aps . '"
+                        data-nilai_pasar_apv="' . $transaksi->nilai_pasar_apv . '"
+                        data-nilai_likuiditas_apv="' . $transaksi->nilai_likuiditas_apv . '"
                         data-putusan_pinjaman="' . $transaksi->putusan_pinjaman . '"
                         data-bunga="' . $transaksi->bunga . '"
                         data-bunga_perbulan="' . $transaksi->bunga_perbulan . '"
@@ -83,6 +87,8 @@ class TransaksiController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
+            'no_pendaftaran' => 'required|string',
+            'no_pangkal' => 'required|string',
             'nasabah_id' => 'required|exists:nasabahs,id',
             'pengajuan_pinjaman' => 'required|string',
             'jangka_waktu' => 'required|string',

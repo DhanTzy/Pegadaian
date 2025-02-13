@@ -84,6 +84,18 @@
                 </div>
             </div>
 
+            <div class="row mb-3">
+                <div class="col-md-3">
+                    <form action="{{ route('dashboard.index') }}" method="GET">
+                        <label for="year" class="form-label">Pilih Tahun</label>
+                        <select name="year" id="year" class="form-control" onchange="this.form.submit()">
+                            @foreach ($availableYears as $year)
+                                <option value="{{ $year }}" {{ $selectedYear == $year ? 'selected' : '' }}>{{ $year }}</option>
+                            @endforeach
+                        </select>
+                    </form>
+                </div>
+            </div>
         </div>
         <div class="card mt-4">
             <div class="card-body" style="height: 10%;">

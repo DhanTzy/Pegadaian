@@ -44,8 +44,8 @@ class AppraisalController extends Controller
                         data-bs-target="#appraisalDetailModal"
                         data-id="' . $transaksi->id . '"
                         data-jenis_jaminan="' . e($transaksi->jenis_jaminan) . '"
-                        data-nilai_pasar="' . e($transaksi->nilai_pasar) . '"
-                        data-nilai_likuiditas="' . e($transaksi->nilai_likuiditas) . '"
+                        data-nilai_pasar_aps="' . e($transaksi->nilai_pasar_aps) . '"
+                        data-nilai_likuiditas_aps="' . e($transaksi->nilai_likuiditas_aps) . '"
                         data-foto_jaminan="' . e($fotoJaminan) . '">
                     <i class="fas fa-check-circle"></i>
                 </button>';
@@ -71,8 +71,8 @@ class AppraisalController extends Controller
     public function update(Request $request, $id)
     {
         $validated = $request->validate([
-            'nilai_pasar' => 'nullable|string',
-            'nilai_likuiditas' => 'nullable|string',
+            'nilai_pasar_aps' => 'nullable|string',
+            'nilai_likuiditas_aps' => 'nullable|string',
             'foto_jaminan.*' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
             'status_transaksi' => 'nullable|in:Menunggu Appraisal,Appraisal Selesai,Menunggu Approval,Approval Selesai,Ditolak',
         ]);
@@ -93,8 +93,8 @@ class AppraisalController extends Controller
         }
 
         $transaksi->update([
-            'nilai_pasar' => $validated['nilai_pasar'],
-            'nilai_likuiditas' => $validated['nilai_likuiditas'],
+            'nilai_pasar_aps' => $validated['nilai_pasar_aps'],
+            'nilai_likuiditas_aps' => $validated['nilai_likuiditas_aps'],
             'status_transaksi' => 'Menunggu Approval',
         ]);
 
