@@ -43,6 +43,7 @@ class CetakController extends Controller
 
         switch ($request->jenisCetak) {
             case 'data':
+                $pdf = Pdf::loadView('cetak.data', compact('nasabah', 'transaksi', 'user'));
                 return $pdf->stream();
                 break;
             case 'pendaftaran':
