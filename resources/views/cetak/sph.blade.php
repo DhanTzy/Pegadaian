@@ -100,36 +100,36 @@ $base64Logo = 'data:image/' . $type . ';base64,' . base64_encode($data);
             Oktober, bertindak untuk dan atas nama PT Sigma Artha Nusantara.
         </p>
         <p>
-            Pada hari ini Kamis, Tanggal, Bulan, Tahun. yang bertanda tangan dibawah ini :
+            Pada hari ini {{ \Carbon\Carbon::now()->locale('id')->isoFormat('dddd, D MMMM Y') }} yang bertanda tangan dibawah ini :
         </p>
         <table style="width: 100%; margin-left: 20px;">
             <tr>
                 <td>Nama</td>
-                <td>: Siti Junariyah</td>
+                <td>: {{ $nasabah->nama_lengkap ?? "-" }}</td>
             </tr>
             <tr>
                 <td>NIK</td>
-                <td>: 1234567890</td>
+                <td>: {{ $nasabah->nomor_identitas ?? "-" }}</td>
             </tr>
             <tr>
                 <td>Alamat</td>
-                <td>: Jl. 1234567890, Kab. 1234567890, Kota Jember, Jawa Barat, Indonesia</td>
+                <td>: {{ $nasabah->alamat_lengkap ?? "-" }}</td>
             </tr>
             <tr>
                 <td>Kelurahan</td>
-                <td>: Kelurahan</td>
+                <td>: {{ $nasabah->kelurahan ?? "-" }}</td>
             </tr>
             <tr>
                 <td>Kecamatan</td>
-                <td>: Kecamatan</td>
+                <td>: {{ $nasabah->kecamatan ?? "-" }}</td>
             </tr>
             <tr>
                 <td>Kabupaten</td>
-                <td>: Kabupaten</td>
+                <td>: {{ $nasabah->kabupaten ?? "-" }}</td>
             </tr>
             <tr>
                 <td>Provinsi</td>
-                <td>: Provinsi</td>
+                <td>: {{ $nasabah->propinsi ?? "-" }}</td>
             </tr>
         </table>
         <p>
@@ -138,7 +138,7 @@ $base64Logo = 'data:image/' . $type . ';base64,' . base64_encode($data);
             maupun sendiri-sendiri atau salah seorang saja menanggung segala hutang (hoofdelijk), selanjutnya disebut
             YANG BERHUTANG, menyatakan mengaku berhutang kepada PT. Sigma Artha Nusantara selanjutnya disebut
             PERUSAHAAN,
-            karena telah menerima uang sebagai pinjaman GADAI KITA sejumlah Rp.1,000,000 menurut syarat - syarat dan
+            karena telah menerima uang sebagai pinjaman GADAI KITA sejumlah {{ $transaksi->putusan_pinjaman ?? "-"}} menurut syarat - syarat dan
             ketentuan-ketentuan sebagaimana tersebut dibawah ini :
         </p>
         <p class="text-center">Pasal 1</p>
@@ -146,7 +146,7 @@ $base64Logo = 'data:image/' . $type . ';base64,' . base64_encode($data);
         <ol>
             <li>
                 YANG BERHUTANG telah menerima dari PERUSAHAAN sejumlah uang sebagai pokok PERUSAHAAN
-                sebesar Rp. 1,000,000
+                sebesar {{ $transaksi->putusan_pinjaman ?? "-"}}
             </li>
             <li>
                 HUTANG yang diterima oleh YANG BERHUTANG dari PERUSAHAAN dipergunakan untuk keperluan Rumah Tangga
@@ -157,11 +157,11 @@ $base64Logo = 'data:image/' . $type . ';base64,' . base64_encode($data);
         <ol>
             <li>
                 YANG BERHUTANG wajib melunasi seluruh kewajibannya, namun tidak terbatas pada tagihan pokok,
-                bunga, denda dan biaya lainnya (apabila ada) kepada PERUSAHAAN pada tanggal 29 Januari 2025
+                bunga, denda dan biaya lainnya (apabila ada) kepada PERUSAHAAN pada tanggal {{ \Carbon\Carbon::now()->addMonths((int) str_replace(' Bulan', '', $transaksi->jangka_waktu))->locale('id')->isoFormat('D MMMM Y') }}
                 (selanjutnya disebut Tanggal Jatuh Tempo).
             </li>
             <li>
-                Atas HUTANG yang diterimanya, YANG BERHUTANG wajib membayar bunga sebesar 10% per bulan
+                Atas HUTANG yang diterimanya, YANG BERHUTANG wajib membayar bunga sebesar {{ $transaksi->bunga ?? "-"}} per bulan
             </li>
             <li>
                 YANG BERHUTANG wajib melakukan pembayaran pokok dan bunga HUTANG dengan ketentuan sebagai
@@ -169,11 +169,11 @@ $base64Logo = 'data:image/' . $type . ';base64,' . base64_encode($data);
                 <ul>
                     <li>
                         Pokok HUTANG berikut bunganya harus dibayar kembali oleh YANG BERHUTANG pada saat Tanggal
-                        Jatuh Tempo dengan total sebesar Rp. 1,000,000 satu juta
+                        Jatuh Tempo dengan total sebesar {{ $transaksi->putusan_pinjaman ?? "-"}} juta
                     </li>
                     <li>
                         Bunga HUTANG wajib dibayar kembali oleh YANG BERHUTANG setiap bulannya masing - masing sebesar
-                        sebesar Rp. 100,000 seratus ribu selambat - lambatnya
+                        sebesar {{ $transaksi->bunga_perbulan ?? "-"}} selambat - lambatnya
                         setiap tanggal 26 hingga seluruh kewajibannya dinyatakan lunas oleh PERUSAHAAN.
                         Pokok HUTANG wajib dibayar oleh YANG BERHUTANG secara sekaligus pada Tanggal Jatuh Tempo.
                     </li>
@@ -197,7 +197,7 @@ $base64Logo = 'data:image/' . $type . ';base64,' . base64_encode($data);
             <li>
                 Pembayaran pokok berikut bunga HUTANG sebagaimana disebutkan dalam ayat 1 dan ayat 2 Pasal ini, dapat
                 bersumber dari penjualan atau lelang barang yang telah dijaminan dan disimpan di PERUSAHAAN yaitu berupa
-                barang HP Realme C51 RAM 4/64 Untuk kepentingan dimaksud, maka YANG BERHUTANG mem -
+                barang {{ $transaksi->jenis_jaminan ?? "-"}} Untuk kepentingan dimaksud, maka YANG BERHUTANG mem -
                 berikan kuasa dalam SURAT PENGAKUAN HUTANG ini kepada PERUSAHAAN untuk menjual atau melelang jaminan
                 tanpa perlu dibuatkan Surat Kuasa terpisah.
             </li>
@@ -223,7 +223,7 @@ $base64Logo = 'data:image/' . $type . ';base64,' . base64_encode($data);
                 YANG BERHUTANG harus membayar :
                 <ul>
                     <li>
-                        Biaya administrasi sebesar Rp. 25.000
+                        Biaya administrasi sebesar {{ $transaksi->biaya_administrasi ?? "-"}}
                     </li>
                     <li>
                         Asuransi
@@ -359,7 +359,7 @@ $base64Logo = 'data:image/' . $type . ';base64,' . base64_encode($data);
         <p>Demikian, Surat Pengakuan Hutang ini dibuat dan berlaku sejak tanggal ditandatanganinya.</p>
         <br>
         <br>
-        <p class="text-right">Ditanda tangani di Jember Tanggal	14 Februari 2025</p>
+        <p class="text-right">Ditanda tangani di Jember Tanggal	{{ \Carbon\Carbon::now()->locale('id')->isoFormat(' D MMMM Y') }}</p>
         <table class="tablettd">
             <tr>
                 <td class"ttd"><strong>Yang Berhutang</strong></td>
@@ -370,7 +370,7 @@ $base64Logo = 'data:image/' . $type . ';base64,' . base64_encode($data);
             <br>
             <br>
             <tr>
-                <td class"ttd"><span class="underlinettd">Siti Junariyah</span></td>
+                <td class"ttd"><span class="underlinettd">{{ $nasabah->nama_lengkap ?? "-"}}</span></td>
                 <td class"ttd"><span class="underlinettd">Perusahaan</span></td>
             </tr>
         </table>

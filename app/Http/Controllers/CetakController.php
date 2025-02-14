@@ -17,29 +17,38 @@ class CetakController extends Controller
         $this->middleware('role:admin|customer service');
     }
 
-    public function index($nasabahId, $transaksiId)
-    {
-        $nasabah = Nasabah::find($nasabahId);
-        $transaksi = Transaksi::where('nasabah_id', $nasabahId)->where('id', $transaksiId)->first();
+    // public function index($nasabahId, $transaksiId)
+    // {
+    //     $nasabah = Nasabah::find($nasabahId);
+    //     $transaksi = Transaksi::where('nasabah_id', $nasabahId)->where('id', $transaksiId)->first();
 
-        $user = Auth::user();
+    //     $user = Auth::user();
 
-        $pdf = Pdf::loadView('cetak.index', compact('nasabah', 'transaksi', 'user'));
+    //     $pdf = Pdf::loadView('cetak.index', compact('nasabah', 'transaksi', 'user'));
 
-        return $pdf->stream();
-    }
+    //     return $pdf->stream();
+    // }
 
     public function print(Request $request)
     {
+        // Cetak Pendaftaran
         $transaksiId = $request->id_transaksi;
-        $nasabahId = 1;
-        $jenisCetak = $request->jenisCetak;
+        $nasabahId = $request->id_nasabah;
 
-        $nasabah = Nasabah::find($nasabahId);
-        $transaksi = Transaksi::where('nasabah_id', $nasabahId)->where('id', $transaksiId)->first();
+        if (!$transaksiId || !$nasabahId) {
+            return back()->with('error', 'ID Transaksi dan Nasabah diperlukan');
+        }
+
+        $nasabah = Nasabah::findOrFail($nasabahId);
+        $transaksi = Transaksi::where('nasabah_id', $nasabahId)->where('id', $transaksiId)->firstOrFail();
+
+        // Cetak Gadai
+
+        // Cetak SPH
+
+        // Cetak Kwinansi
 
         $user = Auth::user();
-
 
         switch ($request->jenisCetak) {
             case 'data':
@@ -47,16 +56,20 @@ class CetakController extends Controller
                 return $pdf->stream();
                 break;
             case 'pendaftaran':
-                $pdf = Pdf::loadView('cetak.index', compact('nasabah', 'transaksi', 'user'));
+                $pdf = Pdf::loadView('cetak.pendaftaran', compact('nasabah', 'transaksi', 'user'));
                 return $pdf->stream();
                 break;
             case 'sph':
                 $pdf = Pdf::loadView('cetak.sph', compact('nasabah', 'transaksi', 'user'));
                 return $pdf->stream();
                 break;
-
+            case 'gadai':
+                return "PDF Gadai";
+                break;
+            case 'sph':
+                return "PDF SPH";
+                break;
             default:
-
                 break;
         }
     }
