@@ -47,14 +47,14 @@
     <h2>PENYERAHAN HAK KEPEMILIKAN SECARA</h2>
     <h2>KEPERCAYAAN TERHADAP BARANG</h2>
     <br>
-    <p class="text-right">Jember, Tanggal : 30 September 2020</p>
+    <p class="text-right">Jember, Tanggal : {{ \Carbon\Carbon::now()->locale('id')->isoFormat('D MMMM Y') }}</p>
     <p class="text-right">Kepada Yth. Direktur PT. Sigma Artha Nusantara</p>
     <p class="text-right">di Jember</p>
     <br>
     <p>Dengan Hormat,</p>
     <p>
         Sesuai dengan Perjanjian Penyerahan hak kepemilikan secara kepercayaan terhadap barang antara PT. Sigma Artha
-        Nusantara dengan kami,  Nomor :			009/Pend-12/2024	tanggal	30 Desember 2024
+        Nusantara dengan kami,  Nomor :	{{ $transaksi->no_pendaftaran }}	tanggal	{{ \Carbon\Carbon::now()->locale('id')->isoFormat('D MMMM Y') }}
         dengan  ini  kami  menyerahkan  hak  kepemilikan  secara  Kepercayaan  terhadap  barang  -  barang  yang  tersebut
         dibawah  ini,  penyerahan mana telah diterima  baik  oleh  PERUSAHAAN dan sejak  penyerahan ini barang - barang
         tersebut menjadi milik PERUSAHAAN.
@@ -68,9 +68,9 @@
             <th>Tempat penyimpanan barang - barang</th>
         </tr>
         <tr>
-            <td>1 x HP Realme C51 RAM 4/64</td>
+            <td>{{ $transaksi->jenis_jaminan }}</td>
             <td></td>
-            <td>Rp. 1.050.000</td>
+            <td>{{ $transaksi->nilai_likuiditas_apv }}</td>
             <td></td>
         </tr>
         <tr>
@@ -93,10 +93,10 @@
         </tr>
         <tr>
             <td colspan="2">Jumlah</td>
-            <td colspan="2">Rp. 1.050.000</td>
+            <td colspan="2">{{ $transaksi->nilai_likuiditas_apv }}</td>
         </tr>
     </table>
-    <p>satu juta lima puluh ribu rupiah</p>
+    <p>{{ \App\Helpers\Terbilang::convert($transaksi->nilai_likuiditas_apv) }} rupiah</p>
     <p>
         Selanjutnya kami menerangkan bahwa pada saat ini juga kami telah menerima kembali barang - barang tersebut dari PERUSAHAAN, untuk kami simpan / pergunakan dengan sebaik - baiknya untuk dan atas nama PERUSAHAAN, serta dengan ini kami berjanji dan sanggup memelihara / merawat barang - barang tersebut dengan baik dan dengan segala resiko dan menjadi tanggung jawab kami.
     </p>
@@ -109,7 +109,7 @@
     <br>
     <br>
     <br>
-    <p class="text-right mr">Siti Junariyah</p>
+    <p class="text-right mr">{{ $nasabah->nama_lengkap }}</p>
     {{-- <table class="tablettd">
         <tr>
             <td class"ttd"><strong>Hormat saya,</strong></td>

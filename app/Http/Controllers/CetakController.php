@@ -31,7 +31,6 @@ class CetakController extends Controller
 
     public function print(Request $request)
     {
-        // Cetak Pendaftaran
         $transaksiId = $request->id_transaksi;
         $nasabahId = $request->id_nasabah;
 
@@ -41,12 +40,6 @@ class CetakController extends Controller
 
         $nasabah = Nasabah::findOrFail($nasabahId);
         $transaksi = Transaksi::where('nasabah_id', $nasabahId)->where('id', $transaksiId)->firstOrFail();
-
-        // Cetak Gadai
-
-        // Cetak SPH
-
-        // Cetak Kwinansi
 
         $user = Auth::user();
 
@@ -67,7 +60,7 @@ class CetakController extends Controller
                 $pdf = Pdf::loadView('cetak.gadai', compact('nasabah', 'transaksi', 'user'));
                 return $pdf->stream();
                 break;
-                
+
             default:
                 break;
         }

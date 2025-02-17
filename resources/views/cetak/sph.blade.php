@@ -169,12 +169,12 @@ $base64Logo = 'data:image/' . $type . ';base64,' . base64_encode($data);
                 <ul>
                     <li>
                         Pokok HUTANG berikut bunganya harus dibayar kembali oleh YANG BERHUTANG pada saat Tanggal
-                        Jatuh Tempo dengan total sebesar {{ $transaksi->putusan_pinjaman ?? "-"}} juta
+                        Jatuh Tempo dengan total sebesar {{ $transaksi->putusan_pinjaman ?? "-"}} {{ \App\Helpers\JutaanTerbilang::convert($transaksi->putusan_pinjaman) }}
                     </li>
                     <li>
                         Bunga HUTANG wajib dibayar kembali oleh YANG BERHUTANG setiap bulannya masing - masing sebesar
-                        sebesar {{ $transaksi->bunga_perbulan ?? "-"}} selambat - lambatnya
-                        setiap tanggal 26 hingga seluruh kewajibannya dinyatakan lunas oleh PERUSAHAAN.
+                        sebesar {{ $transaksi->bunga_perbulan ?? "-"}} {{ \App\Helpers\Rupiah::convert($transaksi->bunga_perbulan) }} selambat - lambatnya
+                        setiap tanggal {{ \Carbon\Carbon::now()->addMonths((int) str_replace(' Bulan', '', $transaksi->jangka_waktu))->locale('id')->isoFormat('D') }} hingga seluruh kewajibannya dinyatakan lunas oleh PERUSAHAAN.
                         Pokok HUTANG wajib dibayar oleh YANG BERHUTANG secara sekaligus pada Tanggal Jatuh Tempo.
                     </li>
                     <li>

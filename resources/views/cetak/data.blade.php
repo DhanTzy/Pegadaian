@@ -69,19 +69,19 @@
                     No. Pangkal
                 </td>
                 <td>
-                    30 Desember 2024
+                    {{ \Carbon\Carbon::now()->locale('id')->isoFormat('D MMMM Y') }}
                     <br>
-                    Kamis
+                    {{ \Carbon\Carbon::now()->locale('id')->isoFormat('dddd') }}
                     <br>
-                    26(Dua Puluh Enam)
+                    {{ \Carbon\Carbon::now()->locale('id')->isoFormat('D') }}({{ \App\Helpers\TanggalTerbilang::tanggal(\Carbon\Carbon::now()->format('d')) }})
                     <br>
-                    12(Dua Belas)
+                    {{ \Carbon\Carbon::now()->locale('id')->isoFormat('MM') }}({{ \App\Helpers\TanggalTerbilang::tanggal(\Carbon\Carbon::now()->format('m')) }})
                     <br>
-                    2024(Dua Ribu Dua Puluh Empat)
+                    {{ \Carbon\Carbon::now()->locale('id')->isoFormat('Y') }}({{ \App\Helpers\TanggalTerbilang::tahun(\Carbon\Carbon::now()->format('Y')) }})
                     <br>
-                    009/Pend-12/2024
+                    {{ $transaksi->no_pendaftaran ?? '-' }}
                     <br>
-                    009
+                    {{ $transaksi->no_pangkal ?? '-' }}
                 </td>
             </tr>
             <tr>
@@ -221,10 +221,10 @@
                     <br>
                     {{ $transaksi->pelunasan ?? '-' }}
                     <br>
-                    25.000
+                    {{ $transaksi->biaya_administrasi ?? '-' }}
             </tr>
         </table>
-        <table>
+        {{-- <table>
             <tr class="section-title">
                 <td><strong>1 Bulan</strong></td>
                 <td><strong>4 Bulan</strong></td>
@@ -239,7 +239,7 @@
         <table class="mb-0">
             <tr>
             </tr>
-        </table>
+        </table> --}}
     </div>
 </body>
 

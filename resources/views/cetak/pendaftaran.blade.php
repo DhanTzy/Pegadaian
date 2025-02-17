@@ -100,7 +100,7 @@
                     <br>
                     {{ $nasabah->tempat_lahir ?? "-" }}
                     <br>
-                    {{ $nasabah->tanggal_lahir ? \Carbon\Carbon::parse($nasabah->tanggal_lahir)->format('d F Y') : "-" }}
+                    {{ $nasabah->tanggal_lahir ? \Carbon\Carbon::parse($nasabah->tanggal_lahir)->format('d-m-Y') : "-" }}
                     <br>
                     {{ $nasabah->telepon ?? "-" }}
                     <br>
