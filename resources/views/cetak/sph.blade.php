@@ -77,16 +77,16 @@
         }
     </style>
 </head>
-{{-- @php
+@php
     $logoPath = public_path('img/sigma.png');
 
 $type = pathinfo($logoPath, PATHINFO_EXTENSION);
 $data = file_get_contents($logoPath);
 $base64Logo = 'data:image/' . $type . ';base64,' . base64_encode($data);
-@endphp --}}
+@endphp
 <body>
     <div class="content">
-        {{-- <img src="{{ $base64Logo }}" alt="Logo" style="width: 100%; height: auto;"> --}}
+        <img src="{{ $base64Logo }}" alt="Logo" style="width: 20%; height: auto;">
         <h2>Surat Pengakuan Hutang</h2>
         <br>
         <p class="text-center">

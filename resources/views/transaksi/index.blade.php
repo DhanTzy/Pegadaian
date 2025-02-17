@@ -188,7 +188,7 @@
                     <h5 class="modal-title" id="cetakModalLabel">Cetak Transaksi</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <form action="{{ route('cetak.print') }}" method="post" target="_blank">
+                <form action="{{ route('cetak.print') }}" method="get" target="_blank">
                     @csrf
                     <div class="modal-body">
                         <div class="mb-3">

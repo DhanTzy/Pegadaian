@@ -20,13 +20,26 @@
             text-align: center;
         }
 
+        .fontarial {
+            font-family: "Arial Black", sans-serif;
+            font-size: 40px;
+            font-weight: bold;
+            color: #0044cc;
+            text-align: center;
+            background: linear-gradient(to bottom, #0066ff, #0033cc);
+        }
+
         table {
             width: 100%;
             border-collapse: collapse;
             margin-bottom: 20px;
         }
 
-        th,
+        th {
+            border: 1px solid black;
+            padding: 8px;
+            text-align: left;
+        }
         td {
             border: 1px solid black;
             padding: 20px;
@@ -45,15 +58,27 @@
         }
     </style>
 </head>
+@php
+    $logoPath = public_path('img/gadai.png');
+
+    $type = pathinfo($logoPath, PATHINFO_EXTENSION);
+    $data = file_get_contents($logoPath);
+    $base64Logo = 'data:image/' . $type . ';base64,' . base64_encode($data);
+@endphp
 
 <body>
     <div class="container">
-        <div class="header">Gadai Kita</div>
-        <h2>Form Pendaftaran</h2>
-        <p><strong>Tanggal:</strong> {{ \Carbon\Carbon::now()->format('d/m/Y') }} &nbsp;&nbsp;&nbsp; <strong>No. Pendaftaran:</strong> {{ $transaksi->no_pendaftaran }}</p>
-        <p><strong>Pangkal:</strong> {{ $transaksi->no_pangkal }}</p>
-
+        <img src="{{ $base64Logo }}" alt="Logo" style="width: 15%; height: auto; position: absolute; margin-top: 5px; margin-left: 5px;">
         <table>
+            <tr>
+                <td colspan="2" class="fontarial">Form Pendaftaran</td>
+            </tr>
+            <tr>
+                <td colspan="2" style="padding: 0px;">
+                    <p style="margin-left: 20px"><strong>Tanggal:</strong> {{ \Carbon\Carbon::now()->format('d/m/Y') }} &nbsp;&nbsp;&nbsp; <strong>   No.Pendaftaran:</strong> {{ $transaksi->no_pendaftaran }}</p>
+                    <p style="margin-left: 20px"><strong>Pangkal:</strong> {{ $transaksi->no_pangkal }}</p>
+                </td>
+            </tr>                                               
             <tr>
                 <th colspan="2" class="section-title">Pendaftaran</th>
             </tr>
@@ -84,39 +109,37 @@
                     Jenis Jaminan
                 </td>
                 <td>
-                    {{ $nasabah->nama_lengkap ?? "-" }}
+                    {{ $nasabah->nama_lengkap ?? '-' }}
                     <br>
-                    {{ $nasabah->nomor_identitas ?? "-" }}
+                    {{ $nasabah->nomor_identitas ?? '-' }}
                     <br>
-                    {{ $nasabah->alamat_lengkap ?? "-" }}
+                    {{ $nasabah->alamat_lengkap ?? '-' }}
                     <br>
-                    {{ $nasabah->kelurahan ?? "-" }}
+                    {{ $nasabah->kelurahan ?? '-' }}
                     <br>
-                    {{ $nasabah->kecamatan ?? "-" }}
+                    {{ $nasabah->kecamatan ?? '-' }}
                     <br>
-                    {{ $nasabah->kabupaten ?? "-" }}
+                    {{ $nasabah->kabupaten ?? '-' }}
                     <br>
-                    {{ $nasabah->propinsi ?? "-" }}
+                    {{ $nasabah->propinsi ?? '-' }}
                     <br>
-                    {{ $nasabah->tempat_lahir ?? "-" }}
+                    {{ $nasabah->tempat_lahir ?? '-' }}
                     <br>
-                    {{ $nasabah->tanggal_lahir ? \Carbon\Carbon::parse($nasabah->tanggal_lahir)->format('d-m-Y') : "-" }}
+                    {{ $nasabah->tanggal_lahir ? \Carbon\Carbon::parse($nasabah->tanggal_lahir)->format('d-m-Y') : '-' }}
                     <br>
-                    {{ $nasabah->telepon ?? "-" }}
+                    {{ $nasabah->telepon ?? '-' }}
                     <br>
-                    {{ $transaksi->pengajuan_pinjaman ?? "-" }}
+                    {{ $transaksi->pengajuan_pinjaman ?? '-' }}
                     <br>
-                    {{ $transaksi->jangka_waktu ?? "-" }}
+                    {{ $transaksi->jangka_waktu ?? '-' }}
                     <br>
-                    {{ $transaksi->jenis_jaminan ?? "-" }}
+                    {{ $transaksi->jenis_jaminan ?? '-' }}
                     <br>
                 </td>
             </tr>
             <tr>
-                <td colspan="2">Tanda Tangan customer service :</td>
-            </tr>
-            <tr>
-                <td colspan="2">Tanda Tangan debitur :</td>
+                <td style="font-size: 10px; padding: 30px;">Tanda Tangan customer service :</td>
+                <td style="font-size: 10px; padding: 30px;">Tanda Tangan debitur :</td>
             </tr>
             <tr>
                 <th colspan="2" class="section-title">Appraisal</th>
@@ -130,15 +153,15 @@
                     Nilai Likuiditas APS
                 </td>
                 <td>
-                    {{ $transaksi->jenis_jaminan ?? "-" }}
+                    {{ $transaksi->jenis_jaminan ?? '-' }}
                     <br>
-                    {{ $transaksi->nilai_pasar_aps ?? "-" }}
+                    {{ $transaksi->nilai_pasar_aps ?? '-' }}
                     <br>
-                    {{ $transaksi->nilai_likuiditas_aps ?? "-" }}
+                    {{ $transaksi->nilai_likuiditas_aps ?? '-' }}
                 </td>
             </tr>
             <tr>
-                <td colspan="2">Tanda tangan appraisal :</td>
+                <td colspan="2" style="font-size: 10px; padding: 30px;"">Tanda tangan appraisal :</td>
             </tr>
             <tr>
                 <th colspan="2" class="section-title">Putusan</th>
@@ -164,27 +187,27 @@
                     Biaya Administrasi
                 </td>
                 <td>
-                    {{ $transaksi->jenis_jaminan ?? "-" }}
+                    {{ $transaksi->jenis_jaminan ?? '-' }}
                     <br>
-                    {{ $transaksi->nilai_pasar_apv ?? "-" }}
+                    {{ $transaksi->nilai_pasar_apv ?? '-' }}
                     <br>
-                    {{ $transaksi->nilai_likuiditas_apv ?? "-" }}
+                    {{ $transaksi->nilai_likuiditas_apv ?? '-' }}
                     <br>
-                    {{ $transaksi->putusan_pinjaman ?? "-" }}
+                    {{ $transaksi->putusan_pinjaman ?? '-' }}
                     <br>
-                    {{ $transaksi->jangka_waktu ?? "-" }}
+                    {{ $transaksi->jangka_waktu ?? '-' }}
                     <br>
-                    {{ $transaksi->bunga ?? "-" }}
+                    {{ $transaksi->bunga ?? '-' }}
                     <br>
-                    {{ $transaksi->bunga_perbulan ?? "-" }}
+                    {{ $transaksi->bunga_perbulan ?? '-' }}
                     <br>
-                    {{ $transaksi->pelunasan ?? "-" }}
+                    {{ $transaksi->pelunasan ?? '-' }}
                     <br>
-                    {{ $transaksi->biaya_administrasi ?? "-" }}
+                    {{ $transaksi->biaya_administrasi ?? '-' }}
                 </td>
             </tr>
             <tr>
-                <td colspan="2">Tanda tangan pemutus :</td>
+                <td colspan="2" style="font-size: 10px; padding: 30px;">Tanda tangan pemutus :</td>
             </tr>
         </table>
     </div>

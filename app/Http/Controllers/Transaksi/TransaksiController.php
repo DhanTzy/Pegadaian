@@ -47,7 +47,7 @@ class TransaksiController extends Controller
                     ';
                 }
                 return '
-                <button type="button" class="btn btn-info btn-sm me-2"
+                <button type="button    " class="btn btn-info btn-sm me-2"
                         data-bs-toggle="modal"
                         data-bs-target="#transaksiDetailModal"
                         data-no_pendaftaran="' . $transaksi->no_pendaftaran . '"
