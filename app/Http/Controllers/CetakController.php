@@ -64,11 +64,10 @@ class CetakController extends Controller
                 return $pdf->stream();
                 break;
             case 'gadai':
-                return "PDF Gadai";
+                $pdf = Pdf::loadView('cetak.gadai', compact('nasabah', 'transaksi', 'user'));
+                return $pdf->stream();
                 break;
-            case 'sph':
-                return "PDF SPH";
-                break;
+                
             default:
                 break;
         }
