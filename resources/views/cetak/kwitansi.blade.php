@@ -5,6 +5,23 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cetak Kwitansi</title>
+    @php
+        $logoPath1 = public_path('img/gadaibiru.png');
+        $logoPath2 = public_path('img/sanbiru.png');
+        $logoPath3 = public_path('img/backgroundkwitansi.png');
+
+        $type1 = pathinfo($logoPath1, PATHINFO_EXTENSION);
+        $data1 = file_get_contents($logoPath1);
+        $base64Logo1 = 'data:image/' . $type1 . ';base64,' . base64_encode($data1);
+
+        $type2 = pathinfo($logoPath2, PATHINFO_EXTENSION);
+        $data2 = file_get_contents($logoPath2);
+        $base64Logo2 = 'data:image/' . $type2 . ';base64,' . base64_encode($data2);
+
+        $type3 = pathinfo($logoPath3, PATHINFO_EXTENSION);
+        $data3 = file_get_contents($logoPath3);
+        $base64Logo3 = 'data:image/' . $type3 . ';base64,' . base64_encode($data3);
+    @endphp
 
     <style>
         body {
@@ -14,7 +31,22 @@
             margin: 0;
             padding: 5px;
             line-height: 1.2;
+            position: relative;
         }
+
+        body::before {
+            content: "";
+            position: absolute;
+            top: 70;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('{{ $base64Logo3 }}');
+            background-position: top;
+            background-repeat: no-repeat;
+            opacity: 0.3;
+        }
+
 
         .keterangan {
             margin-left: 500px;
@@ -50,7 +82,8 @@
             border-right: none;
         }
 
-        th, td {
+        th,
+        td {
             border: 1px solid rgb(4, 80, 232);
             padding: 5px;
         }
@@ -87,27 +120,10 @@
     </style>
 </head>
 
-@php
-    $logoPath1 = public_path('img/gadaibiru.png');
-    $logoPath2 = public_path('img/sanbiru.png');
-    $logoPath3 = public_path('img/backgroundkwitansi.png');
-
-    $type1 = pathinfo($logoPath1, PATHINFO_EXTENSION);
-    $data1 = file_get_contents($logoPath1);
-    $base64Logo1 = 'data:image/' . $type1 . ';base64,' . base64_encode($data1);
-
-    $type2 = pathinfo($logoPath2, PATHINFO_EXTENSION);
-    $data2 = file_get_contents($logoPath2);
-    $base64Logo2 = 'data:image/' . $type2 . ';base64,' . base64_encode($data2);
-
-    $type3 = pathinfo($logoPath3, PATHINFO_EXTENSION);
-    $data3 = file_get_contents($logoPath3);
-    $base64Logo3 = 'data:image/' . $type3 . ';base64,' . base64_encode($data3);
-@endphp
-
 <body>
     <img src="{{ $base64Logo1 }}" alt="Logo Gadai" style="width: 20%; height: auto; position: absolute; top: 0; left: 0;">
-    <img src="{{ $base64Logo2 }}" alt="Logo Sigma" style="width: 15%; height: auto; position: absolute; top: 0; right: 0;">
+    <img src="{{ $base64Logo2 }}" alt="Logo Sigma"
+        style="width: 15%; height: auto; position: absolute; top: 0; right: 0;">
     <P class="keterangan keterangan-hari">Hari :</P>
     <P class="keterangan">Tanggal :</P>
     <P class="keterangan">SPH No :</P>
