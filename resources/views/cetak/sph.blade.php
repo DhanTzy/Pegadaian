@@ -363,7 +363,7 @@ $base64Logo = 'data:image/' . $type . ';base64,' . base64_encode($data);
         <table class="tablettd">
             <tr>
                 <td class"ttd"><strong>Yang Berhutang</strong></td>
-                <td class"ttd"><strong>Menerima Pengakuan dari</strong><br>YANG BERHUTANG</td>
+                <td class"ttd"><strong>Menerima Pengakuan dari</strong><br>PEMBERI HUTANG</td>
             </tr>
             <br>
             <br>

@@ -52,6 +52,10 @@ class CetakController extends Controller
                 $pdf = Pdf::loadView('cetak.pendaftaran', compact('nasabah', 'transaksi', 'user'));
                 return $pdf->stream();
                 break;
+            case 'kwitansi':
+                $pdf = Pdf::loadView('cetak.kwitansi', compact('nasabah', 'transaksi', 'user'));
+                return $pdf->stream();
+                break;
             case 'sph':
                 $pdf = Pdf::loadView('cetak.sph', compact('nasabah', 'transaksi', 'user'));
                 return $pdf->stream();
