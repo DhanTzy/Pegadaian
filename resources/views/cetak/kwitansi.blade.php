@@ -124,8 +124,8 @@
     <img src="{{ $base64Logo1 }}" alt="Logo Gadai" style="width: 20%; height: auto; position: absolute; top: 0; left: 0;">
     <img src="{{ $base64Logo2 }}" alt="Logo Sigma"
         style="width: 15%; height: auto; position: absolute; top: 0; right: 0;">
-    <P class="keterangan keterangan-hari">Hari :</P>
-    <P class="keterangan">Tanggal :</P>
+    <P class="keterangan keterangan-hari">Hari : {{ \Carbon\Carbon::now()->locale('id')->isoFormat('dddd') }}</P>
+    <P class="keterangan">Tanggal : {{ \Carbon\Carbon::now()->locale('id')->isoFormat('D MMMM Y') }}</P>
     <P class="keterangan">SPH No :</P>
     <hr style="position: absolute; top: 60; left: 0; width: 100%; color: rgb(116, 255, 66);">
     <h3 style="position: absolute; top: 60; margin-left: 40%">KWITANSI</h3>
@@ -136,18 +136,18 @@
         </tr>
         <tr>
             <td style="border-left: none;">
-                <p>Telah dibayar pinjaman a.n...........</p>
-                <p>Sebesar ...</p>
+                <p>Telah dibayar pinjaman a.n {{ $nasabah->nama_lengkap }}</p>
+                <p>Sebesar {{ $transaksi->putusan_pinjaman }}</p>
                 <p class="angsuran">Angsuran :</p>
                 <ul class="angsuran">
-                    <li>Bunga per bulan :</li>
-                    <li>Pelunasan :</li>
+                    <li>Bunga per bulan : {{ $transaksi->bunga_perbulan }}</li>
+                    <li>Pelunasan : {{ $transaksi->pelunasan }}</li>
                 </ul>
-                <p class="angsuran">Pembayaran paling lambat tanggal :</p>
-                <p>Dengan perjanjian gadai berupa barang :</p>
+                <p class="angsuran">Pembayaran paling lambat tanggal : {{ \Carbon\Carbon::now()->addMonths((int) str_replace(' Bulan', '', $transaksi->jangka_waktu))->locale('id')->isoFormat('D') }}</p>
+                <p>Dengan perjanjian gadai berupa barang : {{ $transaksi->jenis_jaminan }}</p>
             </td>
             <td style="border-right: none;">
-                <P>1.000.000</P>
+                <P>{{ $transaksi->putusan_pinjaman }}</P>
                 <p></p>
                 <br>
                 <br>
@@ -158,10 +158,10 @@
         <tr>
             <td style="border-left: none;">
                 <p class="text-right">JUMLAH</p>
-                <p>TERBILANG :</p>
+                <p>TERBILANG : {{ \App\Helpers\JutaanTerbilang::convert($transaksi->putusan_pinjaman) }} rupiah</p>
             </td>
             <td style="border-right: none;">
-                <p>Rp. 1.000.000</p>
+                <p>{{ $transaksi->putusan_pinjaman }}</p>
                 <p></p>
                 <p></p>
             </td>
