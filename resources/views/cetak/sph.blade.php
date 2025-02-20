@@ -142,7 +142,7 @@ $base64Logo = 'data:image/' . $type . ';base64,' . base64_encode($data);
             ketentuan-ketentuan sebagaimana tersebut dibawah ini :
         </p>
         <p class="text-center">Pasal 1</p>
-        <p class="text-center">Jumlah Penggunaan Pinjaman</p>
+        <p class="text-center">JUMLAH PENGGUNAAN PINJAMAN</p>
         <ol>
             <li>
                 YANG BERHUTANG telah menerima dari PERUSAHAAN sejumlah uang sebagai pokok PERUSAHAAN

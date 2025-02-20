@@ -48,14 +48,14 @@
         }
 
 
-        .keterangan {
+        /* .keterangan {
             margin-left: 500px;
             font-size: 13px;
         }
 
         .keterangan-hari {
             margin-top: 30px;
-        }
+        } */
 
         .header {
             text-align: center;
@@ -103,14 +103,6 @@
             margin: 3px 0;
         }
 
-        hr {
-            position: absolute;
-            top: 50px;
-            left: 0;
-            width: 100%;
-            color: rgb(116, 255, 66);
-        }
-
         h3 {
             position: absolute;
             top: 55px;
@@ -121,14 +113,25 @@
 </head>
 
 <body>
-    <img src="{{ $base64Logo1 }}" alt="Logo Gadai" style="width: 20%; height: auto; position: absolute; top: 0; left: 0;">
-    <img src="{{ $base64Logo2 }}" alt="Logo Sigma"
-        style="width: 15%; height: auto; position: absolute; top: 0; right: 0;">
-    <P class="keterangan keterangan-hari">Hari : {{ \Carbon\Carbon::now()->locale('id')->isoFormat('dddd') }}</P>
-    <P class="keterangan">Tanggal : {{ \Carbon\Carbon::now()->locale('id')->isoFormat('D MMMM Y') }}</P>
-    <P class="keterangan">SPH No :</P>
-    <hr style="position: absolute; top: 60; left: 0; width: 100%; color: rgb(116, 255, 66);">
-    <h3 style="position: absolute; top: 60; margin-left: 40%">KWITANSI</h3>
+    <img src="{{ $base64Logo1 }}" alt="Logo Gadai" style="width: 15%; height: auto; position: absolute; top: 0; left: 0;">
+    <img src="{{ $base64Logo2 }}" alt="Logo Sigma" style="width: 15%; height: auto; position: absolute; top: 0; right: 0;">
+    <table style="margin-left: 470px; margin-top: 20px; margin-bottom: 10px; width: 40%; border-collapse: collapse;">
+        <tr>
+            <td style="font-size: 11px; border: none; padding: 2;">Hari</td>
+            <td style="font-size: 11px; border: none; padding: 2;">: {{ \Carbon\Carbon::now()->locale('id')->isoFormat('dddd') }}</td>
+        </tr>
+        <tr>
+            <td style="font-size: 11px; border: none; padding: 2;">Tanggal</td>
+            <td style="font-size: 11px; border: none; padding: 2;">: {{ \Carbon\Carbon::now()->locale('id')->isoFormat('D MMMM Y') }}</td>
+        </tr>
+        <tr>
+            <td style="font-size: 11px; border: none; padding: 2;">SPH No</td>
+            <td style="font-size: 11px; border: none; padding: 2;">:</td>
+        </tr>
+    </table>
+
+    <hr style="position: absolute; top: 40; left: 0; width: 100%;">
+    <h3 style="position: absolute; top: 40; margin-left: 40%">KWITANSI</h3>
     <table>
         <tr>
             <th style="border-left: none;">URAIAN</th>
@@ -138,17 +141,26 @@
             <td style="border-left: none;">
                 <p>Telah dibayar pinjaman a.n {{ $nasabah->nama_lengkap }}</p>
                 <p>Sebesar {{ $transaksi->putusan_pinjaman }}</p>
-                <p class="angsuran">Angsuran :</p>
-                <ul class="angsuran">
-                    <li>Bunga per bulan : {{ $transaksi->bunga_perbulan }}</li>
-                    <li>Pelunasan : {{ $transaksi->pelunasan }}</li>
-                </ul>
+                <p>Angsuran :</p>
+                <table style="width: 60%; border-collapse: collapse;">
+                    <tr>
+                        <td style="border: none; padding: 1;">- Bunga per bulan</td>
+                        <td class="angsuran" style="border: none; padding: 2;">: {{ $transaksi->bunga_perbulan }}</td>
+                    </tr>
+                    <tr>
+                        <td style="border: none; padding: 1;">- Pelunasan</td>
+                        <td class="angsuran" style="border: none; padding: 2;">: {{ $transaksi->pelunasan }}</td>
+                    </tr>
+                </table>
                 <p class="angsuran">Pembayaran paling lambat tanggal : {{ \Carbon\Carbon::now()->addMonths((int) str_replace(' Bulan', '', $transaksi->jangka_waktu))->locale('id')->isoFormat('D') }}</p>
-                <p>Dengan perjanjian gadai berupa barang : {{ $transaksi->jenis_jaminan }}</p>
+                <p>Dengan perjanjian gadai berupa barang :</p>
+                <p class="angsuran">{{ $transaksi->jenis_jaminan }}</p>
             </td>
-            <td style="border-right: none;">
+            <td style="border-right: none; padding-left: 50px;">
                 <P>{{ $transaksi->putusan_pinjaman }}</P>
                 <p></p>
+                <br>
+                <br>
                 <br>
                 <br>
                 <br>
@@ -160,8 +172,14 @@
                 <p class="text-right">JUMLAH</p>
                 <p>TERBILANG : {{ \App\Helpers\JutaanTerbilang::convert($transaksi->putusan_pinjaman) }} rupiah</p>
             </td>
-            <td style="border-right: none;">
+            <td style="border-right: none;  padding-left: 50px;">
                 <p>{{ $transaksi->putusan_pinjaman }}</p>
+                <p></p>
+                <p></p>
+                <p></p>
+                <p></p>
+                <p></p>
+                <p></p>
                 <p></p>
                 <p></p>
             </td>

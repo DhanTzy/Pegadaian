@@ -2,6 +2,7 @@
 
 @section('contents')
     <div class="container">
+        <div class="content"  style="margin-top: 20px margin-bottom: 200px;">
         <h2>Ubah Password</h2>
         @if (session('success'))
             <div class="alert alert-success">{{ session('success') }}</div>
@@ -38,5 +39,6 @@
             <button type="submit" class="btn btn-primary">Simpan</button>
             <a href="{{ url('dashboard') }}" class="btn btn-secondary w-20">Kembali</a>
         </form>
+    </div>
     </div>
 @endsection
