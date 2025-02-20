@@ -78,7 +78,6 @@ class AuthController extends Controller
 
     public function changePasswordSave(Request $request)
     {
-        // Validasi input dengan pesan kustom
         $request->validate([
             'current_password' => 'required',
             'new_password' => 'required|confirmed',
@@ -90,12 +89,10 @@ class AuthController extends Controller
 
         $user = Auth::user();
 
-        // Cek apakah password lama sesuai
         if (!Hash::check($request->current_password, $user->password)) {
             return back()->withErrors(['current_password' => 'Password lama tidak sesuai.']);
         }
 
-        // Update password
         $user = User::find($user->id);
         $user->password = Hash::make($request->new_password);
         $user->save();

@@ -43,6 +43,8 @@ class ApprovalController extends Controller
                     data-bs-target="#approvalModal"
                     data-id="' . $transaksi->id . '"
                     data-jenis_jaminan="' . $transaksi->jenis_jaminan . '"
+                    data-nilai_pasar_aps="' . $transaksi->nilai_pasar_aps . '"
+                    data-nilai_likuiditas_aps="' . $transaksi->nilai_likuiditas_aps . '"
                     data-foto_jaminan="' . e($fotoJaminan) . '">
                 <i class="fas fa-check-circle"></i>
             </button>';
@@ -70,10 +72,8 @@ class ApprovalController extends Controller
             return redirect()->back()->with('error', 'Lengkapi semua data terlebih dahulu!');
         }
 
-        // Jika semua data sudah terisi, update status menjadi 'approval selesai', jika tidak, biarkan status tetap 'menunggu approval'
         $statusTransaksi = $isComplete ? 'Approval selesai' : 'Menunggu approval';
 
-        // Update transaksi
         $transaksi->update($validated + ['status_transaksi' => $statusTransaksi]);
 
         return redirect()->route('approval.index')->with('success', 'Data Berhasil Disimpan Dan Pengajuan Pinjaman Telah Di Setujui.');

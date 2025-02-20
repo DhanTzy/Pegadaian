@@ -36,7 +36,6 @@ class ProfileController extends Controller
         $profile = $user->profile;
         // dd($profile);
 
-        // Validasi input
         $request->validate([
             'name' => 'required|string|max:255',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
@@ -57,7 +56,6 @@ class ProfileController extends Controller
             'nomor_identitas.unique' => 'Nomor identitas sudah ada. Mohon gunakan nomor yang berbeda.',
         ]);
 
-        // Update data user
         $user->name = $request->name;
 
         if ($request->hasFile('image')) {
@@ -73,7 +71,6 @@ class ProfileController extends Controller
 
         $user->save();
 
-        // Update data profile
         if (!$profile) {
             $profile = new Profile();
             $profile->user_id = $user->id;

@@ -150,8 +150,6 @@ class KaryawanController extends Controller
             // 'anggota_keluarga.*.nik.required' => 'NIK anggota keluarga wajib diisi.',
         ]);
 
-
-        // Upload foto
         $ktpPath = $request->file('foto_ktp')->store('karyawan/foto', 'public');
         // $kkPath = $request->file('foto_kk')->store('karyawan/foto', 'public');
 
@@ -244,7 +242,6 @@ class KaryawanController extends Controller
         //     $validatedData['foto_kk'] = $kkPath;
         // }
 
-        // Update data karyawan
         $karyawan->update($validatedData);
 
         // Mengupdate anggota keluarga

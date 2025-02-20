@@ -52,7 +52,6 @@ class DashboardController extends Controller
             $nasabahCounts[] = $monthlyDataNasabah->where('month', $index + 1)->first()->count ?? 0;
         }
 
-        // Ambil tahun-tahun yang tersedia dari database
         $availableYears = Transaksi::selectRaw('YEAR(created_at) as year')
             ->distinct()
             ->orderBy('year', 'desc')

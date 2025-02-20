@@ -37,8 +37,8 @@
                                         <tr>
                                             <th>No</th>
                                             <th>Jenis Jaminan</th>
-                                            <th>Nilai Pasar</th>
-                                            <th>Nilai Likuiditas</th>
+                                            <th>Nilai Pasar APS</th>
+                                            <th>Nilai Likuiditas APS</th>
                                             <th>Jangka Waktu</th>
                                             <th>Bunga</th>
                                             <th>Bunga Perbulan</th>
@@ -80,18 +80,23 @@
                                 </div>
 
                                 <div class="mb-3">
-                                    <label for="nilai_pasar_apv" class="form-label">Nilai Pasar <span class="text-danger">*</span></label>
+                                    <label for="nilai_pasar_aps" class="form-label">Nilai Pasar APS <span class="text-danger">*</span></label>
+                                    <input type="text" class="form-control" id="nilai_pasar_aps" name="nilai_pasar_aps" readonly>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="nilai_likuiditas_aps" class="form-label">Nilai Likuiditas APS <span class="text-danger">*</span></label>
+                                    <input type="text" class="form-control" id="nilai_likuiditas_aps" name="nilai_likuiditas_aps" readonly>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="nilai_pasar_apv" class="form-label">Nilai Pasar APV <span class="text-danger">*</span></label>
                                     <input type="text" class="form-control" id="nilai_pasar_apv" name="nilai_pasar_apv">
                                 </div>
 
                                 <div class="mb-3">
-                                    <label for="nilai_likuiditas_apv" class="form-label">Nilai Likuiditas <span class="text-danger">*</span></label>
+                                    <label for="nilai_likuiditas_apv" class="form-label">Nilai Likuiditas APV <span class="text-danger">*</span></label>
                                     <input type="text" class="form-control" id="nilai_likuiditas_apv" name="nilai_likuiditas_apv">
-                                </div>
-
-                                <div class="mb-3">
-                                    <label for="putusan_pinjaman" class="form-label">Putusan Pinjaman <span class="text-danger">*</span></label>
-                                    <input type="text" class="form-control" id="putusan_pinjaman" name="putusan_pinjaman">
                                 </div>
 
                                 <div class="mb-3">
@@ -101,6 +106,11 @@
                             </div>
 
                             <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="putusan_pinjaman" class="form-label">Putusan Pinjaman <span class="text-danger">*</span></label>
+                                    <input type="text" class="form-control" id="putusan_pinjaman" name="putusan_pinjaman">
+                                </div>
+
                                 <div class="mb-3">
                                     <label for="bunga" class="form-label">Bunga <span class="text-danger">*</span></label>
                                     <input type="text" class="form-control" id="bunga" name="bunga">
@@ -176,8 +186,8 @@
                 ajax: "{{ route('approval.data') }}",
                 columns: [{ data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: false, searchable: false },
                     { data: 'jenis_jaminan', name: 'jenis_jaminan' },
-                    { data: 'nilai_pasar_apv', name: 'nilai_pasar_apv' },
-                    { data: 'nilai_likuiditas_apv', name: 'nilai_likuiditas_apv' },
+                    { data: 'nilai_pasar_aps', name: 'nilai_pasar_aps' },
+                    { data: 'nilai_likuiditas_aps', name: 'nilai_likuiditas_aps' },
                     { data: 'jangka_waktu', name: 'jangka_waktu' },
                     { data: 'bunga', name: 'bunga' },
                     { data: 'bunga_perbulan', name: 'bunga_perbulan' },
@@ -200,15 +210,15 @@
 
                 let jenisJaminan = button.data('jenis_jaminan');
                 let fotoJaminan = button.data('foto_jaminan')
-                let nilaiPasar = button.data('nilai_pasar');
-                let nilaiLikuiditas = button.data('nilai_likuiditas');
+                let nilaiPasar = button.data('nilai_pasar_aps');
+                let nilaiLikuiditas = button.data('nilai_likuiditas_aps');
 
                 if (jenisJaminan) modal.find('#jenis_jaminan').val(jenisJaminan);
                 if (fotoJaminan) {
                     modal.find('#modalFotoJaminan').html(fotoJaminan);
                 }
-                if (nilaiPasar) modal.find('#nilai_pasar').val(nilaiPasar);
-                if (nilaiLikuiditas) modal.find('#nilai_likuiditas').val(nilaiLikuiditas);
+                if (nilaiPasar) modal.find('#nilai_pasar_aps').val(nilaiPasar);
+                if (nilaiLikuiditas) modal.find('#nilai_likuiditas_aps').val(nilaiLikuiditas);
                 modal.find('#approvalForm').attr('action', "{{ url('approval') }}/" + button.data(
                     'id'));
             });
