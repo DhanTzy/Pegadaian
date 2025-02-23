@@ -115,23 +115,25 @@
 <body>
     <img src="{{ $base64Logo1 }}" alt="Logo Gadai" style="width: 15%; height: auto; position: absolute; top: 0; left: 0;">
     <img src="{{ $base64Logo2 }}" alt="Logo Sigma" style="width: 15%; height: auto; position: absolute; top: 0; right: 0;">
-    <table style="margin-left: 470px; margin-top: 20px; margin-bottom: 10px; width: 40%; border-collapse: collapse;">
+    <p style="position: absolute; top: 15px; margin-left: 35%; font-size: 11px; font-weight: normal;">0021-01-004130-56-0</p>
+    <p style="position: absolute; top: 35px; margin-left: 35%; font-size: 11px; font-weight: normal;">PT. SIGMA ARTHA NUSANTARA</p>
+    <table style="margin-left: 490px; margin-top: 20px; margin-bottom: 10px; width: 30%; border-collapse: collapse;">
         <tr>
-            <td style="font-size: 11px; border: none; padding: 2;">Hari</td>
+            <td style="font-size: 11px; border: none; padding: 2;">HARI</td>
             <td style="font-size: 11px; border: none; padding: 2;">: {{ \Carbon\Carbon::now()->locale('id')->isoFormat('dddd') }}</td>
         </tr>
         <tr>
-            <td style="font-size: 11px; border: none; padding: 2;">Tanggal</td>
+            <td style="font-size: 11px; border: none; padding: 2;">TANGGAL</td>
             <td style="font-size: 11px; border: none; padding: 2;">: {{ \Carbon\Carbon::now()->locale('id')->isoFormat('D MMMM Y') }}</td>
         </tr>
         <tr>
-            <td style="font-size: 11px; border: none; padding: 2;">SPH No</td>
+            <td style="font-size: 11px; border: none; padding: 2;">SPH NO</td>
             <td style="font-size: 11px; border: none; padding: 2;">:</td>
         </tr>
     </table>
 
     <hr style="position: absolute; top: 40; left: 0; width: 100%;">
-    <h3 style="position: absolute; top: 40; margin-left: 40%">KWITANSI</h3>
+    <h3 style="position: absolute; top: 40; margin-left: 43%">KWITANSI</h3>
     <table>
         <tr>
             <th style="border-left: none;">URAIAN</th>
@@ -139,7 +141,7 @@
         </tr>
         <tr>
             <td style="border-left: none;">
-                <p>Telah dibayar pinjaman a.n {{ $nasabah->nama_lengkap }}</p>
+                <p>Telah dibayar pinjaman a.n   {{ $nasabah->nama_lengkap }}</p>
                 <p>Sebesar {{ $transaksi->putusan_pinjaman }}</p>
                 <p>Angsuran :</p>
                 <table style="width: 60%; border-collapse: collapse;">
@@ -152,11 +154,16 @@
                         <td class="angsuran" style="border: none; padding: 2;">: {{ $transaksi->pelunasan }}</td>
                     </tr>
                 </table>
-                <p class="angsuran">Pembayaran paling lambat tanggal : {{ \Carbon\Carbon::now()->addMonths((int) str_replace(' Bulan', '', $transaksi->jangka_waktu))->locale('id')->isoFormat('D') }}</p>
+                <table style="width: 70%;">
+                    <tr>
+                        <td style="border: none; padding: 0;">Pembayaran paling lambat tanggal :</td>
+                        <td class="angsuran" style="border: none; padding: 0;">{{ \Carbon\Carbon::now()->addMonths((int) str_replace(' Bulan', '', $transaksi->jangka_waktu))->locale('id')->isoFormat('D') }}</td>
+                    </tr>
+                </table>
                 <p>Dengan perjanjian gadai berupa barang :</p>
                 <p class="angsuran">{{ $transaksi->jenis_jaminan }}</p>
             </td>
-            <td style="border-right: none; padding-left: 50px;">
+            <td style="border-right: none; padding-left: 70px;">
                 <P>{{ $transaksi->putusan_pinjaman }}</P>
                 <p></p>
                 <br>
@@ -185,38 +192,42 @@
             </td>
         </tr>
     </table>
-    <table style="border-collapse: collapse; width: 100%; border: none;">
+    <table style="border-collapse: collapse; width: 100%; border: none; margin: 0;">
         <tr>
-            <td style="border: none; padding: 10px; text-align: center;">
-                <p></p>
-                <p></p>
-                <br>
-                <br>
-                <br>
+            <td style="text-align: center; border: none;"></td>
+            <td style="text-align: center; border: none;">PETUGAS</td>
+            <td style="text-align: center; border: none;"></td>
+            <td style="text-align: center; border: none;">DEBITUR</td>
+        </tr>
+        <tr>
+            <td style="border: none;"></td>
+            <td style="border: none;"></td>
+            <td style="border: none;"></td>
+            <td style="border: none;">
+                <p style="text-align: center; font-weight: normal; font-size: 10px" >materai</p>
+                <p style="text-align: center; font-weight: normal; font-size: 10px" >10.000</p>
+            </td>
+        </tr>
+        <tr>
+            <td style="padding: 0; border: none;">
                 <p style="text-align: center;">______________</p>
                 <p style="text-align: center;">Approval</p>
             </td>
-            <td style="border: none; padding: 10px; text-align: center;">
-                <p style="text-align: center;">PETUGAS</p>
-                <br>
-                <br>
+            <td style="padding: 0; border: none;">
                 <p style="text-align: center;">______________</p>
-                <p style="text-align: center;">Appraisal</p>
+                <p style="text-align: center;">Apprisal</p>
             </td>
-            <td style="border: none; padding: 10px; text-align: center;">
-                <p></p>
-                <p></p>
-                <br>
-                <br>
-                <br>
+            <td style="padding: 0; border: none;">
                 <p style="text-align: center;">______________</p>
                 <p style="text-align: center;">Customer Service</p>
             </td>
-            <td style="border: none; padding: 10px; text-align: center;">
-                <p style="text-align: center;">DEBITUR</p>
-                <br>
-                <p style="text-align: center;">(materai 10.000)</p>
+            <td style="padding: 0; border: none;">
                 <p style="text-align: center;">______________</p>
+                <p></p>
+                <p></p>
+                <p></p>
+                <p></p>
+                <p></p>
                 <p></p>
                 <p></p>
             </td>

@@ -73,11 +73,11 @@
                     <br>
                     {{ \Carbon\Carbon::now()->locale('id')->isoFormat('dddd') }}
                     <br>
-                    {{ \Carbon\Carbon::now()->locale('id')->isoFormat('D') }}({{ \App\Helpers\TanggalTerbilang::tanggal(\Carbon\Carbon::now()->format('d')) }})
+                    {{ \Carbon\Carbon::now()->locale('id')->isoFormat('D') }} ({{ \App\Helpers\TanggalTerbilang::tanggal(\Carbon\Carbon::now()->format('d')) }})
                     <br>
-                    {{ \Carbon\Carbon::now()->locale('id')->isoFormat('MM') }}({{ \App\Helpers\TanggalTerbilang::tanggal(\Carbon\Carbon::now()->format('m')) }})
+                    {{ \Carbon\Carbon::now()->locale('id')->isoFormat('MM') }} ({{ \App\Helpers\TanggalTerbilang::tanggal(\Carbon\Carbon::now()->format('m')) }})
                     <br>
-                    {{ \Carbon\Carbon::now()->locale('id')->isoFormat('Y') }}({{ \App\Helpers\TanggalTerbilang::tahun(\Carbon\Carbon::now()->format('Y')) }})
+                    {{ \Carbon\Carbon::now()->locale('id')->isoFormat('Y') }} ({{ \App\Helpers\TanggalTerbilang::tahun(\Carbon\Carbon::now()->format('Y')) }})
                     <br>
                     {{ $transaksi->no_pendaftaran ?? '-' }}
                     <br>

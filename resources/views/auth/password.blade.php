@@ -4,6 +4,7 @@
     <div class="container">
         <div class="content"  style="margin-top: 20px margin-bottom: 200px;">
         <h2>Ubah Password</h2>
+        <br>
         @if (session('success'))
             <div class="alert alert-success">{{ session('success') }}</div>
         @endif
@@ -19,6 +20,7 @@
                     @enderror
                 </div>
             </div>
+            <br>
             <div class="form-group">
                 <label for="new_password">Password Baru :</label>
                 <div class="input-group">
@@ -29,6 +31,7 @@
                     @enderror
                 </div>
             </div>
+            <br>
             <div class="form-group">
                 <label for="new_password_confirmation">Konfirmasi Password Baru :</label>
                 <div class="input-group">
@@ -36,6 +39,7 @@
                         name="new_password_confirmation" required>
                 </div>
             </div>
+            <br>
             <button type="submit" class="btn btn-primary">Simpan</button>
             <a href="{{ url('dashboard') }}" class="btn btn-secondary w-20">Kembali</a>
         </form>

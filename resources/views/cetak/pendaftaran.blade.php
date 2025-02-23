@@ -74,11 +74,16 @@
                 <td colspan="2" class="fontarial">Form Pendaftaran</td>
             </tr>
             <tr>
-                <td colspan="2" style="padding: 0px;">
-                    <p style="margin-left: 20px"><strong>Tanggal:</strong> {{ \Carbon\Carbon::now()->format('d/m/Y') }} &nbsp;&nbsp;&nbsp; <strong>   No.Pendaftaran:</strong> {{ $transaksi->no_pendaftaran }}</p>
-                    <p style="margin-left: 20px"><strong>Pangkal:</strong> {{ $transaksi->no_pangkal }}</p>
+                <td style="padding: 0px; border-right: none;">
+                        <p style="margin-left: 20px"><strong>Tanggal:</strong> {{ \Carbon\Carbon::now()->format('d/m/Y') }} &nbsp;&nbsp;&nbsp;</p>
+                        <p style="margin-left: 20px"><strong>Pangkal:</strong> {{ $transaksi->no_pangkal }}</p>
                 </td>
-            </tr>                                               
+                <td style="padding: 0px; border-left: none;">
+                    <p style="margin-left: 20px"><strong>No.Pendaftaran:</strong> {{ $transaksi->no_pendaftaran }}</p>
+                    <p></p>
+                    <p></p>
+                </td>
+            </tr>
             <tr>
                 <th colspan="2" class="section-title">Pendaftaran</th>
             </tr>
@@ -148,9 +153,9 @@
                 <td>
                     Jenis Jaminan
                     <br>
-                    Nilai Pasar Wajar APS
+                    Nilai Pasar Wajar
                     <br>
-                    Nilai Likuiditas APS
+                    Nilai Likuiditas
                 </td>
                 <td>
                     {{ $transaksi->jenis_jaminan ?? '-' }}
@@ -161,7 +166,7 @@
                 </td>
             </tr>
             <tr>
-                <td colspan="2" style="font-size: 10px; padding: 30px;"">Tanda tangan appraisal :</td>
+                <td colspan="2" style="font-size: 10px; padding: 30px;">Tanda tangan appraisal :</td>
             </tr>
             <tr>
                 <th colspan="2" class="section-title">Putusan</th>
@@ -170,9 +175,9 @@
                 <td>
                     Jenis Jaminan
                     <br>
-                    Nilai Pasar Wajar APV
+                    Nilai Pasar Wajar
                     <br>
-                    Nilai Likuiditas APV
+                    Nilai Likuiditas
                     <br>
                     Putusan Pinjaman
                     <br>
