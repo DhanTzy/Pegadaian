@@ -216,9 +216,8 @@
     <script>
         function cetakPDF() {
             var jenisCetak = document.getElementById('jenisCetak').value;
-            alert('Mencetak PDF dengan jenis: ' + jenisCetak + 'ID Transaksi = ' + document.getElementById('id_transaksi').value + 'ID Nasabah = ' + document.getElementById('id_nasabah').value);
+            // alert('Mencetak PDF dengan jenis: ' + jenisCetak + 'ID Transaksi = ' + document.getElementById('id_transaksi').value + 'ID Nasabah = ' + document.getElementById('id_nasabah').value);
             // Tambahkan logika untuk mencetak PDF sesuai dengan jenis yang dipilih
-
         }
     </script>
 

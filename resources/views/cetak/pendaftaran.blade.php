@@ -42,8 +42,11 @@
         }
         td {
             border: 1px solid black;
-            padding: 20px;
+            /* padding: 20px; */
             text-align: left;
+            padding-left: 20px;
+            padding-top: 10px;
+            padding-bottom: 10px;
         }
 
         .header {
@@ -88,12 +91,14 @@
                 <th colspan="2" class="section-title">Pendaftaran</th>
             </tr>
             <tr>
-                <td
+                <td>
                     Nama Debitur
                     <br>
                     NIK
                     <br>
                     Alamat
+                    <br>
+                    Kelurahan
                     <br>
                     Kecamatan
                     <br>
@@ -143,14 +148,14 @@
                 </td>
             </tr>
             <tr>
-                <td style="font-size: 10px; padding: 30px;">Tanda Tangan customer service :</td>
-                <td style="font-size: 10px; padding: 30px;">Tanda Tangan debitur :</td>
+                <td style="font-size: 10px; padding-bottom: 70px;">Tanda Tangan customer service :</td>
+                <td style="font-size: 10px; padding-bottom: 70px;">Tanda Tangan debitur :</td>
             </tr>
             <tr>
                 <th colspan="2" class="section-title">Appraisal</th>
             </tr>
             <tr>
-                <td
+                <td>
                     Jenis Jaminan
                     <br>
                     Nilai Pasar Wajar
@@ -166,7 +171,7 @@
                 </td>
             </tr>
             <tr>
-                <td colspan="2" style="font-size: 10px; padding: 30px;">Tanda tangan appraisal :</td>
+                <td colspan="2" style="font-size: 10px; padding-left: 20px; padding-bottom: 70px;">Tanda tangan appraisal :</td>
             </tr>
             <tr>
                 <th colspan="2" class="section-title">Putusan</th>
@@ -212,7 +217,7 @@
                 </td>
             </tr>
             <tr>
-                <td colspan="2" style="font-size: 10px; padding: 30px;">Tanda tangan pemutus :</td>
+                <td colspan="2" style="font-size: 10px; padding-left: 20px; padding-bottom: 70px;">Tanda tangan pemutus :</td>
             </tr>
         </table>
     </div>
