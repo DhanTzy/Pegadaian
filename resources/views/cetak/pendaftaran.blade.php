@@ -81,14 +81,14 @@
                 <td style="padding: 0px; border-left: none;">
                     <p style="margin-left: 20px"><strong>No.Pendaftaran:</strong> {{ $transaksi->no_pendaftaran }}</p>
                     <p></p>
-                    <p></p>
+                    <br>
                 </td>
             </tr>
             <tr>
                 <th colspan="2" class="section-title">Pendaftaran</th>
             </tr>
             <tr>
-                <td>
+                <td
                     Nama Debitur
                     <br>
                     NIK
@@ -150,7 +150,7 @@
                 <th colspan="2" class="section-title">Appraisal</th>
             </tr>
             <tr>
-                <td>
+                <td
                     Jenis Jaminan
                     <br>
                     Nilai Pasar Wajar
